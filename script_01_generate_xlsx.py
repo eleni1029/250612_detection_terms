@@ -1,36 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_01_generate_xlsx.py
+script_01_generate_xlsx.py (v2.0)
 
-掃描 messages.po 與 zh-TW.json，偵測歧義關鍵字，輸出 tobemodified.xlsx
-欄位：
-  • source / key / value
-  • 敏感詞
-  • 修正方案(企業) / 修正結果(企業)
-  • 修正方案(公部門) / 修正結果(公部門)
-  • 修正方案(培訓機構) / 修正結果(培訓機構)
+掃描指定語言的 messages.po 與 json 檔案，偵測歧義關鍵字，輸出 tobemodified.xlsx
+支援多語言和可配置的業態類型。
 
-改進點：
-1. 修正檔名引用錯誤
-2. 改進敏感詞對應方案的邏輯
-3. 增加錯誤處理和日志
-4. 優化替換邏輯
-5. 增加統計資訊
+更新內容：
+- 支援 config.yaml 配置
+- 支援多語言選擇
+- 支援可擴充的業態類型
+- 動態生成 Excel 欄位
 """
 
-# ── StdLib ───────────────────────────────────
 from pathlib import Path
 import json
 import re
 import itertools
 import sys
+import argparse
 from collections import defaultdict
+from config_loader import get_config
 
-# ── 3rd-party ────────────────────────────────
 try:
-    import polib                       # pip install polib
-    from openpyxl import Workbook      # pip install openpyxl
+    import polib
+    from openpyxl import Workbook
 except ImportError as e:
     print(f"❌ 缺少必要套件：{e}")
     print("請執行：pip install polib openpyxl")
@@ -38,43 +32,84 @@ except ImportError as e:
 
 def main():
     """主執行函數"""
-    print("🚀 開始生成 tobemodified.xlsx")
+    print("🚀 開始生成 tobemodified.xlsx (v2.0)")
     
-    # ── 檔案路徑檢查 ────────────────────────────────
-    PO_PATH = Path("messages.po")
-    JSON_PATH = Path("zh-TW.json")
-    OUT_XLSX = Path("tobemodified.xlsx")
+    # 載入配置
+    config = get_config()
+    config.print_config_summary()
     
-    # ── 載入字典檔案 ────────────────────────────────
+    # 處理命令列參數
+    parser = argparse.ArgumentParser(description='生成敏感詞檢測結果 Excel 檔案')
+    parser.add_argument('--language', '-l', 
+                       choices=list(config.get_languages().keys()),
+                       default=config.get_default_language(),
+                       help='指定要處理的語言')
+    
+    args = parser.parse_args()
+    selected_language = args.language
+    
+    print(f"\n🌐 選擇的語言：{selected_language}")
+    
+    # 獲取語言檔案路徑
+    language_files = config.get_language_files(selected_language)
+    PO_PATH = Path(language_files['po_file'])
+    JSON_PATH = Path(language_files['json_file'])
+    OUT_XLSX = Path(f"tobemodified_{selected_language}.xlsx")
+    
+    print(f"📁 處理檔案：")
+    print(f"   PO 檔案: {PO_PATH}")
+    print(f"   JSON 檔案: {JSON_PATH}")
+    print(f"   輸出檔案: {OUT_XLSX}")
+
+    # 載入檢測詞典
     def load_detection_terms():
         """載入所有檢測詞典，並進行錯誤處理"""
         try:
+            detection_files = config.get_detection_terms_files()
+            
+            # 載入基礎敏感詞
+            base_file = detection_files['base']
             from detection_terms import DETECTION_TERMS
-            # 修正：統一檔名
-            from detection_terms_enterprises import DETECTION_TERMS as ENT_TERMS
-            from detection_terms_public_sector import DETECTION_TERMS as GOV_TERMS
-            from detection_terms_training_institutions import DETECTION_TERMS as EDU_TERMS
+            
+            # 載入各業態方案
+            business_terms = {}
+            business_types = config.get_business_types()
+            
+            for bt_code, bt_config in business_types.items():
+                bt_file = detection_files[bt_code]
+                display_name = bt_config['display_name']
+                
+                try:
+                    # 動態導入模組
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location(f"terms_{bt_code}", bt_file)
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                    business_terms[bt_code] = module.DETECTION_TERMS
+                    print(f"✅ 載入 {bt_file} ({display_name}方案)")
+                except Exception as e:
+                    print(f"❌ 載入 {bt_file} 失敗：{e}")
+                    sys.exit(1)
             
             print(f"✅ 成功載入檢測詞典")
             print(f"   基礎敏感詞: {len(DETECTION_TERMS)} 類別")
-            print(f"   企業方案: {len(ENT_TERMS)} 類別")
-            print(f"   公部門方案: {len(GOV_TERMS)} 類別")
-            print(f"   培訓機構方案: {len(EDU_TERMS)} 類別")
+            for bt_code, bt_config in business_types.items():
+                terms_count = len(business_terms[bt_code])
+                print(f"   {bt_config['display_name']}方案: {terms_count} 類別")
             
-            return DETECTION_TERMS, ENT_TERMS, GOV_TERMS, EDU_TERMS
+            return DETECTION_TERMS, business_terms
             
         except ImportError as e:
             print(f"❌ 無法載入檢測詞典：{e}")
             print("請確認以下檔案存在且格式正確：")
-            print("  - detection_terms.py")
-            print("  - detection_terms_enterprises.py") 
-            print("  - detection_terms_public_sector.py")
-            print("  - detection_terms_training_institutions.py")
+            detection_files = config.get_detection_terms_files()
+            for name, filename in detection_files.items():
+                print(f"  - {filename}")
             sys.exit(1)
     
-    DETECTION_TERMS, ENT_TERMS, GOV_TERMS, EDU_TERMS = load_detection_terms()
+    DETECTION_TERMS, BUSINESS_TERMS = load_detection_terms()
 
-    # ── 建立關鍵字到分類的映射 ────────────────────────────────
+    # 建立關鍵字到分類的映射
     print("\n🔍 建立關鍵字映射...")
     kw2cat = {}
     category_stats = defaultdict(int)
@@ -89,55 +124,55 @@ def main():
     print(f"   總關鍵字數：{len(kw2cat)}")
     print(f"   分類統計：{dict(category_stats)}")
 
-    # ── 改進：建立敏感詞到方案的映射 ────────────────────────────────
-    def build_keyword_to_solution_mapping(solution_terms: dict, solution_name: str):
-        """
-        建立從敏感詞到解決方案的映射
+    # 建立敏感詞到方案的映射
+    def build_keyword_to_solution_mappings():
+        """建立從敏感詞到解決方案的映射"""
+        mappings = {}
+        business_types = config.get_business_types()
         
-        邏輯：
-        1. 對每個敏感詞，找到其分類
-        2. 在該分類的解決方案中按索引對應
-        3. 如果沒有對應方案，保持原詞
-        """
-        keyword_to_solution = {}
-        mapping_stats = {'mapped': 0, 'fallback': 0, 'missing_category': 0}
+        print(f"\n🔄 建立敏感詞到方案映射...")
         
-        for keyword, category in kw2cat.items():
-            solutions = solution_terms.get(category, [])
+        for bt_code, bt_config in business_types.items():
+            display_name = bt_config['display_name']
+            solution_terms = BUSINESS_TERMS[bt_code]
             
-            if not solutions:
-                # 該分類沒有解決方案
-                keyword_to_solution[keyword] = keyword
-                mapping_stats['missing_category'] += 1
-                continue
+            keyword_to_solution = {}
+            mapping_stats = {'mapped': 0, 'fallback': 0, 'missing_category': 0}
             
-            # 找到該關鍵字在基礎詞典中的索引
-            base_keywords = DETECTION_TERMS.get(category, [])
-            try:
-                keyword_index = base_keywords.index(keyword)
-                if keyword_index < len(solutions):
-                    # 有對應的解決方案
-                    keyword_to_solution[keyword] = solutions[keyword_index]
-                    mapping_stats['mapped'] += 1
-                else:
-                    # 索引超出方案範圍
+            for keyword, category in kw2cat.items():
+                solutions = solution_terms.get(category, [])
+                
+                if not solutions:
+                    # 該分類沒有解決方案
+                    keyword_to_solution[keyword] = keyword
+                    mapping_stats['missing_category'] += 1
+                    continue
+                
+                # 找到該關鍵字在基礎詞典中的索引
+                base_keywords = DETECTION_TERMS.get(category, [])
+                try:
+                    keyword_index = base_keywords.index(keyword)
+                    if keyword_index < len(solutions):
+                        # 有對應的解決方案
+                        keyword_to_solution[keyword] = solutions[keyword_index]
+                        mapping_stats['mapped'] += 1
+                    else:
+                        # 索引超出方案範圍
+                        keyword_to_solution[keyword] = keyword
+                        mapping_stats['fallback'] += 1
+                except ValueError:
+                    # 關鍵字不在基礎詞典中（理論上不應該發生）
                     keyword_to_solution[keyword] = keyword
                     mapping_stats['fallback'] += 1
-            except ValueError:
-                # 關鍵字不在基礎詞典中（理論上不應該發生）
-                keyword_to_solution[keyword] = keyword
-                mapping_stats['fallback'] += 1
+            
+            mappings[bt_code] = keyword_to_solution
+            print(f"   {display_name}方案: {mapping_stats['mapped']} 個有方案, {mapping_stats['fallback']} 個回退, {mapping_stats['missing_category']} 個無分類方案")
         
-        print(f"   {solution_name}: {mapping_stats['mapped']} 個有方案, {mapping_stats['fallback']} 個回退, {mapping_stats['missing_category']} 個無分類方案")
-        return keyword_to_solution
+        return mappings
 
-    print("\n🔄 建立敏感詞到方案映射...")
-    ENT_MAPPING = build_keyword_to_solution_mapping(ENT_TERMS, "企業方案")
-    GOV_MAPPING = build_keyword_to_solution_mapping(GOV_TERMS, "公部門方案")
-    EDU_MAPPING = build_keyword_to_solution_mapping(EDU_TERMS, "培訓機構方案")
+    BUSINESS_MAPPINGS = build_keyword_to_solution_mappings()
 
-    # ── 改進：關鍵字檢測 ────────────────────────────────
-    # 按長度排序，優先匹配長詞避免部分匹配問題
+    # 關鍵字檢測
     _kw_sorted = sorted(kw2cat.keys(), key=len, reverse=True)
     KW_RE = re.compile("|".join(map(re.escape, _kw_sorted)))
 
@@ -170,7 +205,7 @@ def main():
                 replacements.append(f"{kw}→{replacement}")
         return "、".join(replacements)
 
-    # ── 改進：檔案讀取函數 ────────────────────────────────
+    # 檔案讀取函數
     def iter_po_entries(po_path: Path):
         """迭代 PO 檔案條目，增加錯誤處理"""
         if not po_path.exists():
@@ -222,7 +257,7 @@ def main():
         except Exception as e:
             print(f"❌ 讀取 {json_path} 失敗：{e}")
 
-    # ── 掃描檔案並收集資料 ────────────────────────────────
+    # 掃描檔案並收集資料
     print(f"\n📖 掃描檔案...")
     rows = []
     detection_stats = defaultdict(int)
@@ -246,18 +281,23 @@ def main():
             detection_stats['total_entries'] += 1
             
             # 建立修正方案和結果
-            rows.append([
+            row_data = [
                 source,
                 key,
                 display_value,
                 "、".join(all_keywords),  # 敏感詞列表
-                build_replacement_plan(all_keywords, ENT_MAPPING),  # 企業修正方案
-                apply_replacements(display_value, ENT_MAPPING),     # 企業修正結果
-                build_replacement_plan(all_keywords, GOV_MAPPING),  # 公部門修正方案
-                apply_replacements(display_value, GOV_MAPPING),     # 公部門修正結果
-                build_replacement_plan(all_keywords, EDU_MAPPING),  # 培訓機構修正方案
-                apply_replacements(display_value, EDU_MAPPING),     # 培訓機構修正結果
-            ])
+            ]
+            
+            # 添加各業態的修正方案和結果
+            business_types = config.get_business_types()
+            for bt_code, bt_config in business_types.items():
+                mapping = BUSINESS_MAPPINGS[bt_code]
+                row_data.extend([
+                    build_replacement_plan(all_keywords, mapping),  # 修正方案
+                    apply_replacements(display_value, mapping),     # 修正結果
+                ])
+            
+            rows.append(row_data)
 
     print(f"   檢測統計：{dict(detection_stats)}")
 
@@ -265,7 +305,7 @@ def main():
         print("✅ 未偵測到歧義詞，未產生 xlsx")
         return
 
-    # ── 輸出 Excel ────────────────────────────────
+    # 輸出 Excel
     print(f"\n📝 生成 Excel 檔案...")
     
     try:
@@ -273,14 +313,19 @@ def main():
         ws = wb.active
         ws.title = "tobemodified"
         
-        # 標題列
-        headers = [
-            "source", "key", "value", "敏感詞",
-            "修正方案(企業)", "修正結果(企業)",
-            "修正方案(公部門)", "修正結果(公部門)",
-            "修正方案(培訓機構)", "修正結果(培訓機構)"
-        ]
+        # 動態建立標題列
+        headers = ["source", "key", "value", "敏感詞"]
+        
+        business_types = config.get_business_types()
+        for bt_code, bt_config in business_types.items():
+            display_name = bt_config['display_name']
+            headers.extend([
+                f"修正方案({display_name})",
+                f"修正結果({display_name})"
+            ])
+        
         ws.append(headers)
+        print(f"   Excel 標題列: {headers}")
 
         # 資料列
         for row in rows:
@@ -315,7 +360,7 @@ def main():
         print(f"❌ 生成 Excel 檔案失敗：{e}")
         sys.exit(1)
 
-    # ── 生成統計報告 ────────────────────────────────
+    # 生成統計報告
     print(f"\n📈 處理報告：")
     
     # 統計各分類的敏感詞出現次數

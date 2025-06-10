@@ -1,0 +1,62 @@
+# 敏感詞檢測與替換系統配置文件
+# Configuration for Sensitive Word Detection and Replacement System
+
+# 語言配置
+languages:
+  zh-TW:
+    po_file: "messages.po"
+    json_file: "zh-TW.json"
+    description: "繁體中文"
+  # 可擴充其他語言
+  # en:
+  #   po_file: "messages_en.po" 
+  #   json_file: "en.json"
+  #   description: "English"
+
+# 業態配置 (可擴充)
+business_types:
+  enterprises:
+    suffix: "_enterprises"
+    display_name: "企業"
+    description: "企業客戶適用的敏感詞解決方案"
+  
+  public_sector:
+    suffix: "_public_sector"
+    display_name: "公部門"
+    description: "政府機關與公部門適用的敏感詞解決方案"
+  
+  training_institutions:
+    suffix: "_training_institutions" 
+    display_name: "培訓機構"
+    description: "教育訓練機構適用的敏感詞解決方案"
+  
+  # 可擴充其他業態
+  # healthcare:
+  #   suffix: "_healthcare"
+  #   display_name: "醫療機構"
+  #   description: "醫療保健機構適用的敏感詞解決方案"
+
+# 基礎檔案配置
+base_files:
+  detection_terms: "detection_terms.py"
+  phrase_comparison_template: "phrase_comparison.xlsx"
+  output_dir: "."
+  backup_dir: "backup"
+
+# Excel 欄位配置
+excel_columns:
+  base_columns:
+    - "敏感詞類型"
+    - "敏感詞"
+  
+  business_type_columns:
+    solution: "對應方案({display_name})"
+    result: "修正結果({display_name})"
+    validation: "一對多校驗({display_name})"
+
+# 預設語言 (當未指定時使用)
+default_language: "zh-TW"
+
+# 版本資訊
+version: "1.0.0"
+last_updated: "2024-12-10"
