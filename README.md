@@ -1,3 +1,458 @@
+2025-06-11 多語言敏感詞檢測與替換系統 Version 2.2
+-------------------------
+# 多語言敏感詞檢測與替換系統 v2.2
+
+🌐 **支援多語言的敏感詞檢測與替換系統**
+
+## ✨ v2.2 版本特色
+
+- 🗂️ **多語言檔案組織**：支援 `i18n_input/{language}/` 目錄結構
+- 🔄 **自動語言檢測**：自動掃描可用語言，無需手動配置
+- 📊 **語言專屬對照表**：每個語言生成獨立的 `phrase_comparison_{language}.xlsx`
+- 📁 **時間戳輸出目錄**：輸出到 `i18n_output/{language}_{timestamp}/`
+- 🔒 **自動備份機制**：自動備份現有檔案，無需確認
+
+## 📁 目錄結構
+
+```
+250609_detection_terms/
+├── i18n_input/                          # 輸入目錄
+│   ├── zh-TW/                           # 繁體中文
+│   │   ├── messages.po                  # PO 檔案（可選）
+│   │   └── zh-TW.json                   # JSON 檔案（可選，但至少要有一個）
+│   ├── en/                              # 英文
+│   │   ├── messages.po
+│   │   └── en.json
+│   └── ja/                              # 日文
+│       ├── messages.po
+│       └── ja.json
+├── i18n_output/                         # 輸出目錄
+│   ├── zh-TW_20241210_143022/           # 繁中輸出（含時間戳）
+│   │   ├── messages_enterprises.po
+│   │   ├── zh-TW_enterprises.json
+│   │   ├── messages_public_sector.po
+│   │   ├── zh-TW_public_sector.json
+│   │   └── apply_fixes_20241210_143022.log
+│   ├── en_20241210_143022/              # 英文輸出
+│   │   ├── messages_enterprises.po
+│   │   ├── en_enterprises.json
+│   │   └── ...
+│   └── ja_20241210_143022/              # 日文輸出
+│       └── ...
+├── phrase_comparison_zh-TW.xlsx         # 繁中對照表
+├── phrase_comparison_en.xlsx            # 英文對照表
+├── phrase_comparison_ja.xlsx            # 日文對照表
+├── tobemodified_zh-TW.xlsx             # 繁中待修正清單
+├── tobemodified_en.xlsx                # 英文待修正清單
+├── backup/                             # 備份目錄
+│   ├── phrase_comparison_zh-TW_20241210_143022.xlsx
+│   └── ...
+├── config.yaml                         # 系統配置
+├── config_loader.py                    # 配置載入器
+├── generate_phrase_comparison.py       # 生成對照表
+├── script_01_generate_xlsx.py          # 生成待修正清單
+└── script_02_apply_fixes.py            # 套用修正結果
+```
+
+## 🚀 極簡工作流程
+
+### **3 步驟完成多語言處理**
+
+```bash
+# 步驟 1：生成各語言的對照表
+python generate_phrase_comparison.py
+
+# 步驟 2：編輯對照表並生成待修正清單
+# (手動編輯各語言的 phrase_comparison_{language}.xlsx)
+python script_01_generate_xlsx.py
+
+# 步驟 3：套用修正結果
+python script_02_apply_fixes.py
+
+# 完成！🎉
+```
+
+## ⚙️ 環境設置
+
+### **1. 安裝必要套件**
+
+```bash
+pip install openpyxl polib pyyaml
+```
+
+### **2. 準備檔案結構**
+
+```bash
+# 創建目錄結構
+mkdir -p i18n_input/{zh-TW,en,ja}
+mkdir -p i18n_output
+mkdir -p backup
+
+# 放置檔案到對應目錄
+# i18n_input/zh-TW/messages.po
+# i18n_input/zh-TW/zh-TW.json
+# i18n_input/en/messages.po
+# i18n_input/en/en.json
+```
+
+## 📋 詳細使用說明
+
+### **1. 生成對照表**
+
+```bash
+# 為所有檢測到的語言生成對照表
+python generate_phrase_comparison.py
+
+# 只為特定語言生成
+python generate_phrase_comparison.py --language zh-TW
+
+# 測試敏感詞檢測
+python generate_phrase_comparison.py --test
+```
+
+**功能**：
+- 自動掃描 `i18n_input/` 中的語言目錄
+- 檢測每個語言檔案中的敏感詞
+- 生成 `phrase_comparison_{language}.xlsx`
+- 自動備份現有檔案
+
+### **2. 編輯對照表**
+
+用任何 Excel 軟體編輯 `phrase_comparison_{language}.xlsx`：
+
+| 敏感詞類型 | 敏感詞 | 對應方案(企業) | 對應方案(公部門) | 對應方案(培訓機構) |
+|------------|--------|----------------|------------------|-------------------|
+| 時間相關   | 年度   | 年度報告       | 年度總結         | 年度課程          |
+| 時間相關   | 季度   | 季度報告       | 季度總結         | 季度課程          |
+
+### **3. 生成待修正清單**
+
+```bash
+# 處理所有語言
+python script_01_generate_xlsx.py
+
+# 處理特定語言
+python script_01_generate_xlsx.py --language zh-TW
+
+# 列出可用語言
+python script_01_generate_xlsx.py --list-languages
+```
+
+**輸出**：`tobemodified_{language}.xlsx`
+
+### **4. 套用修正結果**
+
+```bash
+# 互動式選擇
+python script_02_apply_fixes.py
+
+# 指定語言和業態
+python script_02_apply_fixes.py --language zh-TW --business-types enterprises
+
+# 套用全部業態
+python script_02_apply_fixes.py --business-types all
+
+# 列出可用檔案
+python script_02_apply_fixes.py --list-files
+```
+
+**輸出**：`i18n_output/{language}_{timestamp}/` 目錄
+
+## 🔧 配置管理
+
+### **業態配置**
+
+在 `config.yaml` 中新增業態：
+
+```yaml
+business_types:
+  healthcare:                           # 新業態
+    suffix: "_healthcare"
+    display_name: "醫療機構"
+    description: "醫療保健機構適用方案"
+```
+
+### **檔案命名配置**
+
+```yaml
+file_patterns:
+  po_file: "messages.po"
+  json_file: "{language}.json"          # 支援 {language} 變數
+  phrase_comparison: "phrase_comparison_{language}.xlsx"
+  tobemodified: "tobemodified_{language}.xlsx"
+  output_subdir: "{language}_{timestamp}"
+```
+
+### **目錄配置**
+
+```yaml
+directories:
+  input_dir: "i18n_input"               # 可自訂輸入目錄
+  output_dir: "i18n_output"             # 可自訂輸出目錄
+  backup_dir: "backup"                  # 可自訂備份目錄
+```
+
+## 🌐 多語言支援
+
+### **自動語言檢測**
+
+系統會自動檢測 `i18n_input/` 中的語言目錄：
+
+- ✅ **檢測條件**：目錄中至少有一個 `messages.po` 或 `{language}.json` 檔案
+- ✅ **大小寫兼容**：支援檔案名大小寫不一致（如 `ZH-TW.json`）
+- ✅ **靈活檔案**：可以只有 PO 檔案或只有 JSON 檔案
+
+### **新增語言支援**
+
+```bash
+# 1. 創建語言目錄
+mkdir i18n_input/fr
+
+# 2. 放置檔案
+# i18n_input/fr/messages.po
+# i18n_input/fr/fr.json
+
+# 3. 自動檢測並處理
+python generate_phrase_comparison.py
+python script_01_generate_xlsx.py
+```
+
+### **語言檔案要求**
+
+| 檔案類型 | 檔案名稱 | 是否必須 | 說明 |
+|----------|----------|----------|------|
+| PO 檔案 | `messages.po` | 可選 | GNU gettext 格式 |
+| JSON 檔案 | `{language}.json` | 可選 | 必須與目錄名稱一致 |
+
+**注意**：每個語言目錄至少需要一個檔案。
+
+## 📊 Excel 檔案說明
+
+### **phrase_comparison_{language}.xlsx**
+
+每個語言的對照表，包含：
+
+- **敏感詞類型**：分類名稱
+- **敏感詞**：要檢測的詞彙
+- **對應方案(業態)**：各業態的替換方案
+
+### **tobemodified_{language}.xlsx**
+
+待修正清單，包含：
+
+- **source**：來源檔案類型（po/json）
+- **key**：原始鍵值
+- **value**：原始內容
+- **敏感詞**：檢測到的敏感詞
+- **修正方案(業態)**：建議的修正方案
+- **修正結果(業態)**：修正後的內容
+
+## 🔄 工作流程詳解
+
+### **完整流程圖**
+
+```
+i18n_input/                           generate_phrase_comparison.py
+├── zh-TW/                           ────────────────────────────────►
+│   ├── messages.po                   phrase_comparison_zh-TW.xlsx
+│   └── zh-TW.json                               │
+├── en/                                          │ (手動編輯)
+│   └── en.json                                  ▼
+└── ja/                               script_01_generate_xlsx.py
+    └── messages.po                  ────────────────────────────────►
+                                      tobemodified_zh-TW.xlsx
+                                                  │
+                                                  ▼
+                                      script_02_apply_fixes.py
+                                     ────────────────────────────────►
+                                      i18n_output/zh-TW_20241210_143022/
+                                      ├── messages_enterprises.po
+                                      ├── zh-TW_enterprises.json
+                                      └── ...
+```
+
+### **處理邏輯**
+
+1. **語言檢測**：掃描 `i18n_input/` 目錄
+2. **敏感詞檢測**：從檔案內容中識別敏感詞
+3. **對照表生成**：創建語言專屬的 Excel 對照表
+4. **手動編輯**：使用者編輯替換方案
+5. **清單生成**：掃描檔案並生成待修正清單
+6. **修正套用**：將修正結果寫入新檔案
+
+## 🛠️ 進階功能
+
+### **批量處理**
+
+```bash
+# 處理所有語言的完整流程
+for step in generate_phrase_comparison script_01_generate_xlsx script_02_apply_fixes; do
+    python $step.py
+done
+```
+
+### **單語言處理**
+
+```bash
+# 只處理英文
+python generate_phrase_comparison.py --language en
+python script_01_generate_xlsx.py --language en
+python script_02_apply_fixes.py --language en --business-types all
+```
+
+### **檢查和驗證**
+
+```bash
+# 檢查配置
+python config_loader.py
+
+# 檢測可用語言
+python script_01_generate_xlsx.py --list-languages
+
+# 檢查待修正檔案
+python script_02_apply_fixes.py --list-files
+```
+
+## 📈 輸出結構
+
+### **時間戳目錄**
+
+每次執行 `script_02_apply_fixes.py` 都會創建新的時間戳目錄：
+
+```
+i18n_output/
+├── zh-TW_20241210_143022/    # 第一次執行
+├── zh-TW_20241210_150030/    # 第二次執行
+└── en_20241210_143022/       # 英文處理結果
+```
+
+### **檔案命名規則**
+
+- **PO 檔案**：`{原檔名}_{業態後綴}.po`
+  - 範例：`messages_enterprises.po`
+- **JSON 檔案**：`{原檔名}_{業態後綴}.json`
+  - 範例：`zh-TW_enterprises.json`
+
+## 🔍 故障排除
+
+### **常見問題**
+
+**Q: 找不到語言目錄**
+```bash
+❌ 在 i18n_input 中沒有檢測到任何有效的語言目錄
+```
+**A**: 確認目錄結構正確，每個語言目錄至少有一個檔案
+
+**Q: Excel 檔案缺少欄位**
+```bash
+❌ Excel 缺少必要欄位：['對應方案(企業)']
+```
+**A**: 重新執行 `generate_phrase_comparison.py` 生成標準格式
+
+**Q: JSON 檔案名稱不匹配**
+```bash
+⚠️ 語言目錄 'zh-TW' 中沒有找到有效檔案
+```
+**A**: 確認 JSON 檔案名稱與目錄名稱一致（支援大小寫不敏感）
+
+### **除錯工具**
+
+```bash
+# 檢查系統配置
+python -c "from config_loader import get_config; get_config().print_config_summary()"
+
+# 測試敏感詞檢測
+python generate_phrase_comparison.py --test
+
+# 檢查檔案結構
+find i18n_input -type f -name "*.po" -o -name "*.json" | sort
+```
+
+## 📝 開發和自訂
+
+### **自訂敏感詞類別**
+
+編輯 `generate_phrase_comparison.py` 中的 `BASE_SENSITIVE_WORDS`：
+
+```python
+BASE_SENSITIVE_WORDS = {
+    "新分類": ["詞彙1", "詞彙2", "詞彙3"],
+    "時間相關": ["年度", "季度", "月份"],
+    # ...
+}
+```
+
+### **自訂業態**
+
+在 `config.yaml` 中新增：
+
+```yaml
+business_types:
+  custom_domain:
+    suffix: "_custom"
+    display_name: "自訂領域"
+    description: "自訂領域專用方案"
+```
+
+### **自訂檔案格式**
+
+```yaml
+file_patterns:
+  po_file: "custom.po"                    # 自訂 PO 檔案名
+  json_file: "custom_{language}.json"    # 自訂 JSON 檔案名
+```
+
+## 🎯 最佳實踐
+
+### **檔案組織**
+
+1. **一致的命名**：確保 JSON 檔案名與語言代碼一致
+2. **完整的檔案**：盡量提供 PO 和 JSON 兩種格式
+3. **定期備份**：系統會自動備份，但建議額外保存重要版本
+
+### **編輯對照表**
+
+1. **段階式填寫**：先填寫常用詞彙的替換方案
+2. **一致性檢查**：確保同類詞彙的替換邏輯一致
+3. **測試驗證**：處理小批量檔案先測試效果
+
+### **版本控制**
+
+```bash
+# 將重要檔案加入版本控制
+git add config.yaml
+git add phrase_comparison_*.xlsx
+git commit -m "Update translation mappings"
+
+# 忽略臨時檔案
+echo "tobemodified_*.xlsx" >> .gitignore
+echo "i18n_output/" >> .gitignore
+echo "backup/" >> .gitignore
+```
+
+## ✨ 總結
+
+多語言版本提供了：
+
+- 🌐 **真正的多語言支援**：每個語言獨立處理
+- 🚀 **極簡工作流程**：3 個步驟完成所有處理
+- 🔒 **安全的檔案管理**：自動備份和時間戳目錄
+- 🎯 **精確的對應關係**：語言專屬的對照表
+- 📈 **可擴展的架構**：輕鬆新增語言和業態
+
+從複雜的多檔案系統簡化為：
+
+**準備檔案 → 生成對照表 → 編輯方案 → 生成清單 → 套用修正**
+
+就這麼簡單！🎉
+
+---
+
+**版本**: v2.2.0 (多語言版本)  
+**更新日期**: 2024-12-10  
+**系統類型**: Multi-language Excel-based
+
+
 2025-06-10 詞彙檢測與替換專案 Version 2.0
 -------------------------
 
