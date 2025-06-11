@@ -81,9 +81,9 @@
       "sharedCourse": "分享的課程"
     },
     "statistic": {
-      "posted_by_instructor": "發布文章數(講師)",
+      "posted_by_instructor": "發布文章數(老師)",
       "posted_by_student": "發布文章數(學生)",
-      "replied_by_instructor": "文章回覆數(講師)",
+      "replied_by_instructor": "文章回覆數(老師)",
       "replied_by_student": "文章回覆數(學生)",
       "STU": {
         "total_visits_duration": "總閱讀時長",
@@ -116,8 +116,8 @@
       }
     },
     "score": {
-      "returnAndSetDateTip": "該課程成績已經送繳，但未被轉檔，你可以退回成績并設置日期，講師重新送繳",
-      "returnTip": "該課程成績已經送繳，但未被轉檔，你可以退回成績，講師重新送繳"
+      "returnAndSetDateTip": "該課程成績已經送繳，但未被轉檔，你可以退回成績并設置日期，老師重新送繳",
+      "returnTip": "該課程成績已經送繳，但未被轉檔，你可以退回成績，老師重新送繳"
     },
     "joinCourse": {
       "externalJoin": "校外掃碼加課",
@@ -430,9 +430,9 @@
         "3": "是(同步錄影檔)"
       },
       "hint": {
-        "forTeamsMeeting": "若本次學習活動為同步視訊網址，請講師勾選同步教學並選擇週次。",
-        "forWebLink": "若本次學習活動為同步視訊網址或同步視訊錄影檔，請講師勾選對應之同步教學類別並選擇週次。",
-        "forOnlineVideo": "若本次學習活動為同步視訊錄影檔，請講師勾選同步教學並選擇週次。"
+        "forTeamsMeeting": "若本次學習活動為同步視訊網址，請老師勾選同步教學並選擇週次。",
+        "forWebLink": "若本次學習活動為同步視訊網址或同步視訊錄影檔，請老師勾選對應之同步教學類別並選擇週次。",
+        "forOnlineVideo": "若本次學習活動為同步視訊錄影檔，請老師勾選同步教學並選擇週次。"
       }
     }
   },
@@ -799,10 +799,10 @@
     "upcoming": "未開始",
     "on_going": "進行中",
     "ended": "已結束",
-    "placeholder": "課程名稱/講師/教室",
+    "placeholder": "課程名稱/老師/教室",
     "columns": {
       "courseName": "課程名稱",
-      "instructor": "講師",
+      "instructor": "老師",
       "classroom": "教室",
       "time": "時間",
       "status": "狀態",
@@ -823,7 +823,7 @@
     "currentCover": "目前課程封面",
     "modifyCover": "編輯課程封面"
   },
-  "course_instructors": "任課講師",
+  "course_instructors": "任課老師",
   "course_management": "課程管理",
   "delete": "刪除",
   "department_management": "院系管理",
@@ -963,7 +963,9 @@
     "courseTotalScore": "課程總成績",
     "needReloadPage": "成績比例有異動，請重新整理頁面",
     "published": "成績已經送繳，無法設置成績佔比",
-    "unpublishedScore": "不公佈成績"
+    "unpublishedScore": "不公佈成績",
+    "finalAfterMakeUp": "補考後總成績",
+    "finalAfterMakeUpTip": "持續評核佔比100%時，如有補考請在此填入總成績。"
   },
   "score_publish_error_message": {
     "check_students_final_score": "請確認學生最終成績",
@@ -1312,10 +1314,10 @@
     "ipValidateFailed": "考生繳交試卷時IP位址驗證異常，請留意是否作弊",
     "enableIpValidate": "開啟考生IP驗證機制",
     "ipValidateTip": "考生進入考試和繳交試卷時IP位址需一致，否則將強制交卷",
-    "terminateAndAllowRetakeTip": "您已被講師強制收卷，當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考講師進行處理。您也可以重新進入考試並再次作答",
-    "terminateNotAllowRetakeTip": "您已被講師強制收卷，當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考講師進行處理",
-    "submitAndAllowRetakeTip": "當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考講師進行處理。您也可以重新進入考試並再次作答",
-    "submitNotAllowRetakeTip": "當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考講師進行處理",
+    "terminateAndAllowRetakeTip": "您已被老師強制收卷，當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考老師進行處理。您也可以重新進入考試並再次作答",
+    "terminateNotAllowRetakeTip": "您已被老師強制收卷，當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考老師進行處理",
+    "submitAndAllowRetakeTip": "當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考老師進行處理。您也可以重新進入考試並再次作答",
+    "submitNotAllowRetakeTip": "當前IP位址與進入考試時IP位址不一致，如有疑問，請聯繫監考老師進行處理",
     "reTakeExam": "再次作答",
     "knowIt": "我知道了",
     "submit": "交卷",
@@ -1415,7 +1417,7 @@
   "completion_criterion": "完成指標",
   "completion_selected_description": "設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件",
   "completion_unselected_description": "未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算",
-  "criterionTip": "學生可以自由選擇學習活動進行學習，講師可通過設定完成指標來考察學生的學習情況。",
+  "criterionTip": "學生可以自由選擇學習活動進行學習，老師可通過設定完成指標來考察學生的學習情況。",
   "confirmDeleteActivityTip": "確定在章節中刪除學習活動",
   "warningDeletePrerequisiteTip": "此學習活動已經被關聯為開啟條件，無法刪除。",
   "gotIt": "知道了",
@@ -1448,8 +1450,8 @@
     "courseMember": "班級成員",
     "selectedMember": "已選成員",
     "groupDetail": "分組方案詳情",
-    "homeworkGroupSetInfo": "分組作業只有小組成員可以繳交，每個小組繳交一份作業並得到同一個成績，講師可個別調整",
-    "examGroupSetInfo": "分組測驗只有小組成員可以繳交，每個小組繳交一份測驗並得到同一個成績，講師可個別調整",
+    "homeworkGroupSetInfo": "分組作業只有小組成員可以繳交，每個小組繳交一份作業並得到同一個成績，老師可個別調整",
+    "examGroupSetInfo": "分組測驗只有小組成員可以繳交，每個小組繳交一份測驗並得到同一個成績，老師可個別調整",
     "viewDetail": "查看詳情",
     "disableHomeworkReviewByUser": "部分學生參與的個人作業不支援互評",
     "disableHomeworkReviewByGroup": "部分小組參與的分組作業不支援互評",
@@ -1631,12 +1633,12 @@
     "memberDetail": "成員詳情",
     "courseRoles": {
       "student": "學生",
-      "instructor": "責任講師",
+      "instructor": "責任老師",
       "student_assistant": "學生助教",
-      "assistant_instructor": "輔導講師",
+      "assistant_instructor": "輔導老師",
       "instructor_assistant": "助教",
       "team_teaching": "協同備課",
-      "chief_instructor": "主持講師",
+      "chief_instructor": "主持老師",
       "external_lecturer": "業師",
       "student_manager": "班主任"
     },
@@ -2053,10 +2055,10 @@
     "willNotPublish": "不公佈",
     "publishScore": "公佈成績",
     "publishMark": "公佈批改",
-    "publishScoreTip": "講師評分之後，學生會看到自己的成績",
+    "publishScoreTip": "老師評分之後，學生會看到自己的成績",
     "publishScoreAfterSpecialTimeTip": "公佈時間到達之後，學生會看到自己的成績",
     "customPublishScoreTime": "定時公佈",
-    "publishMarkTip": "講師在批改之後，學生會看到相應的評語、文件批註和添加的批改附件",
+    "publishMarkTip": "老師在批改之後，學生會看到相應的評語、文件批註和添加的批改附件",
     "publishSettings": "公布設定",
     "announceScoreTimeEarlyError": "公布成績時間不能早於繳交截止時間",
     "announceScoreTimeEmptyError": "時間不能為空",
@@ -2124,11 +2126,11 @@
     "reviewNotification": {
       "sendEmailRange": "發送範圍",
       "emailToStudentOnly": "僅勾選學生",
-      "emailToInstructorAndAssistantAlso": "已勾選學生、講師及助教"
+      "emailToInstructorAndAssistantAlso": "已勾選學生、老師及助教"
     }
   },
   "mailToEnrollmentPopUp": {
-    "emailToInstructorAndAssistant": "同時發送 Email 給課程所有講師及助教",
+    "emailToInstructorAndAssistant": "同時發送 Email 給課程所有老師及助教",
     "create": "作業/任務",
     "title": "作業"
   },
@@ -2337,6 +2339,7 @@
     "requiredCourseSubject": "應修科目",
     "learningRoad": {
       "tabName": "學習路徑",
+      "curriculumSection": "學程階段",
       "addCurriculumSection": "新增學習階段",
       "editSectionPopup": {
         "title": "新增階段／階段設定",
@@ -3259,7 +3262,7 @@
     "examTip": "當前正式測驗為隨機組卷，點擊“管理測驗試題”在“抽題規則與題目配分”進行設定",
     "markUpExamTip": "當前補考測驗為隨機組卷，點擊“管理補考試題”在“抽題規則與題目配分”進行設定",
     "configureRule": "設定補考題目展示規則",
-    "scoreTip": "本測驗為隨機抽題，講師尚未設置題目分數",
+    "scoreTip": "本測驗為隨機抽題，老師尚未設置題目分數",
     "unValidScoreForFillInBlankWarning": "請依照填空格平均配分填寫，如無法整除請四捨五入至小數第一位"
   },
   "importSubject": {
@@ -3438,8 +3441,8 @@
       "description": "按照學生，匯出每一天的點名狀態及健康狀態"
     },
     "instructorReport": {
-      "title": "講師健康報表",
-      "description": "按照講師，匯出每一天的健康狀態及是否開課"
+      "title": "老師健康報表",
+      "description": "按照老師，匯出每一天的健康狀態及是否開課"
     }
   },
   "logReport": {
@@ -3465,7 +3468,7 @@
     "weeksOfFaceToFace": "面授週數:",
     "weeksOfDistance": "遠距週數:",
     "weeksOfSelfLearning": "自我學習週數:",
-    "teamsMeetingCourse": "同步教學-Teams直播（講師教學）",
+    "teamsMeetingCourse": "同步教學-Teams直播（老師教學）",
     "teamsMeetingOfficeHour": "同步教學-Teams直播（TA輔導）",
     "countByTeachingActivityTypes": "教學活動（依照活動類型統計筆數）",
     "countOfWeeks": "使用該活動的加總週數",
@@ -3756,7 +3759,7 @@
       "nPeople": "{num}人",
       "chartName": "學生課堂表現"
     },
-    "teacherIncluded": "同時查看講師",
+    "teacherIncluded": "同時查看老師",
     "attended": "參與了",
     "startCourse": "開始",
     "exportPdf": "匯出PDF",
@@ -4036,7 +4039,7 @@
     "allCourses": "總課程數",
     "courses": "門課程",
     "all": "全部",
-    "instructor": "講師",
+    "instructor": "老師",
     "homepage": "入口首頁"
   },
   "currentTime": "當前時間",
@@ -4121,6 +4124,12 @@
   "objectiveCorrectRate": "客觀題答對率：",
   "addSyllabus": "新增單元",
   "activityCount": "{0}個活動",
+  "importWisdomMaster": {
+    "importCourseChapter": "匯入課程章節",
+    "description1": "僅限於支援從智慧大師匯出的 XML 檔案。",
+    "description2": "允許重複匯入相同的章節（不會阻擋重複匯入）。",
+    "description3": "最新匯入的資料會依序往下排列。"
+  },
   "commentAndQuestion": {
     "questionTime": "取得當前時間",
     "questionTimeTips": "當前影片無法獲取播放時間，請手動填寫",
@@ -4205,13 +4214,13 @@
     "title": "課程出席率",
     "name": "課程出席率預警",
     "firstHalf": "當天課程出席率低於",
-    "secondHalf": "後預警，講師及選擇的管理人員將會收到通知",
+    "secondHalf": "後預警，老師及選擇的管理人員將會收到通知",
     "otherOrgSecondHalf": "後預警，選擇的人員將會收到通知",
     "member": "待選人員",
     "selectMember": "選擇管理人員",
     "selectedMember": "已選人員",
     "selectedCountMessage": "已選擇 {0} 位人員",
-    "viewMessage": "當天課程出席率低於 {0} 後預警，講師及選擇的管理人員將會收到通知",
+    "viewMessage": "當天課程出席率低於 {0} 後預警，老師及選擇的管理人員將會收到通知",
     "otherOrgViewMessage": "當天課程出席率低於 {0} 後預警，選擇的人員將會收到通知"
   },
   "rollcallType": {
@@ -5173,7 +5182,7 @@
         "weightSettingItemName": "名稱",
         "weightSettingItemAttribute": "屬性",
         "weightSettingItemRelationship": "關係",
-        "tipsMsg": "從實體名稱、屬性、關係方面綜合對比圖譜中同一實體類型實體的同質性，篩選出語義同質性≥70%的高同質性實體。",
+        "tipsMsg": "從實體名稱、屬性、關係方面綜合對比圖譜中同一實體類型實體的同質性，篩選出語義同質性≥80%的高同質性實體。",
         "createTipsMsg": "請先完成分析參數設定，確認後點擊「分析」即可查看結果",
         "analysisTipsMsg1": "分析進行中，請稍候",
         "analysisTipsMsg2": "當前分析正在進行，可能需要較長時間。您可暫時離開當前頁面，稍後返回即可查看結果",
@@ -5195,7 +5204,9 @@
         "noTargetMsg": "請選擇分析層級",
         "totalWeightsError1": "權重設定總和小於100%",
         "totalWeightsError2": "權重設定總和大於100%",
-        "expand": "展開剩餘"
+        "expand": "展開剩餘",
+        "homogeneousEntityCount": "同質性數量",
+        "noResult": "未找到符合條件的結果"
       },
       "analysis": "分析",
       "analysisTip": "分析頁面實體與目標實體的名稱、屬性、關係相似度，超過70%視為高度同質。",
@@ -5529,7 +5540,7 @@
       "codeInvite": "項目訪問碼邀請",
       "linkInvite": "項目訪問鏈接邀請",
       "noBulletinTip": "該項目還沒有任何公告",
-      "groupTip": "講師可以根據教學策略創建不同的分組方案，將學生劃分為若干小組，實現不同場景使用不同分組方案，快來試試看吧!",
+      "groupTip": "老師可以根據教學策略創建不同的分組方案，將學生劃分為若干小組，實現不同場景使用不同分組方案，快來試試看吧!",
       "stats": "項目訪問統計",
       "studentStat": "項目訪問",
       "basicInfo": "基本資訊",
@@ -5550,7 +5561,7 @@
       "notGraphTip": "目前項目暫未發布知識點",
       "startTime": "項目開始時間",
       "noGroup": "該項目的學生還沒有任何分組",
-      "groupUsageTip": "分組學習通過將項目的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。講師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!",
+      "groupUsageTip": "分組學習通過將項目的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!",
       "emptyTip": {
         "homework": "該項目還沒有任何作業，請新增作業",
         "exam": "該項目還沒有任何測驗，請新增測驗",
@@ -5593,7 +5604,7 @@
     "enterCourseError": "您還不是該課程內的成員，請聯繫授課教師",
     "addCourseSuccess": "成功添加關聯課程",
     "simulate": {
-      "adminSimulateTitle": "講師看到的項目效果",
+      "adminSimulateTitle": "老師看到的項目效果",
       "adminSimulateSubTitle": "巡課功能可以幫助您以教師的身份檢視項目，以便讓您更好的瞭解項目情況。"
     }
   },
@@ -5747,8 +5758,8 @@
     "confirmTipForGroup": "已選擇 {0} 個「已繳交」作業的小組，確定要將作業退回嗎？",
     "success": "已成功設定作業退回重繳",
     "times": "次",
-    "studentRedoMsg1": "你的作業被講師退回，請重新繳交",
-    "studentRedoMsg2": "你的作業被講師退回，請在作業繳交截止前重新繳交，否則將無法統計互評成績",
+    "studentRedoMsg1": "你的作業被老師退回，請重新繳交",
+    "studentRedoMsg2": "你的作業被老師退回，請在作業繳交截止前重新繳交，否則將無法統計互評成績",
     "hasSoreTip": "學生已有評分，無法發起退回重繳",
     "peerReviewHasStartedTip": "互評已開始，無法發起退回重繳"
   },
@@ -5900,7 +5911,7 @@
       "preVisit": "上次造訪",
       "visitCount": "訪問次數",
       "common-category": "通用討論區",
-      "totalInstructorPosts": "講師發表數",
+      "totalInstructorPosts": "老師發表數",
       "totalStudentPosts": "學生發表數"
     },
     "material": {
@@ -6614,7 +6625,7 @@
       },
       "effectiveTeaching": {
         "title": "擔心教學沒有成效嗎？",
-        "description": "透過學生學習記錄，掌握教學的節奏，數據分析讓講師可更早發現問題，幫助學生抓住重點。",
+        "description": "透過學生學習記錄，掌握教學的節奏，數據分析讓老師可更早發現問題，幫助學生抓住重點。",
         "more": "了解更多"
       },
       "clients": {
@@ -6628,7 +6639,7 @@
         "fjuOrg": "輔仁大學",
         "fjuComment": "從課前備課、課中互動教學到完整的課程管理一應俱全，TronClass 相當方便好用！",
         "ttuOrg": "大同大學",
-        "ttuComment": "TronClass 讓傳統的教學活動變得更有效率，學生上課時更專心，也讓講師們更能專注於教學，我覺得非常受用！"
+        "ttuComment": "TronClass 讓傳統的教學活動變得更有效率，學生上課時更專心，也讓老師們更能專注於教學，我覺得非常受用！"
       }
     },
     "useCases": {
@@ -6646,15 +6657,15 @@
       "afterClass": "課後",
       "richResources": {
         "title": "給學生更豐富的學習資源",
-        "description": "講師可安排不同類型的教材，線上可直接觀看 Word、Excel、PowerPoint、PDF，也可下載檔案於離線時閱讀；支援影片、音訊上傳格式（mp4、avi、rmvb等），自動轉出可觀看的微影片。"
+        "description": "老師可安排不同類型的教材，線上可直接觀看 Word、Excel、PowerPoint、PDF，也可下載檔案於離線時閱讀；支援影片、音訊上傳格式（mp4、avi、rmvb等），自動轉出可觀看的微影片。"
       },
       "manageVideo": {
         "title": "免安裝、輕鬆管理課程影片",
-        "description": "講師可自行上傳影片，藉由AI技術自動生成字幕，自動標記知識點，線上直接剪輯影片，減輕講師工作負擔。學生可藉由查詢提問，自動定位知識點影片段落，提升學生學習效率。"
+        "description": "老師可自行上傳影片，藉由AI技術自動生成字幕，自動標記知識點，線上直接剪輯影片，減輕老師工作負擔。學生可藉由查詢提問，自動定位知識點影片段落，提升學生學習效率。"
       },
       "onlineQuiz": {
         "title": "線上測驗、即測即評",
-        "description": "線上測驗方便出題和管理，幫助講師快速完成試卷的編寫，學生答完題繳交後快速計算出客觀題得分，講師不用再為大量的試卷發愁，並可即時獲得學生學習效果的回饋；除此之外，還可以應用到學習競賽答題的場景，讓課堂有更多互動與討論。"
+        "description": "線上測驗方便出題和管理，幫助老師快速完成試卷的編寫，學生答完題繳交後快速計算出客觀題得分，老師不用再為大量的試卷發愁，並可即時獲得學生學習效果的回饋；除此之外，還可以應用到學習競賽答題的場景，讓課堂有更多互動與討論。"
       },
       "omoSyncClass": {
         "title": "OMO線上線下融合同步上課",
@@ -6662,11 +6673,11 @@
       },
       "interactiveClassroom": {
         "title": "互動課堂",
-        "description": "課堂中講師可設計互動的課程內容，學生可透過手機完成課堂互動活動，有效提升參與度，讓講師可即時掌握學生學習情況，第一時間幫助學生抓住重點。",
+        "description": "課堂中老師可設計互動的課程內容，學生可透過手機完成課堂互動活動，有效提升參與度，讓老師可即時掌握學生學習情況，第一時間幫助學生抓住重點。",
         "inClassQuiz": "隨堂測驗",
-        "inClassQuizText": "即時進行課堂測驗，了解學生的上課效果。學生通過手機答題，講師可以控制答題進度，查看班級答題統計數據和分析結果。",
+        "inClassQuizText": "即時進行課堂測驗，了解學生的上課效果。學生通過手機答題，老師可以控制答題進度，查看班級答題統計數據和分析結果。",
         "groupLearning": "分組學習",
-        "groupLearningText": "支援分組教學，講師可以新建並管理班級分組、設定小組作業，讓學生合作完成，提高學生學習積極性和主動性，培養團隊合作精神。",
+        "groupLearningText": "支援分組教學，老師可以新建並管理班級分組、設定小組作業，讓學生合作完成，提高學生學習積極性和主動性，培養團隊合作精神。",
         "saveTime": "節省每節課8分鐘的點名時間",
         "saveTimeText": "打開手機雷達點名，一鍵簽到方便點名管理，節省每節課8分鐘的點名時間，讓更多的時間用在教學上。",
         "feedback": "教學回饋",
@@ -6675,13 +6686,13 @@
       "diverseMaterial": {
         "title": "支援多元化教材、行動學習",
         "oneStepManagement": "一站式作業管理",
-        "oneStepManagementText": "講師可以設定個人作業或分組作業給學生，可以要求同儕互評作業，查看學生的作業內容和附件，並支援Rubric 評量工具於線上批改作業和寫評語。",
+        "oneStepManagementText": "老師可以設定個人作業或分組作業給學生，可以要求同儕互評作業，查看學生的作業內容和附件，並支援Rubric 評量工具於線上批改作業和寫評語。",
         "autoEvaluate": "自動化學習評價，即刻回饋",
         "autoEvaluateText": "學測評一體化，線上測驗、即測即評，建立 Rubric 評分量表讓學生進行作業互評，讓學習評價更簡單直覺。",
         "gradeManagement": "成績管理",
-        "gradeManagementText": "作業、考試、分組學習表現等都可納入成績考量，自動化成績統計，同時允許講師靈活控制各個評價活動的成績比重。單個項目以及總成績都可以靈活設定發布規則。",
+        "gradeManagementText": "作業、考試、分組學習表現等都可納入成績考量，自動化成績統計，同時允許老師靈活控制各個評價活動的成績比重。單個項目以及總成績都可以靈活設定發布規則。",
         "viewTeachingEffects": "1 分鐘瞭解各種教學效果",
-        "viewTeachingEffectsText": "透過學生學習記錄，掌握教學的節奏，數據分析讓講師可更早發現問題，幫助學生抓住重點。"
+        "viewTeachingEffectsText": "透過學生學習記錄，掌握教學的節奏，數據分析讓老師可更早發現問題，幫助學生抓住重點。"
       },
       "sisRelated": {
         "title": "教務相關功能",
@@ -6719,7 +6730,7 @@
       },
       "onCampusOpenCourse": {
         "title": "校內公開課",
-        "description": "校內講師可自行開辦公開課，校內學生都可加入"
+        "description": "校內老師可自行開辦公開課，校內學生都可加入"
       },
       "OpenCourse": {
         "title": "公開課 (課程聯盟)",
@@ -6742,7 +6753,7 @@
       "rollcall": "點名假勤管理",
       "rollcallText": "可以透過手機快速發起數字點名、雷達點名等多種點名方式，進行出缺席和請假管理，並可查看歷史點名記錄和點名結果",
       "interaction": "課堂互動",
-      "interactionText": "在教學過程中，講師透過發起限時搶答、隨機選⼈、投票、搶答與學⽣開展即時互動，為課堂注⼊更多活⼒。更有隨堂測試、教學回饋，幫助⽼師即時查看教學成效",
+      "interactionText": "在教學過程中，老師透過發起限時搶答、隨機選⼈、投票、搶答與學⽣開展即時互動，為課堂注⼊更多活⼒。更有隨堂測試、教學回饋，幫助⽼師即時查看教學成效",
       "discussion": "討論",
       "discussionText": "圍繞課程內容，發表文章展開討論，實現班級成員之間的互動交流。⼩組討論，⼈⼈參與，讓智慧的碰撞有了更加具象的展示空間",
       "assignmentMgt": "作業管理",
@@ -7098,6 +7109,7 @@
     "reissue": "重新出題",
     "canNotReGenerate": "已有答題記錄，不能重新出題",
     "genContinue": "繼續出題",
+    "noDescriptionToGenerateExplanation": "AI 根據題目生成答案解釋，請先輸入題目內容",
     "completionRate": "完成率",
     "correct": "答對",
     "wrong": "答錯",
@@ -7127,7 +7139,7 @@
     "stillUnanswer": "還有題目未作答，準備好了嗎？等待著你繼續挑戰",
     "submissionComplate": "太棒了！答題完成",
     "retryWatchVideo": "打鐵趁熱，再複習影片加強一下吧",
-    "waitPublish": "等待講師公佈答案和解釋吧",
+    "waitPublish": "等待老師公佈答案和解釋吧",
     "questionPlaceholder": "請輸入題目內容",
     "optionPlaceholoder": "請輸入選項內容",
     "explanationPlaceholoder": "請輸入答案解釋",
@@ -7269,7 +7281,9 @@
       "resultMissing": "生成失敗，請重新嘗試",
       "knowledgePointsMissing": "檔案內未識別到知識點相關內容，無法生成題目",
       "contentTooShort": "文本內容過少，無法生成題目"
-    }
+    },
+    "unknown": "不懂",
+    "unknownTipsy": "針對當前頁面提問"
   },
   "airOptimization": {
     "menuTitle": "AI 幫你…",
@@ -7341,12 +7355,11 @@
     "exam": {
       "aiGrading": "AI 自動批改",
       "autoGradingBtn": "自動生成批改建議",
-      "nonAiGradingTip": "講師仍可在學生試卷中手動觸發 AI 批改",
-      "aiGradingTip": "測試結束後，AI 會自動生成簡答題的評分評語，學生最終評分評語會由講師手動給出",
+      "nonAiGradingTip": "老師仍可在學生試卷中手動觸發 AI 批改",
+      "aiGradingTip": "測試結束後，AI 會自動生成簡答題的評分評語，學生最終評分評語會由老師手動給出",
       "AirGradingProcessingTip": "已開啟 AI 自動生成批改建議，AI 正在生成中（{0}/{1}）...",
       "aiGradingBtn": "AI 批改",
       "noAnswerTip": "學生未回答題目，無法批改",
-      "noAnswerExplanationTip": "AI 會根據答案解釋進行批改，請補充答案解釋",
       "comment": "評語",
       "aiGradingPanelTitle": "AI 智能批改",
       "aiGradingPanelLoading": "智能生成中...",
@@ -7354,7 +7367,7 @@
       "generateGradingCloseTips": "關閉後，將停止生成批改結果，是否要關閉？",
       "editExplanation": "編輯答案解釋",
       "noExplanation": "暫無答案解釋",
-      "editExplanationContent": "AI 批改基於答案解釋，請先「編輯答案解釋」。"
+      "editExplanationContent": "AI 將根據答案解釋進行批改，請先新增答案解釋。"
     }
   },
   "airAnalysis": {
@@ -7735,11 +7748,14 @@
   "scorm": {
     "completeness": "需累積觀看",
     "viewRate": "SCORM教材完成率",
-    "avgCompleteness": "人均完成度"
+    "avgCompleteness": "人均完成度",
+    "downloadHelpFile": "下載 Edu Hub SCORM 課件製作規範"
   },
   "h5Courseware": {
     "viewRate": "H5課件完成率",
-    "h5coursewareErrorTip": "目前課件無法追蹤學生學習進度，課件完成指標已自動設定為【無】。"
+    "h5coursewareErrorTip1": "經過系統驗證，該課件支援在平台顯示播放，但不支援讀取完成進度百分比，因此無法為該課件設定完成指標。",
+    "h5coursewareErrorTip2": "如需系統記錄該課件的完成進度百分比，請參照「Edu Hub H5 課件製作規範」製作課件後，重新上傳。",
+    "downloadHelpFile": "下載 Edu Hub H5 課件製作規範"
   },
   "materialExport": {
     "zipName": "課程資源",
@@ -7842,7 +7858,7 @@
   "publicCourse": {
     "title": "AI課程",
     "subtitle": "釋放教育學的無限潛能",
-    "tagline": "讓講師教學更加從容，讓學生學習更加精準。",
+    "tagline": "讓老師教學更加從容，讓學生學習更加精準。",
     "search": "請輸入公開課名稱",
     "courseList": "課程列表",
     "stats": {

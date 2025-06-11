@@ -1,0 +1,54 @@
+敏感詞修正處理摘要報告
+生成時間：2025-06-11 19:00:43
+==================================================
+
+業態：enterprises
+狀態：成功
+PO 更新數量：226
+JSON 更新數量：0
+詳細更新記錄：
+  - PO 更新: '無學生資料' 從 'No student data' 改為 'No employee data'
+  - PO 更新: '尚無任何學生' 從 'No student selected' 改為 'No employee selected'
+  - PO 更新: '已有學生作答，不能修改測驗形式' 從 'Exam Type cannot be changed after students start answering question(s).' 改為 'Exam Type cannot be changed after employees start answering question(s).'
+  - PO 更新: '已繳學生' 從 'Submitted student' 改為 'Submitted employee'
+  - PO 更新: '非本課程修課學生' 從 'The student is not in course' 改為 'The employee is not in course'
+  - PO 更新: '校務行政系統中的學生缺曠管理已存在請假記錄' 從 'There is already a record of student deficiencies in the school administration system. Please go to the faculty information service system to modify' 改為 'There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify'
+  - PO 更新: '校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改' 從 'There is already a record of student deficiencies in the school administration system. Please go to the faculty information service system to modify' 改為 'There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify'
+  - PO 更新: '確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改' 從 'Confirm submit? If you have modified the status of students before sending it, please save the record first. Please modify it on the absence management system after you submit' 改為 'Confirm submit? If you have modified the status of employees before sending it, please save the record first. Please modify it on the absence management system after you submit'
+  - PO 更新: '異動學生' 從 'Changed students' 改為 'Changed employees'
+  - PO 更新: '位學生' 從 'students' 改為 'employees'
+  - PO 更新: '學生造訪課程量' 從 'Amount of student visit' 改為 'Amount of employee visit'
+  - PO 更新: '本班級總共有 {0}位教師 {1}名學生' 從 '{0} instructors, and {1} students' 改為 '{0} instructors, and {1} employees'
+  - PO 更新: '本班級總共有 {0} 名學生' 從 '{0} students' 改為 '{0} employees'
+  - PO 更新: '本課程總共有 {0} 名學生' 從 '{0} students' 改為 '{0} employees'
+  - PO 更新: '設定學生作答繳交完成後，所顯示的內容' 從 'Set up the content that students can see after finishing the test' 改為 'Set up the content that employees can see after finishing the test'
+  - PO 更新: '改變繳交截止時間，將可能影響學生目前的繳交狀態' 從 'Change submission deadline could effect the current student submission status.' 改為 'Change submission deadline could effect the current employee submission status.'
+  - PO 更新: '尚無學生加入此課程' 從 'No students in this course yet' 改為 'No employees in this course yet'
+  - PO 更新: '學生看到的課程效果' 從 'What students see' 改為 'What employees see'
+  - PO 更新: '預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。' 從 'You can preview this course in students' eyes and go back to adjust course content' 改為 'You can preview this course in employees' eyes and go back to adjust course content'
+  - PO 更新: '共有{0}名學生，{1}名教師' 從 '{0} students, {1} instructors in total' 改為 '{0} employees, {1} instructors in total'
+  ... 還有 206 條記錄
+
+------------------------------
+
+業態：public_sector
+狀態：成功
+PO 更新數量：0
+JSON 更新數量：0
+
+------------------------------
+
+業態：training_institutions
+狀態：成功
+PO 更新數量：0
+JSON 更新數量：0
+
+------------------------------
+
+處理總結：
+成功業態：3
+失敗業態：0
+總 PO 更新：226
+總 JSON 更新：0
+總更新項目：226
+成功的業態：enterprises, public_sector, training_institutions

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_02_apply_fixes.py (v2.2 - Multi-language Version)
+script_02_apply_fixes.py (v2.3 - 簡化版本)
+
+修改內容：
+1. 適應新的 Excel 格式（業態_替換結果欄位）
+2. 移除建議方案、修正狀態、備註欄位
+3. 簡化邏輯，直接讀取替換結果並套用
+4. 增強日誌功能
 
 依據各語言的 tobemodified_{language}.xlsx，將修正結果寫回翻譯檔，
 並輸出到 i18n_output/{language}_{timestamp}/ 目錄中
-
-功能：
-1. 自動檢測可用的 tobemodified 檔案
-2. 支援多語言檔案處理
-3. 輸出到時間戳目錄結構
-4. 保持原始檔案名稱
 """
 
 import json
@@ -34,7 +34,7 @@ except ImportError as e:
 
 def main():
     """主執行函數"""
-    print("🚀 開始套用多語言修正結果")
+    print("🚀 開始套用多語言修正結果 (v2.3)")
     
     # 載入配置
     config = get_config()
@@ -112,23 +112,38 @@ def detect_tobemodified_files(config) -> dict:
     """
     available_files = {}
     
+    # 檢測輸出目錄中的檔案
+    try:
+        if hasattr(config, 'get_output_dir'):
+            output_dir = config.get_output_dir()
+        elif hasattr(config, 'output_dir'):
+            output_dir = config.output_dir
+        elif hasattr(config, 'get_config'):
+            config_data = config.get_config()
+            output_dir = Path(config_data.get('output_dir', 'i18n_output'))
+        else:
+            output_dir = Path('i18n_output')
+    except Exception:
+        output_dir = Path('i18n_output')
+    
     # 檢測標準命名的檔案
     available_languages = config.detect_available_languages()
     
     for language in available_languages:
-        tobemodified_path = config.get_tobemodified_excel_path(language)
+        tobemodified_path = output_dir / f"{language}_tobemodified.xlsx"
         if tobemodified_path.exists():
             available_files[language] = tobemodified_path
     
-    # 額外檢測通配符檔案
-    tobemodified_pattern = "tobemodified_*.xlsx"
-    for file_path in Path('.').glob(tobemodified_pattern):
-        # 提取語言代碼
-        filename = file_path.stem
-        if filename.startswith('tobemodified_'):
-            language = filename[len('tobemodified_'):]
-            if language not in available_files:
-                available_files[language] = file_path
+    # 額外檢測當前目錄和輸出目錄中的通配符檔案
+    for search_dir in [Path('.'), output_dir]:
+        if search_dir.exists():
+            for file_path in search_dir.glob("*_tobemodified.xlsx"):
+                # 提取語言代碼
+                filename = file_path.stem
+                if filename.endswith('_tobemodified'):
+                    language = filename[:-len('_tobemodified')]
+                    if language not in available_files:
+                        available_files[language] = file_path
     
     return available_files
 
@@ -180,20 +195,35 @@ def process_language(config, language: str, target_business_types: list) -> bool
     """
     
     # 獲取檔案路徑
-    tobemodified_path = config.get_tobemodified_excel_path(language)
+    available_files = detect_tobemodified_files(config)
+    tobemodified_path = available_files.get(language)
+    
+    if not tobemodified_path:
+        print(f"❌ 找不到 {language} 的 tobemodified 檔案")
+        return False
+    
     language_files = config.get_language_files(language)
     
     print(f"   來源 Excel：{tobemodified_path}")
     print(f"   原始檔案：{list(language_files.values())}")
     
-    if not tobemodified_path.exists():
-        print(f"❌ 找不到 {language} 的 tobemodified 檔案")
-        return False
-    
-    # 獲取輸出路徑
-    output_paths = config.get_output_paths(language)
-    output_dir = output_paths['output_dir']
-    timestamp = output_paths['timestamp']
+    # 獲取輸出路征
+    try:
+        output_paths = config.get_output_paths(language)
+        output_dir = output_paths['output_dir']
+        timestamp = output_paths['timestamp']
+    except Exception:
+        # 回退處理
+        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        try:
+            if hasattr(config, 'get_output_dir'):
+                base_output_dir = config.get_output_dir()
+            else:
+                base_output_dir = Path('i18n_output')
+        except Exception:
+            base_output_dir = Path('i18n_output')
+        
+        output_dir = base_output_dir / f"{language}_{timestamp}"
     
     print(f"   輸出目錄：{output_dir}")
     
@@ -206,9 +236,11 @@ def process_language(config, language: str, target_business_types: list) -> bool
     def log_detail(message: str):
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M:%S')} - {message}\n")
+        print(f"      💬 {message}")  # 同時輸出到控制台
     
     log_detail(f"開始處理語言: {language}")
     log_detail(f"目標業態: {', '.join(target_business_types)}")
+    log_detail(f"來源檔案: {tobemodified_path}")
     
     # 讀取並驗證 Excel
     wb, ws, header = read_and_validate_xlsx(tobemodified_path, config, target_business_types, log_detail)
@@ -246,9 +278,18 @@ def process_language(config, language: str, target_business_types: list) -> bool
             total_updates = result['po_updated'] + result['json_updated']
             print(f"  ✅ 完成 - PO: {result['po_updated']} 個, JSON: {result['json_updated']} 個")
             log_detail(f"{display_name} 處理完成: 總更新 {total_updates} 個")
+            
+            # 詳細記錄每個更新
+            if result.get('details'):
+                for detail in result['details']:
+                    log_detail(f"  {detail}")
         else:
             print(f"  ❌ 失敗")
             log_detail(f"{display_name} 處理失敗")
+            
+            # 記錄錯誤詳情
+            for error in result.get('errors', []):
+                log_detail(f"  錯誤: {error}")
     
     # 生成最終報告
     success_count = sum(1 for r in results.values() if r['success'])
@@ -260,6 +301,9 @@ def process_language(config, language: str, target_business_types: list) -> bool
     print(f"   詳細日誌：{log_file}")
     
     log_detail(f"語言 {language} 處理完成: 成功 {success_count}/{total_count} 個業態")
+    
+    # 生成處理摘要
+    generate_summary_report(results, output_dir, timestamp, log_detail)
     
     return success_count > 0
 
@@ -276,20 +320,21 @@ def read_and_validate_xlsx(xlsx_path: Path, config, target_business_types: list,
         
         log_detail(f"發現欄位: {list(header.keys())}")
         
-        required_columns = ["source", "key", "value"]
+        # 基本欄位檢查
+        required_columns = ["檔案類型", "項目ID", "項目內容", "敏感詞"]
         missing_columns = []
         
         for col in required_columns:
             if col not in header:
                 missing_columns.append(col)
         
-        # 檢查業態欄位
+        # 檢查業態替換結果欄位 - 修改：檢查新格式
         business_types = config.get_business_types()
         for bt_code in target_business_types:
             display_name = business_types[bt_code]['display_name']
-            col_name = f"修正結果({display_name})"
-            if col_name not in header:
-                missing_columns.append(col_name)
+            result_col_name = f"{display_name}_替換結果"
+            if result_col_name not in header:
+                missing_columns.append(result_col_name)
         
         if missing_columns:
             error_msg = f"Excel 缺少必要欄位：{missing_columns}"
@@ -324,34 +369,43 @@ def parse_excel_updates(ws, header, config, target_business_types: list, log_det
             continue
         
         try:
-            source = row[get_column_index("source")]
-            key = row[get_column_index("key")]
+            file_type = row[get_column_index("檔案類型")]
+            entry_id = row[get_column_index("項目ID")]
             
-            if not source or not key:
+            if not file_type or not entry_id:
                 continue
             
+            file_type = str(file_type).lower()
             stats['total_rows'] += 1
             
-            # 處理每個目標業態
+            # 處理每個目標業態 - 修改：跳過空白的替換結果
             for bt_code in target_business_types:
                 display_name = business_types[bt_code]['display_name']
-                col_name = f"修正結果({display_name})"
-                new_value = row[get_column_index(col_name)]
+                result_col_name = f"{display_name}_替換結果"
                 
-                if not (isinstance(new_value, str) and new_value.strip()):
+                try:
+                    new_value = row[get_column_index(result_col_name)]
+                except KeyError:
+                    log_detail(f"警告: 找不到欄位 '{result_col_name}'")
                     continue
                 
-                new_value = new_value.strip()
+                # 修改：更嚴格的空值檢查，跳過空白值
+                if not new_value or not str(new_value).strip():
+                    log_detail(f"跳過空白替換結果 - {display_name}: {entry_id}")
+                    continue
+                
+                new_value = str(new_value).strip()
+                
                 stats[f'{bt_code}_updates'] += 1
                 
-                if source == "po":
-                    updates[bt_code]["po"].append((key, new_value))
-                    log_detail(f"PO 更新 - {display_name}: {key} → {new_value}")
-                elif source == "json":
-                    updates[bt_code]["json"].append((key, new_value))
-                    log_detail(f"JSON 更新 - {display_name}: {key} → {new_value}")
+                if file_type == "po":
+                    updates[bt_code]["po"].append((str(entry_id), new_value))
+                    log_detail(f"PO 更新 - {display_name}: {entry_id} → {new_value}")
+                elif file_type == "json":
+                    updates[bt_code]["json"].append((str(entry_id), new_value))
+                    log_detail(f"JSON 更新 - {display_name}: {entry_id} → {new_value}")
                 else:
-                    log_detail(f"警告: 第 {row_num} 行未知的 source 類型 '{source}'")
+                    log_detail(f"警告: 第 {row_num} 行未知的檔案類型 '{file_type}'")
         
         except Exception as e:
             log_detail(f"錯誤: 第 {row_num} 行處理失敗: {e}")
@@ -396,7 +450,8 @@ def apply_fixes_to_business_type(config, bt_code: str, updates: dict, output_fil
         'success': True,
         'po_updated': 0,
         'json_updated': 0,
-        'errors': []
+        'errors': [],
+        'details': []  # 新增：詳細更新記錄
     }
     
     try:
@@ -405,6 +460,7 @@ def apply_fixes_to_business_type(config, bt_code: str, updates: dict, output_fil
             po_result = update_po_file(output_files['po_file'], updates['po'], log_detail)
             result['po_updated'] = po_result['updated']
             result['errors'].extend(po_result['errors'])
+            result['details'].extend(po_result.get('details', []))
             if not po_result['success']:
                 result['success'] = False
         
@@ -413,6 +469,7 @@ def apply_fixes_to_business_type(config, bt_code: str, updates: dict, output_fil
             json_result = update_json_file(output_files['json_file'], updates['json'], log_detail)
             result['json_updated'] = json_result['updated']
             result['errors'].extend(json_result['errors'])
+            result['details'].extend(json_result.get('details', []))
             if not json_result['success']:
                 result['success'] = False
         
@@ -427,7 +484,7 @@ def apply_fixes_to_business_type(config, bt_code: str, updates: dict, output_fil
 
 def update_po_file(po_path: Path, updates_list: list, log_detail) -> dict:
     """更新 PO 檔案"""
-    result = {"success": False, "updated": 0, "errors": []}
+    result = {"success": False, "updated": 0, "errors": [], "details": []}
     
     if not updates_list:
         result["success"] = True
@@ -444,7 +501,12 @@ def update_po_file(po_path: Path, updates_list: list, log_detail) -> dict:
                     old_value = entry.msgstr
                     entry.msgstr = new_msgstr
                     result["updated"] += 1
-                    log_detail(f"PO 更新: '{msgid}' 從 '{old_value}' 改為 '{new_msgstr}'")
+                    detail_msg = f"PO 更新: '{msgid}' 從 '{old_value}' 改為 '{new_msgstr}'"
+                    result["details"].append(detail_msg)
+                    log_detail(detail_msg)
+                else:
+                    detail_msg = f"PO 跳過: '{msgid}' 值相同"
+                    result["details"].append(detail_msg)
             else:
                 error_msg = f"找不到條目：{msgid}"
                 result["errors"].append(error_msg)
@@ -536,7 +598,7 @@ def set_json_value_by_path(data: dict, path: str, new_value: str) -> bool:
 
 def update_json_file(json_path: Path, updates_list: list, log_detail) -> dict:
     """更新 JSON 檔案"""
-    result = {"success": False, "updated": 0, "errors": []}
+    result = {"success": False, "updated": 0, "errors": [], "details": []}
     
     if not updates_list:
         result["success"] = True
@@ -550,7 +612,9 @@ def update_json_file(json_path: Path, updates_list: list, log_detail) -> dict:
         for json_path_str, new_value in updates_list:
             if set_json_value_by_path(data, json_path_str, new_value):
                 result["updated"] += 1
-                log_detail(f"JSON 更新: '{json_path_str}' → '{new_value}'")
+                detail_msg = f"JSON 更新: '{json_path_str}' → '{new_value}'"
+                result["details"].append(detail_msg)
+                log_detail(detail_msg)
             else:
                 error_msg = f"無法更新路徑：{json_path_str}"
                 result["errors"].append(error_msg)
@@ -573,6 +637,68 @@ def update_json_file(json_path: Path, updates_list: list, log_detail) -> dict:
         log_detail(f"JSON 錯誤: {error_msg}")
     
     return result
+
+
+def generate_summary_report(results: dict, output_dir: Path, timestamp: str, log_detail):
+    """生成處理摘要報告"""
+    summary_file = output_dir / f"processing_summary_{timestamp}.txt"
+    
+    try:
+        with open(summary_file, 'w', encoding='utf-8') as f:
+            f.write(f"敏感詞修正處理摘要報告\n")
+            f.write(f"生成時間：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"{'='*50}\n\n")
+            
+            total_po_updates = 0
+            total_json_updates = 0
+            successful_business_types = []
+            failed_business_types = []
+            
+            for bt_code, result in results.items():
+                f.write(f"業態：{bt_code}\n")
+                f.write(f"狀態：{'成功' if result['success'] else '失敗'}\n")
+                f.write(f"PO 更新數量：{result['po_updated']}\n")
+                f.write(f"JSON 更新數量：{result['json_updated']}\n")
+                
+                if result['success']:
+                    successful_business_types.append(bt_code)
+                    total_po_updates += result['po_updated']
+                    total_json_updates += result['json_updated']
+                else:
+                    failed_business_types.append(bt_code)
+                
+                if result.get('errors'):
+                    f.write(f"錯誤：\n")
+                    for error in result['errors']:
+                        f.write(f"  - {error}\n")
+                
+                if result.get('details'):
+                    f.write(f"詳細更新記錄：\n")
+                    for detail in result['details'][:20]:  # 限制顯示前20條
+                        f.write(f"  - {detail}\n")
+                    if len(result['details']) > 20:
+                        f.write(f"  ... 還有 {len(result['details']) - 20} 條記錄\n")
+                
+                f.write(f"\n{'-'*30}\n\n")
+            
+            # 總計統計
+            f.write(f"處理總結：\n")
+            f.write(f"成功業態：{len(successful_business_types)}\n")
+            f.write(f"失敗業態：{len(failed_business_types)}\n")
+            f.write(f"總 PO 更新：{total_po_updates}\n")
+            f.write(f"總 JSON 更新：{total_json_updates}\n")
+            f.write(f"總更新項目：{total_po_updates + total_json_updates}\n")
+            
+            if successful_business_types:
+                f.write(f"成功的業態：{', '.join(successful_business_types)}\n")
+            
+            if failed_business_types:
+                f.write(f"失敗的業態：{', '.join(failed_business_types)}\n")
+        
+        log_detail(f"摘要報告已生成：{summary_file}")
+        
+    except Exception as e:
+        log_detail(f"生成摘要報告失敗：{e}")
 
 
 if __name__ == "__main__":

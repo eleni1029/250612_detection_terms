@@ -1,0 +1,1147 @@
+19:00:43 - 開始處理語言: en_US
+19:00:43 - 目標業態: enterprises, public_sector, training_institutions
+19:00:43 - 來源檔案: i18n_output/en_US_tobemodified.xlsx
+19:00:43 - 開始讀取 Excel 檔案: i18n_output/en_US_tobemodified.xlsx
+19:00:43 - 發現欄位: ['檔案類型', '檔案路徑', '項目ID', '項目內容', '敏感詞', '敏感詞分類', '企業_替換方案', '企業_替換結果', '公部門_替換方案', '公部門_替換結果', '培訓機構_替換方案', '培訓機構_替換結果']
+19:00:43 - 開始解析 Excel 修正資料
+19:00:43 - PO 更新 - 企業: 無學生資料 → No employee data
+19:00:43 - 跳過空白替換結果 - 公部門: 無學生資料
+19:00:43 - 跳過空白替換結果 - 培訓機構: 無學生資料
+19:00:43 - PO 更新 - 企業: 尚無任何學生 → No employee selected
+19:00:43 - 跳過空白替換結果 - 公部門: 尚無任何學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 尚無任何學生
+19:00:43 - PO 更新 - 企業: 已有學生作答，不能修改測驗形式 → Exam Type cannot be changed after employees start answering question(s).
+19:00:43 - 跳過空白替換結果 - 公部門: 已有學生作答，不能修改測驗形式
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有學生作答，不能修改測驗形式
+19:00:43 - PO 更新 - 企業: 已繳學生 → Submitted employee
+19:00:43 - 跳過空白替換結果 - 公部門: 已繳學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已繳學生
+19:00:43 - PO 更新 - 企業: 非本課程修課學生 → The employee is not in course
+19:00:43 - 跳過空白替換結果 - 公部門: 非本課程修課學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 非本課程修課學生
+19:00:43 - PO 更新 - 企業: 校務行政系統中的學生缺曠管理已存在請假記錄 → There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify
+19:00:43 - 跳過空白替換結果 - 公部門: 校務行政系統中的學生缺曠管理已存在請假記錄
+19:00:43 - 跳過空白替換結果 - 培訓機構: 校務行政系統中的學生缺曠管理已存在請假記錄
+19:00:43 - PO 更新 - 企業: 校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改 → There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify
+19:00:43 - 跳過空白替換結果 - 公部門: 校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改
+19:00:43 - 跳過空白替換結果 - 培訓機構: 校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改
+19:00:43 - PO 更新 - 企業: 確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改 → Confirm submit? If you have modified the status of employees before sending it, please save the record first. Please modify it on the absence management system after you submit
+19:00:43 - 跳過空白替換結果 - 公部門: 確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改
+19:00:43 - 跳過空白替換結果 - 培訓機構: 確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改
+19:00:43 - PO 更新 - 企業: 異動學生 → Changed employees
+19:00:43 - 跳過空白替換結果 - 公部門: 異動學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 異動學生
+19:00:43 - PO 更新 - 企業: 位學生 → employees
+19:00:43 - 跳過空白替換結果 - 公部門: 位學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 位學生
+19:00:43 - PO 更新 - 企業: 學生造訪課程量 → Amount of employee visit
+19:00:43 - 跳過空白替換結果 - 公部門: 學生造訪課程量
+19:00:43 - 跳過空白替換結果 - 培訓機構: 學生造訪課程量
+19:00:43 - PO 更新 - 企業: 本班級總共有 {0}位教師 {1}名學生 → {0} instructors, and {1} employees
+19:00:43 - 跳過空白替換結果 - 公部門: 本班級總共有 {0}位教師 {1}名學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 本班級總共有 {0}位教師 {1}名學生
+19:00:43 - PO 更新 - 企業: 本班級總共有 {0} 名學生 → {0} employees
+19:00:43 - 跳過空白替換結果 - 公部門: 本班級總共有 {0} 名學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 本班級總共有 {0} 名學生
+19:00:43 - PO 更新 - 企業: 本課程總共有 {0} 名學生 → {0} employees
+19:00:43 - 跳過空白替換結果 - 公部門: 本課程總共有 {0} 名學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 本課程總共有 {0} 名學生
+19:00:43 - PO 更新 - 企業: 設定學生作答繳交完成後，所顯示的內容 → Set up the content that employees can see after finishing the test
+19:00:43 - 跳過空白替換結果 - 公部門: 設定學生作答繳交完成後，所顯示的內容
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定學生作答繳交完成後，所顯示的內容
+19:00:43 - PO 更新 - 企業: 改變繳交截止時間，將可能影響學生目前的繳交狀態 → Change submission deadline could effect the current employee submission status.
+19:00:43 - 跳過空白替換結果 - 公部門: 改變繳交截止時間，將可能影響學生目前的繳交狀態
+19:00:43 - 跳過空白替換結果 - 培訓機構: 改變繳交截止時間，將可能影響學生目前的繳交狀態
+19:00:43 - PO 更新 - 企業: 尚無學生加入此課程 → No employees in this course yet
+19:00:43 - 跳過空白替換結果 - 公部門: 尚無學生加入此課程
+19:00:43 - 跳過空白替換結果 - 培訓機構: 尚無學生加入此課程
+19:00:43 - PO 更新 - 企業: 學生看到的課程效果 → What employees see
+19:00:43 - 跳過空白替換結果 - 公部門: 學生看到的課程效果
+19:00:43 - 跳過空白替換結果 - 培訓機構: 學生看到的課程效果
+19:00:43 - PO 更新 - 企業: 預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。 → You can preview this course in employees' eyes and go back to adjust course content
+19:00:43 - 跳過空白替換結果 - 公部門: 預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。
+19:00:43 - PO 更新 - 企業: 共有{0}名學生，{1}名教師 → {0} employees, {1} instructors in total
+19:00:43 - 跳過空白替換結果 - 公部門: 共有{0}名學生，{1}名教師
+19:00:43 - 跳過空白替換結果 - 培訓機構: 共有{0}名學生，{1}名教師
+19:00:43 - PO 更新 - 企業: 向學生顯示 → Show employees
+19:00:43 - 跳過空白替換結果 - 公部門: 向學生顯示
+19:00:43 - 跳過空白替換結果 - 培訓機構: 向學生顯示
+19:00:43 - PO 更新 - 企業: 當學生答對後，會顯示正確答案解釋 → The explanation of correct answer will be shown to the employee after answering correctly
+19:00:43 - 跳過空白替換結果 - 公部門: 當學生答對後，會顯示正確答案解釋
+19:00:43 - 跳過空白替換結果 - 培訓機構: 當學生答對後，會顯示正確答案解釋
+19:00:43 - PO 更新 - 企業: 當學生答錯後，會顯示錯誤答案解釋 → The explanation of incorrect answer will be shown to the employee after answering incorrectly
+19:00:43 - 跳過空白替換結果 - 公部門: 當學生答錯後，會顯示錯誤答案解釋
+19:00:43 - 跳過空白替換結果 - 培訓機構: 當學生答錯後，會顯示錯誤答案解釋
+19:00:43 - PO 更新 - 企業: 模擬學生答題，不能繳交答題結果，不會進行計分 → View as employee, cannot submit, will not score
+19:00:43 - 跳過空白替換結果 - 公部門: 模擬學生答題，不能繳交答題結果，不會進行計分
+19:00:43 - 跳過空白替換結果 - 培訓機構: 模擬學生答題，不能繳交答題結果，不會進行計分
+19:00:43 - PO 更新 - 企業: group.summary → [[groupsNumber()]] groups in total, [[ungroupedNumber()]] employees ungrouped
+19:00:43 - 跳過空白替換結果 - 公部門: group.summary
+19:00:43 - 跳過空白替換結果 - 培訓機構: group.summary
+19:00:43 - PO 更新 - 企業: group.members → [[groupedNumber()]] employees in group
+19:00:43 - 跳過空白替換結果 - 公部門: group.members
+19:00:43 - 跳過空白替換結果 - 培訓機構: group.members
+19:00:43 - PO 更新 - 企業: group.detail.members → this group has <span class='number'>[[group.employeesNumber]] employees</span>
+19:00:43 - 跳過空白替換結果 - 公部門: group.detail.members
+19:00:43 - 跳過空白替換結果 - 培訓機構: group.detail.members
+19:00:43 - PO 更新 - 企業: group.students.number → [[group.employeesNumber]] employees
+19:00:43 - 跳過空白替換結果 - 公部門: group.students.number
+19:00:43 - 跳過空白替換結果 - 培訓機構: group.students.number
+19:00:43 - PO 更新 - 企業: group.ungrouped → [[ungroupedNumber()]] employees ungrouped
+19:00:43 - 跳過空白替換結果 - 公部門: group.ungrouped
+19:00:43 - 跳過空白替換結果 - 培訓機構: group.ungrouped
+19:00:43 - PO 更新 - 企業: 無組員，可從下面添加組員 → Empty group, please choose employees from below
+19:00:43 - 跳過空白替換結果 - 公部門: 無組員，可從下面添加組員
+19:00:43 - 跳過空白替換結果 - 培訓機構: 無組員，可從下面添加組員
+19:00:43 - PO 更新 - 企業: 課程人數 → Subject employee
+19:00:43 - 跳過空白替換結果 - 公部門: 課程人數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程人數
+19:00:43 - PO 更新 - 企業: 共 {0} 組，未分組 {1} 人 → {0} groups, ungrouped employees: {1}
+19:00:43 - 跳過空白替換結果 - 公部門: 共 {0} 組，未分組 {1} 人
+19:00:43 - 跳過空白替換結果 - 培訓機構: 共 {0} 組，未分組 {1} 人
+19:00:43 - PO 更新 - 企業: 課程人數: {0} 人 → Subject employee: {0}
+19:00:43 - 跳過空白替換結果 - 公部門: 課程人數: {0} 人
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程人數: {0} 人
+19:00:43 - PO 更新 - 企業: 暫無可分配小組成員 → There are no any ungrouped employees
+19:00:43 - 跳過空白替換結果 - 公部門: 暫無可分配小組成員
+19:00:43 - 跳過空白替換結果 - 培訓機構: 暫無可分配小組成員
+19:00:43 - PO 更新 - 企業: 班級成員不存在 → employee does not exist
+19:00:43 - 跳過空白替換結果 - 公部門: 班級成員不存在
+19:00:43 - 跳過空白替換結果 - 培訓機構: 班級成員不存在
+19:00:43 - PO 更新 - 企業: 班級成員在其他分組中 → employee already in other group
+19:00:43 - 跳過空白替換結果 - 公部門: 班級成員在其他分組中
+19:00:43 - 跳過空白替換結果 - 培訓機構: 班級成員在其他分組中
+19:00:43 - PO 更新 - 企業: 是否確認設置助教？ → Are you sure to set this employee as assistant?
+19:00:43 - 跳過空白替換結果 - 公部門: 是否確認設置助教？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 是否確認設置助教？
+19:00:43 - PO 更新 - 企業: 助教設置成功 → Successfully set employee as assistant
+19:00:43 - 跳過空白替換結果 - 公部門: 助教設置成功
+19:00:43 - 跳過空白替換結果 - 培訓機構: 助教設置成功
+19:00:43 - PO 更新 - 企業: 助教取消成功 → Successfully unset assistant as employee
+19:00:43 - 跳過空白替換結果 - 公部門: 助教取消成功
+19:00:43 - 跳過空白替換結果 - 培訓機構: 助教取消成功
+19:00:43 - PO 更新 - 企業: 修改後試卷題目、選項、配分將一同更新到學生試卷。 → Once the modification is made, it will be synchronized in employees’ exam papers.
+19:00:43 - 跳過空白替換結果 - 公部門: 修改後試卷題目、選項、配分將一同更新到學生試卷。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 修改後試卷題目、選項、配分將一同更新到學生試卷。
+19:00:43 - PO 更新 - 企業: 繳交截止時間到達之後，學生可以查看基本資訊但不能繳交 → After submit expiration time is reached, employees can see but cannot pay the other operations
+19:00:43 - 跳過空白替換結果 - 公部門: 繳交截止時間到達之後，學生可以查看基本資訊但不能繳交
+19:00:43 - 跳過空白替換結果 - 培訓機構: 繳交截止時間到達之後，學生可以查看基本資訊但不能繳交
+19:00:43 - PO 更新 - 企業: 剩余 {} 學生名額 → {} employee positions left
+19:00:43 - 跳過空白替換結果 - 公部門: 剩余 {} 學生名額
+19:00:43 - 跳過空白替換結果 - 培訓機構: 剩余 {} 學生名額
+19:00:43 - PO 更新 - 企業: 開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息 → After opening time is reached, exam will appear on learning activity list, employees will see the exam info
+19:00:43 - 跳過空白替換結果 - 公部門: 開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息
+19:00:43 - 跳過空白替換結果 - 培訓機構: 開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息
+19:00:43 - PO 更新 - 企業: 截止時間到達之後，學生可以查看但不能進行繳交等操作 → After closing time is reached, employees can see but cannot pay the other operations
+19:00:43 - 跳過空白替換結果 - 公部門: 截止時間到達之後，學生可以查看但不能進行繳交等操作
+19:00:43 - 跳過空白替換結果 - 培訓機構: 截止時間到達之後，學生可以查看但不能進行繳交等操作
+19:00:43 - PO 更新 - 企業: 公佈時間到達之後，學生會看到自己的成績 → After the publication time arrives, employees can see their grades
+19:00:43 - 跳過空白替換結果 - 公部門: 公佈時間到達之後，學生會看到自己的成績
+19:00:43 - 跳過空白替換結果 - 培訓機構: 公佈時間到達之後，學生會看到自己的成績
+19:00:43 - PO 更新 - 企業: 公布时间到达后，学生会看到自己的原始成绩 → After the publication time arrives, employees can see their original score
+19:00:43 - 跳過空白替換結果 - 公部門: 公布时间到达后，学生会看到自己的原始成绩
+19:00:43 - 跳過空白替換結果 - 培訓機構: 公布时间到达后，学生会看到自己的原始成绩
+19:00:43 - PO 更新 - 企業: 公布时间到达后，学生会看到自己的最终成绩 → After the publication time arrives, employees can see their final score
+19:00:43 - 跳過空白替換結果 - 公部門: 公布时间到达后，学生会看到自己的最终成绩
+19:00:43 - 跳過空白替換結果 - 培訓機構: 公布时间到达后，学生会看到自己的最终成绩
+19:00:43 - PO 更新 - 企業: 老師和學生可在APP端查看並進行課堂互動 → Teachers and employees can view the quiz and feedback in app
+19:00:43 - 跳過空白替換結果 - 公部門: 老師和學生可在APP端查看並進行課堂互動
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老師和學生可在APP端查看並進行課堂互動
+19:00:43 - PO 更新 - 企業: 選擇允許後，學生可以看到班級答題結果統計 → When checked allow, employees can see their class answer result statistics
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇允許後，學生可以看到班級答題結果統計
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇允許後，學生可以看到班級答題結果統計
+19:00:43 - PO 更新 - 企業: 開放時間到達之後，作業才能被學生看到並交付 → After the opening time arrives, the assignment can be seen and commit by employees
+19:00:43 - 跳過空白替換結果 - 公部門: 開放時間到達之後，作業才能被學生看到並交付
+19:00:43 - 跳過空白替換結果 - 培訓機構: 開放時間到達之後，作業才能被學生看到並交付
+19:00:43 - PO 更新 - 企業: 繳交截止時間到達之後，學生將不能進行作業繳交 → After closing time is reached, the employee will not be able to submit assignment
+19:00:43 - 跳過空白替換結果 - 公部門: 繳交截止時間到達之後，學生將不能進行作業繳交
+19:00:43 - 跳過空白替換結果 - 培訓機構: 繳交截止時間到達之後，學生將不能進行作業繳交
+19:00:43 - PO 更新 - 企業: 測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！ → This test has been opened to employees, and please note that any modifications will lead to unexpected score statistics!
+19:00:43 - 跳過空白替換結果 - 公部門: 測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！
+19:00:43 - 跳過空白替換結果 - 培訓機構: 測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！
+19:00:43 - PO 更新 - 企業: 已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？ → Total {0} employees of unsubmitted are selected, confirm to send remind assignment notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？
+19:00:43 - PO 更新 - 企業: 已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？ → Total {0} employees of unsubmitted are selected, confirm to send remind questionnaire notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？
+19:00:43 - PO 更新 - 企業: 共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？ → Total {0} employees of unsubmitted, confirm to send remind assignment notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？
+19:00:43 - PO 更新 - 企業: 選擇未繳的學生，設成已繳狀態 → Set selected ”unsubmitted” as ”submitted” for employee(s)
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇未繳的學生，設成已繳狀態
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇未繳的學生，設成已繳狀態
+19:00:43 - PO 更新 - 企業: 選擇已繳的學生，設成未繳狀態 → Set selected ”submitted” as ”unsubmitted” for employee(s)
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇已繳的學生，設成未繳狀態
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇已繳的學生，設成未繳狀態
+19:00:43 - PO 更新 - 企業: 選擇未繳的小組，設成已繳狀態 → Set selected ”unsubmitted” as ”submitted” for employee group(s)
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇未繳的小組，設成已繳狀態
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇未繳的小組，設成已繳狀態
+19:00:43 - PO 更新 - 企業: 選擇已繳的小組，設成未繳狀態 → Set selected ”submitted” as ”unsubmitted” for employee group(s)
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇已繳的小組，設成未繳狀態
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇已繳的小組，設成未繳狀態
+19:00:43 - PO 更新 - 企業: 選擇未繳的學生，可催繳作業 → Select unsubmitted employees can remind assignment
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇未繳的學生，可催繳作業
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇未繳的學生，可催繳作業
+19:00:43 - PO 更新 - 企業: 選擇未繳的學生，可催繳問卷 → Select unsubmitted employees can remind questionnaire
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇未繳的學生，可催繳問卷
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇未繳的學生，可催繳問卷
+19:00:43 - PO 更新 - 企業: 選擇學生，可設定其進行補繳 → Select employees and set them to make up assignment
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇學生，可設定其進行補繳
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇學生，可設定其進行補繳
+19:00:43 - PO 更新 - 企業: 已選擇{0}名學生，確定要發送補繳作業的通知嗎？ → Total {0} employees are selected, confirm to send make up assignment notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇{0}名學生，確定要發送補繳作業的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇{0}名學生，確定要發送補繳作業的通知嗎？
+19:00:43 - PO 更新 - 企業: 共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？ → Total {0} employees of unsubmitted, confirm to send make up assignment notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？
+19:00:43 - PO 更新 - 企業: 選擇已繳的作業，可推薦給學生 → Select committed submissions can recommend to employees
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇已繳的作業，可推薦給學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇已繳的作業，可推薦給學生
+19:00:43 - PO 更新 - 企業: 已選擇{0}名已繳作業的學生，確定推薦嗎？ → Total {0} employees of committed are selected, confirm to recommend?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇{0}名已繳作業的學生，確定推薦嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇{0}名已繳作業的學生，確定推薦嗎？
+19:00:43 - PO 更新 - 企業: 推薦的作業會展示給學生，包括作業內容和評分評語 → Assignment of recommended will be shown to employees, including the content, score and comment
+19:00:43 - 跳過空白替換結果 - 公部門: 推薦的作業會展示給學生，包括作業內容和評分評語
+19:00:43 - 跳過空白替換結果 - 培訓機構: 推薦的作業會展示給學生，包括作業內容和評分評語
+19:00:43 - PO 更新 - 企業: 由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。 → Assignment will be scored by other employee(s).
+19:00:43 - 跳過空白替換結果 - 公部門: 由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。
+19:00:43 - PO 更新 - 企業: 由於人員變動，標記出的人員作業不參與互評，需要您進行批改 → You need to give score to marked employee who cannot involved in peer assessment
+19:00:43 - 跳過空白替換結果 - 公部門: 由於人員變動，標記出的人員作業不參與互評，需要您進行批改
+19:00:43 - 跳過空白替換結果 - 培訓機構: 由於人員變動，標記出的人員作業不參與互評，需要您進行批改
+19:00:43 - PO 更新 - 企業: 私有課程，表示課程僅對您和該課程的成員可見，可透過邀請碼和邀請連結將成員加入課程。 → Private Course: Course only open to the teacher and employees in this course. User need 'access code' or 'access url' to join the course.
+19:00:43 - 跳過空白替換結果 - 公部門: 私有課程，表示課程僅對您和該課程的成員可見，可透過邀請碼和邀請連結將成員加入課程。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 私有課程，表示課程僅對您和該課程的成員可見，可透過邀請碼和邀請連結將成員加入課程。
+19:00:43 - PO 更新 - 企業: 老師評分之後，學生會看到自己的成績 → After instructors give score, employees can see their grades
+19:00:43 - 跳過空白替換結果 - 公部門: 老師評分之後，學生會看到自己的成績
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老師評分之後，學生會看到自己的成績
+19:00:43 - PO 更新 - 企業: 老师评分之后，学生可以马上看到自己的原始成绩 → Once instructors give score, employees can see their original score
+19:00:43 - 跳過空白替換結果 - 公部門: 老师评分之后，学生可以马上看到自己的原始成绩
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老师评分之后，学生可以马上看到自己的原始成绩
+19:00:43 - PO 更新 - 企業: 老师评分之后，学生可以马上看到自己的最终成绩 → Once instructors give score, employees can see their final score
+19:00:43 - 跳過空白替換結果 - 公部門: 老师评分之后，学生可以马上看到自己的最终成绩
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老师评分之后，学生可以马上看到自己的最终成绩
+19:00:43 - PO 更新 - 企業: 已選擇 {0} 名學生，確定送繳學期成績嗎？ → You have selected {0} employees, do you want to submit?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇 {0} 名學生，確定送繳學期成績嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇 {0} 名學生，確定送繳學期成績嗎？
+19:00:43 - PO 更新 - 企業: 成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。 → After your submission, the "final scores" can’t be changed. Even though modify employee’s assignment and exam scores.
+19:00:43 - 跳過空白替換結果 - 公部門: 成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。
+19:00:43 - PO 更新 - 企業: 請選擇送繳學生 → Please select some employees
+19:00:43 - 跳過空白替換結果 - 公部門: 請選擇送繳學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 請選擇送繳學生
+19:00:43 - PO 更新 - 企業: 請先選擇要進行成績送繳的學生範圍。 → Please select some employees to be submitted.
+19:00:43 - 跳過空白替換結果 - 公部門: 請先選擇要進行成績送繳的學生範圍。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 請先選擇要進行成績送繳的學生範圍。
+19:00:43 - PO 更新 - 企業: 已送繳全部學生成績 → All employees have been submitted
+19:00:43 - 跳過空白替換結果 - 公部門: 已送繳全部學生成績
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已送繳全部學生成績
+19:00:43 - PO 更新 - 企業: 送繳部分學生 → Submit some employees
+19:00:43 - 跳過空白替換結果 - 公部門: 送繳部分學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 送繳部分學生
+19:00:43 - PO 更新 - 企業: 送繳全部學生 → Submit all employees
+19:00:43 - 跳過空白替換結果 - 公部門: 送繳全部學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 送繳全部學生
+19:00:43 - PO 更新 - 企業: 人學習 → employees
+19:00:43 - 跳過空白替換結果 - 公部門: 人學習
+19:00:43 - 跳過空白替換結果 - 培訓機構: 人學習
+19:00:43 - PO 更新 - 企業: 注：预警指标说明（低于预警阈值的学生将被预警) → P.S. The employee will be warned if he/she is lower than the Warning Standard.
+19:00:43 - 跳過空白替換結果 - 公部門: 注：预警指标说明（低于预警阈值的学生将被预警)
+19:00:43 - 跳過空白替換結果 - 培訓機構: 注：预警指标说明（低于预警阈值的学生将被预警)
+19:00:43 - PO 更新 - 企業: 请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。 → Please choose the Warning Target then setting the Standard. The employee will be warned if he/she is lower than the Warning Standard. If the standard is blank, it wouldn't be take into the List.
+19:00:43 - 跳過空白替換結果 - 公部門: 请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。
+19:00:43 - PO 更新 - 企業: 預警學生總數 → The sum of Warning employees
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生總數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生總數
+19:00:43 - PO 更新 - 企業: 預警學生數 → The count of Warning employees
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生數
+19:00:43 - PO 更新 - 企業: 預警學生佔比 → The percent of Warning employees
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生佔比
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生佔比
+19:00:43 - PO 更新 - 企業: 本課程有{0}名學生被預警，確定送交預警名單嗎？ → {0} employees in this course are being alerted and are sure to send them to the warning list?
+19:00:43 - 跳過空白替換結果 - 公部門: 本課程有{0}名學生被預警，確定送交預警名單嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 本課程有{0}名學生被預警，確定送交預警名單嗎？
+19:00:43 - PO 更新 - 企業: 附：預警指標說明（低於預警閾值的學生將被預警) → Attachment: Description of early warning indicators (employees below the warning threshold will be alerted)
+19:00:43 - 跳過空白替換結果 - 公部門: 附：預警指標說明（低於預警閾值的學生將被預警)
+19:00:43 - 跳過空白替換結果 - 培訓機構: 附：預警指標說明（低於預警閾值的學生將被預警)
+19:00:43 - PO 更新 - 企業: 缺席 {0} 次後預警 → Absent for {0} times, employees will get notice.
+19:00:43 - 跳過空白替換結果 - 公部門: 缺席 {0} 次後預警
+19:00:43 - 跳過空白替換結果 - 培訓機構: 缺席 {0} 次後預警
+19:00:43 - PO 更新 - 企業: 請假 {0} 次後預警 → On-Leave for {0} times, employees will get notice.
+19:00:43 - 跳過空白替換結果 - 公部門: 請假 {0} 次後預警
+19:00:43 - 跳過空白替換結果 - 培訓機構: 請假 {0} 次後預警
+19:00:43 - PO 更新 - 企業: 出席率低於 {0}％，學生將收到通知 → Attendance Rate lower than {0}％, employees will get notice.
+19:00:43 - 跳過空白替換結果 - 公部門: 出席率低於 {0}％，學生將收到通知
+19:00:43 - 跳過空白替換結果 - 培訓機構: 出席率低於 {0}％，學生將收到通知
+19:00:43 - PO 更新 - 企業: 出席率低於 {0}％，學生將收到不允許參加期末考的通知 → Attendance Rate lower than {0}％, employees will get notice of banned to join Final Exam.
+19:00:43 - 跳過空白替換結果 - 公部門: 出席率低於 {0}％，學生將收到不允許參加期末考的通知
+19:00:43 - 跳過空白替換結果 - 培訓機構: 出席率低於 {0}％，學生將收到不允許參加期末考的通知
+19:00:43 - PO 更新 - 企業: 低於 {0}％不能參加期末考 → lower than {0}％, employees can't join Final Exam.
+19:00:43 - 跳過空白替換結果 - 公部門: 低於 {0}％不能參加期末考
+19:00:43 - 跳過空白替換結果 - 培訓機構: 低於 {0}％不能參加期末考
+19:00:43 - PO 更新 - 企業: 课程成绩详细提示 → Grade lower than {0} points, employees will get notice.
+19:00:43 - 跳過空白替換結果 - 公部門: 课程成绩详细提示
+19:00:43 - 跳過空白替換結果 - 培訓機構: 课程成绩详细提示
+19:00:43 - PO 更新 - 企業: 預警學生已經成功添加 → The warning employee has been successfully added
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生已經成功添加
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生已經成功添加
+19:00:43 - PO 更新 - 企業: 預警學生已經存在 → The warning employee already exist
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生已經存在
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生已經存在
+19:00:43 - PO 更新 - 企業: 預警學生已經成功保存 → Changes of warning employee has been successfully saved
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生已經成功保存
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生已經成功保存
+19:00:43 - PO 更新 - 企業: 預警學生已經成功刪除 → The warning employee has been successfully removed
+19:00:43 - 跳過空白替換結果 - 公部門: 預警學生已經成功刪除
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警學生已經成功刪除
+19:00:43 - PO 更新 - 企業: 人報名 → employees registered
+19:00:43 - 跳過空白替換結果 - 公部門: 人報名
+19:00:43 - 跳過空白替換結果 - 培訓機構: 人報名
+19:00:43 - PO 更新 - 企業: 学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。 → Students can choose learning activities to study freely, instructor can set the completion criteria of activities to investigate employees' learning situation.
+19:00:43 - 跳過空白替換結果 - 公部門: 学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。
+19:00:43 - PO 更新 - 企業: 此課程人數已達上限 → The employee count limitation has reached
+19:00:43 - 跳過空白替換結果 - 公部門: 此課程人數已達上限
+19:00:43 - 跳過空白替換結果 - 培訓機構: 此課程人數已達上限
+19:00:43 - PO 更新 - 企業: 預警名單 → Warning employees list
+19:00:43 - 跳過空白替換結果 - 公部門: 預警名單
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警名單
+19:00:43 - PO 更新 - 企業: 您可以在此輸入對學生作業的評語 → You can input comment for submission of employee here
+19:00:43 - 跳過空白替換結果 - 公部門: 您可以在此輸入對學生作業的評語
+19:00:43 - 跳過空白替換結果 - 培訓機構: 您可以在此輸入對學生作業的評語
+19:00:43 - PO 更新 - 企業: 及格人數 → Passed employees
+19:00:43 - 跳過空白替換結果 - 公部門: 及格人數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 及格人數
+19:00:43 - PO 更新 - 企業: 不及格人數 → Failed employees
+19:00:43 - 跳過空白替換結果 - 公部門: 不及格人數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 不及格人數
+19:00:43 - PO 更新 - 企業: 課程內的所有學生將會變更為：出席 → The action will make all employees to Present.
+19:00:43 - 跳過空白替換結果 - 公部門: 課程內的所有學生將會變更為：出席
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程內的所有學生將會變更為：出席
+19:00:43 - PO 更新 - 企業: 不論當前狀態為何，都會被調整為出席。 → No matter of their current status, employees will be marked present.
+19:00:43 - 跳過空白替換結果 - 公部門: 不論當前狀態為何，都會被調整為出席。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 不論當前狀態為何，都會被調整為出席。
+19:00:43 - PO 更新 - 企業: 設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序 → When set to random, question options in paper of different employees will sort randomly
+19:00:43 - 跳過空白替換結果 - 公部門: 設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序
+19:00:43 - PO 更新 - 企業: 設定為隨機排序，不同學生所見試卷，題目將隨機進行排序 → When set to random, questions in paper of different employees will sort randomly
+19:00:43 - 跳過空白替換結果 - 公部門: 設定為隨機排序，不同學生所見試卷，題目將隨機進行排序
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定為隨機排序，不同學生所見試卷，題目將隨機進行排序
+19:00:43 - PO 更新 - 企業: 設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序 → When set to random, questions in paper of different employees will sort randomly. When set to random in question type, questions in paper of different employees will sort randomly in question type.
+19:00:43 - 跳過空白替換結果 - 公部門: 設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序
+19:00:43 - PO 更新 - 企業: 若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制 → If not allow, employees will not able to drag the timeline to fast forward the video unless they finish watching the video for one time
+19:00:43 - 跳過空白替換結果 - 公部門: 若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制
+19:00:43 - 跳過空白替換結果 - 培訓機構: 若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制
+19:00:43 - PO 更新 - 企業: 課程還沒有學生 → No employee yet
+19:00:43 - 跳過空白替換結果 - 公部門: 課程還沒有學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程還沒有學生
+19:00:43 - PO 更新 - 企業: 課程還沒有學生, 快 → No employee yet,
+19:00:43 - 跳過空白替換結果 - 公部門: 課程還沒有學生, 快
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程還沒有學生, 快
+19:00:43 - PO 更新 - 企業: 課程沒有學生 → No employee yet
+19:00:43 - 跳過空白替換結果 - 公部門: 課程沒有學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程沒有學生
+19:00:43 - PO 更新 - 企業: 查看學生成績單 → View score of employee
+19:00:43 - 跳過空白替換結果 - 公部門: 查看學生成績單
+19:00:43 - 跳過空白替換結果 - 培訓機構: 查看學生成績單
+19:00:43 - PO 更新 - 企業: 機構還沒有教師和學生, 教學活動無法展開 → No instructor or employee
+19:00:43 - 跳過空白替換結果 - 公部門: 機構還沒有教師和學生, 教學活動無法展開
+19:00:43 - 跳過空白替換結果 - 培訓機構: 機構還沒有教師和學生, 教學活動無法展開
+19:00:43 - PO 更新 - 企業: 機構已有{0}名成員, 其中教師{1}人, 學生{2}人 → {0} members in organization, {1} instructors, {2} employees
+19:00:43 - 跳過空白替換結果 - 公部門: 機構已有{0}名成員, 其中教師{1}人, 學生{2}人
+19:00:43 - 跳過空白替換結果 - 培訓機構: 機構已有{0}名成員, 其中教師{1}人, 學生{2}人
+19:00:43 - PO 更新 - 企業: 本月增加教師{0}人, 本月增加學生{1}人 → Added {0} instructors and {1} employees in this month
+19:00:43 - 跳過空白替換結果 - 公部門: 本月增加教師{0}人, 本月增加學生{1}人
+19:00:43 - 跳過空白替換結果 - 培訓機構: 本月增加教師{0}人, 本月增加學生{1}人
+19:00:43 - PO 更新 - 企業: 還沒有學生加入到您的課程或班級 → No employee yet
+19:00:43 - 跳過空白替換結果 - 公部門: 還沒有學生加入到您的課程或班級
+19:00:43 - 跳過空白替換結果 - 培訓機構: 還沒有學生加入到您的課程或班級
+19:00:43 - PO 更新 - 企業: 共有{0}人參加到您的課程，{1}人加入到您的班級 → {0} employees are studying in your courses, {1} in your classes
+19:00:43 - 跳過空白替換結果 - 公部門: 共有{0}人參加到您的課程，{1}人加入到您的班級
+19:00:43 - 跳過空白替換結果 - 培訓機構: 共有{0}人參加到您的課程，{1}人加入到您的班級
+19:00:43 - PO 更新 - 企業: 還沒有教師和學生, 教學活動無法展開 → No instructor or employee
+19:00:43 - 跳過空白替換結果 - 公部門: 還沒有教師和學生, 教學活動無法展開
+19:00:43 - 跳過空白替換結果 - 培訓機構: 還沒有教師和學生, 教學活動無法展開
+19:00:43 - PO 更新 - 企業: 課程內教師身份不可新增座號 → No support for add employee number on teachers.
+19:00:43 - 跳過空白替換結果 - 公部門: 課程內教師身份不可新增座號
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程內教師身份不可新增座號
+19:00:43 - PO 更新 - 企業: 已有{0}名成員, 其中教師{1}人, 學生{2}人 → {0} members, {1} instructors, {2} employees
+19:00:43 - 跳過空白替換結果 - 公部門: 已有{0}名成員, 其中教師{1}人, 學生{2}人
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有{0}名成員, 其中教師{1}人, 學生{2}人
+19:00:43 - PO 更新 - 企業: 選擇學生，可設定其進行補考 → Select employees can set it to make up exam
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇學生，可設定其進行補考
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇學生，可設定其進行補考
+19:00:43 - PO 更新 - 企業: 已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？ → Total {0} employees are selected, confirm to send make up exam notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？
+19:00:43 - PO 更新 - 企業: 分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧! → Group learning through the course of the employees into a number of groups, to achieve the group work, the group of resource sharing and other learning activities. The teacher can easily complete the group here, the designated team leader, to give it a try!
+19:00:43 - 跳過空白替換結果 - 公部門: 分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!
+19:00:43 - 跳過空白替換結果 - 培訓機構: 分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!
+19:00:43 - PO 更新 - 企業: 該課程還沒有任何學生 → No employees in this course
+19:00:43 - 跳過空白替換結果 - 公部門: 該課程還沒有任何學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 該課程還沒有任何學生
+19:00:43 - PO 更新 - 企業: ，去邀請一些學生吧 → , go to invite employee
+19:00:43 - 跳過空白替換結果 - 公部門: ，去邀請一些學生吧
+19:00:43 - 跳過空白替換結果 - 培訓機構: ，去邀請一些學生吧
+19:00:43 - PO 更新 - 企業: Rubric（評分量規）是一個二位的評價表格，你可以用Rubric定義自己的評分規則，定義好的Rubric可以用於作業的評價和同學間的互評，讓評價有據可循，同時方便快捷。 → Rubric (scoring rubrics) is a second evaluation form, you can define its own scoring rules Rubric, Rubric defined can be used on the work of evaluation and employees mutual evaluation, make evaluation according to follow, and convenient.
+19:00:43 - 跳過空白替換結果 - 公部門: Rubric（評分量規）是一個二位的評價表格，你可以用Rubric定義自己的評分規則，定義好的Rubric可以用於作業的評價和同學間的互評，讓評價有據可循，同時方便快捷。
+19:00:43 - 跳過空白替換結果 - 培訓機構: Rubric（評分量規）是一個二位的評價表格，你可以用Rubric定義自己的評分規則，定義好的Rubric可以用於作業的評價和同學間的互評，讓評價有據可循，同時方便快捷。
+19:00:43 - PO 更新 - 企業: 選擇學生 → Select employee
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇學生
+19:00:43 - PO 更新 - 企業: 請選擇學生 → Please select employee
+19:00:43 - 跳過空白替換結果 - 公部門: 請選擇學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 請選擇學生
+19:00:43 - PO 更新 - 企業: 已選擇 {0} 位學生 → Selected {0} employees
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇 {0} 位學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇 {0} 位學生
+19:00:43 - PO 更新 - 企業: 部分學生 → Some employees
+19:00:43 - 跳過空白替換結果 - 公部門: 部分學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 部分學生
+19:00:43 - PO 更新 - 企業: 全部學生 → All employees
+19:00:43 - 跳過空白替換結果 - 公部門: 全部學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 全部學生
+19:00:43 - PO 更新 - 企業: 互評功能不適用於部分學生 → Peer Review can not be used with selected some employees.
+19:00:43 - 跳過空白替換結果 - 公部門: 互評功能不適用於部分學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 互評功能不適用於部分學生
+19:00:43 - PO 更新 - 企業: 因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習 → Due to assign some employees/groups for specific assignment and exam, this course can't change to Checkpoint Learning.
+19:00:43 - 跳過空白替換結果 - 公部門: 因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習
+19:00:43 - 跳過空白替換結果 - 培訓機構: 因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習
+19:00:43 - PO 更新 - 企業: 邀請機構內人員成為學生 → Invite user to become employee in organization
+19:00:43 - 跳過空白替換結果 - 公部門: 邀請機構內人員成為學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 邀請機構內人員成為學生
+19:00:43 - PO 更新 - 企業: 還沒有學生加入到您的課程 → No employee yet
+19:00:43 - 跳過空白替換結果 - 公部門: 還沒有學生加入到您的課程
+19:00:43 - 跳過空白替換結果 - 培訓機構: 還沒有學生加入到您的課程
+19:00:43 - PO 更新 - 企業: 共有{0}人參加到您的課程 → {0} employees are studying in your courses
+19:00:43 - 跳過空白替換結果 - 公部門: 共有{0}人參加到您的課程
+19:00:43 - 跳過空白替換結果 - 培訓機構: 共有{0}人參加到您的課程
+19:00:43 - PO 更新 - 企業: （您可以在學生的帳號中找到家長關聯碼） → (You could find the Association Code in employee's account)
+19:00:43 - 跳過空白替換結果 - 公部門: （您可以在學生的帳號中找到家長關聯碼）
+19:00:43 - 跳過空白替換結果 - 培訓機構: （您可以在學生的帳號中找到家長關聯碼）
+19:00:43 - PO 更新 - 企業: 以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。 → Centered on employees, teachers, educational administration, combined the technology of the cloud, creating a integration management platform of learning, action and social, provide a complete solution of teaching that is most suitable for blended learning system.
+19:00:43 - 跳過空白替換結果 - 公部門: 以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。
+19:00:43 - PO 更新 - 企業: 在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。 → Here, you can share learning materials around the class management, post is your assistant for the rapid release of your message file, you can also interact with employees and parents.
+19:00:43 - 跳過空白替換結果 - 公部門: 在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。
+19:00:43 - PO 更新 - 企業: 添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？ → After add questions, this online video activity will be transformed to interaction activity. It will also makes employees learning history be deleted. Are you sure to do this?
+19:00:43 - 跳過空白替換結果 - 公部門: 添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？
+19:00:43 - PO 更新 - 企業: 若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。 → Chose `Active` to auto-submit answers when employee try to open or switch to another Browser tab more than {0} times.
+19:00:43 - 跳過空白替換結果 - 公部門: 若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。
+19:00:43 - PO 更新 - 企業: 設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。 → Setting the max number of times. When employee exits this page over than the max number, the exam will be submitted.
+19:00:43 - 跳過空白替換結果 - 公部門: 設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。
+19:00:43 - PO 更新 - 企業: 選擇「允許」後，學生將可下載發布後的即時討論錄影檔案 → After selecting 'Allow', employees will be able to download video files after publishing
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇「允許」後，學生將可下載發布後的即時討論錄影檔案
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇「允許」後，學生將可下載發布後的即時討論錄影檔案
+19:00:43 - PO 更新 - 企業: 導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁 → Disable a navigation item, the navigation item will be disappearing on the menu of course; this will cause the employee who is opening the navigation item was redirected to the bulletin page
+19:00:43 - 跳過空白替換結果 - 公部門: 導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁
+19:00:43 - 跳過空白替換結果 - 培訓機構: 導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁
+19:00:43 - PO 更新 - 企業: 僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。 → We only support private IPv4. After setting the IP limited, employee needs to link to the correct IP address to do test.
+19:00:43 - 跳過空白替換結果 - 公部門: 僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。
+19:00:43 - PO 更新 - 企業: 随堂测试已开放给学生，可逐一开启题目给学生作答 → You can open the title one by one  to employees
+19:00:43 - 跳過空白替換結果 - 公部門: 随堂测试已开放给学生，可逐一开启题目给学生作答
+19:00:43 - 跳過空白替換結果 - 培訓機構: 随堂测试已开放给学生，可逐一开启题目给学生作答
+19:00:43 - PO 更新 - 企業: 教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈 → Open the activity,employees can make feedback in app
+19:00:43 - 跳過空白替換結果 - 公部門: 教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈
+19:00:43 - PO 更新 - 企業: 开启后，学生将在app中看到活动并参与反馈。 → After open the activity, employees can view and make feedback in app
+19:00:43 - 跳過空白替換結果 - 公部門: 开启后，学生将在app中看到活动并参与反馈。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 开启后，学生将在app中看到活动并参与反馈。
+19:00:43 - PO 更新 - 企業: 學生試卷 → employee_papers
+19:00:43 - 跳過空白替換結果 - 公部門: 學生試卷
+19:00:43 - 跳過空白替換結果 - 培訓機構: 學生試卷
+19:00:43 - PO 更新 - 企業: 下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？ → It takes a lot of time to zip employee paper, start now?
+19:00:43 - 跳過空白替換結果 - 公部門: 下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？
+19:00:43 - PO 更新 - 企業: 匯出缺席名單 → Export absent employees
+19:00:43 - 跳過空白替換結果 - 公部門: 匯出缺席名單
+19:00:43 - 跳過空白替換結果 - 培訓機構: 匯出缺席名單
+19:00:43 - PO 更新 - 企業: 課程教師、助教與指定為發布對象的分組或學生，才可查看本公告 → Only the instructor, assistant, assign employee(s) and group(s) can see this announcement
+19:00:43 - 跳過空白替換結果 - 公部門: 課程教師、助教與指定為發布對象的分組或學生，才可查看本公告
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程教師、助教與指定為發布對象的分組或學生，才可查看本公告
+19:00:43 - PO 更新 - 企業: 課程教師與指定為發布對象的分組或學生，才可查看本公告 → Only the instructor, assign employee(s) and group(s) can see this announcement
+19:00:43 - 跳過空白替換結果 - 公部門: 課程教師與指定為發布對象的分組或學生，才可查看本公告
+19:00:43 - 跳過空白替換結果 - 培訓機構: 課程教師與指定為發布對象的分組或學生，才可查看本公告
+19:00:43 - PO 更新 - 企業: 教師上傳檔案作為教材，學生對該教材的學習行為統計 → Teachers upload files as a teaching material, employees of the teaching materials learning behavior statistics
+19:00:43 - 跳過空白替換結果 - 公部門: 教師上傳檔案作為教材，學生對該教材的學習行為統計
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師上傳檔案作為教材，學生對該教材的學習行為統計
+19:00:43 - PO 更新 - 企業: 教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計 → Teachers upload video files, or share third-party audio and video links as a teaching material, employees of the textbook learning behavior statistics
+19:00:43 - 跳過空白替換結果 - 公部門: 教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計
+19:00:43 - PO 更新 - 企業: 教師分享網站連結，學生對該網站連結的學習行為統計 → Teachers share site links, employees of the site to link learning behavior statistics
+19:00:43 - 跳過空白替換結果 - 公部門: 教師分享網站連結，學生對該網站連結的學習行為統計
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師分享網站連結，學生對該網站連結的學習行為統計
+19:00:43 - PO 更新 - 企業: 教師發布作業後，學生對該作業的繳交記錄與得分 → After the teacher releases the assignment, records of the score of employees for the assignment
+19:00:43 - 跳過空白替換結果 - 公部門: 教師發布作業後，學生對該作業的繳交記錄與得分
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師發布作業後，學生對該作業的繳交記錄與得分
+19:00:43 - PO 更新 - 企業: 教師發布線上測驗後，學生對該測驗的繳交記錄與得分 → After the teacher releases the online exam, records of the score of employees for the exam
+19:00:43 - 跳過空白替換結果 - 公部門: 教師發布線上測驗後，學生對該測驗的繳交記錄與得分
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師發布線上測驗後，學生對該測驗的繳交記錄與得分
+19:00:43 - PO 更新 - 企業: 教師發起點名，學生的出缺席狀態 → The state of the employee's absence
+19:00:43 - 跳過空白替換結果 - 公部門: 教師發起點名，學生的出缺席狀態
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師發起點名，學生的出缺席狀態
+19:00:43 - PO 更新 - 企業: 老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習 → Instructors can set up three prerequisites at most, employees need to finish all the prerequisites before entering the activity.
+19:00:43 - 跳過空白替換結果 - 公部門: 老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習
+19:00:43 - PO 更新 - 企業: 學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。 → Once the basic score of employees' performance is set, the score of all the employees will be adjusted in a unified way.
+19:00:43 - 跳過空白替換結果 - 公部門: 學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。
+19:00:43 - PO 更新 - 企業: 每次点击分数旁加减按钮所产生的分数差。 → There is the different scores got by clicking the add or minus button beside employee score.
+19:00:43 - 跳過空白替換結果 - 公部門: 每次点击分数旁加减按钮所产生的分数差。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 每次点击分数旁加减按钮所产生的分数差。
+19:00:43 - PO 更新 - 企業: 預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險 → Early Alart: To inform employees who may fail to comply with mandatory course requirements.
+19:00:43 - 跳過空白替換結果 - 公部門: 預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險
+19:00:43 - 跳過空白替換結果 - 培訓機構: 預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險
+19:00:43 - PO 更新 - 企業: 扣考: 通知學生學習總時數(分鐘) 不足，已被扣考 → Barred from Sitting Examination: To inform employees who fail to comply with mandatory course requirements.
+19:00:43 - 跳過空白替換結果 - 公部門: 扣考: 通知學生學習總時數(分鐘) 不足，已被扣考
+19:00:43 - 跳過空白替換結果 - 培訓機構: 扣考: 通知學生學習總時數(分鐘) 不足，已被扣考
+19:00:43 - PO 更新 - 企業: 隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中 → Random Group：Randomly assign ungrouped employees to groups
+19:00:43 - 跳過空白替換結果 - 公部門: 隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中
+19:00:43 - 跳過空白替換結果 - 培訓機構: 隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中
+19:00:43 - PO 更新 - 企業: 依每組人數 → employees per group
+19:00:43 - 跳過空白替換結果 - 公部門: 依每組人數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 依每組人數
+19:00:43 - PO 更新 - 企業: 未分組人數： {0} 人 → ungrouped employees: {0}
+19:00:43 - 跳過空白替換結果 - 公部門: 未分組人數： {0} 人
+19:00:43 - 跳過空白替換結果 - 培訓機構: 未分組人數： {0} 人
+19:00:43 - PO 更新 - 企業: {0}人/組，共{1}組 → {0} employees/group, {1} Groups
+19:00:43 - 跳過空白替換結果 - 公部門: {0}人/組，共{1}組
+19:00:43 - 跳過空白替換結果 - 培訓機構: {0}人/組，共{1}組
+19:00:43 - PO 更新 - 企業: 分組數不能大於未分組人數。 → The total number of groups cannot exceeds the number of ungrouped employees.
+19:00:43 - 跳過空白替換結果 - 公部門: 分組數不能大於未分組人數。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 分組數不能大於未分組人數。
+19:00:43 - PO 更新 - 企業: 每組人數不能大於未分組人數。 → The number of employees per group cannot exceeds the number of ungrouped employees.
+19:00:43 - 跳過空白替換結果 - 公部門: 每組人數不能大於未分組人數。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 每組人數不能大於未分組人數。
+19:00:43 - PO 更新 - 企業: 備註(公開) → Notes(for employee)
+19:00:43 - 跳過空白替換結果 - 公部門: 備註(公開)
+19:00:43 - 跳過空白替換結果 - 培訓機構: 備註(公開)
+19:00:43 - PO 更新 - 企業: 修課學生帳號未填寫 → Enrolled employee account is required.
+19:00:43 - 跳過空白替換結果 - 公部門: 修課學生帳號未填寫
+19:00:43 - 跳過空白替換結果 - 培訓機構: 修課學生帳號未填寫
+19:00:43 - PO 更新 - 企業: 帳號使用者不是本課程的學生 → Not an enrolled employee account.
+19:00:43 - 跳過空白替換結果 - 公部門: 帳號使用者不是本課程的學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: 帳號使用者不是本課程的學生
+19:00:43 - PO 更新 - 企業: 已有{0}筆資料修課學生帳號重複 → {0} duplicated enrolled employee accounts has found.
+19:00:43 - 跳過空白替換結果 - 公部門: 已有{0}筆資料修課學生帳號重複
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有{0}筆資料修課學生帳號重複
+19:00:43 - PO 更新 - 企業: 份數必須大於0且小於學生人數 → Pieces number must larger then 0 and less than employees number
+19:00:43 - 跳過空白替換結果 - 公部門: 份數必須大於0且小於學生人數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 份數必須大於0且小於學生人數
+19:00:43 - PO 更新 - 企業: 請您先到「分組學習」中完成學生的分組 → Please complete the employee group first
+19:00:43 - 跳過空白替換結果 - 公部門: 請您先到「分組學習」中完成學生的分組
+19:00:43 - 跳過空白替換結果 - 培訓機構: 請您先到「分組學習」中完成學生的分組
+19:00:43 - PO 更新 - 企業: 小組內無成員，請您先到「分組學習」中完成學生的分組 → No member in groups. Please complete the employee group first.
+19:00:43 - 跳過空白替換結果 - 公部門: 小組內無成員，請您先到「分組學習」中完成學生的分組
+19:00:43 - 跳過空白替換結果 - 培訓機構: 小組內無成員，請您先到「分組學習」中完成學生的分組
+19:00:43 - PO 更新 - 企業: 學生無成績 → No score employees
+19:00:43 - 跳過空白替換結果 - 公部門: 學生無成績
+19:00:43 - 跳過空白替換結果 - 培訓機構: 學生無成績
+19:00:43 - PO 更新 - 企業: 從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. 如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。 → From all questions, set the number of questions select randomly, for examples: 1. there are 10 multiple-choice questions, questions select randomly number set to 6, said the employees exam paper will select 6 questions randomly from 10 questions. 2. if not select questions select randomly, questions select randomly number set to 10, said the employees exam paper will select 10 questions randomly from 10 questions.
+19:00:43 - 跳過空白替換結果 - 公部門: 從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. 如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. 如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。
+19:00:43 - PO 更新 - 企業: 設定為隨機抽題，不同學生所見的題目範圍隨機設定。 → When set to random, questions in paper of different employees will be set randomly.
+19:00:43 - 跳過空白替換結果 - 公部門: 設定為隨機抽題，不同學生所見的題目範圍隨機設定。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定為隨機抽題，不同學生所見的題目範圍隨機設定。
+19:00:43 - PO 更新 - 企業: 當前測驗為隨機抽題，不同學生題目不同。 → This exam is select question randomly, selected questions in paper is different for different employees.
+19:00:43 - 跳過空白替換結果 - 公部門: 當前測驗為隨機抽題，不同學生題目不同。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 當前測驗為隨機抽題，不同學生題目不同。
+19:00:43 - PO 更新 - 企業: 已有學生繳交互評信息不能修改評分方式 → Any employee has reviewed, should`nt modify Scored method
+19:00:43 - 跳過空白替換結果 - 公部門: 已有學生繳交互評信息不能修改評分方式
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有學生繳交互評信息不能修改評分方式
+19:00:43 - PO 更新 - 企業: 此學生繳交時間過晚，無法參與互評，以教師評分為準 → This employee submitted too late, should score by teacher
+19:00:43 - 跳過空白替換結果 - 公部門: 此學生繳交時間過晚，無法參與互評，以教師評分為準
+19:00:43 - 跳過空白替換結果 - 培訓機構: 此學生繳交時間過晚，無法參與互評，以教師評分為準
+19:00:43 - PO 更新 - 企業: 僅繳交作業才可參與互評 → employees who have already submitted the assignment
+19:00:43 - 跳過空白替換結果 - 公部門: 僅繳交作業才可參與互評
+19:00:43 - 跳過空白替換結果 - 培訓機構: 僅繳交作業才可參與互評
+19:00:43 - PO 更新 - 企業: 已有學生繳交互評信息，不能修改互評開始時間 → employee has submitted review, could`nt modify start time
+19:00:43 - 跳過空白替換結果 - 公部門: 已有學生繳交互評信息，不能修改互評開始時間
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有學生繳交互評信息，不能修改互評開始時間
+19:00:43 - PO 更新 - 企業: 已有學生繳交互評信息，不能修改互評份數 → employee has submitted review, could`nt modify pieces cnt
+19:00:43 - 跳過空白替換結果 - 公部門: 已有學生繳交互評信息，不能修改互評份數
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有學生繳交互評信息，不能修改互評份數
+19:00:43 - PO 更新 - 企業: 已有學生繳交互評信息，不能修改作業形式 → employee has submitted review, could`nt modify the type
+19:00:43 - 跳過空白替換結果 - 公部門: 已有學生繳交互評信息，不能修改作業形式
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有學生繳交互評信息，不能修改作業形式
+19:00:43 - PO 更新 - 企業: 全班可參與互評 → all employees
+19:00:43 - 跳過空白替換結果 - 公部門: 全班可參與互評
+19:00:43 - 跳過空白替換結果 - 培訓機構: 全班可參與互評
+19:00:43 - PO 更新 - 企業: {0} 課程預警通知將發送至名單內 {1} 名學生 → Send warning notification to {1} employees in course {0}
+19:00:43 - 跳過空白替換結果 - 公部門: {0} 課程預警通知將發送至名單內 {1} 名學生
+19:00:43 - 跳過空白替換結果 - 培訓機構: {0} 課程預警通知將發送至名單內 {1} 名學生
+19:00:43 - PO 更新 - 企業: 選擇未評分的學生或小組，發送通知和郵件 → Select employee or group to send review notification and email
+19:00:43 - 跳過空白替換結果 - 公部門: 選擇未評分的學生或小組，發送通知和郵件
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選擇未評分的學生或小組，發送通知和郵件
+19:00:43 - PO 更新 - 企業: 已選擇{0}名未評分的學生，確定要發送互評的通知嗎？ → Total {0} employees are selected, confirm to send review notification?
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇{0}名未評分的學生，確定要發送互評的通知嗎？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇{0}名未評分的學生，確定要發送互評的通知嗎？
+19:00:43 - PO 更新 - 企業: 當前互評作業要求每位學生需完成{0}份作業的評閱 → This assignment requires every employee to complete {0} peer review(s).
+19:00:43 - 跳過空白替換結果 - 公部門: 當前互評作業要求每位學生需完成{0}份作業的評閱
+19:00:43 - 跳過空白替換結果 - 培訓機構: 當前互評作業要求每位學生需完成{0}份作業的評閱
+19:00:43 - PO 更新 - 企業: 若您非教師/學生/家長，請選擇「其他」學校 → If you are not a teacher/employee/parent, please choose “other” school
+19:00:43 - 跳過空白替換結果 - 公部門: 若您非教師/學生/家長，請選擇「其他」學校
+19:00:43 - 跳過空白替換結果 - 培訓機構: 若您非教師/學生/家長，請選擇「其他」學校
+19:00:43 - PO 更新 - 企業: 请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试 → Please make sure that you have completed the test paper group before the test start time, otherwise the employees will not be able to take the test properly
+19:00:43 - 跳過空白替換結果 - 公部門: 请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试
+19:00:43 - 跳過空白替換結果 - 培訓機構: 请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试
+19:00:43 - PO 更新 - 企業: 请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试 → Please make sure that you have completed the test paper group before the test open time, otherwise the employees will not be able to take the test properly
+19:00:43 - 跳過空白替換結果 - 公部門: 请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试
+19:00:43 - 跳過空白替換結果 - 培訓機構: 请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试
+19:00:43 - PO 更新 - 企業: 如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数 → After setting the range, we will calculate the added number of teachers, employees, courses, learning activities, and resources in this range.
+19:00:43 - 跳過空白替換結果 - 公部門: 如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数
+19:00:43 - 跳過空白替換結果 - 培訓機構: 如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数
+19:00:43 - PO 更新 - 企業: 未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算 → If the Completion Index is not set, the employee's learning progress will not be included in the denominator. Teacher-side learning analysis-completion degree will not be included in the calculation
+19:00:43 - 跳過空白替換結果 - 公部門: 未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算
+19:00:43 - 跳過空白替換結果 - 培訓機構: 未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算
+19:00:43 - PO 更新 - 企業: 設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件 → After setting the Completion Index, employees must meet the conditions to be considered complete. This activity will be included in the completion statistics of the learning analysis and used as the denominator condition of the employee's learning progress
+19:00:43 - 跳過空白替換結果 - 公部門: 設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件
+19:00:43 - 跳過空白替換結果 - 培訓機構: 設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件
+19:00:43 - PO 更新 - 企業: 更新成員名單 → Update employee list
+19:00:43 - 跳過空白替換結果 - 公部門: 更新成員名單
+19:00:43 - 跳過空白替換結果 - 培訓機構: 更新成員名單
+19:00:43 - PO 更新 - 企業: 溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課 → Tips: Please remind your employees to connect LDAP account before you create course.
+19:00:43 - 跳過空白替換結果 - 公部門: 溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課
+19:00:43 - 跳過空白替換結果 - 培訓機構: 溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課
+19:00:43 - PO 更新 - 企業: 已選擇 {0} 名學生，系統將會自動覆蓋已有成績 → Total {0} employees are selected, it will automatically overwrite existing results.
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇 {0} 名學生，系統將會自動覆蓋已有成績
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇 {0} 名學生，系統將會自動覆蓋已有成績
+19:00:43 - PO 更新 - 企業: 已選擇 {0} 名學生，請設置補考起止時間 → {0} employees have been selected. Please set the starting and ending time of make-up exam
+19:00:43 - 跳過空白替換結果 - 公部門: 已選擇 {0} 名學生，請設置補考起止時間
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已選擇 {0} 名學生，請設置補考起止時間
+19:00:43 - PO 更新 - 企業: 確定后系統將給已選學生發送測試補考通知 → We will send notices to the selected employees.
+19:00:43 - 跳過空白替換結果 - 公部門: 確定后系統將給已選學生發送測試補考通知
+19:00:43 - 跳過空白替換結果 - 培訓機構: 確定后系統將給已選學生發送測試補考通知
+19:00:43 - PO 更新 - 企業: 開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。 → As while as the activity open time, employee can see the activity. If you set it automatically open/close, the course will be open by the course start/end time.
+19:00:43 - 跳過空白替換結果 - 公部門: 開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。
+19:00:43 - PO 更新 - 企業: 到達開始時間之後，老師和學生才能進入直播間 → After arriving at the start time, teachers and employees can enter the Zoom Live
+19:00:43 - 跳過空白替換結果 - 公部門: 到達開始時間之後，老師和學生才能進入直播間
+19:00:43 - 跳過空白替換結果 - 培訓機構: 到達開始時間之後，老師和學生才能進入直播間
+19:00:43 - PO 更新 - 企業: 到達結束時間後，老師和學生無法再進入直播間 → After the end time, teachers and employees can no longer enter the Zoom Live
+19:00:43 - 跳過空白替換結果 - 公部門: 到達結束時間後，老師和學生無法再進入直播間
+19:00:43 - 跳過空白替換結果 - 培訓機構: 到達結束時間後，老師和學生無法再進入直播間
+19:00:43 - PO 更新 - 企業: 自定人數不能超過全班人數總和 → Custom number should less than employee number
+19:00:43 - 跳過空白替換結果 - 公部門: 自定人數不能超過全班人數總和
+19:00:43 - 跳過空白替換結果 - 培訓機構: 自定人數不能超過全班人數總和
+19:00:43 - PO 更新 - 企業: 選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動 → Select has not been opened for employees. After opening, teachers and employees can view and interact on mobile
+19:00:43 - 跳過空白替換結果 - 公部門: 選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動
+19:00:43 - 跳過空白替換結果 - 培訓機構: 選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動
+19:00:43 - PO 更新 - 企業: 搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動 → Race has not been opened for employees. After opening, teachers and employees can view and interact on mobile
+19:00:43 - 跳過空白替換結果 - 公部門: 搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動
+19:00:43 - 跳過空白替換結果 - 培訓機構: 搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動
+19:00:43 - PO 更新 - 企業: 點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動 → Rollcall has not been opened for employees. After opening, teachers and employees can view and interact on mobile
+19:00:43 - 跳過空白替換結果 - 公部門: 點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動
+19:00:43 - 跳過空白替換結果 - 培訓機構: 點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動
+19:00:43 - PO 更新 - 企業: 點名正在進行中，學生可在移動端簽到 → Rollcall is in progress and employees can check in on mobile
+19:00:43 - 跳過空白替換結果 - 公部門: 點名正在進行中，學生可在移動端簽到
+19:00:43 - 跳過空白替換結果 - 培訓機構: 點名正在進行中，學生可在移動端簽到
+19:00:43 - PO 更新 - 企業: 老師和學生可在移動端查看並進行課堂互動 → Teachers and employees can view and interact on mobile
+19:00:43 - 跳過空白替換結果 - 公部門: 老師和學生可在移動端查看並進行課堂互動
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老師和學生可在移動端查看並進行課堂互動
+19:00:43 - PO 更新 - 企業: 該學生已交卷，無法強制收卷！ → The employee has submitted, you can't do it!
+19:00:43 - 跳過空白替換結果 - 公部門: 該學生已交卷，無法強制收卷！
+19:00:43 - 跳過空白替換結果 - 培訓機構: 該學生已交卷，無法強制收卷！
+19:00:43 - PO 更新 - 企業: 學生已交卷，無法發送警告 → The employee has submitted, you cannot send a warning.
+19:00:43 - 跳過空白替換結果 - 公部門: 學生已交卷，無法發送警告
+19:00:43 - 跳過空白替換結果 - 培訓機構: 學生已交卷，無法發送警告
+19:00:43 - PO 更新 - 企業: 老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動 → Launch in mobile or classroom mode, and employees can participate in the interaction on mobile
+19:00:43 - 跳過空白替換結果 - 公部門: 老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動
+19:00:43 - 跳過空白替換結果 - 培訓機構: 老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動
+19:00:43 - PO 更新 - 企業: 提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次 → Notice：Once you turn it on, employees will be restricted by anti-cheat rules when answering questions.In addition, it is recommended that you set the time limit to 1.
+19:00:43 - 跳過空白替換結果 - 公部門: 提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次
+19:00:43 - 跳過空白替換結果 - 培訓機構: 提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次
+19:00:43 - PO 更新 - 企業: 提醒：关闭后，学生可灵活选择电脑端或手机端考试。 → Notice： Once closed, employees can flexibly choose to take the test on the computer or mobile phone.
+19:00:43 - 跳過空白替換結果 - 公部門: 提醒：关闭后，学生可灵活选择电脑端或手机端考试。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 提醒：关闭后，学生可灵活选择电脑端或手机端考试。
+19:00:43 - PO 更新 - 企業: 教師設置的教學活動默認針對全班成員展開。 → All employees or groups will have the same learning activities.
+19:00:43 - 跳過空白替換結果 - 公部門: 教師設置的教學活動默認針對全班成員展開。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 教師設置的教學活動默認針對全班成員展開。
+19:00:43 - PO 更新 - 企業: 開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。 → Once differentiated instruction is enabled, instuctor can assign specific assignment or exam to partial employees or groups and set corresponding score percentage. Additionally, peer review for this kind of activity will be no longer supported.
+19:00:43 - 跳過空白替換結果 - 公部門: 開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。
+19:00:43 - 跳過空白替換結果 - 培訓機構: 開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。
+19:00:43 - PO 更新 - 企業: 开启在线监考后，学生只能通过电脑端作答。是否开启？ → Once opening, employees can only answer on the computer side. Do you want to open it?
+19:00:43 - 跳過空白替換結果 - 公部門: 开启在线监考后，学生只能通过电脑端作答。是否开启？
+19:00:43 - 跳過空白替換結果 - 培訓機構: 开启在线监考后，学生只能通过电脑端作答。是否开启？
+19:00:43 - PO 更新 - 企業: 开启在线监考后，学生只能通过电脑端作答 → Once opening, employees can only answer on the PC. Avoid employees do test with tablet, this may affect the 			 judgment results and lead to forced hand-in of the paper.
+19:00:43 - 跳過空白替換結果 - 公部門: 开启在线监考后，学生只能通过电脑端作答
+19:00:43 - 跳過空白替換結果 - 培訓機構: 开启在线监考后，学生只能通过电脑端作答
+19:00:43 - PO 更新 - 企業: 已有学生完成课程中学习活动，无法修改发布状态 → The publish status cannot be modified, employees have completed the activities in the course
+19:00:43 - 跳過空白替換結果 - 公部門: 已有学生完成课程中学习活动，无法修改发布状态
+19:00:43 - 跳過空白替換結果 - 培訓機構: 已有学生完成课程中学习活动，无法修改发布状态
+19:00:43 - PO 更新 - 企業: 应到总计 → Total employees
+19:00:43 - 跳過空白替換結果 - 公部門: 应到总计
+19:00:43 - 跳過空白替換結果 - 培訓機構: 应到总计
+19:00:43 - 解析完成統計: {'total_rows': 226, 'enterprises_updates': 226}
+19:00:43 - 開始處理業態: 企業
+19:00:43 - 開始更新 PO 檔案: messages_enterprises.po
+19:00:43 - PO 更新: '無學生資料' 從 'No student data' 改為 'No employee data'
+19:00:43 - PO 更新: '尚無任何學生' 從 'No student selected' 改為 'No employee selected'
+19:00:43 - PO 更新: '已有學生作答，不能修改測驗形式' 從 'Exam Type cannot be changed after students start answering question(s).' 改為 'Exam Type cannot be changed after employees start answering question(s).'
+19:00:43 - PO 更新: '已繳學生' 從 'Submitted student' 改為 'Submitted employee'
+19:00:43 - PO 更新: '非本課程修課學生' 從 'The student is not in course' 改為 'The employee is not in course'
+19:00:43 - PO 更新: '校務行政系統中的學生缺曠管理已存在請假記錄' 從 'There is already a record of student deficiencies in the school administration system. Please go to the faculty information service system to modify' 改為 'There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify'
+19:00:43 - PO 更新: '校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改' 從 'There is already a record of student deficiencies in the school administration system. Please go to the faculty information service system to modify' 改為 'There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify'
+19:00:43 - PO 更新: '確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改' 從 'Confirm submit? If you have modified the status of students before sending it, please save the record first. Please modify it on the absence management system after you submit' 改為 'Confirm submit? If you have modified the status of employees before sending it, please save the record first. Please modify it on the absence management system after you submit'
+19:00:43 - PO 更新: '異動學生' 從 'Changed students' 改為 'Changed employees'
+19:00:43 - PO 更新: '位學生' 從 'students' 改為 'employees'
+19:00:43 - PO 更新: '學生造訪課程量' 從 'Amount of student visit' 改為 'Amount of employee visit'
+19:00:43 - PO 更新: '本班級總共有 {0}位教師 {1}名學生' 從 '{0} instructors, and {1} students' 改為 '{0} instructors, and {1} employees'
+19:00:43 - PO 更新: '本班級總共有 {0} 名學生' 從 '{0} students' 改為 '{0} employees'
+19:00:43 - PO 更新: '本課程總共有 {0} 名學生' 從 '{0} students' 改為 '{0} employees'
+19:00:43 - PO 更新: '設定學生作答繳交完成後，所顯示的內容' 從 'Set up the content that students can see after finishing the test' 改為 'Set up the content that employees can see after finishing the test'
+19:00:43 - PO 更新: '改變繳交截止時間，將可能影響學生目前的繳交狀態' 從 'Change submission deadline could effect the current student submission status.' 改為 'Change submission deadline could effect the current employee submission status.'
+19:00:43 - PO 更新: '尚無學生加入此課程' 從 'No students in this course yet' 改為 'No employees in this course yet'
+19:00:43 - PO 更新: '學生看到的課程效果' 從 'What students see' 改為 'What employees see'
+19:00:43 - PO 更新: '預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。' 從 'You can preview this course in students' eyes and go back to adjust course content' 改為 'You can preview this course in employees' eyes and go back to adjust course content'
+19:00:43 - PO 更新: '共有{0}名學生，{1}名教師' 從 '{0} students, {1} instructors in total' 改為 '{0} employees, {1} instructors in total'
+19:00:43 - PO 更新: '向學生顯示' 從 'Show students' 改為 'Show employees'
+19:00:43 - PO 更新: '當學生答對後，會顯示正確答案解釋' 從 'The explanation of correct answer will be shown to the student after answering correctly' 改為 'The explanation of correct answer will be shown to the employee after answering correctly'
+19:00:43 - PO 更新: '當學生答錯後，會顯示錯誤答案解釋' 從 'The explanation of incorrect answer will be shown to the student after answering incorrectly' 改為 'The explanation of incorrect answer will be shown to the employee after answering incorrectly'
+19:00:43 - PO 更新: '模擬學生答題，不能繳交答題結果，不會進行計分' 從 'View as student, cannot submit, will not score' 改為 'View as employee, cannot submit, will not score'
+19:00:43 - PO 更新: 'group.summary' 從 '[[groupsNumber()]] groups in total, [[ungroupedNumber()]] students ungrouped' 改為 '[[groupsNumber()]] groups in total, [[ungroupedNumber()]] employees ungrouped'
+19:00:43 - PO 更新: 'group.members' 從 '[[groupedNumber()]] students in group' 改為 '[[groupedNumber()]] employees in group'
+19:00:43 - PO 更新: 'group.detail.members' 從 'this group has <span class='number'>[[group.studentsNumber]] students</span>' 改為 'this group has <span class='number'>[[group.employeesNumber]] employees</span>'
+19:00:43 - PO 更新: 'group.students.number' 從 '[[group.studentsNumber]] students' 改為 '[[group.employeesNumber]] employees'
+19:00:43 - PO 更新: 'group.ungrouped' 從 '[[ungroupedNumber()]] students ungrouped' 改為 '[[ungroupedNumber()]] employees ungrouped'
+19:00:43 - PO 更新: '無組員，可從下面添加組員' 從 'Empty group, please choose students from below' 改為 'Empty group, please choose employees from below'
+19:00:43 - PO 更新: '課程人數' 從 'Subject student' 改為 'Subject employee'
+19:00:43 - PO 更新: '共 {0} 組，未分組 {1} 人' 從 '{0} groups, ungrouped students: {1}' 改為 '{0} groups, ungrouped employees: {1}'
+19:00:43 - PO 更新: '課程人數: {0} 人' 從 'Subject student: {0} ' 改為 'Subject employee: {0}'
+19:00:43 - PO 更新: '暫無可分配小組成員' 從 'There are no any ungrouped students' 改為 'There are no any ungrouped employees'
+19:00:43 - PO 更新: '班級成員不存在' 從 'student does not exist' 改為 'employee does not exist'
+19:00:43 - PO 更新: '班級成員在其他分組中' 從 'student already in other group' 改為 'employee already in other group'
+19:00:43 - PO 更新: '是否確認設置助教？' 從 'Are you sure to set this student as assistant?' 改為 'Are you sure to set this employee as assistant?'
+19:00:43 - PO 更新: '助教設置成功' 從 'Successfully set student as assistant' 改為 'Successfully set employee as assistant'
+19:00:43 - PO 更新: '助教取消成功' 從 'Successfully unset assistant as student' 改為 'Successfully unset assistant as employee'
+19:00:43 - PO 更新: '修改後試卷題目、選項、配分將一同更新到學生試卷。' 從 'Once the modification is made, it will be synchronized in students’ exam papers.' 改為 'Once the modification is made, it will be synchronized in employees’ exam papers.'
+19:00:43 - PO 更新: '繳交截止時間到達之後，學生可以查看基本資訊但不能繳交' 從 'After submit expiration time is reached, students can see but cannot pay the other operations' 改為 'After submit expiration time is reached, employees can see but cannot pay the other operations'
+19:00:43 - PO 更新: '剩余 {} 學生名額' 從 '{} student positions left' 改為 '{} employee positions left'
+19:00:43 - PO 更新: '開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息' 從 'After opening time is reached, exam will appear on learning activity list, students will see the exam info' 改為 'After opening time is reached, exam will appear on learning activity list, employees will see the exam info'
+19:00:43 - PO 更新: '截止時間到達之後，學生可以查看但不能進行繳交等操作' 從 'After closing time is reached, students can see but cannot pay the other operations' 改為 'After closing time is reached, employees can see but cannot pay the other operations'
+19:00:43 - PO 更新: '公佈時間到達之後，學生會看到自己的成績' 從 'After the publication time arrives, students can see their grades' 改為 'After the publication time arrives, employees can see their grades'
+19:00:43 - PO 更新: '公布时间到达后，学生会看到自己的原始成绩' 從 'After the publication time arrives, students can see their original score' 改為 'After the publication time arrives, employees can see their original score'
+19:00:43 - PO 更新: '公布时间到达后，学生会看到自己的最终成绩' 從 'After the publication time arrives, students can see their final score' 改為 'After the publication time arrives, employees can see their final score'
+19:00:43 - PO 更新: '老師和學生可在APP端查看並進行課堂互動' 從 'Teachers and students can view the quiz and feedback in app' 改為 'Teachers and employees can view the quiz and feedback in app'
+19:00:43 - PO 更新: '選擇允許後，學生可以看到班級答題結果統計' 從 'When checked allow, students can see their class answer result statistics' 改為 'When checked allow, employees can see their class answer result statistics'
+19:00:43 - PO 更新: '開放時間到達之後，作業才能被學生看到並交付' 從 'After the opening time arrives, the assignment can be seen and commit by students' 改為 'After the opening time arrives, the assignment can be seen and commit by employees'
+19:00:43 - PO 更新: '繳交截止時間到達之後，學生將不能進行作業繳交' 從 'After closing time is reached, the student will not be able to submit assignment' 改為 'After closing time is reached, the employee will not be able to submit assignment'
+19:00:43 - PO 更新: '測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！' 從 'This test has been opened to students, and please note that any modifications will lead to unexpected score statistics!' 改為 'This test has been opened to employees, and please note that any modifications will lead to unexpected score statistics!'
+19:00:43 - PO 更新: '已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？' 從 'Total {0} students of unsubmitted are selected, confirm to send remind assignment notification?' 改為 'Total {0} employees of unsubmitted are selected, confirm to send remind assignment notification?'
+19:00:43 - PO 更新: '已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？' 從 'Total {0} students of unsubmitted are selected, confirm to send remind questionnaire notification?' 改為 'Total {0} employees of unsubmitted are selected, confirm to send remind questionnaire notification?'
+19:00:43 - PO 更新: '共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？' 從 'Total {0} students of unsubmitted, confirm to send remind assignment notification?' 改為 'Total {0} employees of unsubmitted, confirm to send remind assignment notification?'
+19:00:43 - PO 更新: '選擇未繳的學生，設成已繳狀態' 從 'Set selected ”unsubmitted” as ”submitted” for student(s)' 改為 'Set selected ”unsubmitted” as ”submitted” for employee(s)'
+19:00:43 - PO 更新: '選擇已繳的學生，設成未繳狀態' 從 'Set selected ”submitted” as ”unsubmitted” for student(s)' 改為 'Set selected ”submitted” as ”unsubmitted” for employee(s)'
+19:00:43 - PO 更新: '選擇未繳的小組，設成已繳狀態' 從 'Set selected ”unsubmitted” as ”submitted” for student group(s)' 改為 'Set selected ”unsubmitted” as ”submitted” for employee group(s)'
+19:00:43 - PO 更新: '選擇已繳的小組，設成未繳狀態' 從 'Set selected ”submitted” as ”unsubmitted” for student group(s)' 改為 'Set selected ”submitted” as ”unsubmitted” for employee group(s)'
+19:00:43 - PO 更新: '選擇未繳的學生，可催繳作業' 從 'Select unsubmitted students can remind assignment' 改為 'Select unsubmitted employees can remind assignment'
+19:00:43 - PO 更新: '選擇未繳的學生，可催繳問卷' 從 'Select unsubmitted students can remind questionnaire' 改為 'Select unsubmitted employees can remind questionnaire'
+19:00:43 - PO 更新: '選擇學生，可設定其進行補繳' 從 'Select students and set them to make up assignment' 改為 'Select employees and set them to make up assignment'
+19:00:43 - PO 更新: '已選擇{0}名學生，確定要發送補繳作業的通知嗎？' 從 'Total {0} students are selected, confirm to send make up assignment notification?' 改為 'Total {0} employees are selected, confirm to send make up assignment notification?'
+19:00:43 - PO 更新: '共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？' 從 'Total {0} students of unsubmitted, confirm to send make up assignment notification?' 改為 'Total {0} employees of unsubmitted, confirm to send make up assignment notification?'
+19:00:43 - PO 更新: '選擇已繳的作業，可推薦給學生' 從 'Select committed submissions can recommend to students' 改為 'Select committed submissions can recommend to employees'
+19:00:43 - PO 更新: '已選擇{0}名已繳作業的學生，確定推薦嗎？' 從 'Total {0} students of committed are selected, confirm to recommend?' 改為 'Total {0} employees of committed are selected, confirm to recommend?'
+19:00:43 - PO 更新: '推薦的作業會展示給學生，包括作業內容和評分評語' 從 'Assignment of recommended will be shown to students, including the content, score and comment' 改為 'Assignment of recommended will be shown to employees, including the content, score and comment'
+19:00:43 - PO 更新: '由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。' 從 'Assignment will be scored by other student(s).' 改為 'Assignment will be scored by other employee(s).'
+19:00:43 - PO 更新: '由於人員變動，標記出的人員作業不參與互評，需要您進行批改' 從 'You need to give score to marked student who cannot involved in peer assessment' 改為 'You need to give score to marked employee who cannot involved in peer assessment'
+19:00:43 - PO 更新: '私有課程，表示課程僅對您和該課程的成員可見，可透過邀請碼和邀請連結將成員加入課程。' 從 'Private Course: Course only open to the teacher and students in this course. User need 'access code' or 'access url' to join the course.' 改為 'Private Course: Course only open to the teacher and employees in this course. User need 'access code' or 'access url' to join the course.'
+19:00:43 - PO 更新: '老師評分之後，學生會看到自己的成績' 從 'After instructors give score, students can see their grades' 改為 'After instructors give score, employees can see their grades'
+19:00:43 - PO 更新: '老师评分之后，学生可以马上看到自己的原始成绩' 從 'Once instructors give score, students can see their original score' 改為 'Once instructors give score, employees can see their original score'
+19:00:43 - PO 更新: '老师评分之后，学生可以马上看到自己的最终成绩' 從 'Once instructors give score, students can see their final score' 改為 'Once instructors give score, employees can see their final score'
+19:00:43 - PO 更新: '已選擇 {0} 名學生，確定送繳學期成績嗎？' 從 'You have selected {0} students, do you want to submit?' 改為 'You have selected {0} employees, do you want to submit?'
+19:00:43 - PO 更新: '成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。' 從 'After your submission, the "final scores" can’t be changed. Even though modify student’s assignment and exam scores.' 改為 'After your submission, the "final scores" can’t be changed. Even though modify employee’s assignment and exam scores.'
+19:00:43 - PO 更新: '請選擇送繳學生' 從 'Please select some students' 改為 'Please select some employees'
+19:00:43 - PO 更新: '請先選擇要進行成績送繳的學生範圍。' 從 'Please select some students to be submitted.' 改為 'Please select some employees to be submitted.'
+19:00:43 - PO 更新: '已送繳全部學生成績' 從 'All students have been submitted' 改為 'All employees have been submitted'
+19:00:43 - PO 更新: '送繳部分學生' 從 'Submit some students' 改為 'Submit some employees'
+19:00:43 - PO 更新: '送繳全部學生' 從 'Submit all students' 改為 'Submit all employees'
+19:00:43 - PO 更新: '人學習' 從 ' students' 改為 'employees'
+19:00:43 - PO 更新: '注：预警指标说明（低于预警阈值的学生将被预警)' 從 'P.S. The student will be warned if he/she is lower than the Warning Standard.' 改為 'P.S. The employee will be warned if he/she is lower than the Warning Standard.'
+19:00:43 - PO 更新: '请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。' 從 'Please choose the Warning Target then setting the Standard. The student will be warned if he/she is lower than the Warning Standard. If the standard is blank, it wouldn't be take into the List.' 改為 'Please choose the Warning Target then setting the Standard. The employee will be warned if he/she is lower than the Warning Standard. If the standard is blank, it wouldn't be take into the List.'
+19:00:43 - PO 更新: '預警學生總數' 從 'The sum of Warning students' 改為 'The sum of Warning employees'
+19:00:43 - PO 更新: '預警學生數' 從 'The count of Warning students' 改為 'The count of Warning employees'
+19:00:43 - PO 更新: '預警學生佔比' 從 'The percent of Warning students' 改為 'The percent of Warning employees'
+19:00:43 - PO 更新: '本課程有{0}名學生被預警，確定送交預警名單嗎？' 從 '{0} students in this course are being alerted and are sure to send them to the warning list?' 改為 '{0} employees in this course are being alerted and are sure to send them to the warning list?'
+19:00:43 - PO 更新: '附：預警指標說明（低於預警閾值的學生將被預警)' 從 'Attachment: Description of early warning indicators (students below the warning threshold will be alerted)' 改為 'Attachment: Description of early warning indicators (employees below the warning threshold will be alerted)'
+19:00:43 - PO 更新: '缺席 {0} 次後預警' 從 'Absent for {0} times, students will get notice.' 改為 'Absent for {0} times, employees will get notice.'
+19:00:43 - PO 更新: '請假 {0} 次後預警' 從 'On-Leave for {0} times, students will get notice.' 改為 'On-Leave for {0} times, employees will get notice.'
+19:00:43 - PO 更新: '出席率低於 {0}％，學生將收到通知' 從 'Attendance Rate lower than {0}％, students will get notice.' 改為 'Attendance Rate lower than {0}％, employees will get notice.'
+19:00:43 - PO 更新: '出席率低於 {0}％，學生將收到不允許參加期末考的通知' 從 'Attendance Rate lower than {0}％, students will get notice of banned to join Final Exam.' 改為 'Attendance Rate lower than {0}％, employees will get notice of banned to join Final Exam.'
+19:00:43 - PO 更新: '低於 {0}％不能參加期末考' 從 'lower than {0}％, students can't join Final Exam.' 改為 'lower than {0}％, employees can't join Final Exam.'
+19:00:43 - PO 更新: '课程成绩详细提示' 從 'Grade lower than {0} points, students will get notice.' 改為 'Grade lower than {0} points, employees will get notice.'
+19:00:43 - PO 更新: '預警學生已經成功添加' 從 'The warning student has been successfully added' 改為 'The warning employee has been successfully added'
+19:00:43 - PO 更新: '預警學生已經存在' 從 'The warning student already exist' 改為 'The warning employee already exist'
+19:00:43 - PO 更新: '預警學生已經成功保存' 從 'Changes of warning student has been successfully saved' 改為 'Changes of warning employee has been successfully saved'
+19:00:43 - PO 更新: '預警學生已經成功刪除' 從 'The warning student has been successfully removed' 改為 'The warning employee has been successfully removed'
+19:00:43 - PO 更新: '人報名' 從 ' students registered' 改為 'employees registered'
+19:00:43 - PO 更新: '学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。' 從 'Students can choose learning activities to study freely, instructor can set the completion criteria of activities to investigate students' learning situation.' 改為 'Students can choose learning activities to study freely, instructor can set the completion criteria of activities to investigate employees' learning situation.'
+19:00:43 - PO 更新: '此課程人數已達上限' 從 'The student count limitation has reached' 改為 'The employee count limitation has reached'
+19:00:43 - PO 更新: '預警名單' 從 'Warning students list' 改為 'Warning employees list'
+19:00:43 - PO 更新: '您可以在此輸入對學生作業的評語' 從 'You can input comment for submission of student here' 改為 'You can input comment for submission of employee here'
+19:00:43 - PO 更新: '及格人數' 從 'Passed students' 改為 'Passed employees'
+19:00:43 - PO 更新: '不及格人數' 從 'Failed students' 改為 'Failed employees'
+19:00:43 - PO 更新: '課程內的所有學生將會變更為：出席' 從 'The action will make all students to Present.' 改為 'The action will make all employees to Present.'
+19:00:43 - PO 更新: '不論當前狀態為何，都會被調整為出席。' 從 'No matter of their current status, students will be marked present.' 改為 'No matter of their current status, employees will be marked present.'
+19:00:43 - PO 更新: '設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序' 從 'When set to random, question options in paper of different students will sort randomly' 改為 'When set to random, question options in paper of different employees will sort randomly'
+19:00:43 - PO 更新: '設定為隨機排序，不同學生所見試卷，題目將隨機進行排序' 從 'When set to random, questions in paper of different students will sort randomly' 改為 'When set to random, questions in paper of different employees will sort randomly'
+19:00:43 - PO 更新: '設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序' 從 'When set to random, questions in paper of different students will sort randomly. When set to random in question type, questions in paper of different students will sort randomly in question type.' 改為 'When set to random, questions in paper of different employees will sort randomly. When set to random in question type, questions in paper of different employees will sort randomly in question type.'
+19:00:43 - PO 更新: '若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制' 從 'If not allow, students will not able to drag the timeline to fast forward the video unless they finish watching the video for one time' 改為 'If not allow, employees will not able to drag the timeline to fast forward the video unless they finish watching the video for one time'
+19:00:43 - PO 更新: '課程還沒有學生' 從 'No student yet' 改為 'No employee yet'
+19:00:43 - PO 更新: '課程還沒有學生, 快' 從 'No student yet, ' 改為 'No employee yet,'
+19:00:43 - PO 更新: '課程沒有學生' 從 'No student yet' 改為 'No employee yet'
+19:00:43 - PO 更新: '查看學生成績單' 從 'View score of student' 改為 'View score of employee'
+19:00:43 - PO 更新: '機構還沒有教師和學生, 教學活動無法展開' 從 'No instructor or student' 改為 'No instructor or employee'
+19:00:43 - PO 更新: '機構已有{0}名成員, 其中教師{1}人, 學生{2}人' 從 '{0} members in organization, {1} instructors, {2} students' 改為 '{0} members in organization, {1} instructors, {2} employees'
+19:00:43 - PO 更新: '本月增加教師{0}人, 本月增加學生{1}人' 從 'Added {0} instructors and {1} students in this month' 改為 'Added {0} instructors and {1} employees in this month'
+19:00:43 - PO 更新: '還沒有學生加入到您的課程或班級' 從 'No student yet' 改為 'No employee yet'
+19:00:43 - PO 更新: '共有{0}人參加到您的課程，{1}人加入到您的班級' 從 '{0} students are studying in your courses, {1} in your classes' 改為 '{0} employees are studying in your courses, {1} in your classes'
+19:00:43 - PO 更新: '還沒有教師和學生, 教學活動無法展開' 從 'No instructor or student' 改為 'No instructor or employee'
+19:00:43 - PO 更新: '課程內教師身份不可新增座號' 從 'No support for add student number on teachers.' 改為 'No support for add employee number on teachers.'
+19:00:43 - PO 更新: '已有{0}名成員, 其中教師{1}人, 學生{2}人' 從 '{0} members, {1} instructors, {2} students' 改為 '{0} members, {1} instructors, {2} employees'
+19:00:43 - PO 更新: '選擇學生，可設定其進行補考' 從 'Select students can set it to make up exam' 改為 'Select employees can set it to make up exam'
+19:00:43 - PO 更新: '已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？' 從 'Total {0} students are selected, confirm to send make up exam notification?' 改為 'Total {0} employees are selected, confirm to send make up exam notification?'
+19:00:43 - PO 更新: '分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!' 從 'Group learning through the course of the students into a number of groups, to achieve the group work, the group of resource sharing and other learning activities. The teacher can easily complete the group here, the designated team leader, to give it a try!' 改為 'Group learning through the course of the employees into a number of groups, to achieve the group work, the group of resource sharing and other learning activities. The teacher can easily complete the group here, the designated team leader, to give it a try!'
+19:00:43 - PO 更新: '該課程還沒有任何學生' 從 'No students in this course' 改為 'No employees in this course'
+19:00:43 - PO 更新: '，去邀請一些學生吧' 從 ', go to invite student' 改為 ', go to invite employee'
+19:00:43 - PO 更新: 'Rubric（評分量規）是一個二位的評價表格，你可以用Rubric定義自己的評分規則，定義好的Rubric可以用於作業的評價和同學間的互評，讓評價有據可循，同時方便快捷。' 從 'Rubric (scoring rubrics) is a second evaluation form, you can define its own scoring rules Rubric, Rubric defined can be used on the work of evaluation and students mutual evaluation, make evaluation according to follow, and convenient.' 改為 'Rubric (scoring rubrics) is a second evaluation form, you can define its own scoring rules Rubric, Rubric defined can be used on the work of evaluation and employees mutual evaluation, make evaluation according to follow, and convenient.'
+19:00:43 - PO 更新: '選擇學生' 從 'Select student' 改為 'Select employee'
+19:00:43 - PO 更新: '請選擇學生' 從 'Please select student' 改為 'Please select employee'
+19:00:43 - PO 更新: '已選擇 {0} 位學生' 從 'Selected {0} students' 改為 'Selected {0} employees'
+19:00:43 - PO 更新: '部分學生' 從 'Some students' 改為 'Some employees'
+19:00:43 - PO 更新: '全部學生' 從 'All students' 改為 'All employees'
+19:00:43 - PO 更新: '互評功能不適用於部分學生' 從 'Peer Review can not be used with selected some students.' 改為 'Peer Review can not be used with selected some employees.'
+19:00:43 - PO 更新: '因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習' 從 'Due to assign some students/groups for specific assignment and exam, this course can't change to Checkpoint Learning.' 改為 'Due to assign some employees/groups for specific assignment and exam, this course can't change to Checkpoint Learning.'
+19:00:43 - PO 更新: '邀請機構內人員成為學生' 從 'Invite user to become student in organization' 改為 'Invite user to become employee in organization'
+19:00:43 - PO 更新: '還沒有學生加入到您的課程' 從 'No student yet' 改為 'No employee yet'
+19:00:43 - PO 更新: '共有{0}人參加到您的課程' 從 '{0} students are studying in your courses' 改為 '{0} employees are studying in your courses'
+19:00:43 - PO 更新: '（您可以在學生的帳號中找到家長關聯碼）' 從 '(You could find the Association Code in student's account)' 改為 '(You could find the Association Code in employee's account)'
+19:00:43 - PO 更新: '以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。' 從 'Centered on students, teachers, educational administration, combined the technology of the cloud, creating a integration management platform of learning, action and social, provide a complete solution of teaching that is most suitable for blended learning system.' 改為 'Centered on employees, teachers, educational administration, combined the technology of the cloud, creating a integration management platform of learning, action and social, provide a complete solution of teaching that is most suitable for blended learning system.'
+19:00:43 - PO 更新: '在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。' 從 'Here, you can share learning materials around the class management, post is your assistant for the rapid release of your message file, you can also interact with students and parents.' 改為 'Here, you can share learning materials around the class management, post is your assistant for the rapid release of your message file, you can also interact with employees and parents.'
+19:00:43 - PO 更新: '添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？' 從 'After add questions, this online video activity will be transformed to interaction activity. It will also makes students learning history be deleted. Are you sure to do this?' 改為 'After add questions, this online video activity will be transformed to interaction activity. It will also makes employees learning history be deleted. Are you sure to do this?'
+19:00:43 - PO 更新: '若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。' 從 'Chose `Active` to auto-submit answers when student try to open or switch to another Browser tab more than {0} times.' 改為 'Chose `Active` to auto-submit answers when employee try to open or switch to another Browser tab more than {0} times.'
+19:00:43 - PO 更新: '設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。' 從 'Setting the max number of times. When student exits this page over than the max number, the exam will be submitted.' 改為 'Setting the max number of times. When employee exits this page over than the max number, the exam will be submitted.'
+19:00:43 - PO 更新: '選擇「允許」後，學生將可下載發布後的即時討論錄影檔案' 從 'After selecting 'Allow', students will be able to download video files after publishing' 改為 'After selecting 'Allow', employees will be able to download video files after publishing'
+19:00:43 - PO 更新: '導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁' 從 'Disable a navigation item, the navigation item will be disappearing on the menu of course; this will cause the student who is opening the navigation item was redirected to the bulletin page' 改為 'Disable a navigation item, the navigation item will be disappearing on the menu of course; this will cause the employee who is opening the navigation item was redirected to the bulletin page'
+19:00:43 - PO 更新: '僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。' 從 'We only support private IPv4. After setting the IP limited, student needs to link to the correct IP address to do test.' 改為 'We only support private IPv4. After setting the IP limited, employee needs to link to the correct IP address to do test.'
+19:00:43 - PO 更新: '随堂测试已开放给学生，可逐一开启题目给学生作答' 從 'You can open the title one by one  to students' 改為 'You can open the title one by one  to employees'
+19:00:43 - PO 更新: '教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈' 從 'Open the activity,students can make feedback in app' 改為 'Open the activity,employees can make feedback in app'
+19:00:43 - PO 更新: '开启后，学生将在app中看到活动并参与反馈。' 從 'After open the activity, students can view and make feedback in app' 改為 'After open the activity, employees can view and make feedback in app'
+19:00:43 - PO 更新: '學生試卷' 從 'student_papers' 改為 'employee_papers'
+19:00:43 - PO 更新: '下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？' 從 'It takes a lot of time to zip student paper, start now?' 改為 'It takes a lot of time to zip employee paper, start now?'
+19:00:43 - PO 更新: '匯出缺席名單' 從 'Export absent students' 改為 'Export absent employees'
+19:00:43 - PO 更新: '課程教師、助教與指定為發布對象的分組或學生，才可查看本公告' 從 'Only the instructor, assistant, assign student(s) and group(s) can see this announcement' 改為 'Only the instructor, assistant, assign employee(s) and group(s) can see this announcement'
+19:00:43 - PO 更新: '課程教師與指定為發布對象的分組或學生，才可查看本公告' 從 'Only the instructor, assign student(s) and group(s) can see this announcement' 改為 'Only the instructor, assign employee(s) and group(s) can see this announcement'
+19:00:43 - PO 更新: '教師上傳檔案作為教材，學生對該教材的學習行為統計' 從 'Teachers upload files as a teaching material, students of the teaching materials learning behavior statistics' 改為 'Teachers upload files as a teaching material, employees of the teaching materials learning behavior statistics'
+19:00:43 - PO 更新: '教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計' 從 'Teachers upload video files, or share third-party audio and video links as a teaching material, students of the textbook learning behavior statistics' 改為 'Teachers upload video files, or share third-party audio and video links as a teaching material, employees of the textbook learning behavior statistics'
+19:00:43 - PO 更新: '教師分享網站連結，學生對該網站連結的學習行為統計' 從 'Teachers share site links, students of the site to link learning behavior statistics' 改為 'Teachers share site links, employees of the site to link learning behavior statistics'
+19:00:43 - PO 更新: '教師發布作業後，學生對該作業的繳交記錄與得分' 從 'After the teacher releases the assignment, records of the score of students for the assignment' 改為 'After the teacher releases the assignment, records of the score of employees for the assignment'
+19:00:43 - PO 更新: '教師發布線上測驗後，學生對該測驗的繳交記錄與得分' 從 'After the teacher releases the online exam, records of the score of students for the exam' 改為 'After the teacher releases the online exam, records of the score of employees for the exam'
+19:00:43 - PO 更新: '教師發起點名，學生的出缺席狀態' 從 'The state of the student's absence' 改為 'The state of the employee's absence'
+19:00:43 - PO 更新: '老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習' 從 'Instructors can set up three prerequisites at most, students need to finish all the prerequisites before entering the activity.' 改為 'Instructors can set up three prerequisites at most, employees need to finish all the prerequisites before entering the activity.'
+19:00:43 - PO 更新: '學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。' 從 'Once the basic score of students' performance is set, the score of all the students will be adjusted in a unified way.' 改為 'Once the basic score of employees' performance is set, the score of all the employees will be adjusted in a unified way.'
+19:00:43 - PO 更新: '每次点击分数旁加减按钮所产生的分数差。' 從 'There is the different scores got by clicking the add or minus button beside student score.' 改為 'There is the different scores got by clicking the add or minus button beside employee score.'
+19:00:43 - PO 更新: '預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險' 從 'Early Alart: To inform students who may fail to comply with mandatory course requirements.' 改為 'Early Alart: To inform employees who may fail to comply with mandatory course requirements.'
+19:00:43 - PO 更新: '扣考: 通知學生學習總時數(分鐘) 不足，已被扣考' 從 'Barred from Sitting Examination: To inform students who fail to comply with mandatory course requirements.' 改為 'Barred from Sitting Examination: To inform employees who fail to comply with mandatory course requirements.'
+19:00:43 - PO 更新: '隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中' 從 'Random Group：Randomly assign ungrouped students to groups' 改為 'Random Group：Randomly assign ungrouped employees to groups'
+19:00:43 - PO 更新: '依每組人數' 從 'students per group' 改為 'employees per group'
+19:00:43 - PO 更新: '未分組人數： {0} 人' 從 'ungrouped students: {0}' 改為 'ungrouped employees: {0}'
+19:00:43 - PO 更新: '{0}人/組，共{1}組' 從 '{0} students/group, {1} Groups' 改為 '{0} employees/group, {1} Groups'
+19:00:43 - PO 更新: '分組數不能大於未分組人數。' 從 'The total number of groups cannot exceeds the number of ungrouped students.' 改為 'The total number of groups cannot exceeds the number of ungrouped employees.'
+19:00:43 - PO 更新: '每組人數不能大於未分組人數。' 從 'The number of students per group cannot exceeds the number of ungrouped students.' 改為 'The number of employees per group cannot exceeds the number of ungrouped employees.'
+19:00:43 - PO 更新: '備註(公開)' 從 'Notes(for student)' 改為 'Notes(for employee)'
+19:00:43 - PO 更新: '修課學生帳號未填寫' 從 'Enrolled student account is required.' 改為 'Enrolled employee account is required.'
+19:00:43 - PO 更新: '帳號使用者不是本課程的學生' 從 'Not an enrolled student account.' 改為 'Not an enrolled employee account.'
+19:00:43 - PO 更新: '已有{0}筆資料修課學生帳號重複' 從 '{0} duplicated enrolled student accounts has found.' 改為 '{0} duplicated enrolled employee accounts has found.'
+19:00:43 - PO 更新: '份數必須大於0且小於學生人數' 從 'Pieces number must larger then 0 and less than students number' 改為 'Pieces number must larger then 0 and less than employees number'
+19:00:43 - PO 更新: '請您先到「分組學習」中完成學生的分組' 從 'Please complete the student group first' 改為 'Please complete the employee group first'
+19:00:43 - PO 更新: '小組內無成員，請您先到「分組學習」中完成學生的分組' 從 'No member in groups. Please complete the student group first.' 改為 'No member in groups. Please complete the employee group first.'
+19:00:43 - PO 更新: '學生無成績' 從 'No score students' 改為 'No score employees'
+19:00:43 - PO 更新: '從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. 如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。' 從 'From all questions, set the number of questions select randomly, for examples: 1. there are 10 multiple-choice questions, questions select randomly number set to 6, said the students exam paper will select 6 questions randomly from 10 questions. 2. if not select questions select randomly, questions select randomly number set to 10, said the students exam paper will select 10 questions randomly from 10 questions.' 改為 'From all questions, set the number of questions select randomly, for examples: 1. there are 10 multiple-choice questions, questions select randomly number set to 6, said the employees exam paper will select 6 questions randomly from 10 questions. 2. if not select questions select randomly, questions select randomly number set to 10, said the employees exam paper will select 10 questions randomly from 10 questions.'
+19:00:43 - PO 更新: '設定為隨機抽題，不同學生所見的題目範圍隨機設定。' 從 'When set to random, questions in paper of different students will be set randomly.' 改為 'When set to random, questions in paper of different employees will be set randomly.'
+19:00:43 - PO 更新: '當前測驗為隨機抽題，不同學生題目不同。' 從 'This exam is select question randomly, selected questions in paper is different for different students.' 改為 'This exam is select question randomly, selected questions in paper is different for different employees.'
+19:00:43 - PO 更新: '已有學生繳交互評信息不能修改評分方式' 從 'Any student has reviewed, should`nt modify Scored method' 改為 'Any employee has reviewed, should`nt modify Scored method'
+19:00:43 - PO 更新: '此學生繳交時間過晚，無法參與互評，以教師評分為準' 從 'This student submitted too late, should score by teacher' 改為 'This employee submitted too late, should score by teacher'
+19:00:43 - PO 更新: '僅繳交作業才可參與互評' 從 'students who have already submitted the assignment' 改為 'employees who have already submitted the assignment'
+19:00:43 - PO 更新: '已有學生繳交互評信息，不能修改互評開始時間' 從 'student has submitted review, could`nt modify start time' 改為 'employee has submitted review, could`nt modify start time'
+19:00:43 - PO 更新: '已有學生繳交互評信息，不能修改互評份數' 從 'student has submitted review, could`nt modify pieces cnt' 改為 'employee has submitted review, could`nt modify pieces cnt'
+19:00:43 - PO 更新: '已有學生繳交互評信息，不能修改作業形式' 從 'student has submitted review, could`nt modify the type' 改為 'employee has submitted review, could`nt modify the type'
+19:00:43 - PO 更新: '全班可參與互評' 從 'all students' 改為 'all employees'
+19:00:43 - PO 更新: '{0} 課程預警通知將發送至名單內 {1} 名學生' 從 'Send warning notification to {1} students in course {0}' 改為 'Send warning notification to {1} employees in course {0}'
+19:00:43 - PO 更新: '選擇未評分的學生或小組，發送通知和郵件' 從 'Select student or group to send review notification and email' 改為 'Select employee or group to send review notification and email'
+19:00:43 - PO 更新: '已選擇{0}名未評分的學生，確定要發送互評的通知嗎？' 從 'Total {0} students are selected, confirm to send review notification?' 改為 'Total {0} employees are selected, confirm to send review notification?'
+19:00:43 - PO 更新: '當前互評作業要求每位學生需完成{0}份作業的評閱' 從 'This assignment requires every student to complete {0} peer review(s).' 改為 'This assignment requires every employee to complete {0} peer review(s).'
+19:00:43 - PO 更新: '若您非教師/學生/家長，請選擇「其他」學校' 從 'If you are not a teacher/student/parent, please choose “other” school' 改為 'If you are not a teacher/employee/parent, please choose “other” school'
+19:00:43 - PO 更新: '请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试' 從 'Please make sure that you have completed the test paper group before the test start time, otherwise the students will not be able to take the test properly' 改為 'Please make sure that you have completed the test paper group before the test start time, otherwise the employees will not be able to take the test properly'
+19:00:43 - PO 更新: '请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试' 從 'Please make sure that you have completed the test paper group before the test open time, otherwise the students will not be able to take the test properly' 改為 'Please make sure that you have completed the test paper group before the test open time, otherwise the employees will not be able to take the test properly'
+19:00:43 - PO 更新: '如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数' 從 'After setting the range, we will calculate the added number of teachers, students, courses, learning activities, and resources in this range.' 改為 'After setting the range, we will calculate the added number of teachers, employees, courses, learning activities, and resources in this range.'
+19:00:43 - PO 更新: '未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算' 從 'If the Completion Index is not set, the student's learning progress will not be included in the denominator. Teacher-side learning analysis-completion degree will not be included in the calculation' 改為 'If the Completion Index is not set, the employee's learning progress will not be included in the denominator. Teacher-side learning analysis-completion degree will not be included in the calculation'
+19:00:43 - PO 更新: '設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件' 從 'After setting the Completion Index, students must meet the conditions to be considered complete. This activity will be included in the completion statistics of the learning analysis and used as the denominator condition of the student's learning progress' 改為 'After setting the Completion Index, employees must meet the conditions to be considered complete. This activity will be included in the completion statistics of the learning analysis and used as the denominator condition of the employee's learning progress'
+19:00:43 - PO 更新: '更新成員名單' 從 'Update student list' 改為 'Update employee list'
+19:00:43 - PO 更新: '溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課' 從 'Tips: Please remind your students to connect LDAP account before you create course.' 改為 'Tips: Please remind your employees to connect LDAP account before you create course.'
+19:00:43 - PO 更新: '已選擇 {0} 名學生，系統將會自動覆蓋已有成績' 從 'Total {0} students are selected, it will automatically overwrite existing results.' 改為 'Total {0} employees are selected, it will automatically overwrite existing results.'
+19:00:43 - PO 更新: '已選擇 {0} 名學生，請設置補考起止時間' 從 '{0} students have been selected. Please set the starting and ending time of make-up exam' 改為 '{0} employees have been selected. Please set the starting and ending time of make-up exam'
+19:00:43 - PO 更新: '確定后系統將給已選學生發送測試補考通知' 從 'We will send notices to the selected students. ' 改為 'We will send notices to the selected employees.'
+19:00:43 - PO 更新: '開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。' 從 'As while as the activity open time, student can see the activity. If you set it automatically open/close, the course will be open by the course start/end time.' 改為 'As while as the activity open time, employee can see the activity. If you set it automatically open/close, the course will be open by the course start/end time.'
+19:00:43 - PO 更新: '到達開始時間之後，老師和學生才能進入直播間' 從 'After arriving at the start time, teachers and students can enter the Zoom Live' 改為 'After arriving at the start time, teachers and employees can enter the Zoom Live'
+19:00:43 - PO 更新: '到達結束時間後，老師和學生無法再進入直播間' 從 'After the end time, teachers and students can no longer enter the Zoom Live' 改為 'After the end time, teachers and employees can no longer enter the Zoom Live'
+19:00:43 - PO 更新: '自定人數不能超過全班人數總和' 從 'Custom number should less than student number' 改為 'Custom number should less than employee number'
+19:00:43 - PO 更新: '選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動' 從 'Select has not been opened for students. After opening, teachers and students can view and interact on mobile' 改為 'Select has not been opened for employees. After opening, teachers and employees can view and interact on mobile'
+19:00:43 - PO 更新: '搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動' 從 'Race has not been opened for students. After opening, teachers and students can view and interact on mobile' 改為 'Race has not been opened for employees. After opening, teachers and employees can view and interact on mobile'
+19:00:43 - PO 更新: '點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動' 從 'Rollcall has not been opened for students. After opening, teachers and students can view and interact on mobile' 改為 'Rollcall has not been opened for employees. After opening, teachers and employees can view and interact on mobile'
+19:00:43 - PO 更新: '點名正在進行中，學生可在移動端簽到' 從 'Rollcall is in progress and students can check in on mobile' 改為 'Rollcall is in progress and employees can check in on mobile'
+19:00:43 - PO 更新: '老師和學生可在移動端查看並進行課堂互動' 從 'Teachers and students can view and interact on mobile' 改為 'Teachers and employees can view and interact on mobile'
+19:00:43 - PO 更新: '該學生已交卷，無法強制收卷！' 從 'The student has submitted, you can't do it!' 改為 'The employee has submitted, you can't do it!'
+19:00:43 - PO 更新: '學生已交卷，無法發送警告' 從 'The student has submitted, you cannot send a warning.' 改為 'The employee has submitted, you cannot send a warning.'
+19:00:43 - PO 更新: '老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動' 從 'Launch in mobile or classroom mode, and students can participate in the interaction on mobile' 改為 'Launch in mobile or classroom mode, and employees can participate in the interaction on mobile'
+19:00:43 - PO 更新: '提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次' 從 'Notice：Once you turn it on, students will be restricted by anti-cheat rules when answering questions.In addition, it is recommended that you set the time limit to 1.' 改為 'Notice：Once you turn it on, employees will be restricted by anti-cheat rules when answering questions.In addition, it is recommended that you set the time limit to 1.'
+19:00:43 - PO 更新: '提醒：关闭后，学生可灵活选择电脑端或手机端考试。' 從 'Notice： Once closed, students can flexibly choose to take the test on the computer or mobile phone.' 改為 'Notice： Once closed, employees can flexibly choose to take the test on the computer or mobile phone.'
+19:00:43 - PO 更新: '教師設置的教學活動默認針對全班成員展開。' 從 'All students or groups will have the same learning activities.' 改為 'All employees or groups will have the same learning activities.'
+19:00:43 - PO 更新: '開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。' 從 'Once differentiated instruction is enabled, instuctor can assign specific assignment or exam to partial students or groups and set corresponding score percentage. Additionally, peer review for this kind of activity will be no longer supported.' 改為 'Once differentiated instruction is enabled, instuctor can assign specific assignment or exam to partial employees or groups and set corresponding score percentage. Additionally, peer review for this kind of activity will be no longer supported.'
+19:00:43 - PO 更新: '开启在线监考后，学生只能通过电脑端作答。是否开启？' 從 'Once opening, students can only answer on the computer side. Do you want to open it?' 改為 'Once opening, employees can only answer on the computer side. Do you want to open it?'
+19:00:43 - PO 更新: '开启在线监考后，学生只能通过电脑端作答' 從 'Once opening, students can only answer on the PC. Avoid students do test with tablet, this may affect the 			 judgment results and lead to forced hand-in of the paper.' 改為 'Once opening, employees can only answer on the PC. Avoid employees do test with tablet, this may affect the 			 judgment results and lead to forced hand-in of the paper.'
+19:00:43 - PO 更新: '已有学生完成课程中学习活动，无法修改发布状态' 從 'The publish status cannot be modified, students have completed the activities in the course' 改為 'The publish status cannot be modified, employees have completed the activities in the course'
+19:00:43 - PO 更新: '应到总计' 從 'Total students' 改為 'Total employees'
+19:00:43 - PO 檔案已儲存: messages_enterprises.po, 更新 226 個條目
+19:00:43 - 企業 處理完成: 總更新 226 個
+19:00:43 -   PO 更新: '無學生資料' 從 'No student data' 改為 'No employee data'
+19:00:43 -   PO 更新: '尚無任何學生' 從 'No student selected' 改為 'No employee selected'
+19:00:43 -   PO 更新: '已有學生作答，不能修改測驗形式' 從 'Exam Type cannot be changed after students start answering question(s).' 改為 'Exam Type cannot be changed after employees start answering question(s).'
+19:00:43 -   PO 更新: '已繳學生' 從 'Submitted student' 改為 'Submitted employee'
+19:00:43 -   PO 更新: '非本課程修課學生' 從 'The student is not in course' 改為 'The employee is not in course'
+19:00:43 -   PO 更新: '校務行政系統中的學生缺曠管理已存在請假記錄' 從 'There is already a record of student deficiencies in the school administration system. Please go to the faculty information service system to modify' 改為 'There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify'
+19:00:43 -   PO 更新: '校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改' 從 'There is already a record of student deficiencies in the school administration system. Please go to the faculty information service system to modify' 改為 'There is already a record of employee deficiencies in the school administration system. Please go to the faculty information service system to modify'
+19:00:43 -   PO 更新: '確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改' 從 'Confirm submit? If you have modified the status of students before sending it, please save the record first. Please modify it on the absence management system after you submit' 改為 'Confirm submit? If you have modified the status of employees before sending it, please save the record first. Please modify it on the absence management system after you submit'
+19:00:43 -   PO 更新: '異動學生' 從 'Changed students' 改為 'Changed employees'
+19:00:43 -   PO 更新: '位學生' 從 'students' 改為 'employees'
+19:00:43 -   PO 更新: '學生造訪課程量' 從 'Amount of student visit' 改為 'Amount of employee visit'
+19:00:43 -   PO 更新: '本班級總共有 {0}位教師 {1}名學生' 從 '{0} instructors, and {1} students' 改為 '{0} instructors, and {1} employees'
+19:00:43 -   PO 更新: '本班級總共有 {0} 名學生' 從 '{0} students' 改為 '{0} employees'
+19:00:43 -   PO 更新: '本課程總共有 {0} 名學生' 從 '{0} students' 改為 '{0} employees'
+19:00:43 -   PO 更新: '設定學生作答繳交完成後，所顯示的內容' 從 'Set up the content that students can see after finishing the test' 改為 'Set up the content that employees can see after finishing the test'
+19:00:43 -   PO 更新: '改變繳交截止時間，將可能影響學生目前的繳交狀態' 從 'Change submission deadline could effect the current student submission status.' 改為 'Change submission deadline could effect the current employee submission status.'
+19:00:43 -   PO 更新: '尚無學生加入此課程' 從 'No students in this course yet' 改為 'No employees in this course yet'
+19:00:43 -   PO 更新: '學生看到的課程效果' 從 'What students see' 改為 'What employees see'
+19:00:43 -   PO 更新: '預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。' 從 'You can preview this course in students' eyes and go back to adjust course content' 改為 'You can preview this course in employees' eyes and go back to adjust course content'
+19:00:43 -   PO 更新: '共有{0}名學生，{1}名教師' 從 '{0} students, {1} instructors in total' 改為 '{0} employees, {1} instructors in total'
+19:00:43 -   PO 更新: '向學生顯示' 從 'Show students' 改為 'Show employees'
+19:00:43 -   PO 更新: '當學生答對後，會顯示正確答案解釋' 從 'The explanation of correct answer will be shown to the student after answering correctly' 改為 'The explanation of correct answer will be shown to the employee after answering correctly'
+19:00:43 -   PO 更新: '當學生答錯後，會顯示錯誤答案解釋' 從 'The explanation of incorrect answer will be shown to the student after answering incorrectly' 改為 'The explanation of incorrect answer will be shown to the employee after answering incorrectly'
+19:00:43 -   PO 更新: '模擬學生答題，不能繳交答題結果，不會進行計分' 從 'View as student, cannot submit, will not score' 改為 'View as employee, cannot submit, will not score'
+19:00:43 -   PO 更新: 'group.summary' 從 '[[groupsNumber()]] groups in total, [[ungroupedNumber()]] students ungrouped' 改為 '[[groupsNumber()]] groups in total, [[ungroupedNumber()]] employees ungrouped'
+19:00:43 -   PO 更新: 'group.members' 從 '[[groupedNumber()]] students in group' 改為 '[[groupedNumber()]] employees in group'
+19:00:43 -   PO 更新: 'group.detail.members' 從 'this group has <span class='number'>[[group.studentsNumber]] students</span>' 改為 'this group has <span class='number'>[[group.employeesNumber]] employees</span>'
+19:00:43 -   PO 更新: 'group.students.number' 從 '[[group.studentsNumber]] students' 改為 '[[group.employeesNumber]] employees'
+19:00:43 -   PO 更新: 'group.ungrouped' 從 '[[ungroupedNumber()]] students ungrouped' 改為 '[[ungroupedNumber()]] employees ungrouped'
+19:00:43 -   PO 更新: '無組員，可從下面添加組員' 從 'Empty group, please choose students from below' 改為 'Empty group, please choose employees from below'
+19:00:43 -   PO 更新: '課程人數' 從 'Subject student' 改為 'Subject employee'
+19:00:43 -   PO 更新: '共 {0} 組，未分組 {1} 人' 從 '{0} groups, ungrouped students: {1}' 改為 '{0} groups, ungrouped employees: {1}'
+19:00:43 -   PO 更新: '課程人數: {0} 人' 從 'Subject student: {0} ' 改為 'Subject employee: {0}'
+19:00:43 -   PO 更新: '暫無可分配小組成員' 從 'There are no any ungrouped students' 改為 'There are no any ungrouped employees'
+19:00:43 -   PO 更新: '班級成員不存在' 從 'student does not exist' 改為 'employee does not exist'
+19:00:43 -   PO 更新: '班級成員在其他分組中' 從 'student already in other group' 改為 'employee already in other group'
+19:00:43 -   PO 更新: '是否確認設置助教？' 從 'Are you sure to set this student as assistant?' 改為 'Are you sure to set this employee as assistant?'
+19:00:43 -   PO 更新: '助教設置成功' 從 'Successfully set student as assistant' 改為 'Successfully set employee as assistant'
+19:00:43 -   PO 更新: '助教取消成功' 從 'Successfully unset assistant as student' 改為 'Successfully unset assistant as employee'
+19:00:43 -   PO 更新: '修改後試卷題目、選項、配分將一同更新到學生試卷。' 從 'Once the modification is made, it will be synchronized in students’ exam papers.' 改為 'Once the modification is made, it will be synchronized in employees’ exam papers.'
+19:00:43 -   PO 更新: '繳交截止時間到達之後，學生可以查看基本資訊但不能繳交' 從 'After submit expiration time is reached, students can see but cannot pay the other operations' 改為 'After submit expiration time is reached, employees can see but cannot pay the other operations'
+19:00:43 -   PO 更新: '剩余 {} 學生名額' 從 '{} student positions left' 改為 '{} employee positions left'
+19:00:43 -   PO 更新: '開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息' 從 'After opening time is reached, exam will appear on learning activity list, students will see the exam info' 改為 'After opening time is reached, exam will appear on learning activity list, employees will see the exam info'
+19:00:43 -   PO 更新: '截止時間到達之後，學生可以查看但不能進行繳交等操作' 從 'After closing time is reached, students can see but cannot pay the other operations' 改為 'After closing time is reached, employees can see but cannot pay the other operations'
+19:00:43 -   PO 更新: '公佈時間到達之後，學生會看到自己的成績' 從 'After the publication time arrives, students can see their grades' 改為 'After the publication time arrives, employees can see their grades'
+19:00:43 -   PO 更新: '公布时间到达后，学生会看到自己的原始成绩' 從 'After the publication time arrives, students can see their original score' 改為 'After the publication time arrives, employees can see their original score'
+19:00:43 -   PO 更新: '公布时间到达后，学生会看到自己的最终成绩' 從 'After the publication time arrives, students can see their final score' 改為 'After the publication time arrives, employees can see their final score'
+19:00:43 -   PO 更新: '老師和學生可在APP端查看並進行課堂互動' 從 'Teachers and students can view the quiz and feedback in app' 改為 'Teachers and employees can view the quiz and feedback in app'
+19:00:43 -   PO 更新: '選擇允許後，學生可以看到班級答題結果統計' 從 'When checked allow, students can see their class answer result statistics' 改為 'When checked allow, employees can see their class answer result statistics'
+19:00:43 -   PO 更新: '開放時間到達之後，作業才能被學生看到並交付' 從 'After the opening time arrives, the assignment can be seen and commit by students' 改為 'After the opening time arrives, the assignment can be seen and commit by employees'
+19:00:43 -   PO 更新: '繳交截止時間到達之後，學生將不能進行作業繳交' 從 'After closing time is reached, the student will not be able to submit assignment' 改為 'After closing time is reached, the employee will not be able to submit assignment'
+19:00:43 -   PO 更新: '測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！' 從 'This test has been opened to students, and please note that any modifications will lead to unexpected score statistics!' 改為 'This test has been opened to employees, and please note that any modifications will lead to unexpected score statistics!'
+19:00:43 -   PO 更新: '已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？' 從 'Total {0} students of unsubmitted are selected, confirm to send remind assignment notification?' 改為 'Total {0} employees of unsubmitted are selected, confirm to send remind assignment notification?'
+19:00:43 -   PO 更新: '已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？' 從 'Total {0} students of unsubmitted are selected, confirm to send remind questionnaire notification?' 改為 'Total {0} employees of unsubmitted are selected, confirm to send remind questionnaire notification?'
+19:00:43 -   PO 更新: '共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？' 從 'Total {0} students of unsubmitted, confirm to send remind assignment notification?' 改為 'Total {0} employees of unsubmitted, confirm to send remind assignment notification?'
+19:00:43 -   PO 更新: '選擇未繳的學生，設成已繳狀態' 從 'Set selected ”unsubmitted” as ”submitted” for student(s)' 改為 'Set selected ”unsubmitted” as ”submitted” for employee(s)'
+19:00:43 -   PO 更新: '選擇已繳的學生，設成未繳狀態' 從 'Set selected ”submitted” as ”unsubmitted” for student(s)' 改為 'Set selected ”submitted” as ”unsubmitted” for employee(s)'
+19:00:43 -   PO 更新: '選擇未繳的小組，設成已繳狀態' 從 'Set selected ”unsubmitted” as ”submitted” for student group(s)' 改為 'Set selected ”unsubmitted” as ”submitted” for employee group(s)'
+19:00:43 -   PO 更新: '選擇已繳的小組，設成未繳狀態' 從 'Set selected ”submitted” as ”unsubmitted” for student group(s)' 改為 'Set selected ”submitted” as ”unsubmitted” for employee group(s)'
+19:00:43 -   PO 更新: '選擇未繳的學生，可催繳作業' 從 'Select unsubmitted students can remind assignment' 改為 'Select unsubmitted employees can remind assignment'
+19:00:43 -   PO 更新: '選擇未繳的學生，可催繳問卷' 從 'Select unsubmitted students can remind questionnaire' 改為 'Select unsubmitted employees can remind questionnaire'
+19:00:43 -   PO 更新: '選擇學生，可設定其進行補繳' 從 'Select students and set them to make up assignment' 改為 'Select employees and set them to make up assignment'
+19:00:43 -   PO 更新: '已選擇{0}名學生，確定要發送補繳作業的通知嗎？' 從 'Total {0} students are selected, confirm to send make up assignment notification?' 改為 'Total {0} employees are selected, confirm to send make up assignment notification?'
+19:00:43 -   PO 更新: '共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？' 從 'Total {0} students of unsubmitted, confirm to send make up assignment notification?' 改為 'Total {0} employees of unsubmitted, confirm to send make up assignment notification?'
+19:00:43 -   PO 更新: '選擇已繳的作業，可推薦給學生' 從 'Select committed submissions can recommend to students' 改為 'Select committed submissions can recommend to employees'
+19:00:43 -   PO 更新: '已選擇{0}名已繳作業的學生，確定推薦嗎？' 從 'Total {0} students of committed are selected, confirm to recommend?' 改為 'Total {0} employees of committed are selected, confirm to recommend?'
+19:00:43 -   PO 更新: '推薦的作業會展示給學生，包括作業內容和評分評語' 從 'Assignment of recommended will be shown to students, including the content, score and comment' 改為 'Assignment of recommended will be shown to employees, including the content, score and comment'
+19:00:43 -   PO 更新: '由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。' 從 'Assignment will be scored by other student(s).' 改為 'Assignment will be scored by other employee(s).'
+19:00:43 -   PO 更新: '由於人員變動，標記出的人員作業不參與互評，需要您進行批改' 從 'You need to give score to marked student who cannot involved in peer assessment' 改為 'You need to give score to marked employee who cannot involved in peer assessment'
+19:00:43 -   PO 更新: '私有課程，表示課程僅對您和該課程的成員可見，可透過邀請碼和邀請連結將成員加入課程。' 從 'Private Course: Course only open to the teacher and students in this course. User need 'access code' or 'access url' to join the course.' 改為 'Private Course: Course only open to the teacher and employees in this course. User need 'access code' or 'access url' to join the course.'
+19:00:43 -   PO 更新: '老師評分之後，學生會看到自己的成績' 從 'After instructors give score, students can see their grades' 改為 'After instructors give score, employees can see their grades'
+19:00:43 -   PO 更新: '老师评分之后，学生可以马上看到自己的原始成绩' 從 'Once instructors give score, students can see their original score' 改為 'Once instructors give score, employees can see their original score'
+19:00:43 -   PO 更新: '老师评分之后，学生可以马上看到自己的最终成绩' 從 'Once instructors give score, students can see their final score' 改為 'Once instructors give score, employees can see their final score'
+19:00:43 -   PO 更新: '已選擇 {0} 名學生，確定送繳學期成績嗎？' 從 'You have selected {0} students, do you want to submit?' 改為 'You have selected {0} employees, do you want to submit?'
+19:00:43 -   PO 更新: '成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。' 從 'After your submission, the "final scores" can’t be changed. Even though modify student’s assignment and exam scores.' 改為 'After your submission, the "final scores" can’t be changed. Even though modify employee’s assignment and exam scores.'
+19:00:43 -   PO 更新: '請選擇送繳學生' 從 'Please select some students' 改為 'Please select some employees'
+19:00:43 -   PO 更新: '請先選擇要進行成績送繳的學生範圍。' 從 'Please select some students to be submitted.' 改為 'Please select some employees to be submitted.'
+19:00:43 -   PO 更新: '已送繳全部學生成績' 從 'All students have been submitted' 改為 'All employees have been submitted'
+19:00:43 -   PO 更新: '送繳部分學生' 從 'Submit some students' 改為 'Submit some employees'
+19:00:43 -   PO 更新: '送繳全部學生' 從 'Submit all students' 改為 'Submit all employees'
+19:00:43 -   PO 更新: '人學習' 從 ' students' 改為 'employees'
+19:00:43 -   PO 更新: '注：预警指标说明（低于预警阈值的学生将被预警)' 從 'P.S. The student will be warned if he/she is lower than the Warning Standard.' 改為 'P.S. The employee will be warned if he/she is lower than the Warning Standard.'
+19:00:43 -   PO 更新: '请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。' 從 'Please choose the Warning Target then setting the Standard. The student will be warned if he/she is lower than the Warning Standard. If the standard is blank, it wouldn't be take into the List.' 改為 'Please choose the Warning Target then setting the Standard. The employee will be warned if he/she is lower than the Warning Standard. If the standard is blank, it wouldn't be take into the List.'
+19:00:43 -   PO 更新: '預警學生總數' 從 'The sum of Warning students' 改為 'The sum of Warning employees'
+19:00:43 -   PO 更新: '預警學生數' 從 'The count of Warning students' 改為 'The count of Warning employees'
+19:00:43 -   PO 更新: '預警學生佔比' 從 'The percent of Warning students' 改為 'The percent of Warning employees'
+19:00:43 -   PO 更新: '本課程有{0}名學生被預警，確定送交預警名單嗎？' 從 '{0} students in this course are being alerted and are sure to send them to the warning list?' 改為 '{0} employees in this course are being alerted and are sure to send them to the warning list?'
+19:00:43 -   PO 更新: '附：預警指標說明（低於預警閾值的學生將被預警)' 從 'Attachment: Description of early warning indicators (students below the warning threshold will be alerted)' 改為 'Attachment: Description of early warning indicators (employees below the warning threshold will be alerted)'
+19:00:43 -   PO 更新: '缺席 {0} 次後預警' 從 'Absent for {0} times, students will get notice.' 改為 'Absent for {0} times, employees will get notice.'
+19:00:43 -   PO 更新: '請假 {0} 次後預警' 從 'On-Leave for {0} times, students will get notice.' 改為 'On-Leave for {0} times, employees will get notice.'
+19:00:43 -   PO 更新: '出席率低於 {0}％，學生將收到通知' 從 'Attendance Rate lower than {0}％, students will get notice.' 改為 'Attendance Rate lower than {0}％, employees will get notice.'
+19:00:43 -   PO 更新: '出席率低於 {0}％，學生將收到不允許參加期末考的通知' 從 'Attendance Rate lower than {0}％, students will get notice of banned to join Final Exam.' 改為 'Attendance Rate lower than {0}％, employees will get notice of banned to join Final Exam.'
+19:00:43 -   PO 更新: '低於 {0}％不能參加期末考' 從 'lower than {0}％, students can't join Final Exam.' 改為 'lower than {0}％, employees can't join Final Exam.'
+19:00:43 -   PO 更新: '课程成绩详细提示' 從 'Grade lower than {0} points, students will get notice.' 改為 'Grade lower than {0} points, employees will get notice.'
+19:00:43 -   PO 更新: '預警學生已經成功添加' 從 'The warning student has been successfully added' 改為 'The warning employee has been successfully added'
+19:00:43 -   PO 更新: '預警學生已經存在' 從 'The warning student already exist' 改為 'The warning employee already exist'
+19:00:43 -   PO 更新: '預警學生已經成功保存' 從 'Changes of warning student has been successfully saved' 改為 'Changes of warning employee has been successfully saved'
+19:00:43 -   PO 更新: '預警學生已經成功刪除' 從 'The warning student has been successfully removed' 改為 'The warning employee has been successfully removed'
+19:00:43 -   PO 更新: '人報名' 從 ' students registered' 改為 'employees registered'
+19:00:43 -   PO 更新: '学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。' 從 'Students can choose learning activities to study freely, instructor can set the completion criteria of activities to investigate students' learning situation.' 改為 'Students can choose learning activities to study freely, instructor can set the completion criteria of activities to investigate employees' learning situation.'
+19:00:43 -   PO 更新: '此課程人數已達上限' 從 'The student count limitation has reached' 改為 'The employee count limitation has reached'
+19:00:43 -   PO 更新: '預警名單' 從 'Warning students list' 改為 'Warning employees list'
+19:00:43 -   PO 更新: '您可以在此輸入對學生作業的評語' 從 'You can input comment for submission of student here' 改為 'You can input comment for submission of employee here'
+19:00:43 -   PO 更新: '及格人數' 從 'Passed students' 改為 'Passed employees'
+19:00:43 -   PO 更新: '不及格人數' 從 'Failed students' 改為 'Failed employees'
+19:00:43 -   PO 更新: '課程內的所有學生將會變更為：出席' 從 'The action will make all students to Present.' 改為 'The action will make all employees to Present.'
+19:00:43 -   PO 更新: '不論當前狀態為何，都會被調整為出席。' 從 'No matter of their current status, students will be marked present.' 改為 'No matter of their current status, employees will be marked present.'
+19:00:43 -   PO 更新: '設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序' 從 'When set to random, question options in paper of different students will sort randomly' 改為 'When set to random, question options in paper of different employees will sort randomly'
+19:00:43 -   PO 更新: '設定為隨機排序，不同學生所見試卷，題目將隨機進行排序' 從 'When set to random, questions in paper of different students will sort randomly' 改為 'When set to random, questions in paper of different employees will sort randomly'
+19:00:43 -   PO 更新: '設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序' 從 'When set to random, questions in paper of different students will sort randomly. When set to random in question type, questions in paper of different students will sort randomly in question type.' 改為 'When set to random, questions in paper of different employees will sort randomly. When set to random in question type, questions in paper of different employees will sort randomly in question type.'
+19:00:43 -   PO 更新: '若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制' 從 'If not allow, students will not able to drag the timeline to fast forward the video unless they finish watching the video for one time' 改為 'If not allow, employees will not able to drag the timeline to fast forward the video unless they finish watching the video for one time'
+19:00:43 -   PO 更新: '課程還沒有學生' 從 'No student yet' 改為 'No employee yet'
+19:00:43 -   PO 更新: '課程還沒有學生, 快' 從 'No student yet, ' 改為 'No employee yet,'
+19:00:43 -   PO 更新: '課程沒有學生' 從 'No student yet' 改為 'No employee yet'
+19:00:43 -   PO 更新: '查看學生成績單' 從 'View score of student' 改為 'View score of employee'
+19:00:43 -   PO 更新: '機構還沒有教師和學生, 教學活動無法展開' 從 'No instructor or student' 改為 'No instructor or employee'
+19:00:43 -   PO 更新: '機構已有{0}名成員, 其中教師{1}人, 學生{2}人' 從 '{0} members in organization, {1} instructors, {2} students' 改為 '{0} members in organization, {1} instructors, {2} employees'
+19:00:43 -   PO 更新: '本月增加教師{0}人, 本月增加學生{1}人' 從 'Added {0} instructors and {1} students in this month' 改為 'Added {0} instructors and {1} employees in this month'
+19:00:43 -   PO 更新: '還沒有學生加入到您的課程或班級' 從 'No student yet' 改為 'No employee yet'
+19:00:43 -   PO 更新: '共有{0}人參加到您的課程，{1}人加入到您的班級' 從 '{0} students are studying in your courses, {1} in your classes' 改為 '{0} employees are studying in your courses, {1} in your classes'
+19:00:43 -   PO 更新: '還沒有教師和學生, 教學活動無法展開' 從 'No instructor or student' 改為 'No instructor or employee'
+19:00:43 -   PO 更新: '課程內教師身份不可新增座號' 從 'No support for add student number on teachers.' 改為 'No support for add employee number on teachers.'
+19:00:43 -   PO 更新: '已有{0}名成員, 其中教師{1}人, 學生{2}人' 從 '{0} members, {1} instructors, {2} students' 改為 '{0} members, {1} instructors, {2} employees'
+19:00:43 -   PO 更新: '選擇學生，可設定其進行補考' 從 'Select students can set it to make up exam' 改為 'Select employees can set it to make up exam'
+19:00:43 -   PO 更新: '已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？' 從 'Total {0} students are selected, confirm to send make up exam notification?' 改為 'Total {0} employees are selected, confirm to send make up exam notification?'
+19:00:43 -   PO 更新: '分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!' 從 'Group learning through the course of the students into a number of groups, to achieve the group work, the group of resource sharing and other learning activities. The teacher can easily complete the group here, the designated team leader, to give it a try!' 改為 'Group learning through the course of the employees into a number of groups, to achieve the group work, the group of resource sharing and other learning activities. The teacher can easily complete the group here, the designated team leader, to give it a try!'
+19:00:43 -   PO 更新: '該課程還沒有任何學生' 從 'No students in this course' 改為 'No employees in this course'
+19:00:43 -   PO 更新: '，去邀請一些學生吧' 從 ', go to invite student' 改為 ', go to invite employee'
+19:00:43 -   PO 更新: 'Rubric（評分量規）是一個二位的評價表格，你可以用Rubric定義自己的評分規則，定義好的Rubric可以用於作業的評價和同學間的互評，讓評價有據可循，同時方便快捷。' 從 'Rubric (scoring rubrics) is a second evaluation form, you can define its own scoring rules Rubric, Rubric defined can be used on the work of evaluation and students mutual evaluation, make evaluation according to follow, and convenient.' 改為 'Rubric (scoring rubrics) is a second evaluation form, you can define its own scoring rules Rubric, Rubric defined can be used on the work of evaluation and employees mutual evaluation, make evaluation according to follow, and convenient.'
+19:00:43 -   PO 更新: '選擇學生' 從 'Select student' 改為 'Select employee'
+19:00:43 -   PO 更新: '請選擇學生' 從 'Please select student' 改為 'Please select employee'
+19:00:43 -   PO 更新: '已選擇 {0} 位學生' 從 'Selected {0} students' 改為 'Selected {0} employees'
+19:00:43 -   PO 更新: '部分學生' 從 'Some students' 改為 'Some employees'
+19:00:43 -   PO 更新: '全部學生' 從 'All students' 改為 'All employees'
+19:00:43 -   PO 更新: '互評功能不適用於部分學生' 從 'Peer Review can not be used with selected some students.' 改為 'Peer Review can not be used with selected some employees.'
+19:00:43 -   PO 更新: '因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習' 從 'Due to assign some students/groups for specific assignment and exam, this course can't change to Checkpoint Learning.' 改為 'Due to assign some employees/groups for specific assignment and exam, this course can't change to Checkpoint Learning.'
+19:00:43 -   PO 更新: '邀請機構內人員成為學生' 從 'Invite user to become student in organization' 改為 'Invite user to become employee in organization'
+19:00:43 -   PO 更新: '還沒有學生加入到您的課程' 從 'No student yet' 改為 'No employee yet'
+19:00:43 -   PO 更新: '共有{0}人參加到您的課程' 從 '{0} students are studying in your courses' 改為 '{0} employees are studying in your courses'
+19:00:43 -   PO 更新: '（您可以在學生的帳號中找到家長關聯碼）' 從 '(You could find the Association Code in student's account)' 改為 '(You could find the Association Code in employee's account)'
+19:00:43 -   PO 更新: '以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。' 從 'Centered on students, teachers, educational administration, combined the technology of the cloud, creating a integration management platform of learning, action and social, provide a complete solution of teaching that is most suitable for blended learning system.' 改為 'Centered on employees, teachers, educational administration, combined the technology of the cloud, creating a integration management platform of learning, action and social, provide a complete solution of teaching that is most suitable for blended learning system.'
+19:00:43 -   PO 更新: '在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。' 從 'Here, you can share learning materials around the class management, post is your assistant for the rapid release of your message file, you can also interact with students and parents.' 改為 'Here, you can share learning materials around the class management, post is your assistant for the rapid release of your message file, you can also interact with employees and parents.'
+19:00:43 -   PO 更新: '添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？' 從 'After add questions, this online video activity will be transformed to interaction activity. It will also makes students learning history be deleted. Are you sure to do this?' 改為 'After add questions, this online video activity will be transformed to interaction activity. It will also makes employees learning history be deleted. Are you sure to do this?'
+19:00:43 -   PO 更新: '若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。' 從 'Chose `Active` to auto-submit answers when student try to open or switch to another Browser tab more than {0} times.' 改為 'Chose `Active` to auto-submit answers when employee try to open or switch to another Browser tab more than {0} times.'
+19:00:43 -   PO 更新: '設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。' 從 'Setting the max number of times. When student exits this page over than the max number, the exam will be submitted.' 改為 'Setting the max number of times. When employee exits this page over than the max number, the exam will be submitted.'
+19:00:43 -   PO 更新: '選擇「允許」後，學生將可下載發布後的即時討論錄影檔案' 從 'After selecting 'Allow', students will be able to download video files after publishing' 改為 'After selecting 'Allow', employees will be able to download video files after publishing'
+19:00:43 -   PO 更新: '導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁' 從 'Disable a navigation item, the navigation item will be disappearing on the menu of course; this will cause the student who is opening the navigation item was redirected to the bulletin page' 改為 'Disable a navigation item, the navigation item will be disappearing on the menu of course; this will cause the employee who is opening the navigation item was redirected to the bulletin page'
+19:00:43 -   PO 更新: '僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。' 從 'We only support private IPv4. After setting the IP limited, student needs to link to the correct IP address to do test.' 改為 'We only support private IPv4. After setting the IP limited, employee needs to link to the correct IP address to do test.'
+19:00:43 -   PO 更新: '随堂测试已开放给学生，可逐一开启题目给学生作答' 從 'You can open the title one by one  to students' 改為 'You can open the title one by one  to employees'
+19:00:43 -   PO 更新: '教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈' 從 'Open the activity,students can make feedback in app' 改為 'Open the activity,employees can make feedback in app'
+19:00:43 -   PO 更新: '开启后，学生将在app中看到活动并参与反馈。' 從 'After open the activity, students can view and make feedback in app' 改為 'After open the activity, employees can view and make feedback in app'
+19:00:43 -   PO 更新: '學生試卷' 從 'student_papers' 改為 'employee_papers'
+19:00:43 -   PO 更新: '下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？' 從 'It takes a lot of time to zip student paper, start now?' 改為 'It takes a lot of time to zip employee paper, start now?'
+19:00:43 -   PO 更新: '匯出缺席名單' 從 'Export absent students' 改為 'Export absent employees'
+19:00:43 -   PO 更新: '課程教師、助教與指定為發布對象的分組或學生，才可查看本公告' 從 'Only the instructor, assistant, assign student(s) and group(s) can see this announcement' 改為 'Only the instructor, assistant, assign employee(s) and group(s) can see this announcement'
+19:00:43 -   PO 更新: '課程教師與指定為發布對象的分組或學生，才可查看本公告' 從 'Only the instructor, assign student(s) and group(s) can see this announcement' 改為 'Only the instructor, assign employee(s) and group(s) can see this announcement'
+19:00:43 -   PO 更新: '教師上傳檔案作為教材，學生對該教材的學習行為統計' 從 'Teachers upload files as a teaching material, students of the teaching materials learning behavior statistics' 改為 'Teachers upload files as a teaching material, employees of the teaching materials learning behavior statistics'
+19:00:43 -   PO 更新: '教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計' 從 'Teachers upload video files, or share third-party audio and video links as a teaching material, students of the textbook learning behavior statistics' 改為 'Teachers upload video files, or share third-party audio and video links as a teaching material, employees of the textbook learning behavior statistics'
+19:00:43 -   PO 更新: '教師分享網站連結，學生對該網站連結的學習行為統計' 從 'Teachers share site links, students of the site to link learning behavior statistics' 改為 'Teachers share site links, employees of the site to link learning behavior statistics'
+19:00:43 -   PO 更新: '教師發布作業後，學生對該作業的繳交記錄與得分' 從 'After the teacher releases the assignment, records of the score of students for the assignment' 改為 'After the teacher releases the assignment, records of the score of employees for the assignment'
+19:00:43 -   PO 更新: '教師發布線上測驗後，學生對該測驗的繳交記錄與得分' 從 'After the teacher releases the online exam, records of the score of students for the exam' 改為 'After the teacher releases the online exam, records of the score of employees for the exam'
+19:00:43 -   PO 更新: '教師發起點名，學生的出缺席狀態' 從 'The state of the student's absence' 改為 'The state of the employee's absence'
+19:00:43 -   PO 更新: '老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習' 從 'Instructors can set up three prerequisites at most, students need to finish all the prerequisites before entering the activity.' 改為 'Instructors can set up three prerequisites at most, employees need to finish all the prerequisites before entering the activity.'
+19:00:43 -   PO 更新: '學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。' 從 'Once the basic score of students' performance is set, the score of all the students will be adjusted in a unified way.' 改為 'Once the basic score of employees' performance is set, the score of all the employees will be adjusted in a unified way.'
+19:00:43 -   PO 更新: '每次点击分数旁加减按钮所产生的分数差。' 從 'There is the different scores got by clicking the add or minus button beside student score.' 改為 'There is the different scores got by clicking the add or minus button beside employee score.'
+19:00:43 -   PO 更新: '預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險' 從 'Early Alart: To inform students who may fail to comply with mandatory course requirements.' 改為 'Early Alart: To inform employees who may fail to comply with mandatory course requirements.'
+19:00:43 -   PO 更新: '扣考: 通知學生學習總時數(分鐘) 不足，已被扣考' 從 'Barred from Sitting Examination: To inform students who fail to comply with mandatory course requirements.' 改為 'Barred from Sitting Examination: To inform employees who fail to comply with mandatory course requirements.'
+19:00:43 -   PO 更新: '隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中' 從 'Random Group：Randomly assign ungrouped students to groups' 改為 'Random Group：Randomly assign ungrouped employees to groups'
+19:00:43 -   PO 更新: '依每組人數' 從 'students per group' 改為 'employees per group'
+19:00:43 -   PO 更新: '未分組人數： {0} 人' 從 'ungrouped students: {0}' 改為 'ungrouped employees: {0}'
+19:00:43 -   PO 更新: '{0}人/組，共{1}組' 從 '{0} students/group, {1} Groups' 改為 '{0} employees/group, {1} Groups'
+19:00:43 -   PO 更新: '分組數不能大於未分組人數。' 從 'The total number of groups cannot exceeds the number of ungrouped students.' 改為 'The total number of groups cannot exceeds the number of ungrouped employees.'
+19:00:43 -   PO 更新: '每組人數不能大於未分組人數。' 從 'The number of students per group cannot exceeds the number of ungrouped students.' 改為 'The number of employees per group cannot exceeds the number of ungrouped employees.'
+19:00:43 -   PO 更新: '備註(公開)' 從 'Notes(for student)' 改為 'Notes(for employee)'
+19:00:43 -   PO 更新: '修課學生帳號未填寫' 從 'Enrolled student account is required.' 改為 'Enrolled employee account is required.'
+19:00:43 -   PO 更新: '帳號使用者不是本課程的學生' 從 'Not an enrolled student account.' 改為 'Not an enrolled employee account.'
+19:00:43 -   PO 更新: '已有{0}筆資料修課學生帳號重複' 從 '{0} duplicated enrolled student accounts has found.' 改為 '{0} duplicated enrolled employee accounts has found.'
+19:00:43 -   PO 更新: '份數必須大於0且小於學生人數' 從 'Pieces number must larger then 0 and less than students number' 改為 'Pieces number must larger then 0 and less than employees number'
+19:00:43 -   PO 更新: '請您先到「分組學習」中完成學生的分組' 從 'Please complete the student group first' 改為 'Please complete the employee group first'
+19:00:43 -   PO 更新: '小組內無成員，請您先到「分組學習」中完成學生的分組' 從 'No member in groups. Please complete the student group first.' 改為 'No member in groups. Please complete the employee group first.'
+19:00:43 -   PO 更新: '學生無成績' 從 'No score students' 改為 'No score employees'
+19:00:43 -   PO 更新: '從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. 如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。' 從 'From all questions, set the number of questions select randomly, for examples: 1. there are 10 multiple-choice questions, questions select randomly number set to 6, said the students exam paper will select 6 questions randomly from 10 questions. 2. if not select questions select randomly, questions select randomly number set to 10, said the students exam paper will select 10 questions randomly from 10 questions.' 改為 'From all questions, set the number of questions select randomly, for examples: 1. there are 10 multiple-choice questions, questions select randomly number set to 6, said the employees exam paper will select 6 questions randomly from 10 questions. 2. if not select questions select randomly, questions select randomly number set to 10, said the employees exam paper will select 10 questions randomly from 10 questions.'
+19:00:43 -   PO 更新: '設定為隨機抽題，不同學生所見的題目範圍隨機設定。' 從 'When set to random, questions in paper of different students will be set randomly.' 改為 'When set to random, questions in paper of different employees will be set randomly.'
+19:00:43 -   PO 更新: '當前測驗為隨機抽題，不同學生題目不同。' 從 'This exam is select question randomly, selected questions in paper is different for different students.' 改為 'This exam is select question randomly, selected questions in paper is different for different employees.'
+19:00:43 -   PO 更新: '已有學生繳交互評信息不能修改評分方式' 從 'Any student has reviewed, should`nt modify Scored method' 改為 'Any employee has reviewed, should`nt modify Scored method'
+19:00:43 -   PO 更新: '此學生繳交時間過晚，無法參與互評，以教師評分為準' 從 'This student submitted too late, should score by teacher' 改為 'This employee submitted too late, should score by teacher'
+19:00:43 -   PO 更新: '僅繳交作業才可參與互評' 從 'students who have already submitted the assignment' 改為 'employees who have already submitted the assignment'
+19:00:43 -   PO 更新: '已有學生繳交互評信息，不能修改互評開始時間' 從 'student has submitted review, could`nt modify start time' 改為 'employee has submitted review, could`nt modify start time'
+19:00:43 -   PO 更新: '已有學生繳交互評信息，不能修改互評份數' 從 'student has submitted review, could`nt modify pieces cnt' 改為 'employee has submitted review, could`nt modify pieces cnt'
+19:00:43 -   PO 更新: '已有學生繳交互評信息，不能修改作業形式' 從 'student has submitted review, could`nt modify the type' 改為 'employee has submitted review, could`nt modify the type'
+19:00:43 -   PO 更新: '全班可參與互評' 從 'all students' 改為 'all employees'
+19:00:43 -   PO 更新: '{0} 課程預警通知將發送至名單內 {1} 名學生' 從 'Send warning notification to {1} students in course {0}' 改為 'Send warning notification to {1} employees in course {0}'
+19:00:43 -   PO 更新: '選擇未評分的學生或小組，發送通知和郵件' 從 'Select student or group to send review notification and email' 改為 'Select employee or group to send review notification and email'
+19:00:43 -   PO 更新: '已選擇{0}名未評分的學生，確定要發送互評的通知嗎？' 從 'Total {0} students are selected, confirm to send review notification?' 改為 'Total {0} employees are selected, confirm to send review notification?'
+19:00:43 -   PO 更新: '當前互評作業要求每位學生需完成{0}份作業的評閱' 從 'This assignment requires every student to complete {0} peer review(s).' 改為 'This assignment requires every employee to complete {0} peer review(s).'
+19:00:43 -   PO 更新: '若您非教師/學生/家長，請選擇「其他」學校' 從 'If you are not a teacher/student/parent, please choose “other” school' 改為 'If you are not a teacher/employee/parent, please choose “other” school'
+19:00:43 -   PO 更新: '请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试' 從 'Please make sure that you have completed the test paper group before the test start time, otherwise the students will not be able to take the test properly' 改為 'Please make sure that you have completed the test paper group before the test start time, otherwise the employees will not be able to take the test properly'
+19:00:43 -   PO 更新: '请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试' 從 'Please make sure that you have completed the test paper group before the test open time, otherwise the students will not be able to take the test properly' 改為 'Please make sure that you have completed the test paper group before the test open time, otherwise the employees will not be able to take the test properly'
+19:00:43 -   PO 更新: '如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数' 從 'After setting the range, we will calculate the added number of teachers, students, courses, learning activities, and resources in this range.' 改為 'After setting the range, we will calculate the added number of teachers, employees, courses, learning activities, and resources in this range.'
+19:00:43 -   PO 更新: '未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算' 從 'If the Completion Index is not set, the student's learning progress will not be included in the denominator. Teacher-side learning analysis-completion degree will not be included in the calculation' 改為 'If the Completion Index is not set, the employee's learning progress will not be included in the denominator. Teacher-side learning analysis-completion degree will not be included in the calculation'
+19:00:43 -   PO 更新: '設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件' 從 'After setting the Completion Index, students must meet the conditions to be considered complete. This activity will be included in the completion statistics of the learning analysis and used as the denominator condition of the student's learning progress' 改為 'After setting the Completion Index, employees must meet the conditions to be considered complete. This activity will be included in the completion statistics of the learning analysis and used as the denominator condition of the employee's learning progress'
+19:00:43 -   PO 更新: '更新成員名單' 從 'Update student list' 改為 'Update employee list'
+19:00:43 -   PO 更新: '溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課' 從 'Tips: Please remind your students to connect LDAP account before you create course.' 改為 'Tips: Please remind your employees to connect LDAP account before you create course.'
+19:00:43 -   PO 更新: '已選擇 {0} 名學生，系統將會自動覆蓋已有成績' 從 'Total {0} students are selected, it will automatically overwrite existing results.' 改為 'Total {0} employees are selected, it will automatically overwrite existing results.'
+19:00:43 -   PO 更新: '已選擇 {0} 名學生，請設置補考起止時間' 從 '{0} students have been selected. Please set the starting and ending time of make-up exam' 改為 '{0} employees have been selected. Please set the starting and ending time of make-up exam'
+19:00:43 -   PO 更新: '確定后系統將給已選學生發送測試補考通知' 從 'We will send notices to the selected students. ' 改為 'We will send notices to the selected employees.'
+19:00:43 -   PO 更新: '開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。' 從 'As while as the activity open time, student can see the activity. If you set it automatically open/close, the course will be open by the course start/end time.' 改為 'As while as the activity open time, employee can see the activity. If you set it automatically open/close, the course will be open by the course start/end time.'
+19:00:43 -   PO 更新: '到達開始時間之後，老師和學生才能進入直播間' 從 'After arriving at the start time, teachers and students can enter the Zoom Live' 改為 'After arriving at the start time, teachers and employees can enter the Zoom Live'
+19:00:43 -   PO 更新: '到達結束時間後，老師和學生無法再進入直播間' 從 'After the end time, teachers and students can no longer enter the Zoom Live' 改為 'After the end time, teachers and employees can no longer enter the Zoom Live'
+19:00:43 -   PO 更新: '自定人數不能超過全班人數總和' 從 'Custom number should less than student number' 改為 'Custom number should less than employee number'
+19:00:43 -   PO 更新: '選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動' 從 'Select has not been opened for students. After opening, teachers and students can view and interact on mobile' 改為 'Select has not been opened for employees. After opening, teachers and employees can view and interact on mobile'
+19:00:43 -   PO 更新: '搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動' 從 'Race has not been opened for students. After opening, teachers and students can view and interact on mobile' 改為 'Race has not been opened for employees. After opening, teachers and employees can view and interact on mobile'
+19:00:43 -   PO 更新: '點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動' 從 'Rollcall has not been opened for students. After opening, teachers and students can view and interact on mobile' 改為 'Rollcall has not been opened for employees. After opening, teachers and employees can view and interact on mobile'
+19:00:43 -   PO 更新: '點名正在進行中，學生可在移動端簽到' 從 'Rollcall is in progress and students can check in on mobile' 改為 'Rollcall is in progress and employees can check in on mobile'
+19:00:43 -   PO 更新: '老師和學生可在移動端查看並進行課堂互動' 從 'Teachers and students can view and interact on mobile' 改為 'Teachers and employees can view and interact on mobile'
+19:00:43 -   PO 更新: '該學生已交卷，無法強制收卷！' 從 'The student has submitted, you can't do it!' 改為 'The employee has submitted, you can't do it!'
+19:00:43 -   PO 更新: '學生已交卷，無法發送警告' 從 'The student has submitted, you cannot send a warning.' 改為 'The employee has submitted, you cannot send a warning.'
+19:00:43 -   PO 更新: '老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動' 從 'Launch in mobile or classroom mode, and students can participate in the interaction on mobile' 改為 'Launch in mobile or classroom mode, and employees can participate in the interaction on mobile'
+19:00:43 -   PO 更新: '提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次' 從 'Notice：Once you turn it on, students will be restricted by anti-cheat rules when answering questions.In addition, it is recommended that you set the time limit to 1.' 改為 'Notice：Once you turn it on, employees will be restricted by anti-cheat rules when answering questions.In addition, it is recommended that you set the time limit to 1.'
+19:00:43 -   PO 更新: '提醒：关闭后，学生可灵活选择电脑端或手机端考试。' 從 'Notice： Once closed, students can flexibly choose to take the test on the computer or mobile phone.' 改為 'Notice： Once closed, employees can flexibly choose to take the test on the computer or mobile phone.'
+19:00:43 -   PO 更新: '教師設置的教學活動默認針對全班成員展開。' 從 'All students or groups will have the same learning activities.' 改為 'All employees or groups will have the same learning activities.'
+19:00:43 -   PO 更新: '開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。' 從 'Once differentiated instruction is enabled, instuctor can assign specific assignment or exam to partial students or groups and set corresponding score percentage. Additionally, peer review for this kind of activity will be no longer supported.' 改為 'Once differentiated instruction is enabled, instuctor can assign specific assignment or exam to partial employees or groups and set corresponding score percentage. Additionally, peer review for this kind of activity will be no longer supported.'
+19:00:43 -   PO 更新: '开启在线监考后，学生只能通过电脑端作答。是否开启？' 從 'Once opening, students can only answer on the computer side. Do you want to open it?' 改為 'Once opening, employees can only answer on the computer side. Do you want to open it?'
+19:00:43 -   PO 更新: '开启在线监考后，学生只能通过电脑端作答' 從 'Once opening, students can only answer on the PC. Avoid students do test with tablet, this may affect the 			 judgment results and lead to forced hand-in of the paper.' 改為 'Once opening, employees can only answer on the PC. Avoid employees do test with tablet, this may affect the 			 judgment results and lead to forced hand-in of the paper.'
+19:00:43 -   PO 更新: '已有学生完成课程中学习活动，无法修改发布状态' 從 'The publish status cannot be modified, students have completed the activities in the course' 改為 'The publish status cannot be modified, employees have completed the activities in the course'
+19:00:43 -   PO 更新: '应到总计' 從 'Total students' 改為 'Total employees'
+19:00:43 - 開始處理業態: 公部門
+19:00:43 - 公部門 處理完成: 總更新 0 個
+19:00:43 - 開始處理業態: 培訓機構
+19:00:43 - 培訓機構 處理完成: 總更新 0 個
+19:00:43 - 語言 en_US 處理完成: 成功 3/3 個業態
+19:00:43 - 摘要報告已生成：i18n_output/en_US_20250611_190043/processing_summary_20250611_190043.txt

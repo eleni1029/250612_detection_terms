@@ -64,9 +64,16 @@ excel_config:
   horizontal_layout:
     use_language_blocks: true        # 使用語言區塊分區
     block_separator_columns: 1       # 語言區塊間的分隔列數
+    language_independent: true       # 語言獨立模式：每個語言有自己的敏感詞
     language_label_style: "header"   # 語言標籤樣式：header/merged/simple
     allow_user_additions: true      # 允許用戶在區塊內新增詞彙
     error_tolerance: "high"          # 錯誤容忍度：high/medium/low
+    
+    # 語言獨立區塊結構
+    block_structure:
+      category_column: true          # 每個區塊包含敏感詞類型列
+      keyword_column: true           # 每個區塊包含敏感詞列
+      business_columns: true         # 每個區塊包含業態方案列
   
   # 必要欄位（基礎部分）
   required_columns:
