@@ -53,8 +53,7 @@ class ConfigLoader:
         return {
             'input_dir': dirs.get('input_dir', 'i18n_input'),
             'output_dir': dirs.get('output_dir', 'i18n_output'),
-            'backup_dir': dirs.get('backup_dir', 'backup'),
-            'language_subdir': dirs.get('language_subdir', '{language}/LC_MESSAGES')  # 新增
+            'backup_dir': dirs.get('backup_dir', 'backup')
         }
     
     def get_file_patterns(self) -> Dict[str, str]:
@@ -65,21 +64,38 @@ class ConfigLoader:
         """獲取業態配置"""
         return self.config.get('business_types', {})
     
-    def get_language_input_path(self, language: str) -> Path:
+    def get_language_po_path(self, language: str) -> Path:
         """
-        獲取語言輸入目錄路徑 - 新的路徑結構
+        獲取語言 PO 檔案目錄路徑（在 LC_MESSAGES 子目錄中）
         
         Args:
             language: 語言代碼
             
         Returns:
-            Path: 語言輸入目錄路徑
+            Path: PO 檔案目錄路徑
+        """
+        dirs = self.get_directories()
+        file_handling = self.get_file_handling_config()
+        
+        input_dir = Path(dirs['input_dir'])
+        lc_messages_subdir = file_handling.get('lc_messages_subdir', 'LC_MESSAGES')
+        
+        return input_dir / language / lc_messages_subdir
+    
+    def get_language_json_path(self, language: str) -> Path:
+        """
+        獲取語言 JSON 檔案目錄路徑（在語言根目錄中）
+        
+        Args:
+            language: 語言代碼
+            
+        Returns:
+            Path: JSON 檔案目錄路徑
         """
         dirs = self.get_directories()
         input_dir = Path(dirs['input_dir'])
-        language_subdir = dirs['language_subdir'].format(language=language)
         
-        return input_dir / language_subdir
+        return input_dir / language
     
     def detect_available_languages(self) -> List[str]:
         """
@@ -109,34 +125,29 @@ class ConfigLoader:
         require_at_least_one = file_handling.get('require_at_least_one', True)
         ignore_patterns = file_handling.get('ignore_patterns', ['*.tmp', '*.bak', '*.log', '*~'])
         
-        # 掃描所有語言目錄 - 考慮新的路徑結構
+        # 掃描所有語言目錄 - 新的路徑結構：JSON 在根目錄，PO 在 LC_MESSAGES 子目錄
         for lang_dir in input_dir.iterdir():
             if not lang_dir.is_dir():
                 continue
             
             language = lang_dir.name
-            # 構建完整的語言檔案路徑
-            language_files_dir = self.get_language_input_path(language)
-            
-            if not language_files_dir.exists():
-                # 如果 LC_MESSAGES 目錄不存在，也檢查直接在語言目錄下的情況（向下相容）
-                language_files_dir = lang_dir
-            
             files_found = []
             
-            # 檢查 PO 檔案 - 只查找 messages.po
-            po_file = language_files_dir / po_pattern
+            # 檢查 PO 檔案 - 在 LC_MESSAGES 子目錄中
+            po_dir = self.get_language_po_path(language)
+            po_file = po_dir / po_pattern
             if po_file.exists():
                 files_found.append('po')
             
-            # 檢查 JSON 檔案 - 只查找 {language}.json
+            # 檢查 JSON 檔案 - 在語言根目錄中
+            json_dir = self.get_language_json_path(language)
             json_filename = json_pattern.format(language=language)
-            json_file = language_files_dir / json_filename
+            json_file = json_dir / json_filename
             
             # 大小寫不敏感檢查
             if not json_file.exists():
-                # 在目錄中查找符合命名的 JSON 檔案
-                for file in language_files_dir.glob('*.json'):
+                # 在語言根目錄中查找符合命名的 JSON 檔案
+                for file in json_dir.glob('*.json'):
                     if file.name.lower() == json_filename.lower():
                         files_found.append('json')
                         break
@@ -146,26 +157,29 @@ class ConfigLoader:
             # 驗證檔案要求：至少需要一個檔案
             if require_at_least_one and not files_found:
                 print(f"⚠️  語言目錄 '{language}' 中沒有找到有效檔案")
-                print(f"   預期路徑：{language_files_dir}")
-                print(f"   預期檔案：{po_pattern} 或 {json_filename}")
+                print(f"   PO 檔案預期路徑：{po_file}")
+                print(f"   JSON 檔案預期路徑：{json_file}")
                 continue
             
             available_languages.append(language)
             print(f"✅ 檢測到語言：{language} (檔案：{', '.join(files_found)})")
-            print(f"   路徑：{language_files_dir}")
+            if 'po' in files_found:
+                print(f"   PO: {po_file}")
+            if 'json' in files_found:
+                print(f"   JSON: {json_file}")
         
         if not available_languages:
             print(f"❌ 在 {input_dir} 中沒有檢測到任何有效的語言目錄")
             print("請確認目錄結構：")
             print(f"  {input_dir}/")
             print(f"  ├── zh-TW/")
+            print(f"  │   ├── zh-TW.json          # JSON 檔案在語言根目錄")
             print(f"  │   └── LC_MESSAGES/")
-            print(f"  │       ├── messages.po")
-            print(f"  │       └── zh-TW.json")
+            print(f"  │       └── messages.po     # PO 檔案在 LC_MESSAGES 子目錄")
             print(f"  └── en/")
+            print(f"      ├── en.json")
             print(f"      └── LC_MESSAGES/")
-            print(f"          ├── messages.po")
-            print(f"          └── en.json")
+            print(f"          └── messages.po")
             sys.exit(1)
         
         self._detected_languages = available_languages
@@ -316,13 +330,14 @@ class ConfigLoader:
         # 目錄配置
         dirs = self.get_directories()
         print(f"   輸入目錄：{dirs['input_dir']}")
-        print(f"   語言子目錄模式：{dirs['language_subdir']}")
+        print(f"   檔案結構：JSON 在語言根目錄，PO 在 LC_MESSAGES 子目錄")
         print(f"   輸出目錄：{dirs['output_dir']}")
         print(f"   備份目錄：{dirs['backup_dir']}")
         
         # 檔案處理規則
         file_handling = self.get_file_handling_config()
         print(f"   檔案處理：至少需要一個檔案 = {file_handling.get('require_at_least_one', True)}")
+        print(f"   LC_MESSAGES 子目錄：{file_handling.get('lc_messages_subdir', 'LC_MESSAGES')}")
         
         # 檢測到的語言
         languages = self.detect_available_languages()
