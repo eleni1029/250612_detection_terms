@@ -6,6 +6,8 @@ directories:
   input_dir: "i18n_input"           # 輸入目錄，包含各語言的原始檔案
   output_dir: "i18n_output"        # 輸出目錄，包含各語言的處理結果
   backup_dir: "backup"             # 備份目錄
+  # 調整：語言子目錄路徑模式，從 {language}/ 改為 {language}/LC_MESSAGES/
+  language_subdir: "{language}/LC_MESSAGES"
 
 # 檔案命名配置
 file_patterns:
@@ -35,6 +37,15 @@ business_types:
     suffix: "_training_institutions" 
     display_name: "培訓機構"
     description: "教育訓練機構適用的敏感詞解決方案"
+
+# 檔案處理規則
+file_handling:
+  # 檔案優先順序和處理規則
+  priority_files: ["messages.po", "{language}.json"]
+  ignore_patterns: ["*.tmp", "*.bak", "*.log", "*~"]
+  require_at_least_one: true  # 至少需要一個優先檔案存在
+  # 新增：如果兩個檔案都存在，優先處理哪個（如果有衝突的話）
+  file_priority: "both"  # both: 都處理, po: 優先PO, json: 優先JSON
 
 # 統一 Excel 配置
 excel_config:

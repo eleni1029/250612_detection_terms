@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-config_loader.py (v2.2 - Multi-language Version)
+config_loader.py (v2.3 - 修正路徑結構版本)
 
-多語言敏感詞檢測系統的配置載入器
-支援自動語言檢測和多語言檔案組織
-
-更新內容：
-- 支援 i18n_input 目錄結構
-- 自動檢測可用語言
-- 多語言檔案路徑管理
-- 時間戳目錄支援
+基於現有邏輯進行最小化調整，主要修正：
+1. 路徑結構從 i18n_input/{language}/ 改為 i18n_input/{language}/LC_MESSAGES/
+2. 檔案讀取邏輯：優先讀取 messages.po 和 {language}.json，忽略其他檔案
+3. 如果兩個檔案都不存在才報錯，有其中一個就可以處理
 """
 
 import yaml
@@ -21,7 +17,7 @@ import re
 from typing import Dict, List, Optional, Tuple
 
 class ConfigLoader:
-    """多語言配置載入器"""
+    """多語言配置載入器 - 修正版本"""
     
     def __init__(self, config_path: str = "config.yaml"):
         """
@@ -57,7 +53,8 @@ class ConfigLoader:
         return {
             'input_dir': dirs.get('input_dir', 'i18n_input'),
             'output_dir': dirs.get('output_dir', 'i18n_output'),
-            'backup_dir': dirs.get('backup_dir', 'backup')
+            'backup_dir': dirs.get('backup_dir', 'backup'),
+            'language_subdir': dirs.get('language_subdir', '{language}/LC_MESSAGES')  # 新增
         }
     
     def get_file_patterns(self) -> Dict[str, str]:
@@ -68,9 +65,25 @@ class ConfigLoader:
         """獲取業態配置"""
         return self.config.get('business_types', {})
     
+    def get_language_input_path(self, language: str) -> Path:
+        """
+        獲取語言輸入目錄路徑 - 新的路徑結構
+        
+        Args:
+            language: 語言代碼
+            
+        Returns:
+            Path: 語言輸入目錄路徑
+        """
+        dirs = self.get_directories()
+        input_dir = Path(dirs['input_dir'])
+        language_subdir = dirs['language_subdir'].format(language=language)
+        
+        return input_dir / language_subdir
+    
     def detect_available_languages(self) -> List[str]:
         """
-        檢測 i18n_input 目錄中可用的語言
+        檢測 i18n_input 目錄中可用的語言 - 使用新的路徑結構
         
         Returns:
             可用語言列表
@@ -91,140 +104,129 @@ class ConfigLoader:
         po_pattern = file_patterns.get('po_file', 'messages.po')
         json_pattern = file_patterns.get('json_file', '{language}.json')
         
-        # 檢測配置
-        detection_config = self.config.get('language_detection', {})
-        ignore_case = detection_config.get('case_handling', {}).get('ignore_case', True)
-        require_at_least_one = detection_config.get('validation', {}).get('require_at_least_one', True)
+        # 檔案處理規則
+        file_handling = self.config.get('file_handling', {})
+        require_at_least_one = file_handling.get('require_at_least_one', True)
+        ignore_patterns = file_handling.get('ignore_patterns', ['*.tmp', '*.bak', '*.log', '*~'])
         
-        # 掃描所有子目錄
+        # 掃描所有語言目錄 - 考慮新的路徑結構
         for lang_dir in input_dir.iterdir():
             if not lang_dir.is_dir():
                 continue
             
             language = lang_dir.name
+            # 構建完整的語言檔案路徑
+            language_files_dir = self.get_language_input_path(language)
+            
+            if not language_files_dir.exists():
+                # 如果 LC_MESSAGES 目錄不存在，也檢查直接在語言目錄下的情況（向下相容）
+                language_files_dir = lang_dir
+            
             files_found = []
             
-            # 檢查 PO 檔案
-            po_file = lang_dir / po_pattern
-            if self._file_exists_ignore_case(po_file) if ignore_case else po_file.exists():
+            # 檢查 PO 檔案 - 只查找 messages.po
+            po_file = language_files_dir / po_pattern
+            if po_file.exists():
                 files_found.append('po')
             
-            # 檢查 JSON 檔案
+            # 檢查 JSON 檔案 - 只查找 {language}.json
             json_filename = json_pattern.format(language=language)
-            json_file = lang_dir / json_filename
+            json_file = language_files_dir / json_filename
             
-            if ignore_case:
-                # 大小寫不敏感檢查
-                json_found = False
-                for file in lang_dir.glob('*.json'):
+            # 大小寫不敏感檢查
+            if not json_file.exists():
+                # 在目錄中查找符合命名的 JSON 檔案
+                for file in language_files_dir.glob('*.json'):
                     if file.name.lower() == json_filename.lower():
                         files_found.append('json')
-                        json_found = True
                         break
-                if not json_found:
-                    # 檢查是否只有一個 JSON 檔案且檔名匹配語言
-                    json_files = list(lang_dir.glob('*.json'))
-                    for json_f in json_files:
-                        if json_f.stem.lower() == language.lower():
-                            files_found.append('json')
-                            break
             else:
-                if json_file.exists():
-                    files_found.append('json')
+                files_found.append('json')
             
-            # 驗證檔案要求
+            # 驗證檔案要求：至少需要一個檔案
             if require_at_least_one and not files_found:
                 print(f"⚠️  語言目錄 '{language}' 中沒有找到有效檔案")
+                print(f"   預期路徑：{language_files_dir}")
                 print(f"   預期檔案：{po_pattern} 或 {json_filename}")
                 continue
             
             available_languages.append(language)
             print(f"✅ 檢測到語言：{language} (檔案：{', '.join(files_found)})")
+            print(f"   路徑：{language_files_dir}")
         
         if not available_languages:
             print(f"❌ 在 {input_dir} 中沒有檢測到任何有效的語言目錄")
             print("請確認目錄結構：")
             print(f"  {input_dir}/")
             print(f"  ├── zh-TW/")
-            print(f"  │   ├── messages.po")
-            print(f"  │   └── zh-TW.json")
+            print(f"  │   └── LC_MESSAGES/")
+            print(f"  │       ├── messages.po")
+            print(f"  │       └── zh-TW.json")
             print(f"  └── en/")
-            print(f"      ├── messages.po")
-            print(f"      └── en.json")
+            print(f"      └── LC_MESSAGES/")
+            print(f"          ├── messages.po")
+            print(f"          └── en.json")
             sys.exit(1)
         
         self._detected_languages = available_languages
         return available_languages
     
-    def _file_exists_ignore_case(self, file_path: Path) -> bool:
-        """檢查檔案是否存在（忽略大小寫）"""
-        if file_path.exists():
-            return True
-        
-        parent = file_path.parent
-        target_name = file_path.name.lower()
-        
-        if not parent.exists():
-            return False
-        
-        for file in parent.iterdir():
-            if file.name.lower() == target_name:
-                return True
-        
-        return False
-    
     def get_language_files(self, language: str) -> Dict[str, Path]:
         """
-        獲取指定語言的檔案路徑
+        獲取指定語言的檔案路徑 - 修正版本
         
         Args:
             language: 語言代碼
             
         Returns:
-            包含檔案路徑的字典
+            包含檔案路徑的字典，只返回存在的檔案
         """
-        dirs = self.get_directories()
+        language_files_dir = self.get_language_input_path(language)
+        
+        # 如果 LC_MESSAGES 目錄不存在，嘗試直接在語言目錄下查找（向下相容）
+        if not language_files_dir.exists():
+            dirs = self.get_directories()
+            input_dir = Path(dirs['input_dir'])
+            language_files_dir = input_dir / language
+        
+        if not language_files_dir.exists():
+            raise ValueError(f"語言目錄不存在：{language_files_dir}")
+        
         file_patterns = self.get_file_patterns()
-        detection_config = self.config.get('language_detection', {})
-        ignore_case = detection_config.get('case_handling', {}).get('ignore_case', True)
-        
-        input_dir = Path(dirs['input_dir'])
-        lang_dir = input_dir / language
-        
-        if not lang_dir.exists():
-            raise ValueError(f"語言目錄不存在：{lang_dir}")
-        
-        # 獲取檔案路徑
         result = {}
         
-        # PO 檔案
+        # 檢查 PO 檔案 - 只查找 messages.po
         po_pattern = file_patterns.get('po_file', 'messages.po')
-        po_file = lang_dir / po_pattern
-        
-        if ignore_case and not po_file.exists():
-            # 大小寫不敏感查找
-            for file in lang_dir.glob('*.po'):
-                if file.name.lower() == po_pattern.lower():
-                    po_file = file
-                    break
+        po_file = language_files_dir / po_pattern
         
         if po_file.exists():
             result['po_file'] = po_file
         
-        # JSON 檔案
+        # 檢查 JSON 檔案 - 只查找 {language}.json
         json_pattern = file_patterns.get('json_file', '{language}.json')
         json_filename = json_pattern.format(language=language)
-        json_file = lang_dir / json_filename
+        json_file = language_files_dir / json_filename
         
-        if ignore_case and not json_file.exists():
-            # 大小寫不敏感查找
-            for file in lang_dir.glob('*.json'):
+        # 大小寫不敏感查找
+        if not json_file.exists():
+            for file in language_files_dir.glob('*.json'):
                 if file.name.lower() == json_filename.lower():
                     json_file = file
                     break
         
         if json_file.exists():
             result['json_file'] = json_file
+        
+        # 檢查是否至少有一個檔案
+        file_handling = self.config.get('file_handling', {})
+        require_at_least_one = file_handling.get('require_at_least_one', True)
+        
+        if require_at_least_one and not result:
+            raise FileNotFoundError(
+                f"語言 '{language}' 的必要檔案不存在。\n"
+                f"預期路徑：{language_files_dir}\n"
+                f"預期檔案：{po_pattern} 或 {json_filename}"
+            )
         
         return result
     
@@ -257,19 +259,20 @@ class ConfigLoader:
             'timestamp': timestamp
         }
     
-    def get_comparison_excel_path(self, language: str) -> Path:
+    def get_comparison_excel_path(self, language: str = None) -> Path:
         """
-        獲取指定語言的 phrase_comparison Excel 路徑
+        獲取 phrase_comparison Excel 路徑 - 統一版本
         
         Args:
-            language: 語言代碼
+            language: 語言代碼（保留參數以維持相容性，但實際不使用）
             
         Returns:
             Excel 檔案路徑
         """
         file_patterns = self.get_file_patterns()
-        pattern = file_patterns.get('phrase_comparison', 'phrase_comparison_{language}.xlsx')
-        return Path(pattern.format(language=language))
+        # 使用統一的檔案名，不再按語言分別
+        pattern = file_patterns.get('phrase_comparison', 'phrase_comparison.xlsx')
+        return Path(pattern)
     
     def get_tobemodified_excel_path(self, language: str) -> Path:
         """
@@ -302,6 +305,10 @@ class ConfigLoader:
         """獲取備份配置"""
         return self.config.get('backup', {})
     
+    def get_file_handling_config(self) -> Dict:
+        """獲取檔案處理配置"""
+        return self.config.get('file_handling', {})
+    
     def print_config_summary(self):
         """打印配置摘要"""
         print("📋 系統配置摘要：")
@@ -309,8 +316,13 @@ class ConfigLoader:
         # 目錄配置
         dirs = self.get_directories()
         print(f"   輸入目錄：{dirs['input_dir']}")
+        print(f"   語言子目錄模式：{dirs['language_subdir']}")
         print(f"   輸出目錄：{dirs['output_dir']}")
         print(f"   備份目錄：{dirs['backup_dir']}")
+        
+        # 檔案處理規則
+        file_handling = self.get_file_handling_config()
+        print(f"   檔案處理：至少需要一個檔案 = {file_handling.get('require_at_least_one', True)}")
         
         # 檢測到的語言
         languages = self.detect_available_languages()
@@ -351,18 +363,21 @@ if __name__ == "__main__":
     
     print("\n🔍 檢測檔案路徑：")
     for lang in config.detect_available_languages():
-        files = config.get_language_files(lang)
-        print(f"   {lang}:")
-        for file_type, file_path in files.items():
-            print(f"     {file_type}: {file_path}")
-        
-        # 測試輸出路徑
-        output_paths = config.get_output_paths(lang)
-        print(f"     輸出目錄: {output_paths['output_dir']}")
-        
-        # 測試 Excel 路徑
-        comparison_path = config.get_comparison_excel_path(lang)
-        tobemodified_path = config.get_tobemodified_excel_path(lang)
-        print(f"     對照表: {comparison_path}")
-        print(f"     待修正: {tobemodified_path}")
-        print()
+        try:
+            files = config.get_language_files(lang)
+            print(f"   {lang}:")
+            for file_type, file_path in files.items():
+                print(f"     {file_type}: {file_path}")
+            
+            # 測試輸出路徑
+            output_paths = config.get_output_paths(lang)
+            print(f"     輸出目錄: {output_paths['output_dir']}")
+            
+            # 測試 Excel 路徑
+            comparison_path = config.get_comparison_excel_path()
+            tobemodified_path = config.get_tobemodified_excel_path(lang)
+            print(f"     統一對照表: {comparison_path}")
+            print(f"     待修正: {tobemodified_path}")
+            print()
+        except Exception as e:
+            print(f"   {lang}: 錯誤 - {e}")
