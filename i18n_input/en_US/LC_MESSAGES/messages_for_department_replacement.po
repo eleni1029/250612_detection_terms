@@ -1,0 +1,232 @@
+# English (United States) translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-07-19 15:16+0800\n"
+"PO-Revision-Date: 2018-07-19 16:30+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+# 這個文件的用途是在同一個語系、同一個 msgid 之下，想要給不同環境有不同的翻譯所使用的文件
+# 來取用新翻譯
+# 如果你要給指定環境、指定org客製翻譯，建議文件命名為 message_deliveryorg_orgid.pot
+# 如果你不需要客製翻譯，你只需要在 messages.pot 建立平台通用的翻譯即可
+# Usage:
+# 在 html 上仍使用 _ ，在 py 需改用 from lms.i18n import gettext2 as _ 取代 from
+# flask_babel import _
+# 院系, Department #
+msgid "課程院系"
+msgstr "Department"
+
+msgid "教師所屬院系代碼"
+msgstr "Instructor Department Code"
+
+msgid "教師所屬院系名稱"
+msgstr "Instructor Department Name"
+
+msgid "院系代碼 / 院系名稱 / 院系簡稱"
+msgstr "Dept code / Dept name / Dept abrev."
+
+msgid "院系名稱"
+msgstr "Department Name"
+
+msgid "院系簡稱"
+msgstr "Department Short Name"
+
+msgid "院系代碼"
+msgstr "Department Code"
+
+msgid "開課院系代碼"
+msgstr "Department Code of Course"
+
+msgid "開課院系名稱"
+msgstr "Department Name of Course"
+
+msgid "上級院系"
+msgstr "Parent Department"
+
+msgid "院系階層"
+msgstr "Level"
+
+msgid "添加院系"
+msgstr "add department"
+
+msgid "院系"
+msgstr "Department"
+
+msgid "系級"
+msgstr "Department"
+
+msgid "開課系級"
+msgstr "Department"
+
+msgid "人事院系、课程选课等信息接入TronClass平台，提供无缝平滑的数据对接。成绩自动上报教务系统，采用灵活的同步方式（数据库、API）和同步机制（定时同步、实时同步）。"
+msgstr ""
+
+msgid "教务人员可以对院系、人员和课程等进行统一的管理，随时了解人员基本信息和修课情况并及时发出提醒，还可以协助老师完成公告发布，大纲录入等工作。"
+msgstr ""
+
+msgid "您所在院系容量不足"
+msgstr "Capacity of your department is insufficient"
+
+msgid "選擇課程所屬的院系"
+msgstr "filter course by department"
+
+msgid "無指定院系"
+msgstr "Not Specified"
+
+msgid "个别院系已使用容量超过平均值，不能完成分配"
+msgstr ""
+"Individual departments have used capacity than the average, can not "
+"complete the allocation"
+
+msgid "平均分配會覆蓋之前的院系容量設置，是否分配？"
+msgstr ""
+"The average allocation will cover before the faculty capacity setting, "
+"whether or not it is assigned?"
+
+msgid "開啟該選項之後，本校教務可審核分享至院系資源庫的資源"
+msgstr ""
+"Turn on this toggle to allow the Edu Admin to audit resources which "
+"shared to manageable departments"
+
+msgid "請在“設定-權限設定”中為其分配可管理的院系"
+msgstr "Please assign manageable departments in 'Settings-Permissions'"
+
+msgid "您修改的新院系裝不下這麼多東西哦，快呼叫容量管理員為您重新分配吧"
+msgstr ""
+"The capacity of new department is not enough,please contact the "
+"administrator for you."
+
+msgid "哎呀！修改的新院系裝不下您的容量，快呼叫容量管理員為您重新分配哦"
+msgstr ""
+"The capacity of the new department can't fit your capacity，please contact"
+" the administrator for you."
+
+msgid "管理院系設定"
+msgstr "Management Departments Setting"
+
+msgid "管理院系刪除成功"
+msgstr "Permissions departments has been deleted successfully"
+
+msgid "暫無院系被設定"
+msgstr "No Department"
+
+msgid "開課院系"
+msgstr "Department"
+
+msgid "調整院系"
+msgstr "Adjust Department"
+
+msgid "添加某一院系時，若要對下面的子院系也能夠管理，需要將下面的子院系也同時添加"
+msgstr ""
+"When add a department, if you want to manage departments under it, please"
+" add them at the same time"
+
+msgid "院系不存在"
+msgstr "Department does not exist"
+
+msgid "院系代碼未填寫"
+msgstr "Department code is required"
+
+msgid "院系名稱未填寫"
+msgstr "Department name is required"
+
+msgid "院系代碼重複"
+msgstr "Department code is duplicated"
+
+msgid "已有{0}筆資料院系代碼重複"
+msgstr "Find duplicated department code {0} times"
+
+msgid "院系代碼不可清空"
+msgstr "Department code cannot be NULL"
+
+msgid "院系名稱不可清空"
+msgstr "Department name cannot be NULL"
+
+msgid "該院系下已有其他下級院系，不能刪除"
+msgstr "Cannot delete unit which already has subordinate unit"
+
+msgid "該院系下已有課程，不能刪除"
+msgstr "Cannot delete unit which already has course"
+
+msgid "該院系下已有成員，不能刪除"
+msgstr "Cannot delete unit which already has member"
+
+msgid "上級院系不存在"
+msgstr "Parent department does not exist"
+
+msgid "提示：以下錯誤資訊未匯入，你可以手動建立院系資訊"
+msgstr ""
+"Attention: these invalid departments below were not imported, you can "
+"create manually"
+
+msgid "提示：以下錯誤資訊未匯入，你可以手動編輯院系資訊"
+msgstr ""
+"Attention: these invalid departments below were not imported, you can "
+"edit manually"
+
+msgid "已成功創建了{0}個院系"
+msgstr "Successfully created {0} departments"
+
+msgid "已成功編輯了{0}個院系"
+msgstr "Successfully edited {0} departments"
+
+msgid "上級院系代碼"
+msgstr "Parent department code"
+
+msgid "請指定資源所屬院系"
+msgstr "Please specify the subordinate department"
+
+msgid "選擇院系"
+msgstr "Select departments"
+
+msgid "The department code has been used"
+msgstr ""
+
+msgid "The department does not exist."
+msgstr ""
+
+msgid "Department has been created successfully"
+msgstr ""
+
+msgid "Department has been updated successfully"
+msgstr ""
+
+msgid "開放院系"
+msgstr "Open Departments"
+
+msgid "請確認您的平台身份、院系是否符合「開放限制」"
+msgstr ""
+"You can't join this course, please check the open requirements of this "
+"course."
+
+msgid "查看目前選擇院系"
+msgstr "View Selected Departments"
+
+msgid "查看課程開放院系"
+msgstr "View Course Open Departments"
+
+msgid "暫無選擇院系"
+msgstr "No Selected Departments"
+
+msgid "院系資源庫"
+msgstr "Department"
+
+msgid "此資源僅限指定院系查看，無法進行分享"
+msgstr "This resource only open to the certain departments."
+
+#~ msgid "专业"
+#~ msgstr "Program"
+

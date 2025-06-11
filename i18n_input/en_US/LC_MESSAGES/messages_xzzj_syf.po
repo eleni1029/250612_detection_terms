@@ -1,0 +1,66 @@
+# English (United States) translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-02-19 15:52+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "院系"
+msgstr "Class Cagegory"
+
+msgid "学院"
+msgstr "Class Cagegory"
+
+msgid "院系代碼 / 院系名稱 / 院系簡稱"
+msgstr " Class Cagegory Code/Class Cagegory Name/Class Cagegory Short Name"
+
+msgid "院系名稱"
+msgstr "Class Cagegory Name"
+
+msgid "院系簡稱"
+msgstr "Class Cagegory Short Name"
+
+msgid "院系代碼"
+msgstr "Class Cagegory Code"
+
+msgid "學院代碼"
+msgstr "Class Cagegory Code"
+
+msgid "學院名稱"
+msgstr "Class Cagegory Name"
+
+msgid "開課學院"
+msgstr "Class Cagegory"
+
+msgid "開課院系代碼"
+msgstr "Class Cagegory Code"
+
+msgid "開課院系名稱"
+msgstr "Class Cagegory Name"
+
+msgid "上級院系"
+msgstr "Parent Class Cagegory"
+
+msgid "院系階層"
+msgstr "Class Cagegory Level"
+
+msgid "添加院系"
+msgstr "Add Class Cagegory"
+
+msgid "無指定院系"
+msgstr "Not Specified"
+

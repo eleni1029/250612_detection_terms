@@ -1,7 +1,27 @@
 2025-06-11 多語言敏感詞檢測與替換系統 Version 2.3
 -------------------------
-用户初步對比的 excel 統一為 phrase_comparison.xlsx
-在 tobemodified 時，才根據語言拆分多個 excel 文件。
+1. 用户初步對比的 excel 統一為 phrase_comparison.xlsx
+   在 tobemodified 時，才根據語言拆分多個 excel 文件。
+
+2. 同步修改多語言生成的結果是橫向排列，方便用戶手動操作增減。
+
+3. 根據目前 SaaS 中的方式讀取對應規格，使用者注意要根據這個邏輯匯入：
+
+250609_detection_terms/
+├── i18n_input/                          # 輸入目錄
+│   ├── zh-TW/                           # 繁體中文
+│   │   ├── zh-TW.json                   # JSON 檔案在語言根目錄
+│   │   └── LC_MESSAGES/                 # PO 檔案在子目錄
+│   │       └── messages.po
+│   ├── en/                              # 英文
+│   │   ├── en.json
+│   │   └── LC_MESSAGES/
+│   │       └── messages.po
+│   └── ja/                              # 日文
+│       ├── ja.json
+│       └── LC_MESSAGES/
+│           └── messages.po
+
 
 2025-06-11 多語言敏感詞檢測與替換系統 Version 2.2
 -------------------------

@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-generate_phrase_comparison.py (v2.3 - Unified Excel Version)
+generate_phrase_comparison.py (v2.3 - 修正路徑結構版本)
 
 生成統一的 phrase_comparison.xlsx 檔案，包含所有語言的敏感詞對照表
 支援語言區塊分離，在同一個 Excel 中統一管理所有語言和業態
 
-功能：
-1. 自動掃描 i18n_input 目錄中的所有語言
-2. 從各語言檔案中檢測敏感詞
-3. 生成統一的 phrase_comparison.xlsx，按語言分區塊
-4. 使用從 JSON 提取的基礎敏感詞字典
-5. 自動備份現有檔案
+修正內容：
+1. 適配新的路徑結構：JSON 在語言根目錄，PO 在 LC_MESSAGES 子目錄
+2. 使用新的 config_loader 方法
 """
 
 import json
@@ -100,16 +97,13 @@ def safe_adjust_column_widths_for_summary(worksheet):
 # 基礎敏感詞字典 - 從 JSON 檔案分析和教育培訓領域經驗整理
 BASE_SENSITIVE_WORDS = {
     "學員相關": [
-        "學生", "學員", "參與者", "受訓者", "同學", "班級", "組別",
-        "學號", "姓名", "聯絡方式", "出席", "請假", "缺席", "退選"
+        "學生", "學員", "參與者", "受訓者", "同學", "班級", "組別"
     ],
     "師資相關": [
-        "老師", "教師", "講師", "教授", "助教", "指導員", "輔導員",
-        "專家", "顧問", "主講", "協同", "代課", "兼任", "專任", "客座"
+        "老師", "教師", "講師", "教授", "助教", "指導員", "輔導員"
     ],
     "時間相關": [
-        "學期", "學年", "年度", "季度", "月份", "週次", "節次",
-        "時間", "日期", "期間", "開始", "結束", "截止", "延期", "排程"
+        "學期", "學年", "年度", "季度", "月份", "週次", "節次"
     ]
 }
 
@@ -135,8 +129,7 @@ def main():
     timestamp = datetime.datetime.now().strftime(timestamp_format)
     
     # 獲取統一 Excel 檔案路徑
-    file_patterns = config.get_file_patterns()
-    excel_path = Path(file_patterns.get('phrase_comparison', 'phrase_comparison.xlsx'))
+    excel_path = config.get_comparison_excel_path()
     
     print(f"   目標檔案：{excel_path}")
     
@@ -153,19 +146,25 @@ def main():
     
     for language in available_languages:
         print(f"\n📋 分析語言：{language}")
-        language_files = config.get_language_files(language)
-        detected_keywords = detect_sensitive_words(language_files, config, language)
-        
-        if not detected_keywords:
-            print(f"   ⚠️  在 {language} 中未檢測到敏感詞，使用基礎詞彙")
-            detected_keywords = BASE_SENSITIVE_WORDS.copy()
-        
-        all_language_keywords[language] = detected_keywords
-        
-        total_words = sum(len(words) for words in detected_keywords.values())
-        print(f"   📊 檢測到 {total_words} 個敏感詞，{len(detected_keywords)} 個分類")
-        for category, words in detected_keywords.items():
-            print(f"      {category}: {len(words)} 個詞")
+        try:
+            language_files = config.get_language_files(language)
+            detected_keywords = detect_sensitive_words(language_files, config, language)
+            
+            if not detected_keywords:
+                print(f"   ⚠️  在 {language} 中未檢測到敏感詞，使用基礎詞彙")
+                detected_keywords = BASE_SENSITIVE_WORDS.copy()
+            
+            all_language_keywords[language] = detected_keywords
+            
+            total_words = sum(len(words) for words in detected_keywords.values())
+            print(f"   📊 檢測到 {total_words} 個敏感詞，{len(detected_keywords)} 個分類")
+            for category, words in detected_keywords.items():
+                print(f"      {category}: {len(words)} 個詞")
+                
+        except Exception as e:
+            print(f"   ❌ 處理語言 {language} 時發生錯誤：{e}")
+            print(f"   ⚠️  將使用基礎詞彙作為後備方案")
+            all_language_keywords[language] = BASE_SENSITIVE_WORDS.copy()
     
     # 生成統一 Excel
     generate_unified_excel(config, all_language_keywords, excel_path)
@@ -185,7 +184,7 @@ def main():
 
 def detect_sensitive_words(language_files: dict, config, language: str) -> dict:
     """
-    從語言檔案中檢測敏感詞
+    從語言檔案中檢測敏感詞 - 修正版本，適配新的路徑結構
     
     Args:
         language_files: 語言檔案路徑字典
@@ -202,20 +201,24 @@ def detect_sensitive_words(language_files: dict, config, language: str) -> dict:
     # 讀取 PO 檔案
     if 'po_file' in language_files:
         try:
-            po_file = polib.pofile(str(language_files['po_file']))
+            po_file_path = language_files['po_file']
+            print(f"      📖 讀取 PO 檔案：{po_file_path}")
+            po_file = polib.pofile(str(po_file_path))
             for entry in po_file:
                 if entry.msgid:
                     all_texts.append(entry.msgid)
                 if entry.msgstr:
                     all_texts.append(entry.msgstr)
-            print(f"      ✅ 讀取 PO 檔案：{len(po_file)} 個條目")
+            print(f"      ✅ PO 檔案：{len(po_file)} 個條目")
         except Exception as e:
             print(f"      ⚠️  讀取 PO 檔案失敗：{e}")
     
     # 讀取 JSON 檔案
     if 'json_file' in language_files:
         try:
-            with open(language_files['json_file'], 'r', encoding='utf-8') as f:
+            json_file_path = language_files['json_file']
+            print(f"      📖 讀取 JSON 檔案：{json_file_path}")
+            with open(json_file_path, 'r', encoding='utf-8') as f:
                 json_data = json.load(f)
             
             def extract_json_values(obj):
@@ -231,7 +234,7 @@ def detect_sensitive_words(language_files: dict, config, language: str) -> dict:
             
             json_texts = list(extract_json_values(json_data))
             all_texts.extend(json_texts)
-            print(f"      ✅ 讀取 JSON 檔案：{len(json_texts)} 個文本")
+            print(f"      ✅ JSON 檔案：{len(json_texts)} 個文本")
             
         except Exception as e:
             print(f"      ⚠️  讀取 JSON 檔案失敗：{e}")
@@ -275,7 +278,7 @@ def detect_sensitive_words(language_files: dict, config, language: str) -> dict:
 
 def generate_unified_excel(config, all_language_keywords: dict, output_path: Path):
     """
-    生成統一的 phrase_comparison Excel 檔案
+    生成統一的 phrase_comparison Excel 檔案 - 語言獨立橫向分區塊版本
     
     Args:
         config: 配置物件
@@ -293,13 +296,15 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
     
     # 樣式設定
     styling = excel_config.get('styling', {})
-    language_header_color = styling.get('language_header_color', '366092')
+    language_header_color = styling.get('language_header_color', '4472C4')
     category_header_color = styling.get('category_header_color', '70AD47')
+    business_header_color = styling.get('business_header_color', 'FFC000')
     data_row_color = styling.get('data_row_color', 'F2F2F2')
     
     # 字體和邊框樣式
     header_font = Font(bold=True, color="FFFFFF", size=12)
-    category_font = Font(bold=True, color="FFFFFF", size=11)
+    language_font = Font(bold=True, color="FFFFFF", size=14)
+    business_font = Font(bold=True, color="FFFFFF", size=10)
     data_font = Font(size=10)
     
     thin_border = Border(
@@ -309,90 +314,102 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
         bottom=Side(style='thin')
     )
     
-    # 建立欄位標題
+    thick_border = Border(
+        left=Side(style='thick'),
+        right=Side(style='thick'),
+        top=Side(style='thick'),
+        bottom=Side(style='thick')
+    )
+    
+    # 建立語言獨立的橫向結構
     business_types = config.get_business_types()
-    headers = ["語言", "敏感詞類型", "敏感詞"]
     
-    for bt_code, bt_config in business_types.items():
-        display_name = bt_config['display_name']
-        business_columns = excel_config.get('business_columns', {})
-        solution_template = business_columns.get('solution_template', '對應方案({display_name})')
-        column_name = solution_template.format(display_name=display_name)
-        headers.append(column_name)
+    # 橫向配置
+    horizontal_config = excel_config.get('horizontal_layout', {})
+    block_separator = horizontal_config.get('block_separator_columns', 1)
     
-    # 寫入主標題
-    current_row = 1
+    # 計算每個語言區塊的寬度：敏感詞類型 + 敏感詞 + 業態數量
+    block_width = 2 + len(business_types)  # 2 是基礎列數
     
-    # 總標題
-    ws.merge_cells(f'A{current_row}:{get_column_letter(len(headers))}{current_row}')
-    title_cell = ws[f'A{current_row}']
-    title_cell.value = "多語言敏感詞對照表"
-    title_cell.font = Font(bold=True, size=14, color="FFFFFF")
+    # 寫入總標題（第1行）
+    total_columns = len(all_language_keywords) * block_width + (len(all_language_keywords) - 1) * block_separator
+    
+    ws.merge_cells(f'A1:{get_column_letter(total_columns)}1')
+    title_cell = ws['A1']
+    title_cell.value = "多語言敏感詞對照表（語言獨立橫向分區塊版）"
+    title_cell.font = Font(bold=True, size=16, color="FFFFFF")
     title_cell.fill = PatternFill(start_color="2F4F4F", end_color="2F4F4F", fill_type="solid")
     title_cell.alignment = Alignment(horizontal="center", vertical="center")
     
-    current_row += 1
+    # 為每個語言創建獨立區塊
+    current_col = 1
     
-    # 欄位標題
-    for col_num, header in enumerate(headers, 1):
-        cell = ws.cell(row=current_row, column=col_num, value=header)
-        cell.font = header_font
-        cell.fill = PatternFill(start_color=language_header_color, end_color=language_header_color, fill_type="solid")
-        cell.alignment = Alignment(horizontal="center", vertical="center")
-        cell.border = thin_border
-    
-    current_row += 1
-    
-    # 語言區塊設定
-    language_blocks = excel_config.get('language_blocks', {})
-    separator_rows = language_blocks.get('separator_rows', 1)
-    
-    # 寫入各語言的資料
     for lang_index, (language, keywords_dict) in enumerate(all_language_keywords.items()):
-        if lang_index > 0:
-            # 語言間分隔行
-            for _ in range(separator_rows):
-                current_row += 1
+        block_start_col = current_col
+        block_end_col = current_col + block_width - 1
         
-        # 語言區塊開始行
-        language_start_row = current_row
+        # 語言標題（第2行，跨越整個區塊）
+        ws.merge_cells(f'{get_column_letter(block_start_col)}2:{get_column_letter(block_end_col)}2')
+        lang_cell = ws.cell(row=2, column=block_start_col, value=f"{language}")
+        lang_cell.font = language_font
+        lang_cell.fill = PatternFill(start_color=language_header_color, end_color=language_header_color, fill_type="solid")
+        lang_cell.alignment = Alignment(horizontal="center", vertical="center")
+        lang_cell.border = thick_border
         
-        # 處理每個分類
-        for category_index, (category, keywords) in enumerate(keywords_dict.items()):
+        # 區塊內標題列（第3行）
+        block_headers = ["敏感詞類型", "敏感詞"]
+        for bt_code, bt_config in business_types.items():
+            block_headers.append(bt_config['display_name'])
+        
+        for i, header in enumerate(block_headers):
+            col = block_start_col + i
+            cell = ws.cell(row=3, column=col, value=header)
+            
+            if i < 2:  # 基礎列
+                cell.font = header_font
+                cell.fill = PatternFill(start_color=category_header_color, end_color=category_header_color, fill_type="solid")
+            else:  # 業態列
+                cell.font = business_font
+                cell.fill = PatternFill(start_color=business_header_color, end_color=business_header_color, fill_type="solid")
+            
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = thin_border
+        
+        # 寫入該語言的敏感詞資料（從第4行開始）
+        current_row = 4
+        
+        for category, keywords in keywords_dict.items():
             for keyword_index, keyword in enumerate(keywords):
-                row_data = [
-                    language if category_index == 0 and keyword_index == 0 else "",  # 只在第一行顯示語言
-                    category if keyword_index == 0 else "",  # 只在分類第一行顯示分類名
-                    keyword
-                ]
+                # 敏感詞類型和敏感詞
+                ws.cell(row=current_row, column=block_start_col, value=category if keyword_index == 0 else "")
+                ws.cell(row=current_row, column=block_start_col + 1, value=keyword)
                 
-                # 為每個業態添加空白的對應方案欄位
-                for bt_code in business_types.keys():
-                    row_data.append("")  # 空白，讓使用者手動填寫
+                # 為每個業態添加空白方案欄位
+                for bt_index in range(len(business_types)):
+                    col = block_start_col + 2 + bt_index
+                    cell = ws.cell(row=current_row, column=col, value="")
+                    cell.border = thin_border
+                    # 設置背景色（奇偶行）
+                    if current_row % 2 == 0:
+                        cell.fill = PatternFill(start_color=data_row_color, end_color=data_row_color, fill_type="solid")
                 
-                # 寫入資料行
-                for col_num, value in enumerate(row_data, 1):
-                    cell = ws.cell(row=current_row, column=col_num, value=value)
+                # 設置基礎列的樣式
+                for base_col_offset in [0, 1]:
+                    col = block_start_col + base_col_offset
+                    cell = ws.cell(row=current_row, column=col)
                     cell.font = data_font
                     cell.border = thin_border
                     cell.alignment = Alignment(horizontal="left", vertical="center")
-                    
-                    # 設置背景色（奇偶行）
                     if current_row % 2 == 0:
                         cell.fill = PatternFill(start_color=data_row_color, end_color=data_row_color, fill_type="solid")
                 
                 current_row += 1
         
-        # 語言區塊結束後，為語言名稱設置合併儲存格
-        if language_start_row < current_row - 1:
-            ws.merge_cells(f'A{language_start_row}:A{current_row - 1}')
-            language_cell = ws[f'A{language_start_row}']
-            language_cell.alignment = Alignment(horizontal="center", vertical="center")
-            language_cell.font = Font(bold=True, size=11)
-            language_cell.fill = PatternFill(start_color="E6F3FF", end_color="E6F3FF", fill_type="solid")
+        # 移動到下個語言區塊
+        current_col = block_end_col + 1 + block_separator
     
-    # 自動調整欄寬（修復 MergedCell 錯誤）
-    auto_adjust_column_widths(ws, max_width=40)
+    # 自動調整欄寬
+    auto_adjust_column_widths(ws, max_width=25)
     
     # 創建總覽工作表
     create_summary_worksheet(wb, config, all_language_keywords)
@@ -403,9 +420,11 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
     # 保存檔案
     wb.save(output_path)
     
-    total_rows = current_row - 1
+    total_languages = len(all_language_keywords)
     total_keywords = sum(sum(len(words) for words in keywords.values()) for keywords in all_language_keywords.values())
-    print(f"      📊 Excel 統計：{total_keywords} 個敏感詞，{len(business_types)} 個業態欄位，{total_rows} 行資料")
+    print(f"      📊 Excel 統計：{total_languages} 個語言，每個語言獨立區塊")
+    print(f"      📐 總敏感詞數：{total_keywords} 個")
+    print(f"      📏 表格寬度：{total_columns} 列")
 
 
 def create_summary_worksheet(wb, config, all_language_keywords: dict):
@@ -455,12 +474,15 @@ def create_summary_worksheet(wb, config, all_language_keywords: dict):
     
     for language, keywords_dict in all_language_keywords.items():
         # 獲取語言檔案資訊
-        language_files = config.get_language_files(language)
-        file_types = []
-        if 'po_file' in language_files:
-            file_types.append('PO')
-        if 'json_file' in language_files:
-            file_types.append('JSON')
+        try:
+            language_files = config.get_language_files(language)
+            file_types = []
+            if 'po_file' in language_files:
+                file_types.append('PO')
+            if 'json_file' in language_files:
+                file_types.append('JSON')
+        except Exception:
+            file_types = []
         
         file_type_str = '+'.join(file_types) if file_types else "無檔案"
         category_count = len(keywords_dict)

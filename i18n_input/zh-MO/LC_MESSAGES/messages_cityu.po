@@ -1,0 +1,89 @@
+# Chinese (Traditional, Macao SAR China) translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-05-13 12:00+0800\n"
+"PO-Revision-Date: 2020-05-12 18:21+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hant_MO\n"
+"Language-Team: zh_Hant_MO <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "學習單元"
+msgstr "學習進度"
+
+msgid "您已經成功添加了新的學習單元"
+msgstr "新增學習進度成功"
+
+msgid "刪除失敗，學習單元下已有學習活動"
+msgstr "不可刪除已有學習活動的學習進度"
+
+msgid "Syllabus is None"
+msgstr "您所指定學習進度不存在"
+
+msgid "syllabus.add.button"
+msgstr "新增學習進度"
+
+msgid "新增學習單元"
+msgstr "新增學習進度"
+
+msgid "屬於它的學習單元都將同步刪除，是否確認刪除？"
+msgstr "本章節下的學習進度都將同步刪除，是否確認刪除？"
+
+msgid "請先添加課程學習單元"
+msgstr "請先新增課程學習進度"
+
+msgid "學習單元數"
+msgstr "學習進度數"
+
+msgid "所屬學習單元"
+msgstr "所屬學習進度"
+
+msgid "學習單元一"
+msgstr "學習進度一"
+
+msgid "編輯學習單元"
+msgstr "編輯學習進度"
+
+msgid "syllabus.new"
+msgstr "新增學習進度"
+
+msgid "再按照知識結構將每個章節內容切分為不同的學習單元"
+msgstr "再按照課程大綱將每個章節細分為不同的學習進度"
+
+msgid "最後按照知識點安排將各種課件資源加入不同的學習單元，還可以通過拖拽調整順序"
+msgstr "最後按照課程大綱將各種教材與活動加入不同的學習進度，還可以通過拖曳調整排序"
+
+msgid "在這裏則可以編輯學習單元"
+msgstr "在此可以編輯學習進度"
+
+msgid "修改學習單元名稱，完善教學目標等信息"
+msgstr "修改學習進度名稱，完成教學目標等訊息"
+
+msgid "批量編輯學習單元"
+msgstr "批次編輯學習進度"
+
+msgid "Some syllabuses of the source course does not exist."
+msgstr "來源課程中的某些學習進度不存在"
+
+msgid "當前狀態為【{0}】，成績無效"
+msgstr "當前狀態為【{0}】"
+
+msgid "zh-MO"
+msgstr "繁體中文"
+
+msgid "en-US"
+msgstr "English"
+
+msgid "點名_備註"
+msgstr "教室"
+

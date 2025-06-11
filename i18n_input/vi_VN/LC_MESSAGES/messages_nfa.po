@@ -1,0 +1,1764 @@
+# Vietnamese (Vietnam) translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-04-29 14:37+0800\n"
+"PO-Revision-Date: 2025-04-29 14:53+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: vi_VN\n"
+"Language-Team: vi_VN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+# # char
+msgid "："
+msgstr ""
+
+# #############################################################################
+# #
+# # 為了方便管理 i18n，故將 msgid 分門別類，以避免重複使用相近詞語，增強整體一致性。
+# # 目錄
+# # - 名詞 Noun
+# #    - 人物 Character
+# #    - 時間 Time
+# #    - 語言 Language
+# # - 動作 Action
+# # - 暫時未分類 Temp
+# #  Note: The Great Wall 下方的尚未分類
+# # 名詞 Noun
+# ### 人物 Character
+msgid "Student"
+msgstr ""
+
+msgid "Instructor"
+msgstr ""
+
+msgid "教師評語"
+msgstr "Comment"
+
+msgid "學年"
+msgstr "Academic Year"
+
+msgid "學期"
+msgstr "Semester"
+
+msgid "添加年級"
+msgstr "Add Grade"
+
+msgid "添加學期"
+msgstr "Add Semester"
+
+msgid "添加班級"
+msgstr "Add Class"
+
+msgid "請選擇班級"
+msgstr "Select Classes"
+
+msgid "請選擇班級內學生"
+msgstr "Select Students"
+
+msgid "無學生資料"
+msgstr "No student data"
+
+msgid "尚無任何學生"
+msgstr "No student selected"
+
+msgid "已選擇學生清單"
+msgstr "Lists of Selected Students"
+
+msgid "新增數據同步的學期"
+msgstr "Add synchronized semester"
+
+msgid "請選擇需要進行數據同步的學期"
+msgstr "Please select the semester to synchronize"
+
+msgid "已新增的學期數據"
+msgstr "Selected semester"
+
+msgid "attachment_edit_allow_download"
+msgstr "Allow download"
+
+msgid "已有學生作答，不能修改測驗形式"
+msgstr ""
+"Exam Type cannot be changed after students start answering question(s)."
+
+msgid "課程代碼 / 課程名稱 / 教師姓名 / 教師帳號 / Email"
+msgstr ""
+"Subject Code / Subject Name / Instructor Name / Instructors No. / Email"
+
+msgid "課程代碼 / 課程名稱 / 教師姓名"
+msgstr "Subject Code / Subject Name / Instructor Name"
+
+msgid "已繳學生"
+msgstr "Submitted student"
+
+msgid "非本課程修課學生"
+msgstr "The student is not in course"
+
+msgid "校務行政系統中的學生缺曠管理已存在請假記錄"
+msgstr ""
+"There is already a record of student deficiencies in the school "
+"administration system. Please go to the faculty information service system "
+"to modify"
+
+msgid "校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改"
+msgstr ""
+"There is already a record of student deficiencies in the school "
+"administration system. Please go to the faculty information service system "
+"to modify"
+
+msgid "點名送繳成功，若要修改請至教職員資訊服務系統的學生缺曠管理"
+msgstr ""
+"Submit successfully. If you want to modify it, please go to the faculty "
+"information service system"
+
+msgid "確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改"
+msgstr ""
+"Confirm submit? If you have modified the status of students before sending "
+"it, please save the record first. Please modify it on the absence management"
+" system after you submit"
+
+msgid "送繳學生缺曠管理系統"
+msgstr "Submit absence management system"
+
+msgid "複製公告內容到其他課程。教師或助教編輯、刪除本公告時，不會同時異動其他課程中的公告"
+msgstr ""
+"Copy the announcement to other courses. Teacher or assistant editor, delete "
+"this announcement, will not modify content in other courses"
+
+msgid "複製公告內容到其他課程。教師編輯、刪除本公告時，不會同時異動其他課程中的公告"
+msgstr ""
+"Copy the announcement to other courses. Teacher delete this announcement, "
+"will not modify content in other courses"
+
+msgid "異動學生"
+msgstr "Changed students"
+
+msgid "位學生"
+msgstr "students"
+
+msgid ""
+"進階式課程適用於有清晰的章節結構，課程內容較為復雜，學習時程較長的課程，這類課程將大量復雜的內容以巧妙的結構組織起來，方便學生系統性、有計劃地進行學習。"
+msgstr ""
+
+msgid "班級代碼"
+msgstr "Class Code"
+
+msgid "學生造訪課程量"
+msgstr "Amount of student visit"
+
+msgid "學生作答數據分析"
+msgstr "Students Statistics"
+
+msgid "由教務系統匯入的課程或者教師新建的課程，皆預設為一般課程。"
+msgstr ""
+"Courses imported from the Academic System or built by teachers will be "
+"setting as a normal course."
+
+msgid "樣板課程非正式課程，功用是作為標準課程的模板。教師於樣板課程中編制完課程內容後，可複製內容至自己教授的其他課程中。"
+msgstr ""
+"Sample course is informal course. When teacher have done the course content,"
+" the content can be copy into the other courses."
+
+msgid "學年期"
+msgstr "Academic Year"
+
+msgid "第一學期"
+msgstr "Semester 1"
+
+msgid "第二學期"
+msgstr "Semester 2"
+
+msgid "第三學期"
+msgstr "Semester 3"
+
+msgid "教師所屬系所"
+msgstr "Department"
+
+msgid "教師身分證號"
+msgstr "ID Card Number"
+
+msgid "教師所屬院系代碼"
+msgstr "Instructor Department Code"
+
+msgid "教師所屬院系名稱"
+msgstr "Instructor Department Name"
+
+msgid "學生端不顯示題目備註，僅在老師端顯示"
+msgstr "Students will not see the question(s) notes, only show to teachers."
+
+msgid "年級"
+msgstr "Grade"
+
+msgid "班級"
+msgstr "Class"
+
+msgid "本班級總共有 {0}位教師 {1}名學生"
+msgstr "{0} instructors, and {1} students"
+
+msgid "本班級總共有 {0} 位成員"
+msgstr "{0} enrollments"
+
+msgid "本班級總共有 {0} 名學生"
+msgstr "{0} students"
+
+msgid "本課程總共有 {0} 名學生"
+msgstr "{0} students"
+
+msgid "計入成績,學生回答了問卷計100分,未回答問卷計0分;不計入成績,學生是否回答該問卷都不計分"
+msgstr ""
+"Count towards grade, if answered 100 else 0; count not towards grade, no "
+"matter answered or not count not towards grade"
+
+msgid "設定學生作答繳交完成後，所顯示的內容"
+msgstr "Set up the content that students can see after finishing the test"
+
+msgid "改變繳交截止時間，將可能影響學生目前的繳交狀態"
+msgstr ""
+"Change submission deadline could effect the current student submission "
+"status."
+
+msgid "附件和學生上繳的作業也將一併刪除，是否確認刪除？"
+msgstr ""
+"Attachments and all submitted works will be deleted as well, are you sure?"
+
+msgid "授課教師"
+msgstr "Instructor"
+
+msgid "班級成員"
+msgstr "Members"
+
+msgid "尚無學生加入此課程"
+msgstr "No students in this course yet"
+
+msgid "學生看到的課程效果"
+msgstr "What students see"
+
+msgid "預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。"
+msgstr ""
+"You can preview this course in students' eyes and go back to adjust course "
+"content"
+
+msgid "共有{0}名學生，{1}名教師"
+msgstr "{0} students, {1} instructors in total"
+
+msgid "向學生顯示"
+msgstr "Show students"
+
+msgid "當學生答對後，會顯示正確答案解釋"
+msgstr ""
+"The explanation of correct answer will be shown to the student after "
+"answering correctly"
+
+msgid "當學生答錯後，會顯示錯誤答案解釋"
+msgstr ""
+"The explanation of incorrect answer will be shown to the student after "
+"answering incorrectly"
+
+msgid "模擬學生答題，不能繳交答題結果，不會進行計分"
+msgstr "View as student, cannot submit, will not score"
+
+msgid "老師可以根據教學策略創建不同的分組方案，將課程的學生劃分為若干小組，實現不同場景使用不同分組方案，快來試試看吧!"
+msgstr ""
+"Group sets house the different groups within a course. Teacher can create "
+"different Group Sets for different teaching methods. Let's give it a try!"
+
+msgid "分組內沒有學生"
+msgstr "There has no members in group"
+
+msgid "班級成員不存在"
+msgstr "student does not exist"
+
+msgid "班級成員在其他分組中"
+msgstr "student already in other group"
+
+msgid "該課程的學生還沒有任何分組"
+msgstr "This subject has no any group now"
+
+msgid "semester_info.academic_year.suffix"
+msgstr "&nbsp;"
+
+msgid "修改後試卷題目、選項、配分將一同更新到學生試卷。"
+msgstr ""
+"Once the modification is made, it will be synchronized in students’ exam "
+"papers."
+
+msgid "答題學生"
+msgstr "Student"
+
+msgid "確認要向教师發送完成大纲填写的提醒吗"
+msgstr "Are you sure to notify the teacher to edit the syllabus"
+
+msgid "繳交截止時間到達之後，學生可以查看基本資訊但不能繳交"
+msgstr ""
+"After submit expiration time is reached, students can see but cannot pay the"
+" other operations"
+
+msgid "秉承以學生為中心的設計理念，關注學習效果，連接課堂內外，除了學習以外，還有更多精彩。"
+msgstr ""
+
+msgid "不再是單向的知識灌輸，讓學生成為學習的主體，影音簡報、分組學習、互評，樣樣精彩。"
+msgstr ""
+
+msgid "（老師輔導、混合式學習、分組合作、學生互評）"
+msgstr ""
+
+msgid "優秀的行動體驗，讓學生隨時隨地學習，讓老師時刻把握教學動態，讓交流和溝通更即時暢通。"
+msgstr ""
+
+msgid "方便进行课堂内的即时测验，了解学生的上课效果。学生通过手机答题，老师可以控制答题进度，查看班级答题统计数据和分析结果。"
+msgstr ""
+
+msgid "老师可以查看学生的作业列表和繳交状态，学生的作业内容、附件以及成绩；查看作业批改情况；可以查看作业属性信息。"
+msgstr ""
+
+msgid "轻松管理班级作业"
+msgstr ""
+
+msgid "学生可以通过手机拍照或者选取相册照片作为附件来交作业，增加了交作业的灵活性，适应课堂教学和户外教学等场景。"
+msgstr ""
+
+msgid ""
+"iLesson课堂录播系统将课堂的过程自动录制下来上传到云端，可以辅助学生回顾课堂内容，复习知识，还可以未能加入课程的学生一个重温课堂学习的机会。"
+msgstr ""
+
+msgid "教师的所有历史教学数据都透明可见，教务人员可以实时跟踪所有课程、老师、学生的情况，方便及时发现教学过程中的问题并为教学评鉴提供事实依据。"
+msgstr ""
+
+msgid "支持分组教学，老师可以创建并管理班级分组，布置小组作业让学生合作完成，提高学生学习积极性和主动性，培养团队合作精神。"
+msgstr ""
+
+msgid "老师创建和管理互动课堂，即可让学生通过在手机上完成随堂测等课堂互动活动，有效提升参与度，老师也可以及时掌握学生学习情况，及时改善教学。"
+msgstr ""
+
+msgid "学生和老师可以在课程讨论区自由发表帖子和回复帖子，方便进行教学互动，增强师生间的沟通，丰富教学形式。"
+msgstr ""
+
+msgid "用带摄像头的笔记本就可以录制微课视频和微课作业，让知识的传递形式更加生动，利于学生更好地理解和掌握知识。"
+msgstr ""
+
+msgid ""
+"作为学习平台的一项基本功能，在线测试帮助老师快速完成试卷的编写和管理，学生答完题交付后即可快速计算出客观题得分，减轻老师负担，让学生可以及时获得学习效果的反馈。"
+msgstr ""
+
+msgid ""
+"老师可以布置线上交付、纸本交付和微课交付三种类型的作业给学生，查看学生的作业内容和附件，并通过手动打分或Rubric打分的方式在线批改作业和写评语。"
+msgstr ""
+
+msgid ""
+"公平公正的评量原则与评量工具，采用行与列组成各项评量标准，能有效增进评量成效。除了让学生们了解教师的评量标准外，也协助学生学习评量自我的学习成果并有针对性地进行改进，带给使用者一番崭新的教学评量体验。"
+msgstr ""
+
+msgid "详细记录学生的学习活动参与情况如视频观看、论坛活跃度、教材下载和阅读、作业交付、成绩分布等，随时掌握学生的学习进度，方便指导改进。"
+msgstr ""
+
+msgid ""
+"可以在移动设备上实时接收最新动态消息，查看在线教材，查看课程和公告信息，发起聊天，发起点名，参与课堂互动等。实现随时随地的教学和互通，节省老师和学生的时间，快捷而高效。"
+msgstr ""
+
+msgid "每门课程多至100名学生"
+msgstr ""
+
+msgid "更多空间、更大班级"
+msgstr ""
+
+msgid "剩余 {} 學生名額"
+msgstr "{} student positions left"
+
+msgid "班級成員加入"
+msgstr "New Member Joined"
+
+msgid "班級成員退出"
+msgstr "Members Exited"
+
+msgid "開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息"
+msgstr ""
+"After opening time is reached, exam will appear on learning activity list, "
+"students will see the exam info"
+
+msgid "截止時間到達之後，學生可以查看但不能進行繳交等操作"
+msgstr ""
+"After closing time is reached, students can see but cannot pay the other "
+"operations"
+
+msgid "開放時間到達之後，學習活動才能被學生看到"
+msgstr "Students can see the learning activity when it comes to the open time"
+
+msgid "公佈時間到達之後，學生會看到自己的成績"
+msgstr "After the publication time arrives, students can see their grades"
+
+msgid "公布时间到达后，学生会看到自己的原始成绩"
+msgstr ""
+"After the publication time arrives, students can see their original score"
+
+msgid "公布时间到达后，学生会看到自己的最终成绩"
+msgstr ""
+"After the publication time arrives, students can see their final score"
+
+msgid "老師和學生可在APP端查看並進行課堂互動"
+msgstr "Teachers and students can view the quiz and feedback in app"
+
+msgid "選擇允許後，學生可以看到班級答題結果統計"
+msgstr ""
+"When checked allow, students can see their class answer result statistics"
+
+msgid "開放時間到達之後，作業才能被學生看到並交付"
+msgstr ""
+"After the opening time arrives, the assignment can be seen and commit by "
+"students"
+
+msgid "繳交截止時間到達之後，學生將不能進行作業繳交"
+msgstr ""
+"After closing time is reached, the student will not be able to submit "
+"assignment"
+
+msgid "測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！"
+msgstr ""
+"This test has been opened to students, and please note that any "
+"modifications will lead to unexpected score statistics!"
+
+msgid "是否確認從班級成員中刪除？"
+msgstr "Are you sure to delete?"
+
+msgid "已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？"
+msgstr ""
+"Total {0} students of unsubmitted are selected, confirm to send remind "
+"assignment notification?"
+
+msgid "已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？"
+msgstr ""
+"Total {0} students of unsubmitted are selected, confirm to send remind "
+"questionnaire notification?"
+
+msgid "共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？"
+msgstr ""
+"Total {0} students of unsubmitted, confirm to send remind assignment "
+"notification?"
+
+msgid "已選擇{0}個「未繳」作業的學生，確定要更改成「已繳」的狀態嗎？"
+msgstr "Set {0} selected ”unsubmitted” one(s) as ”submitted”?"
+
+msgid "已選擇{0}個「已繳」作業的學生，確定要更改成「未繳」的狀態嗎？"
+msgstr "Set {0} selected ”submitted” one(s) as ”unsubmitted”?"
+
+msgid "選擇未繳的學生，設成已繳狀態"
+msgstr "Set selected ”unsubmitted” as ”submitted” for student(s)"
+
+msgid "選擇已繳的學生，設成未繳狀態"
+msgstr "Set selected ”submitted” as ”unsubmitted” for student(s)"
+
+msgid "已成功儲存教師評語"
+msgstr "Comment saved successfully"
+
+msgid "選擇未繳的學生，可催繳作業"
+msgstr "Select unsubmitted students can remind assignment"
+
+msgid "選擇未繳的學生，可催繳問卷"
+msgstr "Select unsubmitted students can remind questionnaire"
+
+msgid "教師通知你重繳作業，請盡快繳交"
+msgstr ""
+"The instructor informs you of make up assignment. Please submit as soon as "
+"possible."
+
+msgid "選擇學生，可設定其進行補繳"
+msgstr "Select students and set them to make up assignment"
+
+msgid "已選擇{0}名學生，確定要發送補繳作業的通知嗎？"
+msgstr ""
+"Total {0} students are selected, confirm to send make up assignment "
+"notification?"
+
+msgid "共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？"
+msgstr ""
+"Total {0} students of unsubmitted, confirm to send make up assignment "
+"notification?"
+
+msgid "選擇已繳的作業，可推薦給學生"
+msgstr "Select committed submissions can recommend to students"
+
+msgid "已選擇{0}名已繳作業的學生，確定推薦嗎？"
+msgstr "Total {0} students of committed are selected, confirm to recommend?"
+
+msgid "推薦的作業會展示給學生，包括作業內容和評分評語"
+msgstr ""
+"Assignment of recommended will be shown to students, including the content, "
+"score and comment"
+
+msgid "由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。"
+msgstr "Assignment will be scored by other student(s)."
+
+msgid "教師評閱"
+msgstr "Instructor"
+
+msgid "學生互評"
+msgstr "Peer Review"
+
+msgid "學生人數 {0}"
+msgstr "Students number {0}"
+
+msgid "截止時間到達後，學生看不到該內容"
+msgstr "Students cannot see the learning activity after the end time"
+
+msgid "已經有學生繳交作業，不能修改作業形式"
+msgstr "Student has already submitted, so you cannot change the type"
+
+msgid "互評學生參與人數"
+msgstr "Number of Students for Peer Assessment"
+
+msgid "教師評分"
+msgstr "Instructor score"
+
+msgid "教師批改分數"
+msgstr "Instructor score"
+
+msgid "已經有人繳交作業後不能修改評分方式"
+msgstr "Cannot change the type after someone has submitted assignment"
+
+msgid "選擇課程所屬的學年"
+msgstr "filter course by academic year"
+
+msgid "選擇課程所屬的學期"
+msgstr "filter course by semester"
+
+msgid "選擇課程所屬的年級"
+msgstr "filter course by grade"
+
+msgid "送繳截止日期到達後，未送繳成績的教師無法再送繳成績"
+msgstr "Instructor cannot publish score if the deadline is reached"
+
+msgid "教師批改"
+msgstr "Instr Rev"
+
+msgid "無指定年級"
+msgstr "Not Specified"
+
+msgid "無指定班級"
+msgstr "Not Specified"
+
+msgid "老師評分之後，學生會看到自己的成績"
+msgstr "After instructors give score, students can see their grades"
+
+msgid "老师评分之后，学生可以马上看到自己的原始成绩"
+msgstr "Once instructors give score, students can see their original score"
+
+msgid "老师评分之后，学生可以马上看到自己的最终成绩"
+msgstr "Once instructors give score, students can see their final score"
+
+msgid "已選擇 {0} 名學生，確定送繳學期成績嗎？"
+msgstr "You have selected {0} students, do you want to submit?"
+
+msgid "成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。"
+msgstr ""
+"After your submission, the \"final scores\" can’t be changed. Even though "
+"modify student’s assignment and exam scores."
+
+msgid "請選擇送繳學生"
+msgstr "Please select some students"
+
+msgid "請先選擇要進行成績送繳的學生範圍。"
+msgstr "Please select some students to be submitted."
+
+msgid "已送繳部分學生成績"
+msgstr "Partial submission"
+
+msgid "已送繳全部學生成績"
+msgstr "All students have been submitted"
+
+msgid "送繳部分學生"
+msgstr "Submit some students"
+
+msgid "送繳全部學生"
+msgstr "Submit all students"
+
+msgid "送繳學期成績"
+msgstr "Submit"
+
+msgid "已送繳學期成績"
+msgstr "Submitted"
+
+msgid "未送繳學期成績"
+msgstr "Not Submitted"
+
+msgid ""
+"加入方式是學生加入課程的方式，目前系統提供兩種加入課程的方式，公開加入和僅邀請加入。公開加入是任何人都可以加入課程，僅邀請加入是需要有訪問碼或訪問URL才可以加入課程。"
+msgstr ""
+"'Access' is the way how user access the course. Currently system supports "
+"two access ways, 'Open' and 'Only access code and url'. 'Open' means any "
+"user could access the course, 'Only access code and url' means user need "
+"access code or access url to access the course."
+
+msgid "巡課功能可以幫助您以教師的身份檢視課程，以便讓您更好的瞭解課程情況。"
+msgstr ""
+"With inspection, you could inspect the whole course as instructor, and get "
+"better understanding of the course"
+
+msgid "學年學期"
+msgstr "Year&Semester"
+
+msgid "Model course role can only be instructor"
+msgstr ""
+
+msgid "注：预警指标说明（低于预警阈值的学生将被预警)"
+msgstr ""
+"P.S. The student will be warned if he/she is lower than the Warning "
+"Standard."
+
+msgid "请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。"
+msgstr ""
+"Please choose the Warning Target then setting the Standard. The student will"
+" be warned if he/she is lower than the Warning Standard. If the standard is "
+"blank, it wouldn't be take into the List."
+
+msgid "預警學生總數"
+msgstr "The sum of Warning students"
+
+msgid "預警學生數"
+msgstr "The count of Warning students"
+
+msgid "預警學生佔比"
+msgstr "The percent of Warning students"
+
+msgid "本課程有{0}名學生被預警，確定送交預警名單嗎？"
+msgstr ""
+"{0} students in this course are being alerted and are sure to send them to "
+"the warning list?"
+
+msgid "附：預警指標說明（低於預警閾值的學生將被預警)"
+msgstr ""
+"Attachment: Description of early warning indicators (students below the "
+"warning threshold will be alerted)"
+
+msgid "測驗 {0} 次未繳交後預警"
+msgstr "Alerting if there are {0} unsubmitted exams"
+
+msgid "作業 {0} 次未繳交後預警"
+msgstr "Alerting if there are {0} unsubmitted assignments"
+
+msgid "討論 {0} 次未參與後預警"
+msgstr "Alerting if there are {0} unattended discussions"
+
+msgid "隨堂測驗 {0} 次未參與後預警"
+msgstr "Alerting if there are {0} untaken quizzes"
+
+msgid "缺席 {0} 次後預警"
+msgstr "Absent for {0} times, students will get notice."
+
+msgid "請假 {0} 次後預警"
+msgstr "On-Leave for {0} times, students will get notice."
+
+msgid "出席率低於 {0}％，學生將收到通知"
+msgstr "Attendance Rate lower than {0}％, students will get notice."
+
+msgid "出席率低於 {0}％，學生將收到不允許參加期末考的通知"
+msgstr ""
+"Attendance Rate lower than {0}％, students will get notice of banned to join "
+"Final Exam."
+
+msgid "课程成绩详细提示"
+msgstr "Grade lower than {0} points, students will get notice."
+
+msgid "預警學生已經成功添加"
+msgstr "The warning student has been successfully added"
+
+msgid "預警學生已經存在"
+msgstr "The warning student already exist"
+
+msgid "預警學生已經成功保存"
+msgstr "Changes of warning student has been successfully saved"
+
+msgid "預警學生已經成功刪除"
+msgstr "The warning student has been successfully removed"
+
+msgid "教務修改了該生成績"
+msgstr "Edu Admin changed it"
+
+msgid "教師數"
+msgstr "Instructors"
+
+msgid "學生數"
+msgstr "Students"
+
+msgid "開啟該選項後，可以由課程教師編輯該課程內開放閱覽的學習活動"
+msgstr ""
+"Turn on this toggle to open learning activities to the guest. The course "
+"teacher can choose which one to open for the guest."
+
+msgid "学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。"
+msgstr ""
+"Students can choose learning activities to study freely, instructor can set "
+"the completion criteria of activities to investigate students' learning "
+"situation."
+
+msgid ""
+"学生需要按照老师已经设定好的学习活动开启条件，按顺序进行学习，只有完成当前学习活动之后才能开启下一学习活动，老师设置学习活动开启条件可以不依照章节顺序进行。"
+msgstr ""
+"Students will not be able to participate in the next activity unless "
+"requirements set by the instructor(s) are met first. As an instructor, you "
+"do not need to set prerequisite(s) according to the sequence of activities"
+
+msgid "课程进行过程中调整学习模式，不会影响学生已完成的学习活动，未开始的学习活动将按照新的学习模式进行："
+msgstr ""
+"Changing the learning mode during the teaching period will only act on these"
+" un-started learning activities:"
+
+msgid "1.开启闯关式学习后，学生需要根据老师设置的开启条件进入新的学习活动进行学习。已完成的学习活动不受影响。"
+msgstr ""
+"Scenario 1: Students are required to complete the prerequisites of the "
+"locked activity. Completed learning activities are not affected."
+
+msgid "2.关闭闯关式学习后，学生可以自由选择学习活动进行学习，不受开启条件限制。再次开启闯关式学习，原开启条件将重新生效。"
+msgstr ""
+"Scenario 2: Students can freely choose learning activities for learning "
+"without being limited by the opening conditions. The open prerequisites will"
+" work again when reversing the mode."
+
+msgid "添加學年"
+msgstr "Add Academic Year"
+
+msgid "學生造訪影音教材的查看率，不等於完成觀看。如需依照完成指標分析完成度，請至「課程活動」的影音教材內查看熱點分析。"
+msgstr ""
+"Student just visit the video material but it doesn't means they have "
+"watched. If you want to know more about Hot spot in video learning, please "
+"go to \"Course Events\"."
+
+msgid "學生完成度"
+msgstr "Completeness"
+
+msgid "教師訪問時長"
+msgstr "Teachers' Length of Page Viewing"
+
+msgid "學生資訊"
+msgstr "Student Information"
+
+msgid "學生郵箱"
+msgstr "Student E-mail"
+
+msgid "學生個人檔案"
+msgstr "Student Personal File"
+
+msgid "學生申請表格"
+msgstr "Student Application Forms"
+
+msgid "學生資訊管理 (管理員)"
+msgstr "Student Information (Admin)"
+
+msgid "授課班級"
+msgstr "Teaching Class"
+
+msgid "按學生查看"
+msgstr "View by Student"
+
+msgid "課程內的所有學生將會變更為：無狀態"
+msgstr "The action will clear all status."
+
+msgid "老師必須重新手動選擇學生出席狀態。"
+msgstr "Students will be changed to unmarked."
+
+msgid "課程內的所有學生將會變更為：出席"
+msgstr "The action will make all students to Present."
+
+msgid "任課教師"
+msgstr "Instructor(s)"
+
+msgid "班級人數"
+msgstr "Class amount"
+
+msgid "及格人数"
+msgstr "Number of Passed Students"
+
+msgid "优秀人数"
+msgstr "Number of High Achievers"
+
+msgid "优秀率"
+msgstr "Proportion of High Achievers"
+
+msgid "教師簽字"
+msgstr "Instructor Assignment"
+
+msgid "學生人數"
+msgstr "Student Count"
+
+msgid "教師姓名"
+msgstr "Instructor Name"
+
+msgid "教師人員編號"
+msgstr "Instructor User No."
+
+msgid "學生"
+msgstr "Student"
+
+msgid "教師"
+msgstr "Instructor"
+
+msgid "學生統計"
+msgstr "Students"
+
+msgid "設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序"
+msgstr ""
+"When set to random, question options in paper of different students will "
+"sort randomly"
+
+msgid "設定為隨機排序，不同學生所見試卷，題目將隨機進行排序"
+msgstr ""
+"When set to random, questions in paper of different students will sort "
+"randomly"
+
+msgid "設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序"
+msgstr ""
+"When set to random, questions in paper of different students will sort "
+"randomly. When set to random in question type, questions in paper of "
+"different students will sort randomly in question type."
+
+msgid "轻松翻转课堂，让学生爱上学习"
+msgstr ""
+
+msgid "主观题学生互评，老师不用再为上百份作业发愁"
+msgstr ""
+
+msgid "学生学习全面跟踪，学习行为实时分析"
+msgstr ""
+
+msgid "搭配常态录播系统，记录教师授课全过程，自动上传到平台，方便学生复习"
+msgstr ""
+
+msgid "班级管理"
+msgstr "Manage"
+
+msgid "一个平台体验多种先进教学互动模式，让线上学习和线下课堂相结合，减轻教师负担，提升学习效果"
+msgstr ""
+
+msgid "移动学习让学生随时随地学习互动，学习动态一手掌握，帮学生养成良好学习习惯"
+msgstr ""
+
+msgid "多种大数据学习分析，全面跟踪学生学习情况，实时分析学习行为；实时记录教学情况，从此不再为教学管理而烦恼"
+msgstr ""
+
+msgid "让学生爱上学习"
+msgstr ""
+
+msgid "互联网海量资源库帮你轻松备课，难点疑点一键上传到云端，学生随时查看"
+msgstr ""
+
+msgid "让教师从讲台走到学生身边，最大程度提升教学质量与效率"
+msgstr ""
+
+msgid "支持翻转课堂等教学方式，将学习的决定权交给学生，培养学生自主学习能力"
+msgstr ""
+
+msgid "培养学生自主学习，提高教学效益"
+msgstr ""
+
+msgid "调整课堂内外时间，将学习的决定权从教师转移给学生，让学生成为学习的主体"
+msgstr ""
+
+msgid ""
+"畅课、TronClass、在线教育、在线培训、翻转课堂、慕课、企业内训、在线学习管理系统、教学系统、在线课堂、微课学习、在线视频教程、移动学习平台、课堂录播、智能教师"
+msgstr ""
+
+msgid "适用于个人老师学生，进行班级范围的课程教学和分享"
+msgstr ""
+
+msgid "不限课程数和班级大小"
+msgstr ""
+
+msgid "若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制"
+msgstr ""
+"If not allow, students will not able to drag the timeline to fast forward "
+"the video unless they finish watching the video for one time"
+
+msgid "闖關節點下，學生在尚未完成視頻觀看的情況下，默認不能拖動時間軸快進，觀看完成後再次觀看則不受控制"
+msgstr ""
+
+msgid "教師已設置觀看該視頻不能快進"
+msgstr "Forward seeking is not allowed"
+
+msgid "您已經在該班級中"
+msgstr "You have already in this class"
+
+msgid "邀請已發出（其中{0}人發送邀請，{1}人已在班級中）"
+msgstr "Invite Successfully ({0} send invite and {1} already in class)"
+
+msgid "登錄并加入班級"
+msgstr "Login and Join Class"
+
+msgid "註冊并加入班級"
+msgstr "Signup and Join Class"
+
+msgid "您好，{0}，歡迎加入班級“{1}”"
+msgstr "Hello, {0}, welcome to the class '{1}'"
+
+msgid "確定接受邀請加入該班級？"
+msgstr "Are you sure to join this class?"
+
+msgid "您已加入該班級"
+msgstr "You have joined this class"
+
+msgid "協作教師"
+msgstr "Collaborative teacher"
+
+msgid "選擇學年"
+msgstr "Academic Year"
+
+msgid "請先新增學年"
+msgstr "please add the academic year first."
+
+msgid "課程名稱 / 教師姓名"
+msgstr "Course Name / Instructor Name"
+
+msgid "管理學生的分組"
+msgstr "Manage group"
+
+msgid "管理學生考勤"
+msgstr "Manage rollcall"
+
+msgid "維護學生成績 (作業、測驗、總成績)"
+msgstr "Manage grade (assignment, exam, total score)"
+
+msgid "學生助教"
+msgstr "Student Assistant"
+
+msgid "無指定學年"
+msgstr "Not Specified"
+
+msgid "無指定學期"
+msgstr "Not Specified"
+
+msgid ", 有助於學生瞭解你的課程"
+msgstr " "
+
+msgid ", 能在第一時間吸引學生"
+msgstr " "
+
+msgid "課程還沒有學生"
+msgstr "No student yet"
+
+msgid "課程還沒有學生, 快"
+msgstr "No student yet, "
+
+msgid "課程沒有學生"
+msgstr "No student yet"
+
+msgid "教師版"
+msgstr "For Instructor"
+
+msgid "學生版"
+msgstr "For Student"
+
+msgid "管理學生分組"
+msgstr "Manage group"
+
+msgid "查看所有學生的考勤記錄"
+msgstr "View rollcall history"
+
+msgid "您也可以以教師身份開設課程"
+msgstr "You could also create course as Instructor"
+
+msgid "機構還沒有教師和學生, 教學活動無法展開"
+msgstr "No instructor or student"
+
+msgid "機構已有{0}名成員, 其中教師{1}人, 學生{2}人"
+msgstr "{0} members in organization, {1} instructors, {2} students"
+
+msgid "本月增加教師{0}人, 本月增加學生{1}人"
+msgstr "Added {0} instructors and {1} students in this month"
+
+msgid "學生管理"
+msgstr "Students"
+
+msgid "還沒有學生加入到您的課程或班級"
+msgstr "No student yet"
+
+msgid "共有{0}人參加到您的課程，{1}人加入到您的班級"
+msgstr "{0} students are studying in your courses, {1} in your classes"
+
+msgid "還沒有教師和學生, 教學活動無法展開"
+msgstr "No instructor or student"
+
+msgid "班級不存在"
+msgstr "Class does not exist"
+
+msgid "年級不存在"
+msgstr "Grade does not exist"
+
+msgid "課程內教師身份不可新增座號"
+msgstr "No support for add student number on teachers."
+
+msgid "已有{0}名成員, 其中教師{1}人, 學生{2}人"
+msgstr "{0} members, {1} instructors, {2} students"
+
+msgid "授課教師帳號有誤"
+msgstr "User numbers of instructors are invalid"
+
+msgid "授課教師帳號"
+msgstr "Instructors No."
+
+msgid "開始時間到達之後，學生才可以進入答題"
+msgstr "Students can start exam when submit start time is reached"
+
+msgid "選擇學生，可設定其進行補考"
+msgstr "Select students can set it to make up exam"
+
+msgid "教師通知你補考測驗，請盡快補考"
+msgstr ""
+"The instructor informs you of making up exam. Please submit as soon as "
+"possible."
+
+msgid "已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？"
+msgstr ""
+"Total {0} students are selected, confirm to send make up exam notification?"
+
+msgid "分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!"
+msgstr ""
+"Group learning through the course of the students into a number of groups, "
+"to achieve the group work, the group of resource sharing and other learning "
+"activities. The teacher can easily complete the group here, the designated "
+"team leader, to give it a try!"
+
+msgid "該課程還沒有任何學生"
+msgstr "No students in this course"
+
+msgid "，去邀請一些學生吧"
+msgstr ", go to invite student"
+
+msgid "由教師批改作業，給予評分與評語。未勾選則不會收到批改通知，但仍可對學生的作業留下評分與評語，評分不列入原始分數計算。"
+msgstr "Assignment will be scored by instructor."
+
+msgid "由學生給予其他分組的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。"
+msgstr "Assignment will be scored by inter-group peer review."
+
+msgid "由學生給予自己所屬分組成員評分與評語，學生無法查看組內互評結果。只有教師可查看完整資訊。"
+msgstr "Assignment will be scored by intra-group peer review."
+
+msgid "只有教師可查看組內互評結果，組員無法得知你的評分與評語。"
+msgstr "Only the lectures will receive the Intra-group Review outcomes."
+
+msgid "選擇學生"
+msgstr "Select student"
+
+msgid "請選擇學生"
+msgstr "Please select student"
+
+msgid "已選擇 {0} 位學生"
+msgstr "Selected {0} students"
+
+msgid "部分學生"
+msgstr "Some students"
+
+msgid "全部學生"
+msgstr "All students"
+
+msgid "互評功能不適用於部分學生"
+msgstr "Peer Review can not be used with selected some students."
+
+msgid "因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習"
+msgstr ""
+"Due to assign some students/groups for specific assignment and exam, this "
+"course can't change to Checkpoint Learning."
+
+msgid "我的班級"
+msgstr "My Classes"
+
+msgid "新建班級"
+msgstr "New Class"
+
+msgid "編輯班級"
+msgstr "Edit Class"
+
+msgid "班級設置"
+msgstr "Settings"
+
+msgid "班級名稱"
+msgstr "Class Name"
+
+msgid "邀請機構內人員成為學生"
+msgstr "Invite user to become student in organization"
+
+msgid "邀請機構內人員成為教師"
+msgstr "Invite user to become instructor in organization"
+
+msgid "學生可輸入訪問碼或訪問鏈接加入課程"
+msgstr "User can join the course by access url or fill the access code"
+
+msgid "班級角色"
+msgstr "Class Role"
+
+msgid "2. 上傳具智慧財產權之教材與電子資源，必須事先取得合法使用授權書，並限修課學生線上觀看，請勿提供下載，以免侵權。"
+msgstr ""
+"2. Please do NOT violate Copyright Act and Personal Information Protection "
+"Act."
+
+msgid "可以通過以下邀請方式將其他成員加入本班，加入班級的成員可以看到該班級內分享的所有內容"
+msgstr ""
+"You can use these ways below to invite user to join this teaching class, the"
+" members can visit all shared content from class"
+
+msgid "用戶註冊後，通過下列訪問碼可以加入該班級"
+msgstr ""
+"Before user registered, they can use the access code below to join this "
+"teaching class"
+
+msgid "用戶通過訪問以下訪問鏈接註冊，自動加入該班級"
+msgstr ""
+"User can use the link below to register, and auto join this teaching class"
+
+msgid "批量發送郵件直接邀請學生或其他班級成員"
+msgstr "Invite teaching class members by mail"
+
+msgid "發送 Email 通知給班級成員"
+msgstr "Send email notification to class members."
+
+msgid "班級訪問碼不正確，請核對"
+msgstr "Access Code is invalid, please check it"
+
+msgid "加入班級"
+msgstr "Join Class"
+
+msgid "班級訪問碼"
+msgstr "Access Code"
+
+msgid "因平台角色限制，您不能加入班級"
+msgstr "Due to the role limited, You cannot join this teaching class"
+
+msgid "您還沒有自己的班級，趕緊去創建吧！"
+msgstr "You have no owned classes, create it now!"
+
+msgid "您還沒有加入任何班級，趕緊去加入吧！"
+msgstr "You have not joined any classes, join it now!"
+
+msgid "您的孩子還沒有加入任何班級"
+msgstr "Your child has not joined any classes"
+
+msgid "快把關聯碼提供給家長吧, 家長可註冊進來檢視你的班級活動"
+msgstr "Parents could use association code to register"
+
+msgid "允許通過訪問碼加入班級"
+msgstr "Allowed to join with access code"
+
+msgid "在這裏您可以為班級學生快速創建作業"
+msgstr "You can create assignment from here"
+
+msgid "创建班级"
+msgstr "Create Teaching Class"
+
+msgid "{}的班級"
+msgstr "{}'s classes"
+
+msgid "班級建設"
+msgstr "Classes"
+
+msgid "查看班級"
+msgstr "View All"
+
+msgid "共在{0}個班級中進行教學活動"
+msgstr "You are teaching in {0} classes"
+
+msgid "您還沒有在任何一個班級中進行教學"
+msgstr "You are not teaching in any classes"
+
+msgid "去創建班級"
+msgstr "Create"
+
+msgid "還沒有學生加入到您的課程"
+msgstr "No student yet"
+
+msgid "（您可以在學生的帳號中找到家長關聯碼）"
+msgstr "(You could find the Association Code in student's account)"
+
+msgid "以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。"
+msgstr ""
+"Centered on students, teachers, educational administration, combined the "
+"technology of the cloud, creating a integration management platform of "
+"learning, action and social, provide a complete solution of teaching that is"
+" most suitable for blended learning system."
+
+msgid "在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。"
+msgstr ""
+"Here, you can share learning materials around the class management, post is "
+"your assistant for the rapid release of your message file, you can also "
+"interact with students and parents."
+
+msgid "班级名称是必填项"
+msgstr "This field is required"
+
+msgid "在這裏您可以為班級學生快速創建測驗"
+msgstr "You can create exam from here"
+
+msgid "所在班級暫沒有待辦事項"
+msgstr "There is no todo in teaching class"
+
+msgid "該班級還沒有任何測驗，請新增測驗"
+msgstr "This teaching class has no exam yet"
+
+msgid "該班級還沒有任何作業，請新增作業"
+msgstr "This teaching class has no assignment yet"
+
+msgid "該班級還沒有任何測驗"
+msgstr "This teaching class has no exam yet"
+
+msgid "該班級還沒有任何作業"
+msgstr "This teaching class has no assignment yet"
+
+msgid "班級動態"
+msgstr "Class Stream"
+
+msgid "設置成績送繳的時間段，教師可在該時間段內送繳"
+msgstr ""
+"Set time range for publish score, instructor can publish score in that time "
+"range"
+
+msgid "送繳開始日期到達後，允許教師送繳成績"
+msgstr "Allow publish score When publish start date reached"
+
+msgid "學期成績即將送出，送岀後成績即被鎖定，無法再做修改。"
+msgstr ""
+"The final score is about to be submitted. Once submitted, the scores will be"
+" immediately locked and cannot be modified."
+
+msgid "影音觀看率指的是學生觀看完成的影音教材在該課程影音教材中所占的比例。"
+msgstr ""
+"Online video completeness refers to the percentage of online video activity "
+"completeness"
+
+msgid "请设置平台内课程的课程信息项目，教师需要对这些项目进行填写"
+msgstr "Please setup the course outline options for current organization"
+
+msgid "除设置的项目外，允许教师自定义添加其他项目"
+msgstr "Teachers can add customized items"
+
+msgid "添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？"
+msgstr ""
+"After add questions, this online video activity will be transformed to "
+"interaction activity. It will also makes students learning history be "
+"deleted. Are you sure to do this?"
+
+msgid "若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。"
+msgstr ""
+"Chose `Active` to auto-submit answers when student try to open or switch to "
+"another Browser tab more than {0} times."
+
+msgid "設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。"
+msgstr ""
+"Setting the max number of times. When student exits this page over than the "
+"max number, the exam will be submitted."
+
+msgid "選擇「允許」後，學生將可下載發布後的即時討論錄影檔案"
+msgstr ""
+"After selecting 'Allow', students will be able to download video files after"
+" publishing"
+
+msgid "(限教師與管理者編輯排程，若您是助教，請聯繫課程教師)"
+msgstr ""
+"(Only instructor and admin are able to edit schedule.If your are an course "
+"assistant, please contact the Instructor.)"
+
+msgid "導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁"
+msgstr ""
+"Disable a navigation item, the navigation item will be disappearing on the "
+"menu of course; this will cause the student who is opening the navigation "
+"item was redirected to the bulletin page"
+
+msgid "注意：空缺請輸入兩個下劃線__"
+msgstr "Note: Please enter two underscores __ for one blank"
+
+msgid "作業開放繳交期間，學生最多可重複繳交的次數"
+msgstr ""
+"To limit the total number of submissions before the submission deadline."
+
+msgid "教師電腦桌面錄影檔"
+msgstr "Screen Recording File"
+
+msgid "僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。"
+msgstr ""
+"We only support private IPv4. After setting the IP limited, student needs to"
+" link to the correct IP address to do test."
+
+msgid "随堂测试活动尚未开启给学生，开启后学生可在app中参与答题"
+msgstr "Students can take the quiz via APP after you start it!"
+
+msgid "随堂测试活动正在进行中，学生可在app中参与答题"
+msgstr "Students can view the quiz in app"
+
+msgid "开启后，将不能再调整“答题控制方式”和“测试题目”，确定要开启该活动吗？学生将在app中看到活动并参与答题。"
+msgstr ""
+"You can no longer adjust the \"answer control mode\" and \"test questions\","
+" determine to open the activity?"
+
+msgid "随堂测试已开放给学生，可逐一开启题目给学生作答"
+msgstr "You can open the title one by one  to students"
+
+msgid "教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈"
+msgstr "Open the activity,students can make feedback in app"
+
+msgid "教学反馈活动正在进行中，学生可在app中参与反馈"
+msgstr "Students can make feedback in app"
+
+msgid "开启后，学生将在app中看到活动并参与反馈。"
+msgstr "After open the activity, students can view and make feedback in app"
+
+msgid "學生試卷"
+msgstr "student_papers"
+
+msgid "學生姓名"
+msgstr "Student Name"
+
+msgid "下載學生試卷"
+msgstr "Download Student Paper"
+
+msgid "下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？"
+msgstr "It takes a lot of time to zip student paper, start now?"
+
+msgid "試卷打包中，請耐心等待。您可關閉當前窗口，待打包完成後再次點擊\"下載學生試卷\"即可下載打包文件。"
+msgstr ""
+"The papers are being packed, please wait patiently. You can close the "
+"current window and click \"Download Student Paper\" again to download the "
+"package file when finished."
+
+msgid "請至少選擇一個學年學期匯出數據"
+msgstr ""
+"In order to  export the data, you should choose at least one semester or "
+"academic year."
+
+msgid "課程教師、助教與指定為發布對象的分組或學生，才可查看本公告"
+msgstr ""
+"Only the instructor, assistant, assign student(s) and group(s) can see this "
+"announcement"
+
+msgid "學生造訪學習活動的統計"
+msgstr "Student visits to learning activities"
+
+msgid "教師上傳檔案作為教材，學生對該教材的學習行為統計"
+msgstr ""
+"Teachers upload files as a teaching material, students of the teaching "
+"materials learning behavior statistics"
+
+msgid "教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計"
+msgstr ""
+"Teachers upload video files, or share third-party audio and video links as a"
+" teaching material, students of the textbook learning behavior statistics"
+
+msgid "教師分享網站連結，學生對該網站連結的學習行為統計"
+msgstr ""
+"Teachers share site links, students of the site to link learning behavior "
+"statistics"
+
+msgid "教師發布作業後，學生對該作業的繳交記錄與得分"
+msgstr ""
+"After the teacher releases the assignment, records of the score of students "
+"for the assignment"
+
+msgid "教師發布線上測驗後，學生對該測驗的繳交記錄與得分"
+msgstr ""
+"After the teacher releases the online exam, records of the score of students"
+" for the exam"
+
+msgid "教師、教務發布課程公告，課程成員查看課程公告的行為統計"
+msgstr "Statistics of publishing and reading announcements in class"
+
+msgid "教師發起點名，學生的出缺席狀態"
+msgstr "The state of the student's absence"
+
+msgid "老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習"
+msgstr ""
+"Instructors can set up three prerequisites at most, students need to finish "
+"all the prerequisites before entering the activity."
+
+msgid "當前學年"
+msgstr "Current Academic Year "
+
+msgid "當前學期"
+msgstr "Current Semester"
+
+msgid "(僅供查詢107學年第一學期前之舊資料)"
+msgstr " "
+
+msgid "學生證掛失系統"
+msgstr "Student card loss reporting System"
+
+msgid "教師帳號"
+msgstr "Instructors No."
+
+msgid "學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。"
+msgstr ""
+"Once the basic score of students' performance is set, the score of all the "
+"students will be adjusted in a unified way."
+
+msgid "預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險"
+msgstr ""
+"Early Alart: To inform students who may fail to comply with mandatory course"
+" requirements."
+
+msgid "扣考: 通知學生學習總時數(分鐘) 不足，已被扣考"
+msgstr ""
+"Barred from Sitting Examination: To inform students who fail to comply with "
+"mandatory course requirements."
+
+msgid "隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中"
+msgstr "Random Group：Randomly assign ungrouped students to groups"
+
+msgid "修課學生帳號未填寫"
+msgstr "Enrolled student account is required."
+
+msgid "帳號使用者不是本課程的學生"
+msgstr "Not an enrolled student account."
+
+msgid "修課學生已加入其他分組"
+msgstr "Student has been assigned to another group."
+
+msgid "已有{0}筆資料修課學生帳號重複"
+msgstr "{0} duplicated enrolled student accounts has found."
+
+msgid "份數必須大於0且小於學生人數"
+msgstr "Pieces number must larger then 0 and less than students number"
+
+msgid "請您先到「分組學習」中完成學生的分組"
+msgstr "Please complete the student group first"
+
+msgid "小組內無成員，請您先到「分組學習」中完成學生的分組"
+msgstr "No member in groups. Please complete the student group first."
+
+msgid "選擇或建立 Rubric，讓學生評價共同進行分組作業的過程中，同組成員的表現。"
+msgstr "Group members can assess each other's performance with this Rubric."
+
+msgid "教師回覆率"
+msgstr "Teacher reply rate"
+
+msgid "學生無成績"
+msgstr "No score students"
+
+msgid "送至學期成績暫存區"
+msgstr "Submit Final Score"
+
+msgid ""
+"從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. "
+"如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。"
+msgstr ""
+"From all questions, set the number of questions select randomly, for "
+"examples: 1. there are 10 multiple-choice questions, questions select "
+"randomly number set to 6, said the students exam paper will select 6 "
+"questions randomly from 10 questions. 2. if not select questions select "
+"randomly, questions select randomly number set to 10, said the students exam"
+" paper will select 10 questions randomly from 10 questions."
+
+msgid "設定為隨機抽題，不同學生所見的題目範圍隨機設定。"
+msgstr ""
+"When set to random, questions in paper of different students will be set "
+"randomly."
+
+msgid "當前測驗為隨機抽題，不同學生題目不同。"
+msgstr ""
+"This exam is select question randomly, selected questions in paper is "
+"different for different students."
+
+msgid "已有學生繳交互評信息不能修改評分方式"
+msgstr "Any student has reviewed, should`nt modify Scored method"
+
+msgid "此學生繳交時間過晚，無法參與互評，以教師評分為準"
+msgstr "This student submitted too late, should score by teacher"
+
+msgid "已有學生繳交互評信息，不能修改互評開始時間"
+msgstr "student has submitted review, could`nt modify start time"
+
+msgid "已有學生繳交互評信息，不能修改互評份數"
+msgstr "student has submitted review, could`nt modify pieces cnt"
+
+msgid "已有學生繳交互評信息，不能修改作業形式"
+msgstr "student has submitted review, could`nt modify the type"
+
+msgid "总学生数"
+msgstr "Students"
+
+msgid "已有學生繳交作業，不能修改作業形式"
+msgstr "Student has already submitted, so you cannot change the type"
+
+msgid "已通知學生"
+msgstr "Notified"
+
+msgid "{0} 課程預警通知將發送至名單內 {1} 名學生"
+msgstr "Send warning notification to {1} students in course {0}"
+
+msgid "臺北教師e學苑"
+msgstr "Taipei City Teachers' E-learning Center"
+
+msgid "教師時數認證申請"
+msgstr "Certification Course of Teacher Application"
+
+msgid "學生時數認證申請"
+msgstr "Certification Course of Student Application"
+
+msgid "此功能僅限臺北市教師"
+msgstr "Only for teacher in Taipei City"
+
+msgid "請留意，此功能僅限臺北市教師上傳時數申請"
+msgstr ""
+"This study hours application is only available for teachers in Taipei City."
+
+msgid "您是否要針對「{0}」提出教師研習時數申請？"
+msgstr "Do you want to apply for teacher study hours for \"{0}\"?"
+
+msgid "教師研習網"
+msgstr "Study Course Service"
+
+msgid "互評已開始，調整作業狀態並不會影響學生互評"
+msgstr ""
+"Review already started, change submission status will not affect the review"
+
+msgid "選擇未評分的學生或小組，發送通知和郵件"
+msgstr "Select student or group to send review notification and email"
+
+msgid "已選擇{0}名未評分的學生，確定要發送互評的通知嗎？"
+msgstr "Total {0} students are selected, confirm to send review notification?"
+
+msgid "當前互評作業要求每位學生需完成{0}份作業的評閱"
+msgstr ""
+"This assignment requires every student to complete {0} peer review(s)."
+
+msgid "不公開，僅教師可見"
+msgstr "Private, only viewable for instructor"
+
+msgid "若您非教師/學生/家長，請選擇「其他」學校"
+msgstr "If you are not a teacher/student/parent, please choose “other” school"
+
+msgid "请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试"
+msgstr ""
+"Please make sure that you have completed the test paper group before the "
+"test start time, otherwise the students will not be able to take the test "
+"properly"
+
+msgid "请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试"
+msgstr ""
+"Please make sure that you have completed the test paper group before the "
+"test open time, otherwise the students will not be able to take the test "
+"properly"
+
+msgid "服務異常，儲存失敗，請聯繫教師或管理員。"
+msgstr ""
+"Save failed because of a service exception, please contact the teacher or "
+"administrator"
+
+msgid "儲存失敗，請勿離開當前頁面，並盡快聯繫教師或管理員。"
+msgstr ""
+"Save failed, please do not leave the current page and contact the teacher or"
+" administrator immediately."
+
+msgid "如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数"
+msgstr ""
+"After setting the range, we will calculate the added number of teachers, "
+"students, courses, learning activities, and resources in this range."
+
+msgid "學生分組、分組作業、分組討論"
+msgstr "Grouping, Grouping assignments, Grouping discussions"
+
+msgid "未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算"
+msgstr ""
+"If the Completion Index is not set, the student's learning progress will not"
+" be included in the denominator. Teacher-side learning analysis-completion "
+"degree will not be included in the calculation"
+
+msgid "設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件"
+msgstr ""
+"After setting the Completion Index, students must meet the conditions to be "
+"considered complete. This activity will be included in the completion "
+"statistics of the learning analysis and used as the denominator condition of"
+" the student's learning progress"
+
+msgid "大學生"
+msgstr "Undergraduate"
+
+msgid "本學期教務系統開課"
+msgstr "Create a Course based on the List"
+
+msgid "有尚未與LDAP綁定之學生"
+msgstr "Student without connect LDAP account."
+
+msgid "溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課"
+msgstr ""
+"Tips: Please remind your students to connect LDAP account before you create "
+"course."
+
+msgid "請勾選該課程下要開課的班級"
+msgstr "Target Class"
+
+msgid "主講教師"
+msgstr "Lecturer"
+
+msgid "請選擇該課程下要開課的班級"
+msgstr "Target Class"
+
+msgid "該類目下已關聯學期，不能刪除"
+msgstr "There was some semester in this item, you cannot delete it"
+
+msgid "已選擇 {0} 名學生，系統將會自動覆蓋已有成績"
+msgstr ""
+"Total {0} students are selected, it will automatically overwrite existing "
+"results."
+
+msgid "已選擇 {0} 名學生，請設置補考起止時間"
+msgstr ""
+"{0} students have been selected. Please set the starting and ending time of "
+"make-up exam"
+
+msgid "確定后系統將給已選學生發送測試補考通知"
+msgstr "We will send notices to the selected students. "
+
+msgid "開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。"
+msgstr ""
+"As while as the activity open time, student can see the activity. If you set"
+" it automatically open/close, the course will be open by the course "
+"start/end time."
+
+msgid "到達開始時間之後，老師和學生才能進入直播間"
+msgstr ""
+"After arriving at the start time, teachers and students can enter the Zoom "
+"Live"
+
+msgid "到達結束時間後，老師和學生無法再進入直播間"
+msgstr ""
+"After the end time, teachers and students can no longer enter the Zoom Live"
+
+msgid "選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動"
+msgstr ""
+"Select has not been opened for students. After opening, teachers and "
+"students can view and interact on mobile"
+
+msgid "搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動"
+msgstr ""
+"Race has not been opened for students. After opening, teachers and students "
+"can view and interact on mobile"
+
+msgid "點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動"
+msgstr ""
+"Rollcall has not been opened for students. After opening, teachers and "
+"students can view and interact on mobile"
+
+msgid "點名正在進行中，學生可在移動端簽到"
+msgstr "Rollcall is in progress and students can check in on mobile"
+
+msgid "老師和學生可在移動端查看並進行課堂互動"
+msgstr "Teachers and students can view and interact on mobile"
+
+msgid "該學生已交卷，無法強制收卷！"
+msgstr "The student has submitted, you can't do it!"
+
+msgid "學生已交卷，無法發送警告"
+msgstr "The student has submitted, you cannot send a warning."
+
+msgid "上課班級"
+msgstr "Teaching Class"
+
+msgid "老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動"
+msgstr ""
+"Launch in mobile or classroom mode, and students can participate in the "
+"interaction on mobile"
+
+msgid "量規總分由各個條件中的最高分加和得到。建議您將總分設置為100分，避免學生成績過低。"
+msgstr ""
+"The total score of the rubric is obtained by adding the highest scores in "
+"each condition. It is recommended that you set the total score to 100 points"
+" to avoid undergraduates."
+
+msgid "提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次"
+msgstr ""
+"Notice：Once you turn it on, students will be restricted by anti-cheat rules "
+"when answering questions.In addition, it is recommended that you set the "
+"time limit to 1."
+
+msgid "提醒：关闭后，学生可灵活选择电脑端或手机端考试。"
+msgstr ""
+"Notice： Once closed, students can flexibly choose to take the test on the "
+"computer or mobile phone."
+
+msgid "行政班级"
+msgstr "Administrative class"
+
+msgid "刪除年級後，所關聯課程的年級資料將會清空。確定刪除嗎？"
+msgstr ""
+"After deleting the grade, the grade information of the associated course "
+"will be cleared. confirm to delete?"
+
+msgid "刪除班級後，所關聯課程的班級資料將會清空。確定刪除嗎？"
+msgstr ""
+"After deleting the class, the class information of the associated course "
+"will be cleared. confirm to delete?"
+
+msgid "教師設置的教學活動默認針對全班成員展開。"
+msgstr "All students or groups will have the same learning activities."
+
+msgid "針對作業、測試，教師可指派給部分成員或小組。"
+msgstr ""
+"Students or groups can have different assignments or exams to help address "
+"the needs of all."
+
+msgid "開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。"
+msgstr ""
+"Once differentiated instruction is enabled, instuctor can assign specific "
+"assignment or exam to partial students or groups and set corresponding score"
+" percentage. Additionally, peer review for this kind of activity will be no "
+"longer supported."
+
+msgid "學生詳情"
+msgstr "Details"
+
+msgid "主课老师已将子课内容成绩占比调整为 {0}，您当前使用量已超出，请及时调整。"
+msgstr ""
+"The master course teacher has adjusted the percentage of child course scores"
+" to {0}. Your current usage has exceeded. Please adjust it in time."
+
+msgid "學年代碼未填寫"
+msgstr "Academic code is required"
+
+msgid "學期代碼未填寫"
+msgstr "Semester code is required"
+
+msgid "學年不存在"
+msgstr "Academic year does not exist"
+
+msgid "學期不存在"
+msgstr "Semester does not exist"
+
+msgid "教師重新計算（原始成績）分數"
+msgstr "Exam Recalculate Original Score"
+
+msgid "教師重新計算（最終成績）分數"
+msgstr "Exam Recalculate Final Score"
+
+msgid "發送email給班級成員"
+msgstr "Send Course Enrollments Mail"
+
+msgid "給班級成員發送學習分析完成度email"
+msgstr "Send Course Enrollments Stat Completeness Mail"
+
+msgid "开启在线监考后，学生只能通过电脑端作答。是否开启？"
+msgstr ""
+"Once opening, students can only answer on the computer side. Do you want to "
+"open it?"
+
+msgid "开启在线监考后，学生只能通过电脑端作答"
+msgstr ""
+"Once opening, students can only answer on the PC. Avoid students do test "
+"with tablet, this may affect the \t\t\t judgment results and lead to forced "
+"hand-in of the paper."
+
+msgid "已有学生完成课程中学习活动，无法修改发布状态"
+msgstr ""
+"The publish status cannot be modified, students have completed the "
+"activities in the course"
+
+msgid "請學生透過Web簽到，暫不提供APP簽到"
+msgstr ""
+"Students are requested to sign in via the web, no app sign-in is available "
+"at this time."
+
+msgid "学年学期代码"
+msgstr "semester.code"
+
+msgid "学生学号"
+msgstr "std.code"

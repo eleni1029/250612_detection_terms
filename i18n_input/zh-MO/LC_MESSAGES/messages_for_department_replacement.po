@@ -1,0 +1,213 @@
+# Chinese (Traditional, Macau SAR China) translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-07-19 15:16+0800\n"
+"PO-Revision-Date: 2018-07-19 16:29+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hant_MO\n"
+"Language-Team: zh_Hant_MO <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+# 這個文件的用途是在同一個語系、同一個 msgid 之下，想要給不同環境有不同的翻譯所使用的文件
+# 來取用新翻譯
+# 如果你要給指定環境、指定org客製翻譯，建議文件命名為 message_deliveryorg_orgid.pot
+# 如果你不需要客製翻譯，你只需要在 messages.pot 建立平台通用的翻譯即可
+# Usage:
+# 在 html 上仍使用 _ ，在 py 需改用 from lms.i18n import gettext2 as _ 取代 from
+# flask_babel import _
+# 院系, Department #
+msgid "課程院系"
+msgstr "課程單位"
+
+msgid "教師所屬院系代碼"
+msgstr "教師所屬單位代碼"
+
+msgid "教師所屬院系名稱"
+msgstr "教師所屬單位名稱"
+
+msgid "院系代碼 / 院系名稱 / 院系簡稱"
+msgstr "單位代碼 / 單位名稱 / 單位簡稱"
+
+msgid "院系名稱"
+msgstr "單位名稱"
+
+msgid "院系簡稱"
+msgstr "單位簡稱"
+
+msgid "院系代碼"
+msgstr "單位代碼"
+
+msgid "開課院系代碼"
+msgstr "開課單位代碼"
+
+msgid "開課院系名稱"
+msgstr "開課單位名稱"
+
+msgid "上級院系"
+msgstr "上級單位"
+
+msgid "院系階層"
+msgstr "單位階層"
+
+msgid "添加院系"
+msgstr "添加單位"
+
+msgid "院系"
+msgstr "單位"
+
+msgid "系級"
+msgstr "單位 / 系級"
+
+msgid "開課系級"
+msgstr "開課單位"
+
+msgid "人事院系、课程选课等信息接入TronClass平台，提供无缝平滑的数据对接。成绩自动上报教务系统，采用灵活的同步方式（数据库、API）和同步机制（定时同步、实时同步）。"
+msgstr ""
+"教務資訊介接 TronClass "
+"平台，提供無縫平滑的資料對接。成績自動上傳教務系統，採用靈活的同步方式（資料庫、API）和同步機制（定時同步、即時同步）。"
+
+msgid "教务人员可以对院系、人员和课程等进行统一的管理，随时了解人员基本信息和修课情况并及时发出提醒，还可以协助老师完成公告发布，大纲录入等工作。"
+msgstr "教務人員可以對單位、人員和課程等進行統一的管理，隨時了解人員基本訊息和修課情況並及時發出提醒，還可以協助老師完成公告發布，大綱輸入等工作。"
+
+msgid "您所在院系容量不足"
+msgstr "您所在單位容量不足"
+
+msgid "選擇課程所屬的院系"
+msgstr "選擇課程所屬的單位"
+
+msgid "無指定院系"
+msgstr "無指定單位"
+
+msgid "个别院系已使用容量超过平均值，不能完成分配"
+msgstr "各單位已使用容量超過平均值，不能完成分配"
+
+msgid "平均分配會覆蓋之前的院系容量設置，是否分配？"
+msgstr "平均分配會覆蓋之前的單位容量設置，是否分配？"
+
+msgid "開啟該選項之後，本校教務可審核分享至院系資源庫的資源"
+msgstr "開啟該選項之後，本校教務可審核分享至單位資源庫的資源"
+
+msgid "請在“設定-權限設定”中為其分配可管理的院系"
+msgstr "請在“設定-權限設定”中為其分配可管理的單位"
+
+msgid "您修改的新院系裝不下這麼多東西哦，快呼叫容量管理員為您重新分配吧"
+msgstr "您修改的新單位裝不下這麼多東西哦，快呼叫容量管理員為您重新分配吧"
+
+msgid "哎呀！修改的新院系裝不下您的容量，快呼叫容量管理員為您重新分配哦"
+msgstr "哎呀！修改的新單位裝不下您的容量，快呼叫容量管理員為您重新分配哦"
+
+msgid "管理院系設定"
+msgstr "管理單位設定"
+
+msgid "管理院系刪除成功"
+msgstr "管理單位刪除成功"
+
+msgid "暫無院系被設定"
+msgstr "暫無單位被設定"
+
+msgid "開課院系"
+msgstr "開課單位"
+
+msgid "調整院系"
+msgstr "調整單位"
+
+msgid "添加某一院系時，若要對下面的子院系也能夠管理，需要將下面的子院系也同時添加"
+msgstr "添加某一單位時，若要對下面的子單位也能夠管理，需要將下面的子單位也同時添加"
+
+msgid "院系不存在"
+msgstr "單位不存在"
+
+msgid "院系代碼未填寫"
+msgstr "單位代碼未填寫"
+
+msgid "院系名稱未填寫"
+msgstr "單位名稱未填寫"
+
+msgid "院系代碼重複"
+msgstr "單位代碼重複"
+
+msgid "已有{0}筆資料院系代碼重複"
+msgstr "已有{0}筆資料單位代碼重複"
+
+msgid "院系代碼不可清空"
+msgstr "單位代碼不可清空"
+
+msgid "院系名稱不可清空"
+msgstr "單位名稱不可清空"
+
+msgid "該院系下已有其他下級院系，不能刪除"
+msgstr "該單位下已有其他下級單位，不能刪除"
+
+msgid "該院系下已有課程，不能刪除"
+msgstr "該單位下已有課程，不能刪除"
+
+msgid "該院系下已有成員，不能刪除"
+msgstr "該單位下已有成員，不能刪除"
+
+msgid "上級院系不存在"
+msgstr "上級單位不存在"
+
+msgid "提示：以下錯誤資訊未匯入，你可以手動建立院系資訊"
+msgstr "提示：以下錯誤資訊未匯入，你可以手動建立單位資訊"
+
+msgid "提示：以下錯誤資訊未匯入，你可以手動編輯院系資訊"
+msgstr "提示：以下錯誤資訊未匯入，你可以手動編輯單位資訊"
+
+msgid "已成功創建了{0}個院系"
+msgstr "已成功創建了{0}個單位"
+
+msgid "已成功編輯了{0}個院系"
+msgstr "已成功編輯了{0}個單位"
+
+msgid "上級院系代碼"
+msgstr "上級單位代碼"
+
+msgid "請指定資源所屬院系"
+msgstr "請指定資源所屬單位"
+
+msgid "選擇院系"
+msgstr "選擇單位"
+
+msgid "The department code has been used"
+msgstr "已有其他單位使用此單位代碼。"
+
+msgid "The department does not exist."
+msgstr "您所指定的單位不存在"
+
+msgid "Department has been created successfully"
+msgstr "建立單位成功"
+
+msgid "Department has been updated successfully"
+msgstr "更新單位資訊成功"
+
+msgid "開放院系"
+msgstr "開課單位"
+
+msgid "請確認您的平台身份、院系是否符合「開放限制」"
+msgstr "請確認您的平台角色、單位是否符合「開放限制」"
+
+msgid "查看目前選擇院系"
+msgstr "查看目前選擇單位"
+
+msgid "查看課程開放院系"
+msgstr "查看課程開放單位"
+
+msgid "暫無選擇院系"
+msgstr "暫無選擇單位"
+
+msgid "院系資源庫"
+msgstr "單位資源庫"
+
+msgid "此資源僅限指定院系查看，無法進行分享"
+msgstr "此資源僅限指定單位查看，無法進行分享"
+

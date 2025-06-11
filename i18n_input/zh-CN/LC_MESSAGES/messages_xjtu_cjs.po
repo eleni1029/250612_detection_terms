@@ -1,0 +1,11 @@
+msgid "課件活動"
+msgstr "课程活动"
+
+msgid "分組學習"
+msgstr "分组"
+
+msgid "學習分析"
+msgstr "学习统计"
+
+msgid "教學成果"
+msgstr "学习分析"

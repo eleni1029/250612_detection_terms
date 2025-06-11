@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_01_generate_xlsx.py (v2.3 - Unified Excel Version)
+script_01_generate_xlsx.py (v2.3 - 語言獨立橫向分區塊版本)
 
-基於統一的 phrase_comparison.xlsx 檔案生成各語言的 tobemodified_{language}.xlsx
-支援多語言區塊統一管理，使用者在單一 Excel 中完成所有配置
+基於語言獨立橫向分區塊的 phrase_comparison.xlsx 檔案生成各語言的 tobemodified_{language}.xlsx
+每個語言有自己的敏感詞類型和敏感詞內容，完全獨立處理
 
 功能：
-1. 從統一的 phrase_comparison.xlsx 中讀取所有語言的敏感詞映射
-2. 自動解析語言區塊結構
+1. 從語言獨立橫向分區塊的 phrase_comparison.xlsx 中讀取各語言的敏感詞映射
+2. 智能解析語言區塊結構，每個語言區塊包含：敏感詞類型 + 敏感詞 + 業態方案
 3. 為每個語言生成獨立的 tobemodified_{language}.xlsx
-4. 支援統一的業態管理
+4. 容錯機制：處理用戶自訂內容和格式不規範
 """
 
 import json
@@ -32,32 +32,33 @@ except ImportError as e:
     sys.exit(1)
 
 
-class UnifiedExcelMapping:
-    """基於統一 Excel 檔案的映射類"""
+class LanguageIndependentExcelMapping:
+    """基於語言獨立橫向分區塊 Excel 檔案的映射類"""
     
     def __init__(self, config):
         """
-        初始化統一 Excel 映射
+        初始化語言獨立 Excel 映射
         
         Args:
             config: 配置物件
         """
         self.config = config
-        file_patterns = config.get_file_patterns()
-        self.excel_path = Path(file_patterns.get('phrase_comparison', 'phrase_comparison.xlsx'))
+        self.excel_path = config.get_comparison_excel_path()
         self.language_mappings = {}  # {language: {business_type: {keyword: replacement}}}
         self.language_categories = {}  # {language: {keyword: category}}
-        self.load_unified_mappings()
+        self.language_blocks = {}  # {language: block_info}
+        self.parsing_warnings = []  # 解析警告
+        self.load_independent_mappings()
     
-    def load_unified_mappings(self):
-        """從統一 Excel 檔案載入所有語言的映射關係"""
+    def load_independent_mappings(self):
+        """從語言獨立橫向分區塊 Excel 檔案載入所有語言的映射關係"""
         if not self.excel_path.exists():
             print(f"❌ 找不到統一對照表：{self.excel_path}")
             print(f"請先執行：python generate_phrase_comparison.py")
             sys.exit(1)
         
         try:
-            print(f"📖 載入統一對照表：{self.excel_path}")
+            print(f"📖 載入語言獨立橫向分區塊對照表：{self.excel_path}")
             wb = openpyxl.load_workbook(self.excel_path, data_only=True)
             
             # 獲取主工作表
@@ -70,131 +71,177 @@ class UnifiedExcelMapping:
                 ws = wb.active
                 print(f"⚠️  找不到工作表 '{comparison_sheet_name}'，使用預設工作表")
             
-            self._parse_unified_excel(ws)
+            self._parse_independent_excel(ws)
             
         except Exception as e:
-            print(f"❌ 載入統一 Excel 檔案失敗：{e}")
+            print(f"❌ 載入語言獨立 Excel 檔案失敗：{e}")
             sys.exit(1)
     
-    def _parse_unified_excel(self, ws):
-        """解析統一 Excel 的結構"""
-        # 讀取標題列（假設在第2行）
-        header_row = 2
-        headers = []
-        for col in range(1, ws.max_column + 1):
-            cell_value = ws.cell(row=header_row, column=col).value
-            if cell_value:
-                headers.append(str(cell_value).strip())
-            else:
-                headers.append("")
+    def _parse_independent_excel(self, ws):
+        """解析語言獨立橫向分區塊 Excel 的結構"""
+        # 解析語言區塊結構（第2行是語言標題）
+        language_row = 2
+        header_row = 3
         
-        # 建立欄位索引映射
-        column_indices = {header: idx for idx, header in enumerate(headers) if header}
+        # 解析語言區塊結構
+        self.language_blocks = self._parse_language_blocks(ws, language_row, header_row)
         
-        print(f"   發現欄位：{list(column_indices.keys())}")
-        
-        # 檢查必要欄位
-        excel_config = self.config.get_excel_config()
-        required_columns = excel_config.get('required_columns', {})
-        
-        language_col = required_columns.get('language', '語言')
-        category_col = required_columns.get('category', '敏感詞類型')
-        keyword_col = required_columns.get('keyword', '敏感詞')
-        
-        missing_columns = []
-        for col_name in [language_col, category_col, keyword_col]:
-            if col_name not in column_indices:
-                missing_columns.append(col_name)
-        
-        # 檢查業態欄位
-        business_types = self.config.get_business_types()
-        business_columns = excel_config.get('business_columns', {})
-        solution_template = business_columns.get('solution_template', '對應方案({display_name})')
-        
-        business_column_indices = {}
-        for bt_code, bt_config in business_types.items():
-            display_name = bt_config['display_name']
-            solution_col = solution_template.format(display_name=display_name)
-            if solution_col not in column_indices:
-                missing_columns.append(solution_col)
-            else:
-                business_column_indices[bt_code] = column_indices[solution_col]
-        
-        if missing_columns:
-            print(f"❌ Excel 缺少必要欄位：{missing_columns}")
-            print(f"現有欄位：{list(column_indices.keys())}")
+        if not self.language_blocks:
+            print(f"❌ 無法解析語言區塊結構")
             sys.exit(1)
         
-        # 初始化語言映射
-        detected_languages = set()
+        print(f"   發現語言區塊：{list(self.language_blocks.keys())}")
         
-        # 讀取資料行（從第3行開始）
-        current_language = None
-        row_count = 0
+        # 初始化映射結構
+        business_types = self.config.get_business_types()
+        for language in self.language_blocks.keys():
+            self.language_mappings[language] = {}
+            self.language_categories[language] = {}
+            for bt_code in business_types.keys():
+                self.language_mappings[language][bt_code] = {}
         
-        for row_num in range(3, ws.max_row + 1):
-            row_values = []
-            for col in range(1, len(headers) + 1):
-                cell = ws.cell(row=row_num, column=col)
-                row_values.append(cell.value)
-            
-            # 安全讀取欄位值
-            def get_cell_value(col_name):
-                if col_name in column_indices:
-                    idx = column_indices[col_name]
-                    if idx < len(row_values) and row_values[idx] is not None:
-                        return str(row_values[idx]).strip()
-                return ""
-            
-            language = get_cell_value(language_col)
-            category = get_cell_value(category_col)
-            keyword = get_cell_value(keyword_col)
-            
-            # 更新當前語言
-            if language:
-                current_language = language
-                detected_languages.add(language)
-                if language not in self.language_mappings:
-                    self.language_mappings[language] = {}
-                    for bt_code in business_types.keys():
-                        self.language_mappings[language][bt_code] = {}
-                if language not in self.language_categories:
-                    self.language_categories[language] = {}
-            
-            # 處理敏感詞
-            if current_language and keyword:
-                # 記錄分類
-                if category:
-                    self.language_categories[current_language][keyword] = category
-                
-                # 讀取各業態的對應方案
-                for bt_code in business_types.keys():
-                    if bt_code in business_column_indices:
-                        col_idx = business_column_indices[bt_code]
-                        if col_idx < len(row_values):
-                            solution = row_values[col_idx]
-                            if solution is not None:
-                                solution = str(solution).strip()
-                            else:
-                                solution = ""
-                        else:
-                            solution = ""
-                        
-                        # 如果沒有方案，使用原敏感詞
-                        if not solution:
-                            solution = keyword
-                        
-                        self.language_mappings[current_language][bt_code][keyword] = solution
-                
-                row_count += 1
+        # 為每個語言獨立讀取資料
+        for language, block_info in self.language_blocks.items():
+            self._parse_language_block_data(ws, language, block_info)
         
-        print(f"✅ 成功載入 {len(detected_languages)} 個語言，{row_count} 個敏感詞映射")
+        print(f"✅ 成功載入 {len(self.language_blocks)} 個語言區塊")
         
         # 顯示載入統計
-        for language in detected_languages:
+        self._print_loading_stats()
+        if self.parsing_warnings:
+            print(f"⚠️  解析警告：")
+            for warning in self.parsing_warnings[:5]:
+                print(f"     {warning}")
+            if len(self.parsing_warnings) > 5:
+                print(f"     ... 還有 {len(self.parsing_warnings) - 5} 個警告")
+    
+    def _parse_language_blocks(self, ws, language_row: int, header_row: int) -> dict:
+        """解析語言區塊結構"""
+        language_blocks = {}
+        business_types = self.config.get_business_types()
+        
+        # 掃描第2行尋找語言標題
+        current_col = 1
+        
+        while current_col <= ws.max_column:
+            # 讀取語言標題
+            lang_cell = ws.cell(row=language_row, column=current_col)
+            if not lang_cell.value:
+                current_col += 1
+                continue
+            
+            language = str(lang_cell.value).strip()
+            if not language:
+                current_col += 1
+                continue
+            
+            # 確定這個語言區塊的列範圍
+            block_start = current_col
+            
+            # 計算區塊寬度：敏感詞類型 + 敏感詞 + 業態數量
+            block_width = 2 + len(business_types)
+            block_end = block_start + block_width - 1
+            
+            # 驗證區塊標題
+            expected_headers = ["敏感詞類型", "敏感詞"]
+            for bt_code, bt_config in business_types.items():
+                expected_headers.append(bt_config['display_name'])
+            
+            # 檢查標題行是否符合預期
+            valid_block = True
+            business_columns = {}
+            
+            for i, expected_header in enumerate(expected_headers):
+                col = block_start + i
+                if col <= ws.max_column:
+                    header_cell = ws.cell(row=header_row, column=col)
+                    actual_header = str(header_cell.value or "").strip()
+                    
+                    if i >= 2:  # 業態列
+                        bt_code = list(business_types.keys())[i - 2]
+                        if actual_header == expected_header:
+                            business_columns[bt_code] = col
+                        else:
+                            self.parsing_warnings.append(
+                                f"語言 {language} 區塊列 {col} 標題不符：期望 '{expected_header}'，實際 '{actual_header}'"
+                            )
+                else:
+                    valid_block = False
+                    break
+            
+            if valid_block:
+                # 記錄語言區塊資訊
+                language_blocks[language] = {
+                    'start_col': block_start,
+                    'end_col': block_end,
+                    'category_col': block_start,      # 敏感詞類型列
+                    'keyword_col': block_start + 1,   # 敏感詞列
+                    'business_columns': business_columns
+                }
+                print(f"   解析語言區塊：{language} (列 {block_start}-{block_end})")
+            
+            # 移動到下一個可能的語言區塊
+            horizontal_config = self.config.get_excel_config().get('horizontal_layout', {})
+            block_separator = horizontal_config.get('block_separator_columns', 1)
+            current_col = block_end + 1 + block_separator
+        
+        return language_blocks
+    
+    def _parse_language_block_data(self, ws, language: str, block_info: dict):
+        """為單個語言解析區塊資料"""
+        business_types = self.config.get_business_types()
+        category_col = block_info['category_col']
+        keyword_col = block_info['keyword_col']
+        business_columns = block_info['business_columns']
+        
+        current_category = ""
+        keyword_count = 0
+        
+        # 從第4行開始讀取資料
+        for row_num in range(4, ws.max_row + 1):
+            # 讀取敏感詞類型和敏感詞
+            category_cell = ws.cell(row=row_num, column=category_col)
+            keyword_cell = ws.cell(row=row_num, column=keyword_col)
+            
+            category = str(category_cell.value).strip() if category_cell.value else ""
+            keyword = str(keyword_cell.value).strip() if keyword_cell.value else ""
+            
+            # 更新當前分類
+            if category:
+                current_category = category
+            elif not current_category:
+                current_category = "用戶自訂"
+            
+            # 跳過空白關鍵字
+            if not keyword:
+                continue
+            
+            # 記錄該語言的敏感詞和分類
+            self.language_categories[language][keyword] = current_category
+            keyword_count += 1
+            
+            # 讀取業態方案
+            for bt_code, col_index in business_columns.items():
+                solution_cell = ws.cell(row=row_num, column=col_index)
+                solution = str(solution_cell.value).strip() if solution_cell.value else ""
+                
+                # 如果沒有方案，使用原敏感詞
+                if not solution:
+                    solution = keyword
+                
+                self.language_mappings[language][bt_code][keyword] = solution
+        
+        print(f"     {language}: {keyword_count} 個敏感詞")
+    
+    def _print_loading_stats(self):
+        """打印載入統計"""
+        business_types = self.config.get_business_types()
+        
+        for language in self.language_blocks.keys():
             if language in self.language_mappings:
+                categories = set(self.language_categories.get(language, {}).values())
                 total_keywords = len(self.language_categories.get(language, {}))
-                print(f"   {language}: {total_keywords} 個敏感詞")
+                print(f"   {language}: {total_keywords} 個敏感詞，{len(categories)} 個分類")
                 
                 for bt_code, bt_config in business_types.items():
                     display_name = bt_config['display_name']
@@ -254,50 +301,51 @@ class UnifiedExcelMapping:
         return "、".join(replacements)
     
     def get_available_languages(self) -> list:
-        """獲取統一 Excel 中可用的語言列表"""
+        """獲取語言獨立 Excel 中可用的語言列表"""
         return list(self.language_mappings.keys())
 
 
 def main():
     """主執行函數"""
-    print("🚀 開始基於統一 Excel 生成各語言 tobemodified 檔案")
+    print("🚀 開始基於語言獨立橫向分區塊 Excel 生成各語言 tobemodified 檔案")
     
     # 載入配置
     config = get_config()
     config.print_config_summary()
     
     # 處理命令列參數
-    parser = argparse.ArgumentParser(description='基於統一 Excel 生成敏感詞檢測結果')
+    parser = argparse.ArgumentParser(description='基於語言獨立橫向分區塊 Excel 生成敏感詞檢測結果')
     parser.add_argument('--language', '-l', 
                        help='指定要處理的語言（若未指定將處理所有可用語言）')
     parser.add_argument('--list-languages', action='store_true',
-                       help='列出統一 Excel 中的所有語言')
+                       help='列出語言獨立 Excel 中的所有語言')
     
     args = parser.parse_args()
     
-    # 載入統一 Excel 映射
+    # 載入語言獨立 Excel 映射
     try:
-        unified_mapper = UnifiedExcelMapping(config)
+        independent_mapper = LanguageIndependentExcelMapping(config)
     except Exception as e:
-        print(f"❌ 載入統一 Excel 失敗：{e}")
+        print(f"❌ 載入語言獨立 Excel 失敗：{e}")
         return False
     
     # 獲取可用語言
-    excel_languages = unified_mapper.get_available_languages()
+    excel_languages = independent_mapper.get_available_languages()
     input_languages = config.detect_available_languages()
     
     if args.list_languages:
-        print(f"\n🌐 統一 Excel 中的語言：")
+        print(f"\n🌐 語言獨立 Excel 中的語言：")
         for lang in excel_languages:
             status = "✅ 有輸入檔案" if lang in input_languages else "❌ 缺少輸入檔案"
-            keywords_count = len(unified_mapper.get_language_keywords(lang))
-            print(f"   {lang}: {keywords_count} 個敏感詞 - {status}")
+            keywords_count = len(independent_mapper.get_language_keywords(lang))
+            categories = set(independent_mapper.get_language_categories(lang).values())
+            print(f"   {lang}: {keywords_count} 個敏感詞，{len(categories)} 個分類 - {status}")
         return True
     
     # 選擇要處理的語言
     if args.language:
         if args.language not in excel_languages:
-            print(f"❌ 語言 '{args.language}' 不在統一 Excel 中：{excel_languages}")
+            print(f"❌ 語言 '{args.language}' 不在語言獨立 Excel 中：{excel_languages}")
             sys.exit(1)
         if args.language not in input_languages:
             print(f"❌ 語言 '{args.language}' 缺少輸入檔案")
@@ -308,7 +356,7 @@ def main():
         # 取交集：既在 Excel 中又有輸入檔案的語言
         target_languages = list(set(excel_languages) & set(input_languages))
         if not target_languages:
-            print(f"❌ 沒有語言同時存在於統一 Excel 和輸入檔案中")
+            print(f"❌ 沒有語言同時存在於語言獨立 Excel 和輸入檔案中")
             print(f"   Excel 中的語言：{excel_languages}")
             print(f"   輸入檔案語言：{input_languages}")
             sys.exit(1)
@@ -320,7 +368,7 @@ def main():
         print(f"\n{'='*60}")
         print(f"📋 處理語言：{language}")
         
-        if process_language(config, unified_mapper, language):
+        if process_language(config, independent_mapper, language):
             success_count += 1
         else:
             print(f"❌ {language} 處理失敗")
@@ -329,13 +377,13 @@ def main():
     return success_count == len(target_languages)
 
 
-def process_language(config, unified_mapper: UnifiedExcelMapping, language: str) -> bool:
+def process_language(config, independent_mapper: LanguageIndependentExcelMapping, language: str) -> bool:
     """
     處理單個語言的 tobemodified 生成
     
     Args:
         config: 配置物件
-        unified_mapper: 統一 Excel 映射物件
+        independent_mapper: 語言獨立 Excel 映射物件
         language: 語言代碼
     
     Returns:
@@ -351,17 +399,18 @@ def process_language(config, unified_mapper: UnifiedExcelMapping, language: str)
     print(f"   來源檔案：{list(language_files.values())}")
     print(f"   輸出檔案：{tobemodified_path}")
     
-    # 獲取該語言的敏感詞
-    all_keywords = unified_mapper.get_language_keywords(language)
-    language_categories = unified_mapper.get_language_categories(language)
+    # 獲取該語言的敏感詞（僅來自該語言區塊）
+    all_keywords = independent_mapper.get_language_keywords(language)
+    language_categories = independent_mapper.get_language_categories(language)
     
-    print(f"   敏感詞數量：{len(all_keywords)}")
+    print(f"   該語言敏感詞數量：{len(all_keywords)}")
+    print(f"   該語言分類數量：{len(set(language_categories.values()))}")
     
     if not all_keywords:
-        print(f"⚠️  {language} 沒有敏感詞，跳過處理")
+        print(f"⚠️  {language} 區塊中沒有敏感詞，跳過處理")
         return True
     
-    # 建立關鍵字檢測器
+    # 建立關鍵字檢測器（僅使用該語言的敏感詞）
     detection_config = config.get_keyword_detection_config()
     priority_by_length = detection_config.get('priority_by_length', True)
     
@@ -439,7 +488,7 @@ def process_language(config, unified_mapper: UnifiedExcelMapping, language: str)
             print(f"❌ 讀取 JSON 檔案失敗：{e}")
     
     # 掃描檔案並收集資料
-    print(f"📖 掃描 {language} 檔案...")
+    print(f"📖 掃描 {language} 檔案（使用該語言區塊的敏感詞）...")
     rows = []
     detection_stats = defaultdict(int)
     
@@ -447,7 +496,7 @@ def process_language(config, unified_mapper: UnifiedExcelMapping, language: str)
         # 如果 value 為空，使用 key
         display_value = value if value else key
         
-        # 檢測 key 和 value 中的敏感詞
+        # 檢測 key 和 value 中的敏感詞（僅檢測該語言區塊的敏感詞）
         key_keywords = find_keywords(key)
         value_keywords = find_keywords(display_value)
         
@@ -458,7 +507,7 @@ def process_language(config, unified_mapper: UnifiedExcelMapping, language: str)
             detection_stats[source] += 1
             detection_stats['total_entries'] += 1
             
-            # 使用統一 Excel 映射建立修正方案和結果
+            # 使用語言獨立 Excel 映射建立修正方案和結果
             row_data = [
                 source,
                 key,
@@ -470,8 +519,8 @@ def process_language(config, unified_mapper: UnifiedExcelMapping, language: str)
             business_types = config.get_business_types()
             for bt_code, bt_config in business_types.items():
                 row_data.extend([
-                    unified_mapper.build_replacement_plan(language, all_keywords_found, bt_code),  # 修正方案
-                    unified_mapper.apply_replacements(language, display_value, bt_code),           # 修正結果
+                    independent_mapper.build_replacement_plan(language, all_keywords_found, bt_code),  # 修正方案
+                    independent_mapper.apply_replacements(language, display_value, bt_code),           # 修正結果
                 ])
             
             rows.append(row_data)
@@ -479,7 +528,7 @@ def process_language(config, unified_mapper: UnifiedExcelMapping, language: str)
     print(f"   檢測統計：{dict(detection_stats)}")
     
     if not rows:
-        print(f"✅ {language} 未偵測到歧義詞，未產生 Excel")
+        print(f"✅ {language} 未偵測到該語言區塊定義的敏感詞，未產生 Excel")
         return True
     
     # 輸出 Excel

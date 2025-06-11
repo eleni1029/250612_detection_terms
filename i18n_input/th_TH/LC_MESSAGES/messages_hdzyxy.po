@@ -1,0 +1,121 @@
+# Thai (Thailand) translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-03-07 14:33+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: th_TH\n"
+"Language-Team: th_TH <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+# Translations template for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+msgid "学院"
+msgstr ""
+
+msgid "院系"
+msgstr ""
+
+msgid "院系代碼 / 院系名稱 / 院系簡稱"
+msgstr ""
+
+msgid "院系名稱"
+msgstr ""
+
+msgid "院系簡稱"
+msgstr ""
+
+msgid "院系代碼"
+msgstr ""
+
+msgid "學院代碼"
+msgstr ""
+
+msgid "學院名稱"
+msgstr ""
+
+msgid "開課學院"
+msgstr ""
+
+msgid "開課院系代碼"
+msgstr ""
+
+msgid "開課院系名稱"
+msgstr ""
+
+msgid "上級院系"
+msgstr ""
+
+msgid "院系階層"
+msgstr ""
+
+msgid "添加院系"
+msgstr ""
+
+msgid "無指定院系"
+msgstr ""
+
+msgid "課程院系"
+msgstr ""
+
+msgid "開放院系"
+msgstr ""
+
+msgid "指本機構院系"
+msgstr ""
+
+msgid "開課院系"
+msgstr ""
+
+msgid "查看目前選擇院系"
+msgstr ""
+
+msgid "暫無選擇院系"
+msgstr ""
+
+msgid "選擇院系"
+msgstr ""
+
+msgid "選擇課程所屬的院系"
+msgstr ""
+
+msgid "查看課程開放院系"
+msgstr ""
+
+msgid "系級"
+msgstr ""
+
+msgid "開課系級"
+msgstr ""
+
+msgid "校本資源庫"
+msgstr ""
+
+msgid "審核通過，且分享至校本資源庫的資源才可推薦至首頁"
+msgstr ""
+
+msgid "全校公開"
+msgstr ""
+
+msgid "院系資源庫"
+msgstr ""
+
+msgid "調整院系"
+msgstr ""
+
+msgid "僅本院系可見"
+msgstr ""
+

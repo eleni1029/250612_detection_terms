@@ -1,0 +1,37 @@
+# Chinese (Traditional, Taiwan) translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-02-19 15:52+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hant_TW\n"
+"Language-Team: zh_Hant_TW <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "EducationalAdmin"
+msgstr "staf akademik"
+
+msgid "教務權限"
+msgstr "Pihak berkuasa akademik"
+
+msgid "教務人員可修改總成績"
+msgstr "Kakitangan akademik boleh mengubah suai jumlah markah"
+
+msgid "教務人員可重置人員密碼"
+msgstr "Kakitangan akademik boleh menetapkan semula kata laluan kakitangan"
+
+msgid "開啟該選項之後，本校教務可修改老師送繳的課程總成績"
+msgstr ""
+"Selepas menghidupkan pilihan ini, pentadbiran akademik sekolah boleh "
+"mengubah suai jumlah gred kursus yang diserahkan oleh guru."

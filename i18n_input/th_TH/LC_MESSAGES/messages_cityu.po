@@ -1,0 +1,89 @@
+# English (United States) translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-05-13 12:00+0800\n"
+"PO-Revision-Date: 2020-05-12 18:19+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "學習單元"
+msgstr "Schedule"
+
+msgid "您已經成功添加了新的學習單元"
+msgstr "You have successfully added a new schedule"
+
+msgid "刪除失敗，學習單元下已有學習活動"
+msgstr "Deletion failed, the schedule is not empty"
+
+msgid "Syllabus is None"
+msgstr "Schedule is None"
+
+msgid "syllabus.add.button"
+msgstr "Add Schedule"
+
+msgid "新增學習單元"
+msgstr "Add Schedule"
+
+msgid "屬於它的學習單元都將同步刪除，是否確認刪除？"
+msgstr "All contained schedules will be deleted, are you sure?"
+
+msgid "請先添加課程學習單元"
+msgstr "Add schedule first"
+
+msgid "學習單元數"
+msgstr "Schedules"
+
+msgid "所屬學習單元"
+msgstr "Schedules"
+
+msgid "學習單元一"
+msgstr "First Schedule"
+
+msgid "編輯學習單元"
+msgstr "Edit Schedule"
+
+msgid "syllabus.new"
+msgstr "Add Schedule"
+
+msgid "再按照知識結構將每個章節內容切分為不同的學習單元"
+msgstr "Then, group each course section into different schedules"
+
+msgid "最後按照知識點安排將各種課件資源加入不同的學習單元，還可以通過拖拽調整順序"
+msgstr "Finally, add content to different schedules, and sort them by dragging"
+
+msgid "在這裏則可以編輯學習單元"
+msgstr "Edit schedule here"
+
+msgid "修改學習單元名稱，完善教學目標等信息"
+msgstr "Edit schedule name, and fulfill information like objective"
+
+msgid "批量編輯學習單元"
+msgstr "Batch Edit Schedule"
+
+msgid "Some syllabuses of the source course does not exist."
+msgstr "Some schedules of the original course does not exist."
+
+msgid "當前狀態為【{0}】，成績無效"
+msgstr "Current status is {0}"
+
+msgid "zh-MO"
+msgstr "繁體中文"
+
+msgid "en-US"
+msgstr "English"
+
+msgid "點名_備註"
+msgstr "Classroom"
+

@@ -57,27 +57,36 @@ excel_config:
     comparison: "phrase_comparison"   # 對照表工作表名稱
     summary: "語言總覽"               # 總覽工作表名稱
   
-  # 必要欄位
+  # 佈局模式：horizontal (橫向分區塊)
+  layout_mode: "horizontal"
+  
+  # 橫向分區塊配置
+  horizontal_layout:
+    use_language_blocks: true        # 使用語言區塊分區
+    block_separator_columns: 1       # 語言區塊間的分隔列數
+    language_label_style: "header"   # 語言標籤樣式：header/merged/simple
+    allow_user_additions: true      # 允許用戶在區塊內新增詞彙
+    error_tolerance: "high"          # 錯誤容忍度：high/medium/low
+  
+  # 必要欄位（基礎部分）
   required_columns:
-    language: "語言"
     category: "敏感詞類型"
     keyword: "敏感詞"
   
-  # 業態方案欄位模板
+  # 業態方案欄位模板（橫向模式）
   business_columns:
-    solution_template: "對應方案({display_name})"
-  
-  # 語言區塊設定
-  language_blocks:
-    header_rows: 2                  # 每個語言區塊的標題行數
-    separator_rows: 1               # 語言區塊間的分隔行數
-    start_row: 3                    # 數據開始行（跳過總標題）
+    # 橫向模式的列名模板：{language}_{business_display_name}
+    horizontal_template: "{language}_{business_display_name}"
+    # 用於解析的模板
+    parse_pattern: r"^(.+?)_(.+)$"  # 用於解析 語言_業態 格式
   
   # 樣式設定
   styling:
-    language_header_color: "366092"  # 語言標題背景色
+    language_header_color: "4472C4"  # 語言標題背景色
     category_header_color: "70AD47"  # 分類標題背景色
     data_row_color: "F2F2F2"        # 奇數行背景色
+    business_header_color: "FFC000"  # 業態標題背景色
+    language_block_border: "thick"   # 語言區塊邊框樣式
 
 # 語言檢測配置
 language_detection:

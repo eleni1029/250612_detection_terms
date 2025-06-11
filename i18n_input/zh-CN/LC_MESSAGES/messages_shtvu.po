@@ -1,0 +1,193 @@
+# Chinese (Traditional, Macau SAR China) translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-07-19 15:16+0800\n"
+"PO-Revision-Date: 2018-07-19 16:29+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hant_MO <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+# 這個文件的用途是在同一個語系、同一個 msgid 之下，想要給不同環境有不同的翻譯所使用的文件
+# 此文件是給 shtvu 環境使用，如果你需要為其它環境客製不同的翻譯，你應該要再產生一個新的 pot 文件，然後修改 i18n.gettext2
+# 來取用新翻譯
+# 如果你要給指定環境、指定org客製翻譯，建議文件命名為 message_deliveryorg_orgid.pot
+# 如果你不需要客製翻譯，你只需要在 messages.pot 建立平台通用的翻譯即可
+# Usage:
+# 在 html 上仍使用 _ ，在 py 需改用 from lms.i18n import gettext2 as _ 取代 from
+# flask_babel import _
+# 院系, Department #
+msgid "章節"
+msgstr "课堂活动"
+
+msgid "章節設定"
+msgstr "授课内容设定"
+
+msgid "進階式課程適用於有清晰的章節結構，課程內容較為復雜，學習時程較長的課程，這類課程將大量復雜的內容以巧妙的結構組織起來，方便學生系統性、有計劃地進行學習。"
+msgstr "进阶式课程适用于有清晰的授课内容结构，课程内容较为复杂，学习时程较长的课程，这类课程将大量复杂的内容以巧妙的结构组织起来，方便学生系统性、有计划地进行学习。"
+
+msgid "章節/單元"
+msgstr "智慧课堂"
+
+msgid "該課程還沒有任何章節"
+msgstr "该课程还没有任何授课内容"
+
+msgid "添加新章節＋"
+msgstr "添加新授课内容＋"
+
+msgid "刪除章節"
+msgstr "删除授课内容"
+
+msgid "複製章節內容"
+msgstr "复制授课内容"
+
+msgid "章節一"
+msgstr "第一授课内容"
+
+msgid "先將要講授的內容劃分為章節"
+msgstr "先将要讲授的内容划分为大的知识授课内容"
+
+msgid "再按照知識結構將每個章節內容切分為不同的學習單元"
+msgstr "在按照知识结构将每个授课内容切分为不同的学习单元"
+
+msgid "隨時可以在這裏設定你的課程章節"
+msgstr "随时可以在这里设定你的课程授课内容"
+
+msgid "在此處編輯已有章節或按照課程計劃添加新的章節"
+msgstr "在此处编辑已有章节或按照课程计划添加新的授课内容"
+
+msgid "新增章節"
+msgstr "新增授课内容"
+
+msgid "章節數"
+msgstr "授课内容数"
+
+msgid "章節完成度"
+msgstr "授课内容完成度"
+
+msgid "章節及學習活動"
+msgstr ""
+"授课内容及\n"
+"学习活动"
+
+msgid "請新增課程章節"
+msgstr "请新增课程授课内容"
+
+msgid "所屬章節"
+msgstr "所属授课内容"
+
+msgid "管理課程章節和單元"
+msgstr "管理课程授课内容和单元"
+
+msgid "在這裡，你可以簡單創建課程，管理課程信息、課程內容和章節知識點，清晰規劃課程進度。你也可以輕鬆地完成課程互動、討論、分組學習、佈置作業、測驗、管理成績和考勤。"
+msgstr "在这里，你可以简单创建课程，管理课程信息、课程内容和授课内容知识点，清晰规划课程进度。你也可以轻松地完成课程互动、讨论、分组学习、布置作业、线上测试、管理成绩和考勤。"
+
+msgid "刪除{0}後，對應章節的學習活動都將一併刪除，但是已被關聯為開啟條件的學習活動，將無法刪除。是否確認刪除?"
+msgstr "删除{0}后，对应授课内容的学习活动都将一并删除，但是已被关联为开启条件的学习活动，将无法删除。是否确认删除?"
+
+msgid "該章節下沒有任何學習活動"
+msgstr "该授课内容下没有任何学习活动"
+
+msgid "該章節下沒有任何解鎖的學習活動"
+msgstr "该授课内容下没有任何解锁的学习活动"
+
+msgid "刪除章節，章節下的內容也將同步刪除，是否確認刪除？"
+msgstr "删除授课内容，章节下的内容也将同步删除，是否确认删除？"
+
+msgid "此章節下有學習活動已被關聯為開啟條件，無法刪除。"
+msgstr "此授课内容下有学习活动已被关联为开启条件，无法删除。"
+
+msgid "改變章節/單元信息，即使取消保存，也將導致此學習活動部分開啟條件失效，請謹慎操作！"
+msgstr "改变授课内容/单元信息，即使取消保存，也将导致此学习活动部分开启条件失效，请谨慎操作！"
+
+msgid "更改章節的順序將導致此課程下所有學習活動的開啟條件失效"
+msgstr "更改授课内容的顺序将导致此课程下所有学习活动的开启条件失效"
+
+msgid "平移章節與學習活動"
+msgstr "平移授课内容与学习活动"
+
+msgid "請留意，如您所複製的章節、學習活動設有闖關學習開啟條件，建議將相關聯的學習活動一併複製到目標課程。"
+msgstr "请留意，如您所复制的章节、学习活动设有闯关学习开启条件，建议将相关联的学习活动一并复制到目标课程。"
+
+msgid "沒有找到指定章節"
+msgstr "没有找到指定授课内容"
+
+msgid "指定章節"
+msgstr "指定授课内容"
+
+msgid "章节内容已成功复制进目标课程"
+msgstr "授课内容已成功复制进目标课程"
+
+msgid "章节内容已成功复制进目标课程，部分课程复制失败"
+msgstr "授课内容已成功复制进目标课程，部分课程复制失败"
+
+msgid "章节内容复制到目标课程失败"
+msgstr "授课内容复制到目标课程失败"
+
+msgid "章节内容复制中，请稍候..."
+msgstr "授课内容复制中，请稍候..."
+
+msgid "步骤1: 选择复制的章节内容"
+msgstr "步骤1: 选择复制的授课内容"
+
+msgid "可以轻松创建课程，录入大纲，并管理课程内容和章节知识点，清晰规划课程进度安排。"
+msgstr "可以轻松创建课程，录入课程信息，并管理课程内容和授课内容知识点，清晰规划课程进度安排。"
+
+msgid "学生需要按照老师已经设定好的学习活动开启条件，按顺序进行学习，只有完成当前学习活动之后才能开启下一学习活动，老师设置学习活动开启条件可以不依照章节顺序进行。"
+msgstr "学生需要按照老师已经设定好的学习活动开启条件，按顺序进行学习，只有完成当前学习活动之后才能开启下一学习活动，老师设置学习活动开启条件可以不依照授课内容顺序进行。"
+
+msgid "确定在章节中删除学习活动？"
+msgstr "确定在授课内容中删除学习活动？"
+
+msgid "删除{0}后，对应章节视图的学习活动会同时删除，是否确认删除？"
+msgstr "删除{0}后，对应授课内容视图的学习活动会同时删除，是否确认删除？"
+
+msgid "学习活动已设置OBE权重，删除后将删除该学习活动与OBE的关系，同时会影响其他学习活动的OBE权重，确定删除？"
+msgstr "学习活动已设置OBE权重，删除后将删除该学习活动与OBE的关系，同时会影响其他学习活动的OBE权重，确定删除？"
+
+msgid "保存并设置OBE权重"
+msgstr "保存并设置OBE权重"
+
+msgid "课程设置中章节导航已被禁用，不能设为闯关式"
+msgstr "课程设置中授课内容导航已被禁用，不能设为闯关式"
+
+msgid "课程为闯关式学习，不能禁用章节导航"
+msgstr "课程为闯关式学习，不能禁用授课内容导航"
+
+msgid "錄影教材"
+msgstr "课堂录播分析"
+
+msgid "請您先到「分組學習」中完成學生的分組"
+msgstr "尚未同步分组信息"
+
+msgid "該課程目前尚未分組，請先建立分組"
+msgstr "尚未同步分组信息"
+
+msgid "成績"
+msgstr "课堂成绩"
+
+msgid "學習分析"
+msgstr "课堂学习分析"
+
+msgid "錄影教材_簡略"
+msgstr "课堂录播"
+
+msgid "課堂情況統計"
+msgstr "课堂情况统计"
+
+msgid "預覽課程"
+msgstr "预览课堂"
+
+msgid "點名記錄"
+msgstr "课堂点名记录"
+

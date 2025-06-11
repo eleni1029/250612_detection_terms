@@ -1,0 +1,37 @@
+# Chinese (Traditional, Taiwan) translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-02-19 15:52+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hant_TW\n"
+"Language-Team: zh_Hant_TW <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "EducationalAdmin"
+msgstr ""
+
+msgid "教務權限"
+msgstr "Edu Admin Permission"
+
+msgid "教務人員可修改總成績"
+msgstr "Edu Admin can change the final score"
+
+msgid "教務人員可重置人員密碼"
+msgstr "Edu Admin can reset user password"
+
+msgid "開啟該選項之後，本校教務可修改老師送繳的課程總成績"
+msgstr ""
+"Turn on this toggle to allow the Edu Admin to change the final score of "
+"courses"

@@ -1,0 +1,69 @@
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-09-12 14:37+0800\n"
+"PO-Revision-Date: 2014-03-24 11:26+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: id_ID\n"
+"Language-Team: id_ID <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+# # char
+msgid "："
+msgstr ""
+
+# #############################################################################
+# #
+# # 為了方便管理 i18n，故將 msgid 分門別類，以避免重複使用相近詞語，增強整體一致性。
+# # 目錄
+# # - 名詞 Noun
+# #    - 人物 Character
+# #    - 時間 Time
+# #    - 語言 Language
+# # - 動作 Action
+# # - 暫時未分類 Temp
+# #  Note: The Great Wall 下方的尚未分類
+# # 名詞 Noun
+# ### 人物 Character
+msgid "校內公開課"
+msgstr "School Course"
+
+msgid "校內課程"
+msgstr "School Course"
+
+msgid "開啟該選項之後，本校所創建的課程將不允許校外人員加入"
+msgstr ""
+
+msgid "提示：跨機構資源分享需要管理員的審核，通過後的資源將可在目標機構的校內資源平台查看"
+msgstr ""
+"Tips: Cross-institutional resource sharing requires administrator`s "
+"review, and the resources will be visible on the target institution's "
+"campus resource platform."
+
+msgid "提示：分享資源需要管理員進行審核，通過後將展示在校內資源平台"
+msgstr ""
+"Tips: share resource need admin to review, show on resource platform "
+"after audit passed"
+
+msgid "一个平台搞定校内私有SPOC和MOOC"
+msgstr ""
+
+msgid "校内校外公开课，灵活控制分享范围"
+msgstr ""
+
+msgid "校內題庫"
+msgstr "Campus Question Bank"
+
+msgid "* 提示：發布試題到校內題庫需要管理員審核通過"
+msgstr "*notice: questions of published need be audit by admin"
+
+msgid "通過後試題將會顯示在本機構的校內題庫列表，確認通過？"
+msgstr ""
+"After passed, the question will public to org question platform list, are"
+" you sure?"

@@ -187,7 +187,7 @@ class ConfigLoader:
     
     def get_language_files(self, language: str) -> Dict[str, Path]:
         """
-        獲取指定語言的檔案路徑 - 修正版本
+        獲取指定語言的檔案路徑 - 修正版本：JSON 在根目錄，PO 在 LC_MESSAGES 子目錄
         
         Args:
             language: 語言代碼
@@ -195,35 +195,26 @@ class ConfigLoader:
         Returns:
             包含檔案路徑的字典，只返回存在的檔案
         """
-        language_files_dir = self.get_language_input_path(language)
-        
-        # 如果 LC_MESSAGES 目錄不存在，嘗試直接在語言目錄下查找（向下相容）
-        if not language_files_dir.exists():
-            dirs = self.get_directories()
-            input_dir = Path(dirs['input_dir'])
-            language_files_dir = input_dir / language
-        
-        if not language_files_dir.exists():
-            raise ValueError(f"語言目錄不存在：{language_files_dir}")
-        
         file_patterns = self.get_file_patterns()
         result = {}
         
-        # 檢查 PO 檔案 - 只查找 messages.po
+        # 檢查 PO 檔案 - 在 LC_MESSAGES 子目錄中
         po_pattern = file_patterns.get('po_file', 'messages.po')
-        po_file = language_files_dir / po_pattern
+        po_dir = self.get_language_po_path(language)
+        po_file = po_dir / po_pattern
         
         if po_file.exists():
             result['po_file'] = po_file
         
-        # 檢查 JSON 檔案 - 只查找 {language}.json
+        # 檢查 JSON 檔案 - 在語言根目錄中
         json_pattern = file_patterns.get('json_file', '{language}.json')
         json_filename = json_pattern.format(language=language)
-        json_file = language_files_dir / json_filename
+        json_dir = self.get_language_json_path(language)
+        json_file = json_dir / json_filename
         
         # 大小寫不敏感查找
         if not json_file.exists():
-            for file in language_files_dir.glob('*.json'):
+            for file in json_dir.glob('*.json'):
                 if file.name.lower() == json_filename.lower():
                     json_file = file
                     break
@@ -232,14 +223,14 @@ class ConfigLoader:
             result['json_file'] = json_file
         
         # 檢查是否至少有一個檔案
-        file_handling = self.config.get('file_handling', {})
+        file_handling = self.get_file_handling_config()
         require_at_least_one = file_handling.get('require_at_least_one', True)
         
         if require_at_least_one and not result:
             raise FileNotFoundError(
                 f"語言 '{language}' 的必要檔案不存在。\n"
-                f"預期路徑：{language_files_dir}\n"
-                f"預期檔案：{po_pattern} 或 {json_filename}"
+                f"PO 檔案預期路徑：{po_file}\n"
+                f"JSON 檔案預期路徑：{json_file}"
             )
         
         return result
