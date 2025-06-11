@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_01_generate_xlsx.py (v2.0)
+script_01_generate_xlsx.py (v2.1 - Pure Excel Version)
 
 掃描指定語言的 messages.po 與 json 檔案，偵測歧義關鍵字，輸出 tobemodified.xlsx
-支援多語言和可配置的業態類型。
+完全基於 phrase_comparison.xlsx，不再依賴任何 Python 字典檔案。
 
 更新內容：
-- 支援 config.yaml 配置
-- 支援多語言選擇
-- 支援可擴充的業態類型
-- 動態生成 Excel 欄位
+- 完全移除對 detection_terms.py 的依賴
+- 直接從 phrase_comparison.xlsx 讀取所有敏感詞
+- 簡化工作流程：只需維護一個 Excel 檔案
+- 更安全、更直觀的純 Excel 方案
 """
 
 from pathlib import Path
@@ -21,6 +21,7 @@ import sys
 import argparse
 from collections import defaultdict
 from config_loader import get_config
+from excel_based_mapping import get_excel_mapping
 
 try:
     import polib
@@ -32,7 +33,8 @@ except ImportError as e:
 
 def main():
     """主執行函數"""
-    print("🚀 開始生成 tobemodified.xlsx (v2.0)")
+    print("🚀 開始生成 tobemodified.xlsx (v2.1 - Pure Excel Version)")
+    print("📊 完全基於 Excel 的敏感詞檢測系統")
     
     # 載入配置
     config = get_config()
@@ -44,137 +46,127 @@ def main():
                        choices=list(config.get_languages().keys()),
                        default=config.get_default_language(),
                        help='指定要處理的語言')
+    parser.add_argument('--excel-source', '-e',
+                       default=config.config.get('base_files', {}).get('phrase_comparison_excel', 'phrase_comparison.xlsx'),
+                       help='指定 phrase_comparison Excel 檔案路徑')
     
     args = parser.parse_args()
     selected_language = args.language
+    excel_source = args.excel_source
     
     print(f"\n🌐 選擇的語言：{selected_language}")
+    print(f"📊 數據來源：{excel_source}")
     
     # 獲取語言檔案路徑
     language_files = config.get_language_files(selected_language)
     PO_PATH = Path(language_files['po_file'])
     JSON_PATH = Path(language_files['json_file'])
-    OUT_XLSX = Path(f"tobemodified_{selected_language}.xlsx")
+    
+    # 生成輸出檔案名
+    output_template = config.config.get('file_generation', {}).get('tobemodified_template', 'tobemodified_{language}.xlsx')
+    OUT_XLSX = Path(output_template.format(language=selected_language))
     
     print(f"📁 處理檔案：")
     print(f"   PO 檔案: {PO_PATH}")
     print(f"   JSON 檔案: {JSON_PATH}")
     print(f"   輸出檔案: {OUT_XLSX}")
 
-    # 載入檢測詞典
-    def load_detection_terms():
-        """載入所有檢測詞典，並進行錯誤處理"""
-        try:
-            detection_files = config.get_detection_terms_files()
-            
-            # 載入基礎敏感詞
-            base_file = detection_files['base']
-            from detection_terms import DETECTION_TERMS
-            
-            # 載入各業態方案
-            business_terms = {}
-            business_types = config.get_business_types()
-            
-            for bt_code, bt_config in business_types.items():
-                bt_file = detection_files[bt_code]
-                display_name = bt_config['display_name']
-                
-                try:
-                    # 動態導入模組
-                    import importlib.util
-                    spec = importlib.util.spec_from_file_location(f"terms_{bt_code}", bt_file)
-                    module = importlib.util.module_from_spec(spec)
-                    spec.loader.exec_module(module)
-                    business_terms[bt_code] = module.DETECTION_TERMS
-                    print(f"✅ 載入 {bt_file} ({display_name}方案)")
-                except Exception as e:
-                    print(f"❌ 載入 {bt_file} 失敗：{e}")
-                    sys.exit(1)
-            
-            print(f"✅ 成功載入檢測詞典")
-            print(f"   基礎敏感詞: {len(DETECTION_TERMS)} 類別")
-            for bt_code, bt_config in business_types.items():
-                terms_count = len(business_terms[bt_code])
-                print(f"   {bt_config['display_name']}方案: {terms_count} 類別")
-            
-            return DETECTION_TERMS, business_terms
-            
-        except ImportError as e:
-            print(f"❌ 無法載入檢測詞典：{e}")
-            print("請確認以下檔案存在且格式正確：")
-            detection_files = config.get_detection_terms_files()
-            for name, filename in detection_files.items():
-                print(f"  - {filename}")
-            sys.exit(1)
-    
-    DETECTION_TERMS, BUSINESS_TERMS = load_detection_terms()
-
-    # 建立關鍵字到分類的映射
-    print("\n🔍 建立關鍵字映射...")
-    kw2cat = {}
-    category_stats = defaultdict(int)
-    
-    for cat, words in DETECTION_TERMS.items():
-        for w in words:
-            if w in kw2cat:
-                print(f"⚠️  重複關鍵字 '{w}' 在分類 '{cat}' 和 '{kw2cat[w]}'")
-            kw2cat[w] = cat
-            category_stats[cat] += 1
-    
-    print(f"   總關鍵字數：{len(kw2cat)}")
-    print(f"   分類統計：{dict(category_stats)}")
-
-    # 建立敏感詞到方案的映射
-    def build_keyword_to_solution_mappings():
-        """建立從敏感詞到解決方案的映射"""
-        mappings = {}
+    # 載入基於 Excel 的映射
+    print(f"\n📖 載入 Excel 映射和敏感詞...")
+    try:
+        excel_mapper = get_excel_mapping(excel_source)
+        
+        # 驗證映射完整性
+        excel_mapper.validate_completeness()
+        
+        print("✅ Excel 映射載入成功")
+        
+    except Exception as e:
+        print(f"❌ 載入 Excel 映射失敗：{e}")
+        print("請確認以下事項：")
+        print(f"1. {excel_source} 檔案存在")
+        print("2. 檔案格式正確，包含必要欄位")
+        print("3. Excel 中有足夠的敏感詞數據")
+        
+        # 提供創建範例 Excel 的建議
+        print(f"\n💡 如果您沒有 {excel_source}，可以手動創建包含以下欄位的 Excel：")
+        print("   - 敏感詞類型")
+        print("   - 敏感詞")
         business_types = config.get_business_types()
-        
-        print(f"\n🔄 建立敏感詞到方案映射...")
-        
         for bt_code, bt_config in business_types.items():
-            display_name = bt_config['display_name']
-            solution_terms = BUSINESS_TERMS[bt_code]
-            
-            keyword_to_solution = {}
-            mapping_stats = {'mapped': 0, 'fallback': 0, 'missing_category': 0}
-            
-            for keyword, category in kw2cat.items():
-                solutions = solution_terms.get(category, [])
-                
-                if not solutions:
-                    # 該分類沒有解決方案
-                    keyword_to_solution[keyword] = keyword
-                    mapping_stats['missing_category'] += 1
-                    continue
-                
-                # 找到該關鍵字在基礎詞典中的索引
-                base_keywords = DETECTION_TERMS.get(category, [])
-                try:
-                    keyword_index = base_keywords.index(keyword)
-                    if keyword_index < len(solutions):
-                        # 有對應的解決方案
-                        keyword_to_solution[keyword] = solutions[keyword_index]
-                        mapping_stats['mapped'] += 1
-                    else:
-                        # 索引超出方案範圍
-                        keyword_to_solution[keyword] = keyword
-                        mapping_stats['fallback'] += 1
-                except ValueError:
-                    # 關鍵字不在基礎詞典中（理論上不應該發生）
-                    keyword_to_solution[keyword] = keyword
-                    mapping_stats['fallback'] += 1
-            
-            mappings[bt_code] = keyword_to_solution
-            print(f"   {display_name}方案: {mapping_stats['mapped']} 個有方案, {mapping_stats['fallback']} 個回退, {mapping_stats['missing_category']} 個無分類方案")
+            print(f"   - 對應方案({bt_config['display_name']})")
         
-        return mappings
+        sys.exit(1)
 
-    BUSINESS_MAPPINGS = build_keyword_to_solution_mappings()
+    # 從 Excel 映射中提取所有敏感詞
+    print(f"\n🔍 從 Excel 提取敏感詞...")
+    all_keywords = set()
+    keyword_categories = {}  # 敏感詞到分類的映射
+    
+    # 從任一業態的映射中提取所有關鍵詞（它們應該是相同的）
+    business_types = config.get_business_types()
+    first_bt_code = list(business_types.keys())[0]
+    first_mapping = excel_mapper.get_mapping(first_bt_code)
+    
+    all_keywords = set(first_mapping.keys())
+    
+    # 建立敏感詞到分類的映射（從 Excel 讀取）
+    print(f"📋 建立敏感詞分類映射...")
+    try:
+        # 重新讀取 Excel 來獲取分類資訊
+        import openpyxl
+        wb = openpyxl.load_workbook(excel_source, data_only=True)
+        ws = wb.active
+        
+        # 讀取標題列
+        header_row = list(ws[1])
+        headers = [str(cell.value).strip() if cell.value else "" for cell in header_row]
+        column_indices = {header: idx for idx, header in enumerate(headers)}
+        
+        # 建立敏感詞到分類的映射
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if not row or not any(row):
+                continue
+            
+            def get_cell_value(col_name):
+                if col_name in column_indices:
+                    idx = column_indices[col_name]
+                    if idx < len(row) and row[idx] is not None:
+                        return str(row[idx]).strip()
+                return ""
+            
+            category = get_cell_value("敏感詞類型")
+            keyword = get_cell_value("敏感詞")
+            
+            if category and keyword:
+                keyword_categories[keyword] = category
+        
+        print(f"✅ 成功建立 {len(keyword_categories)} 個敏感詞的分類映射")
+        
+    except Exception as e:
+        print(f"⚠️  無法建立分類映射：{e}")
+        print("將繼續執行，但統計報告可能不完整")
+    
+    print(f"   總敏感詞數：{len(all_keywords)}")
+    if keyword_categories:
+        category_counts = defaultdict(int)
+        for category in keyword_categories.values():
+            category_counts[category] += 1
+        print(f"   分類統計：{dict(category_counts)}")
 
-    # 關鍵字檢測
-    _kw_sorted = sorted(kw2cat.keys(), key=len, reverse=True)
-    KW_RE = re.compile("|".join(map(re.escape, _kw_sorted)))
+    # 建立關鍵字檢測器
+    print(f"\n🔍 建立關鍵字檢測器...")
+    
+    # 按長度排序，優先匹配長詞避免部分匹配
+    keyword_detection_config = config.config.get('system', {}).get('keyword_detection', {})
+    priority_by_length = keyword_detection_config.get('priority_by_length', True)
+    
+    if priority_by_length:
+        sorted_keywords = sorted(all_keywords, key=len, reverse=True)
+    else:
+        sorted_keywords = sorted(all_keywords)
+    
+    KW_RE = re.compile("|".join(map(re.escape, sorted_keywords)))
 
     def find_keywords(text: str) -> list[str]:
         """在文本中找到所有敏感詞，避免重複"""
@@ -190,24 +182,9 @@ def main():
                 keywords.append(word)
         return keywords
 
-    def apply_replacements(text: str, mapping: dict) -> str:
-        """應用關鍵字替換"""
-        if not text:
-            return text
-        return KW_RE.sub(lambda m: mapping.get(m.group(0), m.group(0)), text)
-
-    def build_replacement_plan(keywords: list[str], mapping: dict) -> str:
-        """建立替換方案說明"""
-        replacements = []
-        for kw in keywords:
-            replacement = mapping.get(kw, kw)
-            if replacement != kw:
-                replacements.append(f"{kw}→{replacement}")
-        return "、".join(replacements)
-
     # 檔案讀取函數
     def iter_po_entries(po_path: Path):
-        """迭代 PO 檔案條目，增加錯誤處理"""
+        """迭代 PO 檔案條目"""
         if not po_path.exists():
             print(f"⚠️  {po_path} 不存在，跳過")
             return
@@ -225,7 +202,7 @@ def main():
             print(f"❌ 讀取 {po_path} 失敗：{e}")
 
     def iter_json_entries(json_path: Path):
-        """迭代 JSON 檔案條目，改進路徑表示"""
+        """迭代 JSON 檔案條目"""
         if not json_path.exists():
             print(f"⚠️  {json_path} 不存在，跳過")
             return
@@ -274,27 +251,25 @@ def main():
         value_keywords = find_keywords(display_value)
         
         # 合併關鍵字，避免重複
-        all_keywords = key_keywords + [kw for kw in value_keywords if kw not in key_keywords]
+        all_keywords_found = key_keywords + [kw for kw in value_keywords if kw not in key_keywords]
         
-        if all_keywords:
+        if all_keywords_found:
             detection_stats[source] += 1
             detection_stats['total_entries'] += 1
             
-            # 建立修正方案和結果
+            # 使用 Excel 映射建立修正方案和結果
             row_data = [
                 source,
                 key,
                 display_value,
-                "、".join(all_keywords),  # 敏感詞列表
+                "、".join(all_keywords_found),  # 敏感詞列表
             ]
             
             # 添加各業態的修正方案和結果
-            business_types = config.get_business_types()
             for bt_code, bt_config in business_types.items():
-                mapping = BUSINESS_MAPPINGS[bt_code]
                 row_data.extend([
-                    build_replacement_plan(all_keywords, mapping),  # 修正方案
-                    apply_replacements(display_value, mapping),     # 修正結果
+                    excel_mapper.build_replacement_plan(all_keywords_found, bt_code),  # 修正方案
+                    excel_mapper.apply_replacements(display_value, bt_code),           # 修正結果
                 ])
             
             rows.append(row_data)
@@ -303,6 +278,10 @@ def main():
 
     if not rows:
         print("✅ 未偵測到歧義詞，未產生 xlsx")
+        print("這可能意味著：")
+        print("1. 翻譯檔案中沒有敏感詞")
+        print("2. Excel 中的敏感詞與翻譯檔案內容不匹配")
+        print("3. 敏感詞列表需要更新")
         return
 
     # 輸出 Excel
@@ -311,12 +290,11 @@ def main():
     try:
         wb = Workbook()
         ws = wb.active
-        ws.title = "tobemodified"
+        ws.title = config.config.get('excel_config', {}).get('worksheet_name', 'tobemodified')
         
         # 動態建立標題列
         headers = ["source", "key", "value", "敏感詞"]
         
-        business_types = config.get_business_types()
         for bt_code, bt_config in business_types.items():
             display_name = bt_config['display_name']
             headers.extend([
@@ -363,24 +341,34 @@ def main():
     # 生成統計報告
     print(f"\n📈 處理報告：")
     
-    # 統計各分類的敏感詞出現次數
-    category_detections = defaultdict(int)
-    keyword_detections = defaultdict(int)
-    
-    for row in rows:
-        keywords = row[3].split("、") if row[3] else []
-        for kw in keywords:
-            if kw in kw2cat:
-                category_detections[kw2cat[kw]] += 1
-                keyword_detections[kw] += 1
-    
-    print(f"   最常出現的分類：")
-    for cat, count in sorted(category_detections.items(), key=lambda x: x[1], reverse=True)[:5]:
-        print(f"     {cat}: {count} 次")
-    
-    print(f"   最常出現的敏感詞：")
-    for kw, count in sorted(keyword_detections.items(), key=lambda x: x[1], reverse=True)[:5]:
-        print(f"     {kw}: {count} 次")
+    if keyword_categories:
+        # 統計各分類的敏感詞出現次數
+        category_detections = defaultdict(int)
+        keyword_detections = defaultdict(int)
+        
+        for row in rows:
+            keywords = row[3].split("、") if row[3] else []
+            for kw in keywords:
+                if kw in keyword_categories:
+                    category_detections[keyword_categories[kw]] += 1
+                    keyword_detections[kw] += 1
+        
+        print(f"   最常出現的分類：")
+        for cat, count in sorted(category_detections.items(), key=lambda x: x[1], reverse=True)[:5]:
+            print(f"     {cat}: {count} 次")
+        
+        print(f"   最常出現的敏感詞：")
+        for kw, count in sorted(keyword_detections.items(), key=lambda x: x[1], reverse=True)[:5]:
+            print(f"     {kw}: {count} 次")
+    else:
+        print(f"   無法生成詳細統計（分類映射不可用）")
+
+    print(f"\n✨ 純 Excel 方案優勢：")
+    print(f"   ✅ 無需維護 Python 字典檔案")
+    print(f"   ✅ 修改 Excel 立即生效")
+    print(f"   ✅ 工作流程更簡單直觀")
+    print(f"   ✅ 避免順序依賴風險")
+    print(f"📊 數據來源：{excel_source}")
 
 
 if __name__ == "__main__":

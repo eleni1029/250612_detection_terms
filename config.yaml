@@ -1,5 +1,5 @@
-# 敏感詞檢測與替換系統配置文件
-# Configuration for Sensitive Word Detection and Replacement System
+# 敏感詞檢測與替換系統配置文件 (純 Excel 版本)
+# Configuration for Sensitive Word Detection and Replacement System (Excel-Only Version)
 
 # 語言配置
 languages:
@@ -36,27 +36,58 @@ business_types:
   #   display_name: "醫療機構"
   #   description: "醫療保健機構適用的敏感詞解決方案"
 
-# 基礎檔案配置
+# 基礎檔案配置 (純 Excel 版本)
 base_files:
-  detection_terms: "detection_terms.py"
-  phrase_comparison_template: "phrase_comparison.xlsx"
+  # 唯一的數據源：Excel 檔案
+  phrase_comparison_excel: "phrase_comparison.xlsx"
   output_dir: "."
   backup_dir: "backup"
 
-# Excel 欄位配置
-excel_columns:
-  base_columns:
-    - "敏感詞類型"
-    - "敏感詞"
+# Excel 檔案配置
+excel_config:
+  # 必要欄位
+  required_columns:
+    category: "敏感詞類型"
+    keyword: "敏感詞"
   
-  business_type_columns:
-    solution: "對應方案({display_name})"
-    result: "修正結果({display_name})"
-    validation: "一對多校驗({display_name})"
+  # 業態方案欄位模板
+  business_columns:
+    solution_template: "對應方案({display_name})"
+    validation_template: "一對多校驗({display_name})"
+  
+  # Excel 檔案設定
+  worksheet_name: "phrase_comparison"
+  header_row: 1
+  data_start_row: 2
+
+# 檔案生成配置
+file_generation:
+  # tobemodified Excel 檔案
+  tobemodified_template: "tobemodified_{language}.xlsx"
+  
+  # 輸出檔案命名
+  output_files:
+    po_template: "{base_name}{suffix}.po"
+    json_template: "{base_name}{suffix}.json"
+
+# 系統設定
+system:
+  # 關鍵字檢測設定
+  keyword_detection:
+    case_sensitive: false
+    match_whole_words: false
+    priority_by_length: true  # 優先匹配長詞
+  
+  # 備份設定
+  backup:
+    timestamp_format: "%Y%m%d_%H%M%S"
+    keep_original: true
+    log_operations: true
 
 # 預設語言 (當未指定時使用)
 default_language: "zh-TW"
 
 # 版本資訊
-version: "1.0.0"
+version: "2.1.0"
 last_updated: "2024-12-10"
+system_type: "excel_only"  # 標記為純 Excel 系統
