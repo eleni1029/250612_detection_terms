@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-generate_phrase_comparison.py (v2.3 - 修正路徑結構版本)
+generate_phrase_comparison.py (v2.3 - 修復版本)
+
+修復內容：
+1. 統一所有語言的敏感詞數量，使用相同的 BASE_SENSITIVE_WORDS
+2. 移除第一行標題，直接從語言標題開始
 
 生成統一的 phrase_comparison.xlsx 檔案，包含所有語言的敏感詞對照表
 支援語言區塊分離，在同一個 Excel 中統一管理所有語言和業態
-
-修正內容：
-1. 適配新的路徑結構：JSON 在語言根目錄，PO 在 LC_MESSAGES 子目錄
-2. 使用新的 config_loader 方法
 """
 
 import json
@@ -17,6 +17,7 @@ import itertools
 import sys
 import shutil
 import datetime
+import argparse
 from pathlib import Path
 from collections import defaultdict
 from config_loader import get_config
@@ -94,7 +95,7 @@ def safe_adjust_column_widths_for_summary(worksheet):
         print(f"⚠️  總覽工作表列寬調整發生錯誤: {e}")
 
 
-# 基礎敏感詞字典 - 從 JSON 檔案分析和教育培訓領域經驗整理
+# 基礎敏感詞字典 - 統一的基礎詞典，所有語言都使用相同的詞彙
 BASE_SENSITIVE_WORDS = {
     "學員相關": [
         "學生", "學員", "參與者", "受訓者", "同學", "班級", "組別"
@@ -141,30 +142,20 @@ def main():
         shutil.copy2(excel_path, backup_path)
         print(f"   ✅ 已備份現有檔案：{backup_filename}")
     
-    # 收集所有語言的敏感詞
+    # 為所有語言使用統一的敏感詞字典 - 修復問題1
     all_language_keywords = {}
     
     for language in available_languages:
-        print(f"\n📋 分析語言：{language}")
-        try:
-            language_files = config.get_language_files(language)
-            detected_keywords = detect_sensitive_words(language_files, config, language)
-            
-            if not detected_keywords:
-                print(f"   ⚠️  在 {language} 中未檢測到敏感詞，使用基礎詞彙")
-                detected_keywords = BASE_SENSITIVE_WORDS.copy()
-            
-            all_language_keywords[language] = detected_keywords
-            
-            total_words = sum(len(words) for words in detected_keywords.values())
-            print(f"   📊 檢測到 {total_words} 個敏感詞，{len(detected_keywords)} 個分類")
-            for category, words in detected_keywords.items():
-                print(f"      {category}: {len(words)} 個詞")
-                
-        except Exception as e:
-            print(f"   ❌ 處理語言 {language} 時發生錯誤：{e}")
-            print(f"   ⚠️  將使用基礎詞彙作為後備方案")
-            all_language_keywords[language] = BASE_SENSITIVE_WORDS.copy()
+        print(f"\n📋 處理語言：{language}")
+        
+        # 所有語言使用相同的基礎敏感詞字典，確保數量一致
+        language_keywords = BASE_SENSITIVE_WORDS.copy()
+        all_language_keywords[language] = language_keywords
+        
+        total_words = sum(len(words) for words in language_keywords.values())
+        print(f"   📊 統一敏感詞：{total_words} 個詞，{len(language_keywords)} 個分類")
+        for category, words in language_keywords.items():
+            print(f"      {category}: {len(words)} 個詞")
     
     # 生成統一 Excel
     generate_unified_excel(config, all_language_keywords, excel_path)
@@ -179,106 +170,12 @@ def main():
     print(f"   語言數量：{total_languages}")
     print(f"   分類總數：{total_categories}")
     print(f"   敏感詞總數：{total_words}")
-    print(f"   平均每語言：{total_words // total_languages if total_languages else 0} 個敏感詞")
-
-
-def detect_sensitive_words(language_files: dict, config, language: str) -> dict:
-    """
-    從語言檔案中檢測敏感詞 - 修正版本，適配新的路徑結構
-    
-    Args:
-        language_files: 語言檔案路徑字典
-        config: 配置物件
-        language: 語言代碼
-    
-    Returns:
-        檢測到的敏感詞字典 {分類: [詞彙列表]}
-    """
-    
-    # 收集所有文本內容
-    all_texts = []
-    
-    # 讀取 PO 檔案
-    if 'po_file' in language_files:
-        try:
-            po_file_path = language_files['po_file']
-            print(f"      📖 讀取 PO 檔案：{po_file_path}")
-            po_file = polib.pofile(str(po_file_path))
-            for entry in po_file:
-                if entry.msgid:
-                    all_texts.append(entry.msgid)
-                if entry.msgstr:
-                    all_texts.append(entry.msgstr)
-            print(f"      ✅ PO 檔案：{len(po_file)} 個條目")
-        except Exception as e:
-            print(f"      ⚠️  讀取 PO 檔案失敗：{e}")
-    
-    # 讀取 JSON 檔案
-    if 'json_file' in language_files:
-        try:
-            json_file_path = language_files['json_file']
-            print(f"      📖 讀取 JSON 檔案：{json_file_path}")
-            with open(json_file_path, 'r', encoding='utf-8') as f:
-                json_data = json.load(f)
-            
-            def extract_json_values(obj):
-                """遞迴提取 JSON 中的所有字符串值"""
-                if isinstance(obj, dict):
-                    for value in obj.values():
-                        yield from extract_json_values(value)
-                elif isinstance(obj, list):
-                    for item in obj:
-                        yield from extract_json_values(item)
-                elif isinstance(obj, str):
-                    yield obj
-            
-            json_texts = list(extract_json_values(json_data))
-            all_texts.extend(json_texts)
-            print(f"      ✅ JSON 檔案：{len(json_texts)} 個文本")
-            
-        except Exception as e:
-            print(f"      ⚠️  讀取 JSON 檔案失敗：{e}")
-    
-    if not all_texts:
-        print(f"      ⚠️  無法從檔案中提取文本內容")
-        return {}
-    
-    # 檢測敏感詞
-    print(f"      🔍 從 {len(all_texts)} 個文本條目中檢測敏感詞...")
-    
-    detected_words = defaultdict(set)
-    detection_config = config.get_keyword_detection_config()
-    case_sensitive = detection_config.get('case_sensitive', False)
-    
-    # 合併所有文本
-    combined_text = ' '.join(all_texts)
-    if not case_sensitive:
-        combined_text = combined_text.lower()
-    
-    # 對每個基礎分類的敏感詞進行檢測
-    for category, base_words in BASE_SENSITIVE_WORDS.items():
-        for word in base_words:
-            search_word = word.lower() if not case_sensitive else word
-            if search_word in combined_text:
-                detected_words[category].add(word)
-    
-    # 轉換為普通字典，並按原始順序排列
-    result = {}
-    for category, words in detected_words.items():
-        # 保持與基礎詞典相同的順序
-        ordered_words = []
-        for base_word in BASE_SENSITIVE_WORDS[category]:
-            if base_word in words:
-                ordered_words.append(base_word)
-        if ordered_words:
-            result[category] = ordered_words
-    
-    return result
+    print(f"   每語言敏感詞數：{total_words // total_languages if total_languages else 0} 個（現在所有語言都相同）")
 
 
 def generate_unified_excel(config, all_language_keywords: dict, output_path: Path):
     """
-    生成統一的 phrase_comparison Excel 檔案 - 語言獨立橫向分區塊版本
+    生成統一的 phrase_comparison Excel 檔案 - 修復版本（移除第一行標題）
     
     Args:
         config: 配置物件
@@ -331,16 +228,7 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
     # 計算每個語言區塊的寬度：敏感詞類型 + 敏感詞 + 業態數量
     block_width = 2 + len(business_types)  # 2 是基礎列數
     
-    # 寫入總標題（第1行）
-    total_columns = len(all_language_keywords) * block_width + (len(all_language_keywords) - 1) * block_separator
-    
-    ws.merge_cells(f'A1:{get_column_letter(total_columns)}1')
-    title_cell = ws['A1']
-    title_cell.value = "多語言敏感詞對照表（語言獨立橫向分區塊版）"
-    title_cell.font = Font(bold=True, size=16, color="FFFFFF")
-    title_cell.fill = PatternFill(start_color="2F4F4F", end_color="2F4F4F", fill_type="solid")
-    title_cell.alignment = Alignment(horizontal="center", vertical="center")
-    
+    # 修復問題2：直接從語言標題開始，不再有第一行總標題
     # 為每個語言創建獨立區塊
     current_col = 1
     
@@ -348,22 +236,22 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
         block_start_col = current_col
         block_end_col = current_col + block_width - 1
         
-        # 語言標題（第2行，跨越整個區塊）
-        ws.merge_cells(f'{get_column_letter(block_start_col)}2:{get_column_letter(block_end_col)}2')
-        lang_cell = ws.cell(row=2, column=block_start_col, value=f"{language}")
+        # 語言標題（第1行，跨越整個區塊）- 修改：從第1行開始而不是第2行
+        ws.merge_cells(f'{get_column_letter(block_start_col)}1:{get_column_letter(block_end_col)}1')
+        lang_cell = ws.cell(row=1, column=block_start_col, value=f"{language}")
         lang_cell.font = language_font
         lang_cell.fill = PatternFill(start_color=language_header_color, end_color=language_header_color, fill_type="solid")
         lang_cell.alignment = Alignment(horizontal="center", vertical="center")
         lang_cell.border = thick_border
         
-        # 區塊內標題列（第3行）
+        # 區塊內標題列（第2行）- 修改：從第2行開始而不是第3行
         block_headers = ["敏感詞類型", "敏感詞"]
         for bt_code, bt_config in business_types.items():
             block_headers.append(bt_config['display_name'])
         
         for i, header in enumerate(block_headers):
             col = block_start_col + i
-            cell = ws.cell(row=3, column=col, value=header)
+            cell = ws.cell(row=2, column=col, value=header)
             
             if i < 2:  # 基礎列
                 cell.font = header_font
@@ -375,8 +263,8 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
             cell.alignment = Alignment(horizontal="center", vertical="center")
             cell.border = thin_border
         
-        # 寫入該語言的敏感詞資料（從第4行開始）
-        current_row = 4
+        # 寫入該語言的敏感詞資料（從第3行開始）- 修改：從第3行開始而不是第4行
+        current_row = 3
         
         for category, keywords in keywords_dict.items():
             for keyword_index, keyword in enumerate(keywords):
@@ -422,8 +310,9 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
     
     total_languages = len(all_language_keywords)
     total_keywords = sum(sum(len(words) for words in keywords.values()) for keywords in all_language_keywords.values())
+    total_columns = total_languages * block_width + (total_languages - 1) * block_separator
     print(f"      📊 Excel 統計：{total_languages} 個語言，每個語言獨立區塊")
-    print(f"      📐 總敏感詞數：{total_keywords} 個")
+    print(f"      📐 總敏感詞數：{total_keywords} 個（現在所有語言都相同）")
     print(f"      📏 表格寬度：{total_columns} 列")
 
 
@@ -488,12 +377,12 @@ def create_summary_worksheet(wb, config, all_language_keywords: dict):
         category_count = len(keywords_dict)
         keyword_count = sum(len(words) for words in keywords_dict.values())
         
-        # 備註資訊
+        # 備註資訊（修正：現在所有語言敏感詞數量都相同）
         notes = []
         if keyword_count == 0:
             notes.append("無敏感詞")
-        elif keyword_count < 20:
-            notes.append("敏感詞較少")
+        else:
+            notes.append("統一詞典")  # 修改備註，說明使用統一詞典
         
         row_data = [
             language,
@@ -521,7 +410,7 @@ def create_summary_worksheet(wb, config, all_language_keywords: dict):
         "-",
         total_categories,
         total_keywords,
-        f"平均每語言 {total_keywords // total_languages if total_languages else 0} 個敏感詞"
+        f"每語言統一 {total_keywords // total_languages if total_languages else 0} 個敏感詞"  # 修改描述
     ]
     
     for col_num, value in enumerate(total_row_data, 1):
@@ -550,7 +439,8 @@ def create_summary_worksheet(wb, config, all_language_keywords: dict):
         "1. 在「phrase_comparison」工作表中編輯各業態的對應方案",
         "2. 空白欄位表示使用原始敏感詞，無需替換",
         "3. 編輯完成後，執行 script_01_generate_xlsx.py 生成待修正清單",
-        "4. 最後執行 script_02_apply_fixes.py 套用修正結果"
+        "4. 最後執行 script_02_apply_fixes.py 套用修正結果",
+        "5. 修復說明：現在所有語言使用統一的敏感詞字典，確保數量一致"  # 新增說明
     ]
     
     for instruction in instructions:
@@ -591,49 +481,14 @@ def test_detection():
     return dict(detected)
 
 
-def extract_keywords_from_json(json_file_path: str) -> dict:
-    """
-    從 JSON 檔案中提取敏感詞（備用功能）
-    
-    Args:
-        json_file_path: JSON 檔案路徑
-    
-    Returns:
-        提取的敏感詞字典
-    """
-    try:
-        with open(json_file_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
-        # 這裡可以根據 JSON 的具體結構來提取敏感詞
-        # 目前使用預設的基礎詞典
-        return BASE_SENSITIVE_WORDS.copy()
-        
-    except Exception as e:
-        print(f"⚠️  從 JSON 檔案提取敏感詞失敗：{e}")
-        return BASE_SENSITIVE_WORDS.copy()
-
-
 if __name__ == "__main__":
-    import argparse
-    
     parser = argparse.ArgumentParser(description='生成統一的 phrase_comparison Excel 檔案')
     parser.add_argument('--test', action='store_true', help='執行檢測測試')
-    parser.add_argument('--extract-json', help='從指定 JSON 檔案提取敏感詞')
     
     args = parser.parse_args()
     
     if args.test:
         test_detection()
-    elif args.extract_json:
-        # 從 JSON 檔案提取敏感詞的功能
-        if Path(args.extract_json).exists():
-            extracted = extract_keywords_from_json(args.extract_json)
-            print(f"從 {args.extract_json} 提取的敏感詞：")
-            for category, words in extracted.items():
-                print(f"  {category}: {len(words)} 個詞")
-        else:
-            print(f"❌ JSON 檔案不存在：{args.extract_json}")
     else:
         # 正常執行
         main()
