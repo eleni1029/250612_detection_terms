@@ -29,18 +29,76 @@ try:
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
     from openpyxl.utils import get_column_letter
+    from openpyxl.cell.cell import MergedCell
 except ImportError as e:
     print(f"❌ 缺少必要套件：{e}")
     print("請執行：pip install polib openpyxl")
     sys.exit(1)
 
 
+def auto_adjust_column_widths(worksheet, max_width=50):
+    """
+    自動調整列寬，避免 MergedCell 錯誤
+    
+    Args:
+        worksheet: openpyxl 工作表對象
+        max_width: 最大列寬
+    """
+    try:
+        for col_idx in range(1, worksheet.max_column + 1):
+            column_letter = get_column_letter(col_idx)
+            max_length = 0
+            
+            # 遍歷該列的所有單元格
+            for row_idx in range(1, worksheet.max_row + 1):
+                cell = worksheet.cell(row=row_idx, column=col_idx)
+                
+                # 跳過 MergedCell
+                if isinstance(cell, MergedCell):
+                    continue
+                    
+                if cell.value:
+                    cell_length = len(str(cell.value))
+                    if cell_length > max_length:
+                        max_length = cell_length
+            
+            # 設置列寬（最小12，最大max_width）
+            adjusted_width = min(max(max_length + 4, 12), max_width)
+            worksheet.column_dimensions[column_letter].width = adjusted_width
+            
+    except Exception as e:
+        print(f"⚠️  列寬調整發生錯誤（不影響功能）: {e}")
+
+
+def safe_adjust_column_widths_for_summary(worksheet):
+    """
+    為總覽工作表安全地調整列寬
+    """
+    try:
+        for col_idx in range(1, worksheet.max_column + 1):
+            column_letter = get_column_letter(col_idx)
+            max_length = 0
+            
+            for row_idx in range(1, worksheet.max_row + 1):
+                cell = worksheet.cell(row=row_idx, column=col_idx)
+                
+                if isinstance(cell, MergedCell):
+                    continue
+                    
+                if cell.value:
+                    cell_length = len(str(cell.value))
+                    if cell_length > max_length:
+                        max_length = cell_length
+            
+            adjusted_width = min(max(max_length + 2, 10), 50)
+            worksheet.column_dimensions[column_letter].width = adjusted_width
+            
+    except Exception as e:
+        print(f"⚠️  總覽工作表列寬調整發生錯誤: {e}")
+
+
 # 基礎敏感詞字典 - 從 JSON 檔案分析和教育培訓領域經驗整理
 BASE_SENSITIVE_WORDS = {
-    "課程相關": [
-        "課程", "科目", "學分", "必修", "選修", "實習", "實驗", "講座",
-        "研習", "工作坊", "訓練", "培訓", "教育", "學習", "教學", "學程"
-    ],
     "學員相關": [
         "學生", "學員", "參與者", "受訓者", "同學", "班級", "組別",
         "學號", "姓名", "聯絡方式", "出席", "請假", "缺席", "退選"
@@ -49,33 +107,9 @@ BASE_SENSITIVE_WORDS = {
         "老師", "教師", "講師", "教授", "助教", "指導員", "輔導員",
         "專家", "顧問", "主講", "協同", "代課", "兼任", "專任", "客座"
     ],
-    "評量相關": [
-        "成績", "分數", "評分", "考試", "測驗", "作業", "報告",
-        "專題", "論文", "評量", "評估", "審核", "認證", "檢核", "及格"
-    ],
     "時間相關": [
         "學期", "學年", "年度", "季度", "月份", "週次", "節次",
         "時間", "日期", "期間", "開始", "結束", "截止", "延期", "排程"
-    ],
-    "管理相關": [
-        "管理", "系統", "平台", "功能", "模組", "設定", "權限",
-        "帳號", "密碼", "登入", "登出", "存取", "備份", "還原", "維護"
-    ],
-    "資料相關": [
-        "資料", "數據", "記錄", "檔案", "文件", "表單", "清單",
-        "統計", "分析", "報表", "匯出", "匯入", "查詢", "搜尋", "欄位"
-    ],
-    "狀態相關": [
-        "啟用", "停用", "開放", "關閉", "完成", "進行中", "待處理",
-        "已確認", "待確認", "通過", "不通過", "有效", "無效", "暫停"
-    ],
-    "組織相關": [
-        "部門", "單位", "機構", "組織", "團隊", "群組", "角色",
-        "職位", "主管", "同事", "協作", "分工", "負責人", "聯絡人", "窗口"
-    ],
-    "流程相關": [
-        "流程", "程序", "步驟", "階段", "環節", "審批", "核准",
-        "申請", "提交", "處理", "回饋", "修正", "確認", "執行", "完結"
     ]
 }
 
@@ -357,22 +391,8 @@ def generate_unified_excel(config, all_language_keywords: dict, output_path: Pat
             language_cell.font = Font(bold=True, size=11)
             language_cell.fill = PatternFill(start_color="E6F3FF", end_color="E6F3FF", fill_type="solid")
     
-    # 自動調整欄寬
-    for col in ws.columns:
-        max_length = 0
-        column_letter = col[0].column_letter
-        
-        for cell in col:
-            try:
-                cell_length = len(str(cell.value or ""))
-                if cell_length > max_length:
-                    max_length = cell_length
-            except:
-                pass
-        
-        # 設定欄寬，最小12，最大40
-        adjusted_width = min(max(max_length + 4, 12), 40)
-        ws.column_dimensions[column_letter].width = adjusted_width
+    # 自動調整欄寬（修復 MergedCell 錯誤）
+    auto_adjust_column_widths(ws, max_width=40)
     
     # 創建總覽工作表
     create_summary_worksheet(wb, config, all_language_keywords)
@@ -515,21 +535,8 @@ def create_summary_worksheet(wb, config, all_language_keywords: dict):
         summary_ws.cell(row=current_row, column=1, value=instruction)
         current_row += 1
     
-    # 自動調整欄寬
-    for col in summary_ws.columns:
-        max_length = 0
-        column_letter = col[0].column_letter
-        
-        for cell in col:
-            try:
-                cell_length = len(str(cell.value or ""))
-                if cell_length > max_length:
-                    max_length = cell_length
-            except:
-                pass
-        
-        adjusted_width = min(max(max_length + 2, 10), 50)
-        summary_ws.column_dimensions[column_letter].width = adjusted_width
+    # 自動調整欄寬（使用安全方法）
+    safe_adjust_column_widths_for_summary(summary_ws)
 
 
 def test_detection():
