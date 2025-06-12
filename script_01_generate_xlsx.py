@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_01_generate_xlsx.py (v2.5 - 包容關係優先處理版本)
+script_01_generate_xlsx.py (v2.6 - 多重敏感詞替換增強版)
 
 新增功能：
-1. 檢測敏感詞之間的包容關係
-2. 根據包容關係確定優先順序
-3. 按優先順序進行匹配，避免重複檢測被包容詞
+1. ✅ 檢測敏感詞之間的包容關係（已實現）
+2. ✅ 根據包容關係確定優先順序（已實現）
+3. ✅ 按優先順序進行匹配，避免重複檢測被包容詞（已實現）
+4. 🆕 支援多重敏感詞替換，記錄所有匹配的敏感詞
+5. 🆕 優化替換結果生成，支援多次替換
 
 修復內容：
 1. 修復Excel語言區塊解析邏輯，正確處理合併儲存格
 2. 改善語言名稱檢測，避免將表頭誤認為語言
 3. 增強錯誤處理和調試資訊
+4. 增強多重敏感詞檢測和替換邏輯
 """
 
 import json
@@ -36,7 +39,7 @@ except ImportError as e:
 
 
 class InclusionDetector:
-    """處理敏感詞包容關係和優先順序的類"""
+    """處理敏感詞包容關係和優先順序的類 - 增強版支援多重匹配"""
     
     def __init__(self, sensitive_words_dict):
         """
@@ -128,9 +131,9 @@ class InclusionDetector:
         else:
             print(f"   📝 總詞數：{total_words}（無包容關係）")
     
-    def detect_with_priority(self, text, log_detail=None):
+    def detect_with_priority_multiple(self, text, log_detail=None):
         """
-        按優先順序檢測敏感詞，避免重複匹配被包容詞
+        【新增功能】按優先順序檢測敏感詞，支援多重匹配但避免重複匹配被包容詞
         
         Args:
             text: 要檢測的文本
@@ -174,6 +177,49 @@ class InclusionDetector:
                         log_detail(f"檢測到：「{keyword}」位置 {start_pos}-{end_pos}")
         
         return detected_items
+    
+    def generate_multiple_replacements(self, text, detected_items, business_type):
+        """
+        【新增功能】根據檢測到的多個敏感詞生成替換結果
+        
+        Args:
+            text: 原始文本
+            detected_items: 檢測到的敏感詞列表
+            business_type: 業態類型
+            
+        Returns:
+            tuple: (替換後的文本, 使用的敏感詞列表)
+        """
+        if not detected_items:
+            return text, []
+        
+        # 按位置排序（從後往前替換避免位置偏移）
+        sorted_items = sorted(detected_items, key=lambda x: x['start_pos'], reverse=True)
+        
+        result_text = text
+        used_keywords = []
+        
+        for item in sorted_items:
+            keyword = item['keyword']
+            start_pos = item['start_pos']
+            end_pos = item['end_pos']
+            replacements = item['replacements']
+            
+            # 獲取該業態的替換方案
+            replacement = replacements.get(business_type, '')
+            
+            if replacement and replacement.strip():
+                # 執行替換
+                result_text = result_text[:start_pos] + replacement + result_text[end_pos:]
+                used_keywords.append(keyword)
+        
+        return result_text, used_keywords
+    
+    def detect_with_priority(self, text, log_detail=None):
+        """
+        【保持向後相容】原有的檢測方法，返回格式保持不變
+        """
+        return self.detect_with_priority_multiple(text, log_detail)
 
 
 def parse_language_blocks_from_excel(excel_path: Path, config):
@@ -393,7 +439,7 @@ def parse_language_blocks_from_excel(excel_path: Path, config):
 
 def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensitive_words: dict):
     """
-    使用優先順序邏輯在指定語言的翻譯檔案中檢測敏感詞
+    【增強版】使用優先順序邏輯在指定語言的翻譯檔案中檢測敏感詞，支援多重匹配
     
     Args:
         config: 配置物件
@@ -401,7 +447,7 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
         sensitive_words: 敏感詞字典 {category: {keyword: {business_type: replacement, ...}, ...}}
         
     Returns:
-        list: 檢測到的敏感詞項目列表
+        list: 檢測到的敏感詞項目列表（合併同一條目的多個敏感詞）
     """
     
     print(f"   🔍 檢測敏感詞...")
@@ -432,20 +478,38 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
                             continue
                         
                         # 使用優先順序檢測
-                        detected = detector.detect_with_priority(entry.msgstr, log_detail)
+                        detected = detector.detect_with_priority_multiple(entry.msgstr, log_detail)
                         
-                        for item in detected:
+                        if detected:
+                            # 【新增功能】處理多重敏感詞的情況
+                            # 合併同一條目中的多個敏感詞
+                            all_keywords = [item['keyword'] for item in detected]
+                            all_categories = list(set(item['category'] for item in detected))
+                            
+                            # 合併所有替換方案
+                            combined_replacements = {}
+                            business_types = config.get_business_types()
+                            
+                            for bt_code in business_types.keys():
+                                # 為每個業態生成替換結果
+                                replaced_text, used_keywords = detector.generate_multiple_replacements(
+                                    entry.msgstr, detected, bt_code
+                                )
+                                combined_replacements[bt_code] = replaced_text
+                            
                             detected_items.append({
                                 'file_type': 'po',
                                 'file_path': po_path,
                                 'entry_id': entry.msgid,
                                 'entry_context': entry.msgctxt or "",
                                 'original_text': entry.msgstr,
-                                'sensitive_word': item['keyword'],
-                                'category': item['category'],
-                                'replacements': item['replacements'],
+                                'sensitive_word': ', '.join(all_keywords),  # 【修改】顯示所有敏感詞
+                                'category': ', '.join(all_categories),      # 【修改】顯示所有分類
+                                'replacements': {},  # 原有格式，保持相容
+                                'multiple_replacements': combined_replacements,  # 【新增】多重替換結果
+                                'detected_details': detected,  # 【新增】詳細檢測資訊
                                 'line_number': entry.linenum if hasattr(entry, 'linenum') else 0,
-                                'match_positions': (item['start_pos'], item['end_pos'])
+                                'match_positions': [(item['start_pos'], item['end_pos']) for item in detected]
                             })
                 
                 except Exception as e:
@@ -471,20 +535,37 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
                                 check_json_recursive(item, new_path)
                         elif isinstance(obj, str):
                             # 使用優先順序檢測
-                            detected = detector.detect_with_priority(obj, log_detail)
+                            detected = detector.detect_with_priority_multiple(obj, log_detail)
                             
-                            for item in detected:
+                            if detected:
+                                # 【新增功能】處理多重敏感詞的情況
+                                all_keywords = [item['keyword'] for item in detected]
+                                all_categories = list(set(item['category'] for item in detected))
+                                
+                                # 合併所有替換方案
+                                combined_replacements = {}
+                                business_types = config.get_business_types()
+                                
+                                for bt_code in business_types.keys():
+                                    # 為每個業態生成替換結果
+                                    replaced_text, used_keywords = detector.generate_multiple_replacements(
+                                        obj, detected, bt_code
+                                    )
+                                    combined_replacements[bt_code] = replaced_text
+                                
                                 detected_items.append({
                                     'file_type': 'json',
                                     'file_path': json_path,
                                     'entry_id': path,
                                     'entry_context': "",
                                     'original_text': obj,
-                                    'sensitive_word': item['keyword'],
-                                    'category': item['category'],
-                                    'replacements': item['replacements'],
+                                    'sensitive_word': ', '.join(all_keywords),  # 【修改】顯示所有敏感詞
+                                    'category': ', '.join(all_categories),      # 【修改】顯示所有分類
+                                    'replacements': {},  # 原有格式，保持相容
+                                    'multiple_replacements': combined_replacements,  # 【新增】多重替換結果
+                                    'detected_details': detected,  # 【新增】詳細檢測資訊
                                     'line_number': 0,
-                                    'match_positions': (item['start_pos'], item['end_pos'])
+                                    'match_positions': [(item['start_pos'], item['end_pos']) for item in detected]
                                 })
                     
                     check_json_recursive(json_data)
@@ -495,12 +576,15 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
         # 簡化統計輸出
         category_stats = defaultdict(int)
         for item in detected_items:
-            category_stats[item['category']] += 1
+            categories = item['category'].split(', ')
+            for category in categories:
+                if category.strip():
+                    category_stats[category.strip()] += 1
         
         if detected_items:
-            print(f"   📊 檢測到 {len(detected_items)} 個敏感詞")
+            print(f"   📊 檢測到 {len(detected_items)} 個條目含敏感詞")
             for category, count in category_stats.items():
-                print(f"     {category}: {count} 個")
+                print(f"     {category}: {count} 個條目")
         else:
             print(f"   ✅ 無敏感詞")
     
@@ -512,7 +596,7 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
 
 def generate_tobemodified_excel(config, language: str, detected_items: list, output_dir: Path):
     """
-    生成待修正 Excel 檔案
+    【增強版】生成待修正 Excel 檔案，支援多重敏感詞替換
     
     Args:
         config: 配置物件
@@ -560,7 +644,8 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
     
     # 定義標題列
     headers = [
-        "檔案類型", "檔案路徑", "項目ID", "項目內容", "敏感詞", "敏感詞分類"
+        "檔案類型", "檔案路徑", "項目ID", "項目內容", 
+        "敏感詞", "敏感詞分類"  # 【修改】這裡會顯示所有匹配的敏感詞
     ]
     
     # 可選添加匹配位置欄位
@@ -590,13 +675,18 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
             str(item['file_path'].name),
             item['entry_id'],
             item['original_text'][:100] + "..." if len(item['original_text']) > 100 else item['original_text'],
-            item['sensitive_word'],
-            item['category']
+            item['sensitive_word'],  # 【修改】包含所有敏感詞，以逗號分隔
+            item['category']         # 【修改】包含所有分類，以逗號分隔
         ]
         
         # 可選添加匹配位置
         if add_position_column:
-            match_pos = f"{item['match_positions'][0]}-{item['match_positions'][1]}" if 'match_positions' in item else ""
+            # 【修改】顯示所有匹配位置
+            if 'match_positions' in item and item['match_positions']:
+                match_positions = [f"{start}-{end}" for start, end in item['match_positions']]
+                match_pos = ", ".join(match_positions)
+            else:
+                match_pos = ""
             basic_data.append(match_pos)
         
         for data in basic_data:
@@ -612,9 +702,18 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
         
         # 各業態替換方案和替換結果
         for bt_code, bt_config in business_types.items():
-            # 替換方案列
-            replacement = item['replacements'].get(bt_code, "")
-            cell = ws.cell(row=row_num, column=col_num, value=replacement)
+            # 替換方案列 - 【修改】顯示所有相關的替換方案
+            replacement_schemes = []
+            if 'detected_details' in item:
+                for detail in item['detected_details']:
+                    keyword = detail['keyword']
+                    replacement = detail['replacements'].get(bt_code, "")
+                    if replacement and replacement.strip():
+                        replacement_schemes.append(f"{keyword}→{replacement}")
+            
+            replacement_display = "; ".join(replacement_schemes) if replacement_schemes else ""
+            
+            cell = ws.cell(row=row_num, column=col_num, value=replacement_display)
             cell.font = data_font
             cell.border = thin_border
             cell.alignment = Alignment(horizontal="left", vertical="center")
@@ -624,28 +723,17 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
             
             col_num += 1
             
-            # 替換結果列
-            sensitive_word = item['sensitive_word']
-            original_text = item['original_text']
+            # 替換結果列 - 【新增】使用多重替換邏輯
             result_value = ""
-            
-            if replacement and replacement.strip():
-                # 使用精確位置替換，而不是簡單的 replace
-                if 'match_positions' in item:
-                    start_pos, end_pos = item['match_positions']
-                    predicted_result = original_text[:start_pos] + replacement + original_text[end_pos:]
-                else:
-                    # 後備方案：使用普通替換
-                    predicted_result = original_text.replace(sensitive_word, replacement)
-                
-                result_value = predicted_result
+            if 'multiple_replacements' in item and bt_code in item['multiple_replacements']:
+                result_value = item['multiple_replacements'][bt_code]
             
             cell = ws.cell(row=row_num, column=col_num, value=result_value)
             cell.font = data_font
             cell.border = thin_border
             cell.alignment = Alignment(horizontal="left", vertical="center")
             
-            if result_value:
+            if result_value and result_value != item['original_text']:
                 edit_fill = PatternFill(start_color="FFFFCC", end_color="FFFFCC", fill_type="solid")
                 cell.fill = edit_fill
             elif row_num % 2 == 0:
@@ -675,34 +763,11 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
     wb.save(output_file)
     
     print(f"   📄 已生成：{output_file.name} ({len(detected_items)} 個項目)")
-    
-    # 自動調整列寬
-    for col_idx in range(1, len(headers) + 1):
-        column_letter = get_column_letter(col_idx)
-        max_length = 0
-        
-        for row_idx in range(1, min(ws.max_row + 1, 100)):
-            cell = ws.cell(row=row_idx, column=col_idx)
-            if cell.value:
-                cell_length = len(str(cell.value))
-                if cell_length > max_length:
-                    max_length = cell_length
-        
-        adjusted_width = min(max(max_length + 2, 10), 50)
-        ws.column_dimensions[column_letter].width = adjusted_width
-    
-    # 確保輸出目錄存在
-    output_dir.mkdir(parents=True, exist_ok=True)
-    
-    # 保存檔案
-    wb.save(output_file)
-    
-    print(f"   📄 已生成：{output_file.name} ({len(detected_items)} 個項目)")
 
 
 def main():
     """主執行函數 - 簡化輸出版本"""
-    print("🚀 開始生成各語言 tobemodified 檔案 (包容關係處理)")
+    print("🚀 開始生成各語言 tobemodified 檔案 (多重敏感詞替換增強版)")
     
     # 載入配置
     config = get_config()
@@ -768,7 +833,7 @@ def main():
         
         sensitive_words = language_blocks[language]
         
-        # 使用新的優先順序檢測邏輯
+        # 使用新的優先順序檢測邏輯（增強版）
         detected_items = detect_sensitive_phrases_in_files_with_priority(config, language, sensitive_words)
         total_detected += len(detected_items)
         
@@ -784,6 +849,12 @@ def main():
     
     if total_detected > 0:
         print(f"\n✅ 已生成待修正清單，請檢查並編輯後執行 script_02_apply_fixes.py")
+        print(f"💡 新功能提示：")
+        print(f"   - 支援多重敏感詞檢測，如「在校生在校的時候是在校生」")
+        print(f"   - 敏感詞欄位顯示所有匹配的詞彙：在校生, 在校")
+        print(f"   - 替換方案欄位顯示具體映射：在校生→在職員工; 在校→在公司")
+        print(f"   - 替換結果欄位顯示最終結果：在職員工在公司的時候是在職員工")
+        print(f"   - ⭐ 黃色底色 = 有效替換（會被處理），空白 = 無替換方案（會被跳過）")
     else:
         print("✅ 所有語言都沒有檢測到敏感詞")
 
