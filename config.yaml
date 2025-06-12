@@ -117,6 +117,13 @@ keyword_detection:
   match_whole_words: false
   priority_by_length: true         # 優先匹配長詞
   
+  # 包容關係處理配置
+  inclusion_handling:
+    enabled: true                  # 啟用包容關係檢測
+    cross_category: true           # 跨分類檢測包容關係
+    debug_output: true             # 顯示包容關係分析結果
+    add_position_column: false      # 在Excel中添加匹配位置欄位
+    
   # 基礎敏感詞配置
   base_keywords:
     use_builtin: true              # 使用內建基礎詞典
@@ -156,9 +163,9 @@ system:
     show_progress: true
 
 # 版本資訊
-version: "2.3.0"
+version: "2.5.0"
 last_updated: "2024-12-10"
-system_type: "unified_multi_language_excel"
+system_type: "unified_multi_language_excel_with_inclusion_handling"
 
 # 預設值
 defaults:
