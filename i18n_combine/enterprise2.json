@@ -1,0 +1,46 @@
+{
+  "zh-CN": {
+    "year_semester": "年度期別",
+    "academic_year": "年度",
+    "semester": "期別",
+    "grade": "职称",
+    "clazz": "职级",
+    "create_year": "添加年度",
+    "create_semester": "添加期別",
+    "create_grade": "添加职称",
+    "create_class": "添加职级",
+    "department": "单位"
+  },
+  "zh-TW": {
+    "year_semester": "年度期別",
+    "academic_year": "年度",
+    "semester": "期別",
+    "clazz": "職級",
+	"test": {
+		"grade": "職稱"
+		},
+    "create_year": "新增年度",
+    "create_semester": "新增期別",
+    "create_grade": "新增職稱",
+    "create_class": "新增職級",
+    "department": "單位"
+  },
+  "en-US": {
+    "year_semester": "Year Term",
+    "academic_year": "Year",
+    "semester": "Phase",
+    "grade": "Job Title",
+    "clazz": "Job Level",
+    "create_year": "Add Year",
+    "create_semester": "Add Phase",
+    "create_grade": "Add Job Title",
+    "create_class": "Add Job Level",
+    "department": "Department"
+  },
+  "simditor": {
+    "santilize": {
+      "forlumn": "formula",
+      "image": "image"
+    }
+  }
+}
