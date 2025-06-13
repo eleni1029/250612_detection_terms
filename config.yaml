@@ -16,8 +16,13 @@ file_patterns:
   phrase_comparison: "phrase_comparison.xlsx"     # 統一對照表
   tobemodified: "tobemodified_{language}.xlsx"   # 各語言的待修正清單
   
+  # 新增：部分檔案命名模板
+  partial_po: "messages{suffix}_partial.po"       # 部分 PO 檔案命名
+  partial_json: "{language}{suffix}_partial.json" # 部分 JSON 檔案命名
+  
   # 輸出目錄命名（含時間戳）
   output_subdir: "{language}_{timestamp}"
+  partial_output_subdir: "{language}_{timestamp}_partial"  # 部分檔案輸出目錄
 
 # 業態配置
 business_types:
@@ -143,10 +148,45 @@ output:
   file_templates:
     po: "{base_name}{suffix}.po"
     json: "{base_name}{suffix}.json"
+    # 新增：部分檔案模板
+    partial_po: "{base_name}{suffix}_partial.po"
+    partial_json: "{base_name}{suffix}_partial.json"
   
   # 目錄結構
   create_timestamped_dirs: true   # 創建帶時間戳的輸出目錄
   preserve_structure: true       # 保持原始檔案結構
+  
+  # 新增：部分檔案配置
+  partial_files:
+    enabled: true                 # 啟用部分檔案功能
+    include_metadata: true        # 在部分檔案中包含元信息
+    preserve_comments: true       # 保留原檔案的註解
+    add_generation_info: true     # 添加生成信息到檔案中
+
+# 新增：部分檔案處理配置
+partial_file_handling:
+  # PO 檔案配置
+  po_files:
+    preserve_metadata: true       # 保留 PO 檔案元信息
+    preserve_header: true         # 保留 PO 檔案標題
+    preserve_comments: true       # 保留註解
+    preserve_flags: true          # 保留標誌
+    preserve_occurrences: true    # 保留出現位置信息
+    add_processing_comments: true # 添加處理信息到註解
+  
+  # JSON 檔案配置
+  json_files:
+    add_metadata: true            # 添加元信息到 JSON
+    preserve_structure: true      # 保持 JSON 結構
+    indent: 2                     # JSON 縮排空格數
+    ensure_ascii: false           # 允許非 ASCII 字符
+    sort_keys: false              # 不排序鍵值
+  
+  # 輸出配置
+  output:
+    create_separate_dirs: true    # 為部分檔案創建獨立目錄
+    add_timestamp: true           # 在目錄名中添加時間戳
+    include_summary: true         # 生成處理摘要
 
 # 系統設定
 system:
@@ -163,9 +203,9 @@ system:
     show_progress: true
 
 # 版本資訊
-version: "2.5.0"
+version: "2.6.0"
 last_updated: "2024-12-10"
-system_type: "unified_multi_language_excel_with_inclusion_handling"
+system_type: "unified_multi_language_excel_with_partial_files"
 
 # 預設值
 defaults:

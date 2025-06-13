@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-config_loader.py (v2.3 - 修正路徑結構版本)
+config_loader.py (v2.4 - 部分檔案支持版本)
 
 基於現有邏輯進行最小化調整，主要修正：
 1. 路徑結構從 i18n_input/{language}/ 改為 i18n_input/{language}/LC_MESSAGES/
 2. 檔案讀取邏輯：優先讀取 messages.po 和 {language}.json，忽略其他檔案
 3. 如果兩個檔案都不存在才報錯，有其中一個就可以處理
+4. 新增部分檔案支持功能
 """
 
 import yaml
@@ -17,7 +18,7 @@ import re
 from typing import Dict, List, Optional, Tuple
 
 class ConfigLoader:
-    """多語言配置載入器 - 修正版本"""
+    """多語言配置載入器 - 修正版本，支援部分檔案"""
     
     def __init__(self, config_path: str = "config.yaml"):
         """
@@ -378,8 +379,132 @@ class ConfigLoader:
         """獲取檔案處理配置"""
         return self.config.get('file_handling', {})
     
+    def get_partial_file_config(self) -> Dict:
+        """獲取部分檔案處理配置"""
+        return self.config.get('partial_file_handling', {})
+
+    def get_partial_output_paths(self, language: str, timestamp: Optional[str] = None) -> Dict[str, Path]:
+        """
+        獲取指定語言的部分檔案輸出路徑
+        
+        Args:
+            language: 語言代碼
+            timestamp: 時間戳（如果為 None 則自動生成）
+            
+        Returns:
+            包含部分檔案輸出路徑的字典
+        """
+        dirs = self.get_directories()
+        file_patterns = self.get_file_patterns()
+        
+        # 生成時間戳
+        if timestamp is None:
+            timestamp_format = self.config.get('backup', {}).get('timestamp_format', '%Y%m%d_%H%M%S')
+            timestamp = datetime.datetime.now().strftime(timestamp_format)
+        
+        # 輸出目錄
+        output_dir = Path(dirs['output_dir'])
+        subdir_pattern = file_patterns.get('partial_output_subdir', '{language}_{timestamp}_partial')
+        lang_output_dir = output_dir / subdir_pattern.format(language=language, timestamp=timestamp)
+        
+        return {
+            'output_dir': lang_output_dir,
+            'timestamp': timestamp
+        }
+
+    def get_partial_file_paths(self, language: str, business_type: str, output_dir: Path) -> Dict[str, Path]:
+        """
+        獲取部分檔案的具體路徑
+        
+        Args:
+            language: 語言代碼
+            business_type: 業態代碼
+            output_dir: 輸出目錄
+            
+        Returns:
+            包含部分檔案路徑的字典
+        """
+        file_patterns = self.get_file_patterns()
+        business_types = self.get_business_types()
+        
+        if business_type not in business_types:
+            raise ValueError(f"未知的業態類型：{business_type}")
+        
+        suffix = business_types[business_type]['suffix']
+        
+        paths = {}
+        
+        # PO 部分檔案路徑
+        po_pattern = file_patterns.get('partial_po', 'messages{suffix}_partial.po')
+        paths['partial_po'] = output_dir / po_pattern.format(suffix=suffix)
+        
+        # JSON 部分檔案路徑
+        json_pattern = file_patterns.get('partial_json', '{language}{suffix}_partial.json')
+        paths['partial_json'] = output_dir / json_pattern.format(language=language, suffix=suffix)
+        
+        return paths
+
+    def validate_partial_file_config(self) -> bool:
+        """
+        驗證部分檔案配置是否正確
+        
+        Returns:
+            配置是否有效
+        """
+        try:
+            partial_config = self.get_partial_file_config()
+            
+            # 檢查必要的配置項
+            required_sections = ['po_files', 'json_files', 'output']
+            for section in required_sections:
+                if section not in partial_config:
+                    print(f"⚠️  部分檔案配置缺少 '{section}' 部分")
+                    return False
+            
+            # 檢查輸出配置
+            output_config = partial_config.get('output', {})
+            if not isinstance(output_config, dict):
+                print("⚠️  部分檔案輸出配置格式錯誤")
+                return False
+            
+            return True
+            
+        except Exception as e:
+            print(f"⚠️  部分檔案配置驗證失敗：{e}")
+            return False
+
+    def print_partial_config_summary(self):
+        """打印部分檔案配置摘要"""
+        print("📋 部分檔案配置摘要：")
+        
+        try:
+            partial_config = self.get_partial_file_config()
+            
+            # PO 檔案配置
+            po_config = partial_config.get('po_files', {})
+            print(f"   PO 檔案：")
+            print(f"     保留元信息：{po_config.get('preserve_metadata', True)}")
+            print(f"     保留註解：{po_config.get('preserve_comments', True)}")
+            print(f"     添加處理信息：{po_config.get('add_processing_comments', True)}")
+            
+            # JSON 檔案配置
+            json_config = partial_config.get('json_files', {})
+            print(f"   JSON 檔案：")
+            print(f"     添加元信息：{json_config.get('add_metadata', True)}")
+            print(f"     保持結構：{json_config.get('preserve_structure', True)}")
+            print(f"     縮排空格：{json_config.get('indent', 2)}")
+            
+            # 輸出配置
+            output_config = partial_config.get('output', {})
+            print(f"   輸出設定：")
+            print(f"     獨立目錄：{output_config.get('create_separate_dirs', True)}")
+            print(f"     包含摘要：{output_config.get('include_summary', True)}")
+            
+        except Exception as e:
+            print(f"   配置讀取失敗：{e}")
+    
     def print_config_summary(self):
-        """打印配置摘要"""
+        """打印配置摘要 - 更新版本"""
         print("📋 系統配置摘要：")
         
         # 目錄配置
@@ -405,6 +530,19 @@ class ConfigLoader:
         business_types = self.get_business_types()
         business_names = [bt['display_name'] for bt in business_types.values()]
         print(f"   支援業態：{', '.join(business_names)}")
+        
+        # 部分檔案功能
+        try:
+            output_config = self.config.get('output', {})
+            partial_enabled = output_config.get('partial_files', {}).get('enabled', False)
+            print(f"   部分檔案功能：{'啟用' if partial_enabled else '停用'}")
+            
+            if partial_enabled and self.validate_partial_file_config():
+                print(f"   部分檔案配置：有效")
+            elif partial_enabled:
+                print(f"   部分檔案配置：無效")
+        except Exception as e:
+            print(f"   部分檔案配置檢查失敗：{e}")
         
         # 版本資訊
         version = self.config.get('version', 'Unknown')
@@ -446,6 +584,10 @@ if __name__ == "__main__":
             output_paths = config.get_output_paths(lang)
             print(f"     輸出目錄: {output_paths['output_dir']}")
             
+            # 測試部分檔案輸出路徑
+            partial_paths = config.get_partial_output_paths(lang)
+            print(f"     部分檔案輸出目錄: {partial_paths['output_dir']}")
+            
             # 測試 Excel 路徑
             comparison_path = config.get_comparison_excel_path()
             tobemodified_path = config.get_tobemodified_excel_path(lang)
@@ -454,3 +596,8 @@ if __name__ == "__main__":
             print()
         except Exception as e:
             print(f"   {lang}: 錯誤 - {e}")
+    
+    # 測試部分檔案配置
+    if config.validate_partial_file_config():
+        print("\n🔧 部分檔案配置測試：")
+        config.print_partial_config_summary()
