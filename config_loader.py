@@ -1,24 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-config_loader.py (v2.4 - 部分檔案支持版本)
+config_loader.py (v2.4 - 部分檔案支持版本 + 合併功能修正版)
 
 基於現有邏輯進行最小化調整，主要修正：
 1. 路徑結構從 i18n_input/{language}/ 改為 i18n_input/{language}/LC_MESSAGES/
 2. 檔案讀取邏輯：優先讀取 messages.po 和 {language}.json，忽略其他檔案
 3. 如果兩個檔案都不存在才報錯，有其中一個就可以處理
 4. 新增部分檔案支持功能
+5. 新增合併功能支援（單語言和多語言）
 """
 
 import yaml
+import json
+import re
 from pathlib import Path
 import datetime
 import sys
-import re
 from typing import Dict, List, Optional, Tuple
 
 class ConfigLoader:
-    """多語言配置載入器 - 修正版本，支援部分檔案"""
+    """多語言配置載入器 - 修正版本，支援部分檔案和合併功能"""
     
     def __init__(self, config_path: str = "config.yaml"):
         """
@@ -126,7 +128,7 @@ class ConfigLoader:
         require_at_least_one = file_handling.get('require_at_least_one', True)
         ignore_patterns = file_handling.get('ignore_patterns', ['*.tmp', '*.bak', '*.log', '*~'])
         
-        # 【新增】定義需要過濾的目錄名稱模式
+        # 定義需要過濾的目錄名稱模式
         ignore_dir_patterns = [
             '~$*',           # Excel/Word 臨時檔案前綴
             '.*',            # 隱藏目錄（以點開頭）
@@ -153,12 +155,12 @@ class ConfigLoader:
             
             language = lang_dir.name
             
-            # 【新增】過濾不符合語言代碼格式的目錄
+            # 過濾不符合語言代碼格式的目錄
             if should_ignore_directory(language):
                 print(f"⚠️  跳過系統目錄：{language}")
                 continue
             
-            # 【新增】基本語言代碼格式驗證（可選）
+            # 基本語言代碼格式驗證（可選）
             if not self._is_valid_language_code(language):
                 print(f"⚠️  跳過無效語言代碼：{language}")
                 continue
@@ -219,7 +221,7 @@ class ConfigLoader:
 
     def _is_valid_language_code(self, language: str) -> bool:
         """
-        【新增】驗證語言代碼格式是否有效
+        驗證語言代碼格式是否有效
         
         Args:
             language: 語言代碼字符串
@@ -227,8 +229,6 @@ class ConfigLoader:
         Returns:
             bool: 是否為有效的語言代碼
         """
-        import re
-        
         # 常見的語言代碼格式：
         # - ISO 639-1: en, zh, fr (2字母)
         # - ISO 639-1 with region: en-US, zh-TW, zh-CN (2字母-2字母)
@@ -502,9 +502,307 @@ class ConfigLoader:
             
         except Exception as e:
             print(f"   配置讀取失敗：{e}")
+
+    # 合併功能相關方法
+    def get_combine_config(self) -> Dict:
+        """獲取檔案合併配置"""
+        return self.config.get('combine', {
+            'combine_dir': 'i18n_combine',
+            'output': {
+                'create_timestamped_dirs': True,
+                'directory_suffix': '_combined',
+                'multi_directory_suffix': '_multi_combined',
+                'preserve_original_structure': True,
+                'file_suffix': '_combined'
+            },
+            'multilang': {
+                'enabled': True,
+                'auto_detect_structure': True,
+                'language_path_mapping': True,
+                'cross_language_conflict_check': True,
+                'merge_multiple_tobemodified': True,
+                'json_structure': {
+                    'top_level_languages': True,
+                    'language_code_pattern': r'^[a-z]{2}(-[A-Z]{2})?$',
+                    'auto_create_language_sections': True,
+                    'preserve_non_language_keys': True
+                },
+                'path_mapping': {
+                    'json_prefix_with_language': True,
+                    'po_language_context': False,
+                    'preserve_original_path': True
+                }
+            },
+            'conflict_handling': {
+                'stop_on_conflict': True,
+                'show_conflict_details': True,
+                'max_conflicts_to_show': 10,
+                'log_all_conflicts': True,
+                'include_language_in_conflict': True
+            },
+            'validation': {
+                'check_file_existence': True,
+                'validate_json_format': True,
+                'validate_po_format': True,
+                'warn_missing_target_files': True,
+                'validate_multilang_structure': True
+            },
+            'merge_strategy': {
+                'skip_identical_values': True,
+                'case_sensitive_comparison': True,
+                'trim_whitespace': True,
+                'handle_empty_values': 'skip',
+                'auto_detect_business_types': True,
+                'merge_cross_language': True
+            },
+            'reporting': {
+                'language_level_stats': True,
+                'business_type_stats': True,
+                'detailed_conflict_report': True,
+                'include_path_mapping_info': True
+            },
+            'logging': {
+                'detailed_merge_log': True,
+                'include_skipped_items': False,
+                'include_debug_info': True,
+                'log_file_pattern': 'combine_{timestamp}.log',
+                'multi_log_file_pattern': 'multi_combine_{timestamp}.log'
+            }
+        })
+
+    def get_multilang_combine_config(self) -> Dict:
+        """獲取多語言合併專用配置"""
+        combine_config = self.get_combine_config()
+        return combine_config.get('multilang', {})
+
+    def get_combine_output_paths(self, language: str = None, timestamp: Optional[str] = None, 
+                               is_multilang: bool = False, languages: List[str] = None) -> Dict[str, Path]:
+        """
+        獲取合併輸出路徑（支援多語言模式）
+        
+        Args:
+            language: 語言代碼（單語言模式）
+            timestamp: 時間戳（如果為 None 則自動生成）
+            is_multilang: 是否為多語言模式
+            languages: 多語言列表（多語言模式）
+            
+        Returns:
+            包含合併輸出路徑的字典
+        """
+        combine_config = self.get_combine_config()
+        dirs = self.get_directories()
+        
+        # 生成時間戳
+        if timestamp is None:
+            timestamp_format = self.config.get('backup', {}).get('timestamp_format', '%Y%m%d_%H%M%S')
+            timestamp = datetime.datetime.now().strftime(timestamp_format)
+        
+        # 合併目錄
+        combine_dir = Path(combine_config['combine_dir'])
+        output_config = combine_config.get('output', {})
+        
+        # 輸出目錄
+        output_dir = Path(dirs['output_dir'])
+        
+        if is_multilang and languages:
+            # 多語言模式
+            directory_suffix = output_config.get('multi_directory_suffix', '_multi_combined')
+            languages_str = '_'.join(sorted(languages))
+            combine_output_dir = output_dir / f"{timestamp}{directory_suffix}_{languages_str}"
+        else:
+            # 單語言模式
+            directory_suffix = output_config.get('directory_suffix', '_combined')
+            combine_output_dir = output_dir / f"{language}_{timestamp}{directory_suffix}"
+        
+        return {
+            'output_dir': combine_output_dir,
+            'combine_dir': combine_dir,
+            'timestamp': timestamp,
+            'is_multilang': is_multilang
+        }
+
+    def get_combine_file_paths(self, output_dir: Path, timestamp: str, is_multilang: bool = False) -> Dict[str, Path]:
+        """
+        獲取合併相關檔案路徑（支援多語言模式）
+        
+        Args:
+            output_dir: 輸出目錄
+            timestamp: 時間戳
+            is_multilang: 是否為多語言模式
+            
+        Returns:
+            包含合併檔案路徑的字典
+        """
+        file_patterns = self.get_file_patterns()
+        combine_config = self.get_combine_config()
+        
+        paths = {}
+        
+        if is_multilang:
+            # 多語言模式檔案路徑
+            summary_pattern = file_patterns.get('multi_combine_summary', 'multi_combine_summary_{timestamp}.txt')
+            log_pattern = combine_config.get('logging', {}).get('multi_log_file_pattern', 'multi_combine_{timestamp}.log')
+        else:
+            # 單語言模式檔案路徑
+            summary_pattern = file_patterns.get('combine_summary', 'combine_summary_{timestamp}.txt')
+            log_pattern = combine_config.get('logging', {}).get('log_file_pattern', 'combine_{timestamp}.log')
+        
+        paths['summary_report'] = output_dir / summary_pattern.format(timestamp=timestamp)
+        paths['log_file'] = output_dir / log_pattern.format(timestamp=timestamp)
+        
+        return paths
+
+    def get_combine_file_suffix(self, file_type: str) -> str:
+        """
+        獲取合併檔案的後綴
+        
+        Args:
+            file_type: 檔案類型 ('po' 或 'json')
+            
+        Returns:
+            檔案後綴字符串
+        """
+        file_patterns = self.get_file_patterns()
+        
+        if file_type.lower() == 'po':
+            return file_patterns.get('combine_po_suffix', '_combined')
+        elif file_type.lower() == 'json':
+            return file_patterns.get('combine_json_suffix', '_combined')
+        else:
+            return '_combined'
+
+    def validate_combine_config(self) -> bool:
+        """
+        驗證合併配置是否正確（支援多語言檢查）
+        
+        Returns:
+            配置是否有效
+        """
+        try:
+            combine_config = self.get_combine_config()
+            
+            # 檢查必要的配置項
+            required_sections = ['combine_dir', 'output', 'conflict_handling']
+            for section in required_sections:
+                if section not in combine_config:
+                    print(f"⚠️  合併配置缺少 '{section}' 部分")
+                    return False
+            
+            # 檢查合併目錄是否存在
+            combine_dir = Path(combine_config['combine_dir'])
+            if not combine_dir.exists():
+                print(f"⚠️  合併目錄不存在：{combine_dir}")
+                print(f"    請創建 {combine_dir} 目錄並放入要合併的檔案")
+                return False
+            
+            # 檢查多語言配置
+            multilang_config = combine_config.get('multilang', {})
+            if multilang_config.get('enabled', True):
+                json_structure = multilang_config.get('json_structure', {})
+                if json_structure.get('top_level_languages', True):
+                    pattern = json_structure.get('language_code_pattern', r'^[a-z]{2}(-[A-Z]{2})?$')
+                    try:
+                        import re
+                        re.compile(pattern)
+                    except re.error:
+                        print(f"⚠️  多語言配置中的語言代碼模式無效：{pattern}")
+                        return False
+            
+            return True
+            
+        except Exception as e:
+            print(f"⚠️  合併配置驗證失敗：{e}")
+            return False
+
+    def print_combine_config_summary(self):
+        """打印合併配置摘要（包含多語言信息）"""
+        print("📋 檔案合併配置摘要：")
+        
+        try:
+            combine_config = self.get_combine_config()
+            
+            # 基本配置
+            combine_dir = combine_config.get('combine_dir', 'i18n_combine')
+            print(f"   合併目錄：{combine_dir}")
+            
+            # 輸出配置
+            output_config = combine_config.get('output', {})
+            print(f"   時間戳目錄：{output_config.get('create_timestamped_dirs', True)}")
+            print(f"   單語言目錄後綴：{output_config.get('directory_suffix', '_combined')}")
+            print(f"   多語言目錄後綴：{output_config.get('multi_directory_suffix', '_multi_combined')}")
+            print(f"   檔案後綴：{output_config.get('file_suffix', '_combined')}")
+            
+            # 多語言配置
+            multilang_config = combine_config.get('multilang', {})
+            print(f"   多語言功能：{multilang_config.get('enabled', True)}")
+            if multilang_config.get('enabled', True):
+                print(f"     自動檢測結構：{multilang_config.get('auto_detect_structure', True)}")
+                print(f"     語言路徑映射：{multilang_config.get('language_path_mapping', True)}")
+                print(f"     跨語言衝突檢查：{multilang_config.get('cross_language_conflict_check', True)}")
+                print(f"     多檔案合併：{multilang_config.get('merge_multiple_tobemodified', True)}")
+            
+            # 衝突處理配置
+            conflict_config = combine_config.get('conflict_handling', {})
+            print(f"   遇衝突停止：{conflict_config.get('stop_on_conflict', True)}")
+            print(f"   顯示衝突詳情：{conflict_config.get('show_conflict_details', True)}")
+            print(f"   包含語言信息：{conflict_config.get('include_language_in_conflict', True)}")
+            
+            # 合併策略配置
+            merge_config = combine_config.get('merge_strategy', {})
+            print(f"   跳過相同值：{merge_config.get('skip_identical_values', True)}")
+            print(f"   自動檢測業態：{merge_config.get('auto_detect_business_types', True)}")
+            print(f"   跨語言合併：{merge_config.get('merge_cross_language', True)}")
+            
+            # 檢查目錄是否存在
+            combine_dir_path = Path(combine_dir)
+            if combine_dir_path.exists():
+                print(f"   目錄狀態：存在")
+                
+                # 統計檔案
+                json_files = list(combine_dir_path.rglob('*.json'))
+                po_files = list(combine_dir_path.rglob('*.po'))
+                
+                print(f"   發現檔案：JSON {len(json_files)} 個，PO {len(po_files)} 個")
+                
+                # 檢查多語言 JSON 結構
+                if json_files:
+                    multilang_json_count = 0
+                    for json_file in json_files:
+                        try:
+                            with open(json_file, 'r', encoding='utf-8') as f:
+                                data = json.load(f)
+                            if self._is_multilang_json_structure(data):
+                                multilang_json_count += 1
+                        except:
+                            pass
+                    print(f"   多語言 JSON：{multilang_json_count} 個")
+            else:
+                print(f"   目錄狀態：不存在")
+            
+        except Exception as e:
+            print(f"   配置讀取失敗：{e}")
+
+    def _is_multilang_json_structure(self, data: dict) -> bool:
+        """檢查 JSON 是否為多語言結構"""
+        if not isinstance(data, dict):
+            return False
+        
+        combine_config = self.get_combine_config()
+        multilang_config = combine_config.get('multilang', {})
+        json_structure = multilang_config.get('json_structure', {})
+        pattern = json_structure.get('language_code_pattern', r'^[a-z]{2}(-[A-Z]{2})?$')
+        
+        # 檢查頂層 key 是否像語言代碼
+        for key in data.keys():
+            if isinstance(key, str) and re.match(pattern, key):
+                # 如果至少有一個 key 像語言代碼，且其值是字典，則認為是多語言結構
+                if isinstance(data[key], dict):
+                    return True
+        
+        return False
     
     def print_config_summary(self):
-        """打印配置摘要 - 更新版本"""
+        """打印配置摘要 - 更新版本，包含多語言合併功能"""
         print("📋 系統配置摘要：")
         
         # 目錄配置
@@ -543,6 +841,29 @@ class ConfigLoader:
                 print(f"   部分檔案配置：無效")
         except Exception as e:
             print(f"   部分檔案配置檢查失敗：{e}")
+        
+        # 合併功能配置（包含多語言支援）
+        try:
+            combine_config = self.config.get('combine', {})
+            if combine_config:
+                print(f"   合併功能：啟用")
+                combine_dir = combine_config.get('combine_dir', 'i18n_combine')
+                combine_dir_path = Path(combine_dir)
+                print(f"   合併目錄：{combine_dir} ({'存在' if combine_dir_path.exists() else '不存在'})")
+                
+                # 多語言功能狀態
+                multilang_config = combine_config.get('multilang', {})
+                multilang_enabled = multilang_config.get('enabled', True)
+                print(f"   多語言合併：{'啟用' if multilang_enabled else '停用'}")
+                
+                if self.validate_combine_config():
+                    print(f"   合併配置：有效")
+                else:
+                    print(f"   合併配置：無效")
+            else:
+                print(f"   合併功能：停用")
+        except Exception as e:
+            print(f"   合併功能檢查失敗：{e}")
         
         # 版本資訊
         version = self.config.get('version', 'Unknown')
@@ -601,261 +922,8 @@ if __name__ == "__main__":
     if config.validate_partial_file_config():
         print("\n🔧 部分檔案配置測試：")
         config.print_partial_config_summary()
-
-
-def get_combine_config(self) -> Dict:
-    """獲取檔案合併配置"""
-    return self.config.get('combine', {
-        'combine_dir': 'i18n_combine',
-        'output': {
-            'create_timestamped_dirs': True,
-            'directory_suffix': '_combined',
-            'preserve_original_structure': True,
-            'file_suffix': '_combined'
-        },
-        'conflict_handling': {
-            'stop_on_conflict': True,
-            'show_conflict_details': True,
-            'max_conflicts_to_show': 10,
-            'log_all_conflicts': True
-        },
-        'validation': {
-            'check_file_existence': True,
-            'validate_json_format': True,
-            'validate_po_format': True,
-            'warn_missing_target_files': True
-        },
-        'merge_strategy': {
-            'skip_identical_values': True,
-            'case_sensitive_comparison': True,
-            'trim_whitespace': True,
-            'handle_empty_values': 'skip',
-            'auto_detect_business_types': True
-        },
-        'logging': {
-            'detailed_merge_log': True,
-            'include_skipped_items': False,
-            'include_debug_info': True,
-            'log_file_pattern': 'combine_{timestamp}.log'
-        }
-    })
-
-def get_combine_output_paths(self, language: str, timestamp: Optional[str] = None) -> Dict[str, Path]:
-    """
-    獲取合併輸出路徑
     
-    Args:
-        language: 語言代碼
-        timestamp: 時間戳（如果為 None 則自動生成）
-        
-    Returns:
-        包含合併輸出路徑的字典
-    """
-    combine_config = self.get_combine_config()
-    dirs = self.get_directories()
-    
-    # 生成時間戳
-    if timestamp is None:
-        timestamp_format = self.config.get('backup', {}).get('timestamp_format', '%Y%m%d_%H%M%S')
-        timestamp = datetime.datetime.now().strftime(timestamp_format)
-    
-    # 合併目錄
-    combine_dir = Path(combine_config['combine_dir'])
-    output_config = combine_config.get('output', {})
-    directory_suffix = output_config.get('directory_suffix', '_combined')
-    
-    # 輸出目錄
-    output_dir = Path(dirs['output_dir'])
-    combine_output_dir = output_dir / f"{language}_{timestamp}{directory_suffix}"
-    
-    return {
-        'output_dir': combine_output_dir,
-        'combine_dir': combine_dir,
-        'timestamp': timestamp
-    }
-
-def get_combine_file_paths(self, language: str, output_dir: Path, timestamp: str) -> Dict[str, Path]:
-    """
-    獲取合併相關檔案路徑
-    
-    Args:
-        language: 語言代碼
-        output_dir: 輸出目錄
-        timestamp: 時間戳
-        
-    Returns:
-        包含合併檔案路徑的字典
-    """
-    file_patterns = self.get_file_patterns()
-    combine_config = self.get_combine_config()
-    
-    paths = {}
-    
-    # 合併摘要報告路徑
-    summary_pattern = file_patterns.get('combine_summary', 'combine_summary_{timestamp}.txt')
-    paths['summary_report'] = output_dir / summary_pattern.format(timestamp=timestamp)
-    
-    # 合併日誌路徑
-    log_pattern = combine_config.get('logging', {}).get('log_file_pattern', 'combine_{timestamp}.log')
-    paths['log_file'] = output_dir / log_pattern.format(timestamp=timestamp)
-    
-    return paths
-
-def get_combine_file_suffix(self, file_type: str) -> str:
-    """
-    獲取合併檔案的後綴
-    
-    Args:
-        file_type: 檔案類型 ('po' 或 'json')
-        
-    Returns:
-        檔案後綴字符串
-    """
-    file_patterns = self.get_file_patterns()
-    
-    if file_type.lower() == 'po':
-        return file_patterns.get('combine_po_suffix', '_combined')
-    elif file_type.lower() == 'json':
-        return file_patterns.get('combine_json_suffix', '_combined')
-    else:
-        return '_combined'
-
-def validate_combine_config(self) -> bool:
-    """
-    驗證合併配置是否正確
-    
-    Returns:
-        配置是否有效
-    """
-    try:
-        combine_config = self.get_combine_config()
-        
-        # 檢查必要的配置項
-        required_sections = ['combine_dir', 'output', 'conflict_handling']
-        for section in required_sections:
-            if section not in combine_config:
-                print(f"⚠️  合併配置缺少 '{section}' 部分")
-                return False
-        
-        # 檢查合併目錄是否存在
-        combine_dir = Path(combine_config['combine_dir'])
-        if not combine_dir.exists():
-            print(f"⚠️  合併目錄不存在：{combine_dir}")
-            print(f"    請創建 {combine_dir} 目錄並放入要合併的檔案")
-            return False
-        
-        return True
-        
-    except Exception as e:
-        print(f"⚠️  合併配置驗證失敗：{e}")
-        return False
-
-def print_combine_config_summary(self):
-    """打印合併配置摘要"""
-    print("📋 檔案合併配置摘要：")
-    
-    try:
-        combine_config = self.get_combine_config()
-        
-        # 基本配置
-        combine_dir = combine_config.get('combine_dir', 'i18n_combine')
-        print(f"   合併目錄：{combine_dir}")
-        
-        # 輸出配置
-        output_config = combine_config.get('output', {})
-        print(f"   時間戳目錄：{output_config.get('create_timestamped_dirs', True)}")
-        print(f"   目錄後綴：{output_config.get('directory_suffix', '_combined')}")
-        print(f"   檔案後綴：{output_config.get('file_suffix', '_combined')}")
-        
-        # 衝突處理配置
-        conflict_config = combine_config.get('conflict_handling', {})
-        print(f"   遇衝突停止：{conflict_config.get('stop_on_conflict', True)}")
-        print(f"   顯示衝突詳情：{conflict_config.get('show_conflict_details', True)}")
-        
-        # 合併策略配置
-        merge_config = combine_config.get('merge_strategy', {})
-        print(f"   跳過相同值：{merge_config.get('skip_identical_values', True)}")
-        print(f"   自動檢測業態：{merge_config.get('auto_detect_business_types', True)}")
-        
-        # 檢查目錄是否存在
-        combine_dir_path = Path(combine_dir)
-        if combine_dir_path.exists():
-            print(f"   目錄狀態：存在")
-            
-            # 統計檔案
-            json_files = list(combine_dir_path.rglob('*.json'))
-            po_files = list(combine_dir_path.rglob('*.po'))
-            
-            print(f"   發現檔案：JSON {len(json_files)} 個，PO {len(po_files)} 個")
-        else:
-            print(f"   目錄狀態：不存在")
-        
-    except Exception as e:
-        print(f"   配置讀取失敗：{e}")
-
-# 在 print_config_summary 方法中添加合併配置檢查
-def print_config_summary(self):
-    """打印配置摘要 - 更新版本，包含合併功能"""
-    print("📋 系統配置摘要：")
-    
-    # ... 現有的配置摘要代碼 ...
-    
-    # 目錄配置
-    dirs = self.get_directories()
-    print(f"   輸入目錄：{dirs['input_dir']}")
-    print(f"   檔案結構：JSON 在語言根目錄，PO 在 LC_MESSAGES 子目錄")
-    print(f"   輸出目錄：{dirs['output_dir']}")
-    print(f"   備份目錄：{dirs['backup_dir']}")
-    
-    # 檔案處理規則
-    file_handling = self.get_file_handling_config()
-    print(f"   檔案處理：至少需要一個檔案 = {file_handling.get('require_at_least_one', True)}")
-    print(f"   LC_MESSAGES 子目錄：{file_handling.get('lc_messages_subdir', 'LC_MESSAGES')}")
-    
-    # 檢測到的語言
-    try:
-        languages = self.detect_available_languages()
-        print(f"   檢測到語言：{', '.join(languages)}")
-    except Exception as e:
-        print(f"   語言檢測失敗：{e}")
-    
-    # 業態配置
-    business_types = self.get_business_types()
-    business_names = [bt['display_name'] for bt in business_types.values()]
-    print(f"   支援業態：{', '.join(business_names)}")
-    
-    # 部分檔案功能
-    try:
-        output_config = self.config.get('output', {})
-        partial_enabled = output_config.get('partial_files', {}).get('enabled', False)
-        print(f"   部分檔案功能：{'啟用' if partial_enabled else '停用'}")
-        
-        if partial_enabled and self.validate_partial_file_config():
-            print(f"   部分檔案配置：有效")
-        elif partial_enabled:
-            print(f"   部分檔案配置：無效")
-    except Exception as e:
-        print(f"   部分檔案配置檢查失敗：{e}")
-    
-    # 新增：合併功能配置
-    try:
-        combine_config = self.config.get('combine', {})
-        if combine_config:
-            print(f"   合併功能：啟用")
-            combine_dir = combine_config.get('combine_dir', 'i18n_combine')
-            combine_dir_path = Path(combine_dir)
-            print(f"   合併目錄：{combine_dir} ({'存在' if combine_dir_path.exists() else '不存在'})")
-            
-            if self.validate_combine_config():
-                print(f"   合併配置：有效")
-            else:
-                print(f"   合併配置：無效")
-        else:
-            print(f"   合併功能：停用")
-    except Exception as e:
-        print(f"   合併功能檢查失敗：{e}")
-    
-    # 版本資訊
-    version = self.config.get('version', 'Unknown')
-    system_type = self.config.get('system_type', 'Unknown')
-    print(f"   系統版本：{version} ({system_type})")
+    # 測試合併配置
+    if config.validate_combine_config():
+        print("\n🔧 合併配置測試：")
+        config.print_combine_config_summary()

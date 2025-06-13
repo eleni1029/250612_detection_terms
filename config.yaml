@@ -213,6 +213,8 @@ defaults:
   business_type: "enterprises"    # 預設業態
   backup_before_overwrite: true
 
+# 在現有 config.yaml 中添加以下配置段落
+
 # 新增：檔案合併配置
 combine:
   # 合併來源目錄 - 固定為 i18n_combine
@@ -221,9 +223,31 @@ combine:
   # 合併輸出配置
   output:
     create_timestamped_dirs: true     # 創建帶時間戳的輸出目錄
-    directory_suffix: "_combined"     # 輸出目錄後綴
+    directory_suffix: "_combined"     # 單語言輸出目錄後綴
+    multi_directory_suffix: "_multi_combined"  # 多語言輸出目錄後綴
     preserve_original_structure: true # 保持原始檔案結構
     file_suffix: "_combined"          # 合併檔案後綴
+  
+  # 多語言處理配置
+  multilang:
+    enabled: true                     # 啟用多語言合併功能
+    auto_detect_structure: true       # 自動檢測多語言結構
+    language_path_mapping: true       # 啟用語言路徑映射
+    cross_language_conflict_check: true  # 跨語言衝突檢查
+    merge_multiple_tobemodified: true # 允許合併多個 tobemodified 檔案
+    
+    # JSON 多語言結構配置
+    json_structure:
+      top_level_languages: true       # 頂層為語言代碼
+      language_code_pattern: "^[a-z]{2}(-[A-Z]{2})?$"  # 語言代碼模式
+      auto_create_language_sections: true  # 自動創建語言區段
+      preserve_non_language_keys: true # 保留非語言相關的 key
+    
+    # 路徑映射規則
+    path_mapping:
+      json_prefix_with_language: true  # JSON 路徑前綴語言代碼
+      po_language_context: false      # PO 檔案不需要語言前綴
+      preserve_original_path: true    # 保留原始路徑信息
   
   # 衝突處理配置
   conflict_handling:
@@ -231,6 +255,7 @@ combine:
     show_conflict_details: true       # 顯示衝突詳情
     max_conflicts_to_show: 10         # 最多顯示的衝突數量
     log_all_conflicts: true           # 將所有衝突記錄到日誌
+    include_language_in_conflict: true # 衝突報告中包含語言信息
   
   # 檔案驗證配置
   validation:
@@ -238,6 +263,7 @@ combine:
     validate_json_format: true        # 驗證 JSON 檔案格式
     validate_po_format: true          # 驗證 PO 檔案格式
     warn_missing_target_files: true   # 警告缺失的目標檔案
+    validate_multilang_structure: true # 驗證多語言結構
   
   # 合併策略配置
   merge_strategy:
@@ -246,6 +272,14 @@ combine:
     trim_whitespace: true             # 比較前去除空白字符
     handle_empty_values: "skip"       # 處理空值：skip/error/warn
     auto_detect_business_types: true  # 自動檢測有替換結果的業態
+    merge_cross_language: true        # 允許跨語言合併
+  
+  # 統計和報告配置
+  reporting:
+    language_level_stats: true        # 語言級別統計
+    business_type_stats: true         # 業態級別統計
+    detailed_conflict_report: true    # 詳細衝突報告
+    include_path_mapping_info: true   # 包含路徑映射信息
   
   # 日誌配置
   logging:
@@ -253,14 +287,18 @@ combine:
     include_skipped_items: false      # 包含跳過的項目在日誌中
     include_debug_info: true          # 包含調試信息
     log_file_pattern: "combine_{timestamp}.log"
+    multi_log_file_pattern: "multi_combine_{timestamp}.log"
 
 # 在現有的檔案命名配置中添加
 file_patterns:
   # ... 現有配置 ...
   
   # 新增：合併相關檔案命名
-  combine_output: "{language}_{timestamp}_combined"      # 合併輸出目錄命名
-  combine_summary: "combine_summary_{timestamp}.txt"     # 合併摘要報告
-  combine_log: "combine_{timestamp}.log"                 # 合併日誌檔案
+  combine_output: "{language}_{timestamp}_combined"      # 單語言合併輸出目錄命名
+  multi_combine_output: "{timestamp}_multi_combined_{languages}"  # 多語言合併輸出目錄命名
+  combine_summary: "combine_summary_{timestamp}.txt"     # 單語言合併摘要報告
+  multi_combine_summary: "multi_combine_summary_{timestamp}.txt"  # 多語言合併摘要報告
+  combine_log: "combine_{timestamp}.log"                 # 單語言合併日誌檔案
+  multi_combine_log: "multi_combine_{timestamp}.log"     # 多語言合併日誌檔案
   combine_po_suffix: "_combined"                          # 合併 PO 檔案後綴
   combine_json_suffix: "_combined"                        # 合併 JSON 檔案後綴
