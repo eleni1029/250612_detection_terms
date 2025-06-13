@@ -99,7 +99,7 @@ class ConfigLoader:
     
     def detect_available_languages(self) -> List[str]:
         """
-        檢測 i18n_input 目錄中可用的語言 - 使用新的路徑結構
+        檢測 i18n_input 目錄中可用的語言 - 使用新的路徑結構，過濾臨時檔案
         
         Returns:
             可用語言列表
@@ -125,12 +125,43 @@ class ConfigLoader:
         require_at_least_one = file_handling.get('require_at_least_one', True)
         ignore_patterns = file_handling.get('ignore_patterns', ['*.tmp', '*.bak', '*.log', '*~'])
         
+        # 【新增】定義需要過濾的目錄名稱模式
+        ignore_dir_patterns = [
+            '~$*',           # Excel/Word 臨時檔案前綴
+            '.*',            # 隱藏目錄（以點開頭）
+            '__pycache__',   # Python 快取目錄
+            '.DS_Store',     # macOS 系統檔案
+            'Thumbs.db',     # Windows 縮圖快取
+            '*.tmp',         # 臨時目錄
+            '*.temp'         # 臨時目錄
+        ]
+        
+        def should_ignore_directory(dir_name: str) -> bool:
+            """檢查目錄是否應該被忽略"""
+            import fnmatch
+            
+            for pattern in ignore_dir_patterns:
+                if fnmatch.fnmatch(dir_name, pattern):
+                    return True
+            return False
+        
         # 掃描所有語言目錄 - 新的路徑結構：JSON 在根目錄，PO 在 LC_MESSAGES 子目錄
         for lang_dir in input_dir.iterdir():
             if not lang_dir.is_dir():
                 continue
             
             language = lang_dir.name
+            
+            # 【新增】過濾不符合語言代碼格式的目錄
+            if should_ignore_directory(language):
+                print(f"⚠️  跳過系統目錄：{language}")
+                continue
+            
+            # 【新增】基本語言代碼格式驗證（可選）
+            if not self._is_valid_language_code(language):
+                print(f"⚠️  跳過無效語言代碼：{language}")
+                continue
+            
             files_found = []
             
             # 檢查 PO 檔案 - 在 LC_MESSAGES 子目錄中
@@ -184,7 +215,40 @@ class ConfigLoader:
         
         self._detected_languages = available_languages
         return available_languages
-    
+
+    def _is_valid_language_code(self, language: str) -> bool:
+        """
+        【新增】驗證語言代碼格式是否有效
+        
+        Args:
+            language: 語言代碼字符串
+            
+        Returns:
+            bool: 是否為有效的語言代碼
+        """
+        import re
+        
+        # 常見的語言代碼格式：
+        # - ISO 639-1: en, zh, fr (2字母)
+        # - ISO 639-1 with region: en-US, zh-TW, zh-CN (2字母-2字母)
+        # - 其他格式: zh_TW, en_US (下劃線分隔)
+        valid_patterns = [
+            r'^[a-zA-Z]{2}$',                    # en, zh
+            r'^[a-zA-Z]{2}[-_][a-zA-Z]{2}$',    # en-US, zh-TW, zh_CN
+            r'^[a-zA-Z]{2}[-_][a-zA-Z]{2,4}$',  # en-US, zh-Hans
+            r'^[a-zA-Z]{3}$',                    # 3字母語言代碼
+        ]
+        
+        for pattern in valid_patterns:
+            if re.match(pattern, language, re.IGNORECASE):
+                return True
+        
+        # 如果不符合標準格式，但不是系統檔案，也允許（向後相容）
+        if not language.startswith(('~$', '.', '__')):
+            return True
+        
+        return False
+        
     def get_language_files(self, language: str) -> Dict[str, Path]:
         """
         獲取指定語言的檔案路徑 - 修正版本：JSON 在根目錄，PO 在 LC_MESSAGES 子目錄
@@ -331,8 +395,11 @@ class ConfigLoader:
         print(f"   LC_MESSAGES 子目錄：{file_handling.get('lc_messages_subdir', 'LC_MESSAGES')}")
         
         # 檢測到的語言
-        languages = self.detect_available_languages()
-        print(f"   檢測到語言：{', '.join(languages)}")
+        try:
+            languages = self.detect_available_languages()
+            print(f"   檢測到語言：{', '.join(languages)}")
+        except Exception as e:
+            print(f"   語言檢測失敗：{e}")
         
         # 業態配置
         business_types = self.get_business_types()

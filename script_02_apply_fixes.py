@@ -528,7 +528,7 @@ def main():
 
 
 def detect_tobemodified_files(config) -> dict:
-    """檢測可用的 tobemodified 檔案 - 保持原有邏輯"""
+    """檢測可用的 tobemodified 檔案 - 修正版，過濾系統臨時檔案"""
     available_files = {}
     
     # 檢測輸出目錄中的檔案
@@ -545,15 +545,39 @@ def detect_tobemodified_files(config) -> dict:
     except Exception:
         output_dir = Path('i18n_output')
     
-    # 檢測標準命名的檔案
-    available_languages = config.detect_available_languages()
+    # 【修正】使用配置載入器的語言檢測，而不是直接掃描檔案
+    # 這樣可以確保使用相同的過濾邏輯
+    try:
+        available_languages = config.detect_available_languages()
+    except Exception as e:
+        print(f"⚠️  語言檢測失敗：{e}")
+        available_languages = []
     
+    # 檢測標準命名的檔案 - 只檢查有效語言
     for language in available_languages:
         tobemodified_path = output_dir / f"{language}_tobemodified.xlsx"
         if tobemodified_path.exists():
             available_files[language] = tobemodified_path
     
-    # 額外檢測當前目錄和輸出目錄中的通配符檔案
+    # 額外檢測當前目錄中的通配符檔案（但要過濾系統檔案）
+    def should_ignore_language_code(language: str) -> bool:
+        """檢查語言代碼是否應該被忽略"""
+        import fnmatch
+        
+        ignore_patterns = [
+            '~$*',           # Excel/Word 臨時檔案前綴
+            '.*',            # 隱藏檔案（以點開頭）
+            '__*',           # Python 特殊檔案
+            'Thumbs',        # Windows 縮圖快取
+            '.DS_Store',     # macOS 系統檔案
+        ]
+        
+        for pattern in ignore_patterns:
+            if fnmatch.fnmatch(language, pattern):
+                return True
+        return False
+    
+    # 在當前目錄和輸出目錄中查找額外的 tobemodified 檔案
     for search_dir in [Path('.'), output_dir]:
         if search_dir.exists():
             for file_path in search_dir.glob("*_tobemodified.xlsx"):
@@ -561,10 +585,54 @@ def detect_tobemodified_files(config) -> dict:
                 filename = file_path.stem
                 if filename.endswith('_tobemodified'):
                     language = filename[:-len('_tobemodified')]
+                    
+                    # 【新增】過濾系統臨時檔案
+                    if should_ignore_language_code(language):
+                        print(f"⚠️  跳過系統臨時檔案：{file_path.name}")
+                        continue
+                    
+                    # 如果語言不在已檢測列表中，也要進行基本驗證
+                    if language not in available_languages:
+                        # 基本語言代碼格式驗證
+                        if not _is_valid_language_code_simple(language):
+                            print(f"⚠️  跳過無效語言代碼：{language}")
+                            continue
+                    
                     if language not in available_files:
                         available_files[language] = file_path
-    
+
     return available_files
+
+
+def _is_valid_language_code_simple(language: str) -> bool:
+    """
+    簡單的語言代碼格式驗證（用於 tobemodified 檔案檢測）
+    
+    Args:
+        language: 語言代碼字符串
+        
+    Returns:
+        bool: 是否為有效的語言代碼
+    """
+    import re
+    
+    # 常見的語言代碼格式
+    valid_patterns = [
+        r'^[a-zA-Z]{2}$',                    # en, zh
+        r'^[a-zA-Z]{2}[-_][a-zA-Z]{2}$',    # en-US, zh-TW, zh_CN
+        r'^[a-zA-Z]{2}[-_][a-zA-Z]{2,4}$',  # en-US, zh-Hans
+        r'^[a-zA-Z]{3}$',                    # 3字母語言代碼
+    ]
+    
+    for pattern in valid_patterns:
+        if re.match(pattern, language, re.IGNORECASE):
+            return True
+    
+    # 如果不符合標準格式，但不是系統檔案，也允許（向後相容）
+    if not language.startswith(('~$', '.', '__')):
+        return True
+    
+    return False
 
 
 def choose_business_types(config, args) -> list:
