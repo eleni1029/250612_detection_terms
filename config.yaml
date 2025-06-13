@@ -212,3 +212,55 @@ defaults:
   language: null                  # 無預設語言，自動檢測
   business_type: "enterprises"    # 預設業態
   backup_before_overwrite: true
+
+# 新增：檔案合併配置
+combine:
+  # 合併來源目錄 - 固定為 i18n_combine
+  combine_dir: "i18n_combine"
+  
+  # 合併輸出配置
+  output:
+    create_timestamped_dirs: true     # 創建帶時間戳的輸出目錄
+    directory_suffix: "_combined"     # 輸出目錄後綴
+    preserve_original_structure: true # 保持原始檔案結構
+    file_suffix: "_combined"          # 合併檔案後綴
+  
+  # 衝突處理配置
+  conflict_handling:
+    stop_on_conflict: true            # 發現衝突時停止處理
+    show_conflict_details: true       # 顯示衝突詳情
+    max_conflicts_to_show: 10         # 最多顯示的衝突數量
+    log_all_conflicts: true           # 將所有衝突記錄到日誌
+  
+  # 檔案驗證配置
+  validation:
+    check_file_existence: true        # 檢查目標檔案是否存在
+    validate_json_format: true        # 驗證 JSON 檔案格式
+    validate_po_format: true          # 驗證 PO 檔案格式
+    warn_missing_target_files: true   # 警告缺失的目標檔案
+  
+  # 合併策略配置
+  merge_strategy:
+    skip_identical_values: true       # 跳過相同的值
+    case_sensitive_comparison: true   # 大小寫敏感的比較
+    trim_whitespace: true             # 比較前去除空白字符
+    handle_empty_values: "skip"       # 處理空值：skip/error/warn
+    auto_detect_business_types: true  # 自動檢測有替換結果的業態
+  
+  # 日誌配置
+  logging:
+    detailed_merge_log: true          # 詳細的合併日誌
+    include_skipped_items: false      # 包含跳過的項目在日誌中
+    include_debug_info: true          # 包含調試信息
+    log_file_pattern: "combine_{timestamp}.log"
+
+# 在現有的檔案命名配置中添加
+file_patterns:
+  # ... 現有配置 ...
+  
+  # 新增：合併相關檔案命名
+  combine_output: "{language}_{timestamp}_combined"      # 合併輸出目錄命名
+  combine_summary: "combine_summary_{timestamp}.txt"     # 合併摘要報告
+  combine_log: "combine_{timestamp}.log"                 # 合併日誌檔案
+  combine_po_suffix: "_combined"                          # 合併 PO 檔案後綴
+  combine_json_suffix: "_combined"                        # 合併 JSON 檔案後綴

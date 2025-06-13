@@ -1,3 +1,47 @@
+2025-06-13 多語言敏感詞檢測與替換系統 Version 2.5
+-------------------------
+1. 補充了partial，部分增補的功能。
+
+✨整體操作流程：
+1. 先將 i18n 文件放到對應的資料夾內，此專案僅校驗 messages.po & {language}.json
+  分別對應如下：
+  i18n_input/{language}/LC_MESSGES/messages.po、
+  i18n_input/{language}/{language}.json，
+  注意語言名稱必須資料夾與json相同。
+
+2. 執行 "generate_phrase_comparison.py"，會根據資料夾結構，生成一個 "phrase_comparison.xlsx"
+  文檔內會有預設的類型與敏感詞（僅作為繁體中文的示例，用戶應自行在各個區域按需填入實際內容）。
+  預設的業態類型如果需要維護，需要在 config.yaml 文檔中調整。（不需維護的時候，留空即可）
+
+3. 完成調整後，執行 "script_01_generate_xlsx.py" 
+會根據匹配 json 與 po 文件，對應到的 key & value，修改了哪些值、預計修改後的結果，根據語言，在 /i18n_output/ 生成對應的 "{language}_tobemodified.xlsx"
+💡注意此處的生成邏輯包含如下：
+  a. 一個 value 符合多個敏感詞的情況，將進行替換並標註。
+  b. 檢測了存在包含關係的敏感詞替換，並且不會循環替換。
+（例如 同時存在 "大學生"替換為"資深員工"、“學生”替換為"人員"，如果 value 中存在"大學生"，僅替換為"資深員工"。）
+  c. 檢測後有預計替換的結果將會標黃並說明替換依據，如果空白處想要添加替換結果也可修改。
+
+確認 tobemodified 後，根據需求（生成新的 json/po 或是 部分增補的 json/po），可以分別執行不同 py：
+  4-1. 完整生成： "script_02_apply_fixes.py"
+    根據修改項進行修改，未修改項略過；重新生成完整的 json/po 文件。
+
+  4-1. 部分增補： "script_02_apply_fixes_partial.py"
+    這個功能會根據有替換結果的內容生成對應的 json/po 文件，未調整的不在寫入範圍。
+    產生的資料夾名稱為 {language}_時間戳_partial
+
+  4-3. 合併現有： "script_02_apply_combine.py"
+    需要選擇要合併的檔案，被合併的檔案需要放在 /i18n_combine 下，並自行分別選擇要合併的 tobemodified 語言、
+    json/po 檔案名稱；合併時如果存在重複的 key，value 內容或層級不同會報錯並中斷操作。
+    產生的資料夾名稱為 /i18n_output/{language}_時間戳_combined。
+
+🎉 檔案生成完畢！在 i18n/output/ 中根據時間戳即可即可找到
+
+暫時作為穩定版本使用。
+
+
+
+
+
 2025-06-11 多語言敏感詞檢測與替換系統 Version 2.3
 -------------------------
 1. 用户初步對比的 excel 統一為 phrase_comparison.xlsx
