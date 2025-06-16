@@ -1,0 +1,978 @@
+層級衝突詳細報告
+生成時間：2025-06-16 10:25:55
+============================================================
+
+總衝突數量：53
+JSON 層級衝突：53 個
+PO 上下文衝突：0 個
+
+JSON 層級衝突詳情：
+----------------------------------------
+
+衝突 1：
+  ID：lecturer
+  類型：json_layer_conflict
+  描述：ID 'lecturer' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.lecturer
+       層級結構: zh-TW.lecturer
+    2) 完整路徑: zh-TW.createModule.lecturer
+       層級結構: zh-TW.createModule.lecturer
+  相關數值：
+    - 主講講師
+
+衝突 2：
+  ID：studentName
+  類型：json_layer_conflict
+  描述：ID 'studentName' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.studentName
+       層級結構: zh-TW.studentName
+    2) 完整路徑: zh-TW.chaoxingScore.studentName
+       層級結構: zh-TW.chaoxingScore.studentName
+  相關數值：
+    - 學員姓名
+
+衝突 3：
+  ID：department
+  類型：json_layer_conflict
+  描述：ID 'department' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.department
+       層級結構: zh-TW.department
+    2) 完整路徑: zh-TW.publicResourceCenter.department
+       層級結構: zh-TW.publicResourceCenter.department
+    3) 完整路徑: zh-TW.curriculum.department
+       層級結構: zh-TW.curriculum.department
+    4) 完整路徑: zh-TW.managementDataboard.department
+       層級結構: zh-TW.managementDataboard.department
+    5) 完整路徑: zh-TW.airCredit.auditCreditView.auditModal.department
+       層級結構: zh-TW.airCredit.auditCreditView.auditModal.department
+    6) 完整路徑: zh-CN.department
+       層級結構: zh-CN.department
+    7) 完整路徑: en-US.department
+       層級結構: en-US.department
+  相關數值：
+    - 單位
+    - 開設單位
+    - 課程單位
+
+衝突 4：
+  ID：year_semester
+  類型：json_layer_conflict
+  描述：ID 'year_semester' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.year_semester
+       層級結構: zh-TW.year_semester
+    2) 完整路徑: zh-CN.year_semester
+       層級結構: zh-CN.year_semester
+    3) 完整路徑: en-US.year_semester
+       層級結構: en-US.year_semester
+  相關數值：
+    - 年度期別
+
+衝突 5：
+  ID：academic_year
+  類型：json_layer_conflict
+  描述：ID 'academic_year' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.academic_year
+       層級結構: zh-TW.academic_year
+    2) 完整路徑: zh-CN.academic_year
+       層級結構: zh-CN.academic_year
+    3) 完整路徑: en-US.academic_year
+       層級結構: en-US.academic_year
+  相關數值：
+    - 年度
+
+衝突 6：
+  ID：semester
+  類型：json_layer_conflict
+  描述：ID 'semester' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.semester
+       層級結構: zh-TW.semester
+    2) 完整路徑: zh-TW.airCredit.auditCreditView.auditModal.semester
+       層級結構: zh-TW.airCredit.auditCreditView.auditModal.semester
+    3) 完整路徑: zh-CN.semester
+       層級結構: zh-CN.semester
+    4) 完整路徑: en-US.semester
+       層級結構: en-US.semester
+  相關數值：
+    - 課程期別
+    - 期別
+
+衝突 7：
+  ID：grade
+  類型：json_layer_conflict
+  描述：ID 'grade' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.grade
+       層級結構: zh-TW.grade
+    2) 完整路徑: zh-TW.logReport.grade
+       層級結構: zh-TW.logReport.grade
+    3) 完整路徑: zh-CN.grade
+       層級結構: zh-CN.grade
+    4) 完整路徑: en-US.grade
+       層級結構: en-US.grade
+  相關數值：
+    - 部門
+
+衝突 8：
+  ID：create_year
+  類型：json_layer_conflict
+  描述：ID 'create_year' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.create_year
+       層級結構: zh-TW.create_year
+    2) 完整路徑: zh-CN.create_year
+       層級結構: zh-CN.create_year
+    3) 完整路徑: en-US.create_year
+       層級結構: en-US.create_year
+  相關數值：
+    - 新增年度
+
+衝突 9：
+  ID：create_semester
+  類型：json_layer_conflict
+  描述：ID 'create_semester' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.create_semester
+       層級結構: zh-TW.create_semester
+    2) 完整路徑: zh-CN.create_semester
+       層級結構: zh-CN.create_semester
+    3) 完整路徑: en-US.create_semester
+       層級結構: en-US.create_semester
+  相關數值：
+    - 新增期別
+
+衝突 10：
+  ID：create_grade
+  類型：json_layer_conflict
+  描述：ID 'create_grade' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.create_grade
+       層級結構: zh-TW.create_grade
+    2) 完整路徑: zh-CN.create_grade
+       層級結構: zh-CN.create_grade
+    3) 完整路徑: en-US.create_grade
+       層級結構: en-US.create_grade
+  相關數值：
+    - 新增部門
+
+衝突 11：
+  ID：meeting_host_must_bind_mobile_phone
+  類型：json_layer_conflict
+  描述：ID 'meeting_host_must_bind_mobile_phone' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：public_sector, training_institutions, enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.classin.meeting_host_must_bind_mobile_phone
+       層級結構: zh-TW.classin.meeting_host_must_bind_mobile_phone
+    2) 完整路徑: zh-TW.tencent_meeting.meeting_host_must_bind_mobile_phone
+       層級結構: zh-TW.tencent_meeting.meeting_host_must_bind_mobile_phone
+  相關數值：
+    - 主持人需綁定手機號碼，請在個人設定-帳號綁定中綁定手機號碼
+
+衝突 12：
+  ID：placeholder
+  類型：json_layer_conflict
+  描述：ID 'placeholder' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.chinamcloud_live.placeholder
+       層級結構: zh-TW.chinamcloud_live.placeholder
+    2) 完整路徑: zh-TW.airCredit.auditCreditView.auditFilter.placeholder
+       層級結構: zh-TW.airCredit.auditCreditView.auditFilter.placeholder
+  相關數值：
+    - 課程名稱/講師/教室
+    - 課程名稱/課程編號/講師姓名/講師編號
+
+衝突 13：
+  ID：instructor
+  類型：json_layer_conflict
+  描述：ID 'instructor' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.chinamcloud_live.columns.instructor
+       層級結構: zh-TW.chinamcloud_live.columns.instructor
+    2) 完整路徑: zh-TW.teachingTeam.courseRoles.instructor
+       層級結構: zh-TW.teachingTeam.courseRoles.instructor
+    3) 完整路徑: zh-TW.alert.instructor
+       層級結構: zh-TW.alert.instructor
+    4) 完整路徑: zh-TW.alert.courseAttendanceRate.instructor
+       層級結構: zh-TW.alert.courseAttendanceRate.instructor
+    5) 完整路徑: zh-TW.portal.instructor
+       層級結構: zh-TW.portal.instructor
+    6) 完整路徑: zh-TW.userStudio.instructor
+       層級結構: zh-TW.userStudio.instructor
+    7) 完整路徑: zh-TW.learningSpace.courseProject.instructor
+       層級結構: zh-TW.learningSpace.courseProject.instructor
+    8) 完整路徑: zh-TW.teachingCalendar.instructor
+       層級結構: zh-TW.teachingCalendar.instructor
+    9) 完整路徑: zh-TW.vtrs.trialTeaching.instructor
+       層級結構: zh-TW.vtrs.trialTeaching.instructor
+    10) 完整路徑: zh-TW.airCredit.courseStatsView.instructor
+       層級結構: zh-TW.airCredit.courseStatsView.instructor
+    11) 完整路徑: zh-TW.airCredit.auditCreditView.auditModal.instructor
+       層級結構: zh-TW.airCredit.auditCreditView.auditModal.instructor
+    12) 完整路徑: zh-TW.courseNavigation.instructor
+       層級結構: zh-TW.courseNavigation.instructor
+  相關數值：
+    - 主講講師
+    - 授課講師
+    - 講師、助教、自定義課程角色
+    - 講師
+    - 責任講師
+
+衝突 14：
+  ID：tip
+  類型：json_layer_conflict
+  描述：ID 'tip' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：public_sector, training_institutions, enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.course_make_up_score.tip
+       層級結構: zh-TW.course_make_up_score.tip
+    2) 完整路徑: zh-TW.authz.courseRolePermission.activity_publish_status:management.tip
+       層級結構: zh-TW.authz.courseRolePermission.activity_publish_status:management.tip
+    3) 完整路徑: zh-TW.auditCourseResource.tip
+       層級結構: zh-TW.auditCourseResource.tip
+    4) 完整路徑: zh-TW.alert.alert_popup.tip
+       層級結構: zh-TW.alert.alert_popup.tip
+    5) 完整路徑: zh-TW.activity.publishTime.tip
+       層級結構: zh-TW.activity.publishTime.tip
+    6) 完整路徑: zh-TW.airCredit.applyCreditView.course.tip
+       層級結構: zh-TW.airCredit.applyCreditView.course.tip
+  相關數值：
+    - 請確保發布時間早於開始時間，以便學員及時參加考試
+    - 設定後，使用者登入時將會彈出彈窗預警通知
+    - 提示：當學員沒有補考成績時，將維持原本的考試成績進行計算
+    - 建議單次申請 1000 點，預計學員可問答 300 次
+    - 設定單個活動發布狀態或批次設定發布狀態(注：隨堂測試、教學反饋、會議類學習活動不可調整發布狀態)
+    - 課程內上傳的資源需要進行審核，審核通過後才會對學員開放。
+
+衝突 15：
+  ID：published
+  類型：json_layer_conflict
+  描述：ID 'published' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：public_sector, training_institutions, enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.course_make_up_score.published
+       層級結構: zh-TW.course_make_up_score.published
+    2) 完整路徑: zh-TW.sliderTips.published
+       層級結構: zh-TW.sliderTips.published
+  相關數值：
+    - 成績已經送繳，無法設定成績佔比
+    - 成績已經送繳教務，無法設定成績佔比
+
+衝突 16：
+  ID：final_score_is_null
+  類型：json_layer_conflict
+  描述：ID 'final_score_is_null' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.score_publish_error_message.TKU.final_score_is_null
+       層級結構: zh-TW.score_publish_error_message.TKU.final_score_is_null
+    2) 完整路徑: zh-TW.score_publish_error_message.final_score_is_null
+       層級結構: zh-TW.score_publish_error_message.final_score_is_null
+  相關數值：
+    - 有部分學員的最終成績為「無」或是全班成績為0分，請先填寫最終成績後再進行送繳。
+    - 有部分學員的最終成績為「無」，請先填寫最終成績後再進行送繳。
+
+衝突 17：
+  ID：title
+  類型：json_layer_conflict
+  描述：ID 'title' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：training_institutions, enterprises, public_sector
+  衝突路徑：
+    1) 完整路徑: zh-TW.authz.courseRolePermission.activity_publish_status:management.title
+       層級結構: zh-TW.authz.courseRolePermission.activity_publish_status:management.title
+    2) 完整路徑: zh-TW.authz.courseRolePermission.student_rollcall:edit.title
+       層級結構: zh-TW.authz.courseRolePermission.student_rollcall:edit.title
+    3) 完整路徑: zh-TW.authz.courseRolePermission.questionnaire_exclude_create_edit:management.title
+       層級結構: zh-TW.authz.courseRolePermission.questionnaire_exclude_create_edit:management.title
+    4) 完整路徑: zh-TW.authz.courseRolePermission.homework_exclude_create_edit:management.title
+       層級結構: zh-TW.authz.courseRolePermission.homework_exclude_create_edit:management.title
+    5) 完整路徑: zh-TW.managementStat.attendance.student.title
+       層級結構: zh-TW.managementStat.attendance.student.title
+    6) 完整路徑: zh-TW.studentLearningReport.title
+       層級結構: zh-TW.studentLearningReport.title
+    7) 完整路徑: zh-TW.healthReport.studentReport.title
+       層級結構: zh-TW.healthReport.studentReport.title
+    8) 完整路徑: zh-TW.healthReport.instructorReport.title
+       層級結構: zh-TW.healthReport.instructorReport.title
+    9) 完整路徑: zh-TW.inclassReport.performance.title
+       層級結構: zh-TW.inclassReport.performance.title
+    10) 完整路徑: zh-TW.v3.useCases.richResources.title
+       層級結構: zh-TW.v3.useCases.richResources.title
+  相關數值：
+    - 修改學員出勤狀態
+    - 給學員更豐富的學習資源
+    - 學員考勤
+    - 學員學習時數報表
+    - 設定發布狀態
+    - 學員課堂表現得分
+    - 管理學員參與
+    - 學員健康報表
+    - 講師健康報表
+
+衝突 18：
+  ID：student
+  類型：json_layer_conflict
+  描述：ID 'student' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.teachingTeam.courseRoles.student
+       層級結構: zh-TW.teachingTeam.courseRoles.student
+    2) 完整路徑: zh-TW.alert.departmentUserAlert.student
+       層級結構: zh-TW.alert.departmentUserAlert.student
+    3) 完整路徑: zh-TW.examMark.markType.student
+       層級結構: zh-TW.examMark.markType.student
+    4) 完整路徑: zh-TW.courseNavigation.student
+       層級結構: zh-TW.courseNavigation.student
+  相關數值：
+    - 學員
+    - 按學員批改
+    - 學員、學員助教
+
+衝突 19：
+  ID：hint
+  類型：json_layer_conflict
+  描述：ID 'hint' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.interaction.forum.answerLimit.hint
+       層級結構: zh-TW.interaction.forum.answerLimit.hint
+    2) 完整路徑: zh-TW.interaction.forum.repeatAnswer.hint
+       層級結構: zh-TW.interaction.forum.repeatAnswer.hint
+  相關數值：
+    - 學員只有逐題答對才可繼續觀看教材，並允許重複修改答案
+    - 設定學員依照條件是否允許繼續作答及觀看影片
+
+衝突 20：
+  ID：studentCount
+  類型：json_layer_conflict
+  描述：ID 'studentCount' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.managementStat.studentCount
+       層級結構: zh-TW.managementStat.studentCount
+    2) 完整路徑: zh-TW.learningAnalysis.studentCount
+       層級結構: zh-TW.learningAnalysis.studentCount
+    3) 完整路徑: zh-TW.airCredit.userAssignView.studentCount
+       層級結構: zh-TW.airCredit.userAssignView.studentCount
+  相關數值：
+    - 學員數
+
+衝突 21：
+  ID：processing
+  類型：json_layer_conflict
+  描述：ID 'processing' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.exportCourseScore.processing
+       層級結構: zh-TW.exportCourseScore.processing
+    2) 完整路徑: zh-TW.danmuActivity.message.processing
+       層級結構: zh-TW.danmuActivity.message.processing
+  相關數值：
+    - 成績打包中，請耐心等待。您可關閉目前窗口，待打包完成後再次點擊'下載學員成績'即可下載打包文件。
+    - 即時留言活動進行中，學員可在app中參與發送即時留言
+
+衝突 22：
+  ID：info
+  類型：json_layer_conflict
+  描述：ID 'info' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.alert.continuousAbsence.info
+       層級結構: zh-TW.alert.continuousAbsence.info
+    2) 完整路徑: zh-TW.alert.departmentUserAlert.departmentUserAbsent.info
+       層級結構: zh-TW.alert.departmentUserAlert.departmentUserAbsent.info
+    3) 完整路徑: zh-TW.alert.departmentUserAlert.continuousAbsence.info
+       層級結構: zh-TW.alert.departmentUserAlert.continuousAbsence.info
+    4) 完整路徑: zh-TW.alert.departmentUserAlert.departmentUserOnLeave.info
+       層級結構: zh-TW.alert.departmentUserAlert.departmentUserOnLeave.info
+  相關數值：
+    - 連續缺勤 {threshold} 天後，學員將收到通知
+    - 請假 {threshold} 次後，學員將收到通知
+    - 連續缺勤 {0} 天後，學員將收到通知
+    - 缺席 {threshold} 次後，學員將收到通知
+
+衝突 23：
+  ID：confirmTip
+  類型：json_layer_conflict
+  描述：ID 'confirmTip' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：training_institutions, enterprises, public_sector
+  衝突路徑：
+    1) 完整路徑: zh-TW.batchSettingConfirm.confirmTip
+       層級結構: zh-TW.batchSettingConfirm.confirmTip
+    2) 完整路徑: zh-TW.combineCourse.confirmTip
+       層級結構: zh-TW.combineCourse.confirmTip
+  相關數值：
+    - 將修改{number}門課程的設定
+    - 合併過程中，講師無法新增、編輯、刪除原課程內容，學員學習不受影響。
+
+衝突 24：
+  ID：description
+  類型：json_layer_conflict
+  描述：ID 'description' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.healthReport.studentReport.description
+       層級結構: zh-TW.healthReport.studentReport.description
+    2) 完整路徑: zh-TW.healthReport.instructorReport.description
+       層級結構: zh-TW.healthReport.instructorReport.description
+    3) 完整路徑: zh-TW.learningAnalysis.note.analysis.description
+       層級結構: zh-TW.learningAnalysis.note.analysis.description
+    4) 完整路徑: zh-TW.learningAnalysis.note.activityCompletionStatistics.description
+       層級結構: zh-TW.learningAnalysis.note.activityCompletionStatistics.description
+    5) 完整路徑: zh-TW.learningAnalysis.note.attendance.description
+       層級結構: zh-TW.learningAnalysis.note.attendance.description
+    6) 完整路徑: zh-TW.learningAnalysis.note.interaction.description
+       層級結構: zh-TW.learningAnalysis.note.interaction.description
+    7) 完整路徑: zh-TW.learningAnalysis.note.learningDuration.description
+       層級結構: zh-TW.learningAnalysis.note.learningDuration.description
+    8) 完整路徑: zh-TW.v3.homePage.flipClassroom.description
+       層級結構: zh-TW.v3.homePage.flipClassroom.description
+    9) 完整路徑: zh-TW.v3.homePage.effectiveTeaching.description
+       層級結構: zh-TW.v3.homePage.effectiveTeaching.description
+    10) 完整路徑: zh-TW.v3.useCases.blendedLearningPlatform.description
+       層級結構: zh-TW.v3.useCases.blendedLearningPlatform.description
+    11) 完整路徑: zh-TW.v3.useCases.richResources.description
+       層級結構: zh-TW.v3.useCases.richResources.description
+    12) 完整路徑: zh-TW.v3.useCases.manageVideo.description
+       層級結構: zh-TW.v3.useCases.manageVideo.description
+    13) 完整路徑: zh-TW.v3.useCases.onlineQuiz.description
+       層級結構: zh-TW.v3.useCases.onlineQuiz.description
+    14) 完整路徑: zh-TW.v3.useCases.omoSyncClass.description
+       層級結構: zh-TW.v3.useCases.omoSyncClass.description
+    15) 完整路徑: zh-TW.v3.useCases.interactiveClassroom.description
+       層級結構: zh-TW.v3.useCases.interactiveClassroom.description
+    16) 完整路徑: zh-TW.v3.useCases.onCampusOpenCourse.description
+       層級結構: zh-TW.v3.useCases.onCampusOpenCourse.description
+    17) 完整路徑: zh-TW.v3.useCases.OpenCourse.description
+       層級結構: zh-TW.v3.useCases.OpenCourse.description
+    18) 完整路徑: zh-TW.courseNavigation.description
+       層級結構: zh-TW.courseNavigation.description
+  相關數值：
+    - 對學員學習時長進行統計
+    - 不要再讓學員被動學習了！透過微課程、分組學習、互評，讓學員主動發掘學習的樂趣！
+    - 透過學員學習記錄，掌握教學的節奏，數據分析讓講師可更早發現問題，幫助學員抓住重點。
+    - 對學員的活動完成情況進行統計，僅統計設定了完成指標的活動，學員是否完成依據講師設定的完成指標
+    - 若啟用導航，則課程主選單將顯示該功能，若禁用導航，被禁用的功能將不顯示於課程管理模組中，正在查看被禁用頁面的學員將自動跳轉至公告頁。
+    - 課堂中講師可設計互動的課程內容，學員可透過手機完成課堂互動活動，有效提升參與度，讓講師可即時掌握學員學習情況，第一時間幫助學員抓住重點。
+    - 按照講師，匯出每一天的健康狀態及是否開課
+    - 線上測驗方便出題和管理，幫助講師快速完成試卷的編寫，學員答完題繳交後快速計算出客觀題得分，講師不用再為大量的試卷發愁，並可即時獲得學員學習效果的回饋；除此之外，還可以應用到學習競賽答題的場景，讓課堂有更多互動與討論。
+    - 講師可自行上傳影片，藉由AI技術自動生成字幕，自動標記知識點，線上直接剪輯影片，減輕講師工作負擔。學員可藉由查詢提問，自動定位知識點影片段落，提升學員學習效率。
+    - 校內講師可自行開辦公開課，校內學員都可加入
+    - 講師可安排不同類型的教材，線上可直接觀看 Word、Excel、PowerPoint、PDF，也可下載檔案於離線時閱讀；支援影片、音訊上傳格式（mp4、avi、rmvb等），自動轉出可觀看的微影片。
+    - 校級MOOC平臺，學校可以選擇是否，將課程公開給校外學員
+    - 對學員的互動參與情況進行統計
+    - 按照學員，匯出每一天的點名狀態及健康狀態
+    - 對學員的活動參與情況進行統計，僅統計設定了完成指標的活動
+    - 線上虛擬學習和線下實體課堂的混成式學習，整合各種學習工具，提供學員更多元的學習體驗，讓學員依循自己的步調學習。
+    - 對學員的實際出缺席情況進行統計
+    - 透過軟硬體整合，將課堂互動模組、 同步視訊模組、教室錄播模組，將遠距學習與實體教室連結起來，形成 HybridLearning Environment 混合學習環境。驅動跨學習空間的學員，可互動、可協作，提升參與度與學習成效。
+
+衝突 25：
+  ID：tips
+  類型：json_layer_conflict
+  描述：ID 'tips' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.inclassReport.interaction.tips
+       層級結構: zh-TW.inclassReport.interaction.tips
+    2) 完整路徑: zh-TW.inclassReport.courseware.tips
+       層級結構: zh-TW.inclassReport.courseware.tips
+    3) 完整路徑: zh-TW.inclassReport.performance.tips
+       層級結構: zh-TW.inclassReport.performance.tips
+    4) 完整路徑: zh-TW.examMark.tips
+       層級結構: zh-TW.examMark.tips
+  相關數值：
+    - 統計本節課內搶答、投票、教學回饋、隨堂測驗4類學習活動使用個數與學員平均參與率
+    - 統計本節課內講師使用各類型資源數量
+    - 僅顯示主觀題(簡答題、填空題以及題組下的簡答題和填空題) ，其他類型題目系統自動評分，無需講師手動批改
+    - 統計本節課內學員獲得課堂表現分數分佈情況
+
+衝突 26：
+  ID：setting
+  類型：json_layer_conflict
+  描述：ID 'setting' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：public_sector, training_institutions, enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activityPublish.setting
+       層級結構: zh-TW.activityPublish.setting
+    2) 完整路徑: zh-TW.userStudio.setting
+       層級結構: zh-TW.userStudio.setting
+    3) 完整路徑: zh-TW.storageManagement.setting
+       層級結構: zh-TW.storageManagement.setting
+  相關數值：
+    - 工作室設定
+    - 設定
+    - 設定容量
+
+衝突 27：
+  ID：noData
+  類型：json_layer_conflict
+  描述：ID 'noData' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.completeness.noData
+       層級結構: zh-TW.completeness.noData
+    2) 完整路徑: zh-TW.questionnaireStat.noData
+       層級結構: zh-TW.questionnaireStat.noData
+  相關數值：
+    - 未找到符合搜尋條件的學員
+    - 暫無學員數據
+
+衝突 28：
+  ID：attendance
+  類型：json_layer_conflict
+  描述：ID 'attendance' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.analysis.calculationLogic.attendance
+       層級結構: zh-TW.learningAnalysis.note.analysis.calculationLogic.attendance
+    2) 完整路徑: zh-TW.learningAnalysis.note.attendance.calculationLogic.attendance
+       層級結構: zh-TW.learningAnalysis.note.attendance.calculationLogic.attendance
+  相關數值：
+    - 學員已到次數/總點名次數的比例。若講師設定了特殊的點名計分規則，請在點名記錄查看最終成績。
+    - 學員已到次數佔總點名次數的比例。若講師設定了特殊的點名計分規則，請在點名記錄查看最終成績。
+
+衝突 29：
+  ID：students
+  類型：json_layer_conflict
+  描述：ID 'students' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.analysis.calculationLogic.students
+       層級結構: zh-TW.learningAnalysis.note.analysis.calculationLogic.students
+    2) 完整路徑: zh-TW.learningAnalysis.students
+       層級結構: zh-TW.learningAnalysis.students
+    3) 完整路徑: zh-TW.njtc.detailCard.students
+       層級結構: zh-TW.njtc.detailCard.students
+    4) 完整路徑: zh-TW.publicCourse.stats.students
+       層級結構: zh-TW.publicCourse.stats.students
+  相關數值：
+    - 學員數
+    - 學員總數
+    - 累計學員數
+    - 當前課程內學員總數。
+
+衝突 30：
+  ID：interaction
+  類型：json_layer_conflict
+  描述：ID 'interaction' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activityCompletionStatistics.calculationLogic.interaction
+       層級結構: zh-TW.learningAnalysis.note.activityCompletionStatistics.calculationLogic.interaction
+    2) 完整路徑: zh-TW.activity.startTimeTip.interaction
+       層級結構: zh-TW.activity.startTimeTip.interaction
+    3) 完整路徑: zh-TW.activity.endTimeTip.interaction
+       層級結構: zh-TW.activity.endTimeTip.interaction
+  相關數值：
+    - 學習活動開始之後，學員才可以查看互動教材
+    - 學員參加的活動數量/課程內講師發起的活動數量。活動類型包括：搶答、投票、隨堂測驗、教學反饋。
+    - 學習活動結束以後，學員不可以查看互動教材
+
+衝突 31：
+  ID：waitForScoreInfo
+  類型：json_layer_conflict
+  描述：ID 'waitForScoreInfo' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activities.homework.waitForScoreInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.homework.waitForScoreInfo
+    2) 完整路徑: zh-TW.learningAnalysis.note.activities.exam.waitForScoreInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.exam.waitForScoreInfo
+  相關數值：
+    - 待批改作業的學員人次總和。
+    - 待批改測驗的學員人次總和。
+
+衝突 32：
+  ID：avgScoreGraph
+  類型：json_layer_conflict
+  描述：ID 'avgScoreGraph' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activities.homework.avgScoreGraph
+       層級結構: zh-TW.learningAnalysis.note.activities.homework.avgScoreGraph
+    2) 完整路徑: zh-TW.learningAnalysis.note.activities.exam.avgScoreGraph
+       層級結構: zh-TW.learningAnalysis.note.activities.exam.avgScoreGraph
+  相關數值：
+    - 學員平均分分布圖
+
+衝突 33：
+  ID：avgScoreGraphInfo
+  類型：json_layer_conflict
+  描述：ID 'avgScoreGraphInfo' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activities.homework.avgScoreGraphInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.homework.avgScoreGraphInfo
+    2) 完整路徑: zh-TW.learningAnalysis.note.activities.exam.avgScoreGraphInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.exam.avgScoreGraphInfo
+  相關數值：
+    - 展示每個學員課程內所有作業的平均分分布。
+    - 展示每個學員課程內所有測驗的平均分分布。
+
+衝突 34：
+  ID：viewRateInfo
+  類型：json_layer_conflict
+  描述：ID 'viewRateInfo' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activities.material.viewRateInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.material.viewRateInfo
+    2) 完整路徑: zh-TW.learningAnalysis.note.activities.weblink.viewRateInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.weblink.viewRateInfo
+  相關數值：
+    - 所有線上連結活動的訪問學員人數總和/（活動數*學員人數）。
+    - 所有資源查看學員人數總和/(檔案數*學員總人數)。
+
+衝突 35：
+  ID：perViewCountInfo
+  類型：json_layer_conflict
+  描述：ID 'perViewCountInfo' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activities.material.perViewCountInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.material.perViewCountInfo
+    2) 完整路徑: zh-TW.learningAnalysis.note.activities.video.perViewCountInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.video.perViewCountInfo
+    3) 完整路徑: zh-TW.learningAnalysis.note.activities.weblink.perViewCountInfo
+       層級結構: zh-TW.learningAnalysis.note.activities.weblink.perViewCountInfo
+  相關數值：
+    - 所有學員訪問線上連結活動個數總和/學員人數。
+    - 所有學員查看檔案個數總和/學員總人數。
+    - 所有學員的教材查看個數總和/學員總人數。
+
+衝突 36：
+  ID：instructorReplyRate
+  類型：json_layer_conflict
+  描述：ID 'instructorReplyRate' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.learningAnalysis.note.activities.forum.instructorReplyRate
+       層級結構: zh-TW.learningAnalysis.note.activities.forum.instructorReplyRate
+    2) 完整路徑: zh-TW.overviewPage.forum.instructorReplyRate
+       層級結構: zh-TW.overviewPage.forum.instructorReplyRate
+  相關數值：
+    - 講師回覆率
+
+衝突 37：
+  ID：homework
+  類型：json_layer_conflict
+  描述：ID 'homework' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.homework
+       層級結構: zh-TW.activity.startTimeTip.homework
+    2) 完整路徑: zh-TW.activity.endTimeTip.homework
+       層級結構: zh-TW.activity.endTimeTip.homework
+  相關數值：
+    - 作業結束之後，學員不可以繳交作業，但仍可查看繳交記錄
+    - 作業開始之後，學員才可以繳交作業
+
+衝突 38：
+  ID：exam
+  類型：json_layer_conflict
+  描述：ID 'exam' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.exam
+       層級結構: zh-TW.activity.startTimeTip.exam
+    2) 完整路徑: zh-TW.activity.endTimeTip.exam
+       層級結構: zh-TW.activity.endTimeTip.exam
+  相關數值：
+    - 測驗結束之後，學員不可以作答，但仍可查看作答記錄
+    - 測驗開始之後，學員才可以作答
+
+衝突 39：
+  ID：forum
+  類型：json_layer_conflict
+  描述：ID 'forum' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.forum
+       層級結構: zh-TW.activity.startTimeTip.forum
+    2) 完整路徑: zh-TW.activity.endTimeTip.forum
+       層級結構: zh-TW.activity.endTimeTip.forum
+  相關數值：
+    - 討論結束之後，學員不可以張貼文章、參與討論，但可查看討論紀錄
+    - 討論開始之後，學員才可以張貼文章、參與討論
+
+衝突 40：
+  ID：lesson
+  類型：json_layer_conflict
+  描述：ID 'lesson' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.lesson
+       層級結構: zh-TW.activity.startTimeTip.lesson
+    2) 完整路徑: zh-TW.activity.endTimeTip.lesson
+       層級結構: zh-TW.activity.endTimeTip.lesson
+  相關數值：
+    - 學習活動開始之後，學員才可以查看錄影教材
+    - 學習活動結束以後，學員不可以查看錄影教材
+
+衝突 41：
+  ID：common
+  類型：json_layer_conflict
+  描述：ID 'common' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.common
+       層級結構: zh-TW.activity.startTimeTip.common
+    2) 完整路徑: zh-TW.activity.endTimeTip.common
+       層級結構: zh-TW.activity.endTimeTip.common
+  相關數值：
+    - 學習活動開始之後，學員才可以查看教材
+    - 學習活動結束以後，學員不可以查看教材
+
+衝突 42：
+  ID：material
+  類型：json_layer_conflict
+  描述：ID 'material' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.material
+       層級結構: zh-TW.activity.startTimeTip.material
+    2) 完整路徑: zh-TW.activity.endTimeTip.material
+       層級結構: zh-TW.activity.endTimeTip.material
+  相關數值：
+    - 學習活動結束以後，學員不可以查看參考檔案
+    - 學習活動開始之後，學員才可以查看參考檔案
+
+衝突 43：
+  ID：weblink
+  類型：json_layer_conflict
+  描述：ID 'weblink' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.weblink
+       層級結構: zh-TW.activity.startTimeTip.weblink
+    2) 完整路徑: zh-TW.activity.endTimeTip.weblink
+       層級結構: zh-TW.activity.endTimeTip.weblink
+  相關數值：
+    - 學習活動開始之後，學員才可以查看線上連結
+    - 學習活動結束以後，學員不可以查看線上連結
+
+衝突 44：
+  ID：page
+  類型：json_layer_conflict
+  描述：ID 'page' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.page
+       層級結構: zh-TW.activity.startTimeTip.page
+    2) 完整路徑: zh-TW.activity.endTimeTip.page
+       層級結構: zh-TW.activity.endTimeTip.page
+  相關數值：
+    - 學習活動結束以後，學員不可以查看頁面
+    - 學習活動開始之後，學員才可以查看頁面
+
+衝突 45：
+  ID：questionnaire
+  類型：json_layer_conflict
+  描述：ID 'questionnaire' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.questionnaire
+       層級結構: zh-TW.activity.startTimeTip.questionnaire
+    2) 完整路徑: zh-TW.activity.endTimeTip.questionnaire
+       層級結構: zh-TW.activity.endTimeTip.questionnaire
+  相關數值：
+    - 問卷調查開始之後，學員才可以參與問卷調查
+    - 問卷調查結束之後，學員不可以參與問卷調查，但可查看作答紀錄
+
+衝突 46：
+  ID：scorm
+  類型：json_layer_conflict
+  描述：ID 'scorm' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.scorm
+       層級結構: zh-TW.activity.startTimeTip.scorm
+    2) 完整路徑: zh-TW.activity.endTimeTip.scorm
+       層級結構: zh-TW.activity.endTimeTip.scorm
+  相關數值：
+    - 學習活動開始之後，學員才可以查看第三方教材
+    - 學習活動結束以後，學員不可以查看第三方教材
+
+衝突 47：
+  ID：onlineVideo
+  類型：json_layer_conflict
+  描述：ID 'onlineVideo' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.onlineVideo
+       層級結構: zh-TW.activity.startTimeTip.onlineVideo
+    2) 完整路徑: zh-TW.activity.endTimeTip.onlineVideo
+       層級結構: zh-TW.activity.endTimeTip.onlineVideo
+  相關數值：
+    - 學習活動開始之後，學員才可以查看影音教材
+    - 學習活動結束以後，學員不可以查看影音教材
+
+衝突 48：
+  ID：vocabulary
+  類型：json_layer_conflict
+  描述：ID 'vocabulary' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.vocabulary
+       層級結構: zh-TW.activity.startTimeTip.vocabulary
+    2) 完整路徑: zh-TW.activity.endTimeTip.vocabulary
+       層級結構: zh-TW.activity.endTimeTip.vocabulary
+  相關數值：
+    - 學習活動開始之後，學員才可以查看詞彙表
+    - 學習活動結束以後，學員不可以查看詞彙表
+
+衝突 49：
+  ID：virtualExperiment
+  類型：json_layer_conflict
+  描述：ID 'virtualExperiment' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.virtualExperiment
+       層級結構: zh-TW.activity.startTimeTip.virtualExperiment
+    2) 完整路徑: zh-TW.activity.endTimeTip.virtualExperiment
+       層級結構: zh-TW.activity.endTimeTip.virtualExperiment
+  相關數值：
+    - 學習活動結束以後，學員不可以查看虛擬仿真實驗
+    - 學習活動開始之後，學員才可以查看虛擬仿真實驗
+
+衝突 50：
+  ID：h5Courseware
+  類型：json_layer_conflict
+  描述：ID 'h5Courseware' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.activity.startTimeTip.h5Courseware
+       層級結構: zh-TW.activity.startTimeTip.h5Courseware
+    2) 完整路徑: zh-TW.activity.endTimeTip.h5Courseware
+       層級結構: zh-TW.activity.endTimeTip.h5Courseware
+  相關數值：
+    - 學習活動開始之後，學員才可以查看H5課件
+    - 學習活動結束以後，學員不可以查看H5課件
+
+衝突 51：
+  ID：courseCreditUnavailable
+  類型：json_layer_conflict
+  描述：ID 'courseCreditUnavailable' 出現在多個不同的層級結構中
+  影響語言：zh-TW
+  影響業態：enterprises
+  衝突路徑：
+    1) 完整路徑: zh-TW.airCredit.courseState.courseCreditUnavailable
+       層級結構: zh-TW.airCredit.courseState.courseCreditUnavailable
+    2) 完整路徑: zh-TW.airCredit.courseCreditUnavailable
+       層級結構: zh-TW.airCredit.courseCreditUnavailable
+  相關數值：
+    - AIR 服務已停用，學員無法繼續詢問
+    - 課程 AIR 功能已被停用，學員不可繼續使用 AIR 功能。如需使用，請聯繫管理員。
+
+衝突 52：
+  ID：clazz
+  類型：json_layer_conflict
+  描述：ID 'clazz' 出現在多個不同的層級結構中
+  影響語言：
+  影響業態：
+  衝突路徑：
+    1) 完整路徑: zh-CN.clazz
+       層級結構: zh-CN.clazz
+    2) 完整路徑: zh-TW.clazz
+       層級結構: zh-TW.clazz
+    3) 完整路徑: en-US.clazz
+       層級結構: en-US.clazz
+
+衝突 53：
+  ID：create_class
+  類型：json_layer_conflict
+  描述：ID 'create_class' 出現在多個不同的層級結構中
+  影響語言：
+  影響業態：
+  衝突路徑：
+    1) 完整路徑: zh-CN.create_class
+       層級結構: zh-CN.create_class
+    2) 完整路徑: zh-TW.create_class
+       層級結構: zh-TW.create_class
+    3) 完整路徑: en-US.create_class
+       層級結構: en-US.create_class
+
+修正指引：
+1. 層級衝突分析：
+   - 檢查相同 ID 是否在不同的 JSON 路徑層級中使用
+   - 確認多語言結構中的路徑一致性
+   - 驗證 PO 檔案中的 msgid 上下文使用
+
+2. 建議的修正方法：
+   - 重新命名衝突的 ID 以反映其在不同層級的用途
+   - 統一多語言 JSON 結構中的路徑格式
+   - 為 PO 檔案中的重複 msgid 添加適當的上下文
+   - 檢查 Excel 檔案中的項目ID是否有邏輯錯誤
+
+3. 預防措施：
+   - 建立 ID 命名規範，避免層級間的重複
+   - 使用層級前綴來區分不同層級的項目
+   - 在合併前進行結構驗證
+   - 定期審查翻譯檔案的結構一致性
