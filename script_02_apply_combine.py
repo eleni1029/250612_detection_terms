@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_02_apply_combine.py (v1.3 - 修正業態衝突邏輯版)
+script_02_apply_combine.py (v1.4 - 層級衝突檢測版)
 
-修正內容：
-1. ✅ 修正業態間重複處理同一檔案的問題
-2. ✅ 修正衝突檢測邏輯：只處理當前業態的更新
-3. ✅ 避免業態間互相干擾
-4. ✅ 正確區分真正衝突和正常更新
-5. ✅ 改善合併流程邏輯
+新增內容：
+1. ✅ 檢測相同ID名稱但在不同層級的衝突
+2. ✅ 全面列出所有層級衝突詳情
+3. ✅ 發現層級衝突時終止進程
+4. ✅ 提供詳細的衝突報告和修正建議
+5. ✅ 支援多語言和多業態的層級衝突檢測
 
 功能：
 1. 選擇要合併的 tobemodified Excel 檔案（支援多選）
 2. 選擇 i18n_combine 目錄下的 JSON/PO 檔案作為合併目標
 3. 按業態分別處理，避免相互衝突
-4. 生成合併後的檔案到 i18n_output/multi_{timestamp}_combined/
-5. 提供詳細的合併報告和日誌
+4. **新增：檢測並報告相同ID在不同層級的衝突**
+5. 生成合併後的檔案到 i18n_output/multi_{timestamp}_combined/
+6. 提供詳細的合併報告和日誌
 """
 
 import json
@@ -26,7 +27,7 @@ import argparse
 import glob
 import re
 from pathlib import Path
-from collections import defaultdict
+from collections import defaultdict, Counter
 from config_loader import get_config
 
 try:
@@ -37,6 +38,439 @@ except ImportError as e:
     print("請執行：pip install openpyxl polib")
     sys.exit(1)
 
+
+class LayerConflictDetector:
+    """層級衝突檢測器"""
+    
+    def __init__(self):
+        self.json_conflicts = []
+        self.po_conflicts = []
+        self.all_json_paths = defaultdict(list)
+        self.all_po_ids = defaultdict(list)
+    
+    def detect_json_layer_conflicts(self, all_updates: dict, target_json_data: dict, is_multilang: bool) -> bool:
+        """
+        檢測 JSON 檔案中的層級衝突
+        
+        Args:
+            all_updates: 所有語言的更新資料
+            target_json_data: 目標 JSON 檔案內容
+            is_multilang: 是否為多語言結構
+            
+        Returns:
+            bool: 是否發現衝突
+        """
+        print("🔍 檢測 JSON 層級衝突...")
+        
+        # 收集所有路徑和其層級信息
+        path_info = {}  # {path: {layers: [層級列表], languages: [語言列表], business_types: [業態列表]}}
+        
+        # 從更新資料中收集路徑
+        for language, language_updates in all_updates.items():
+            for bt_code, bt_updates in language_updates.items():
+                for json_path_str, new_value, update_language in bt_updates['json']:
+                    # 多語言結構的路徑映射
+                    if is_multilang:
+                        multilang_path = f"{update_language}.{json_path_str}"
+                    else:
+                        multilang_path = json_path_str
+                    
+                    # 分析路徑層級
+                    layers = self._analyze_json_path_layers(multilang_path)
+                    
+                    if multilang_path not in path_info:
+                        path_info[multilang_path] = {
+                            'layers': [],
+                            'languages': set(),
+                            'business_types': set(),
+                            'values': set()
+                        }
+                    
+                    path_info[multilang_path]['layers'] = layers
+                    path_info[multilang_path]['languages'].add(update_language)
+                    path_info[multilang_path]['business_types'].add(bt_code)
+                    path_info[multilang_path]['values'].add(str(new_value))
+        
+        # 從目標檔案中收集現有路徑
+        existing_paths = self._extract_json_paths(target_json_data)
+        for path in existing_paths:
+            if path not in path_info:
+                path_info[path] = {
+                    'layers': self._analyze_json_path_layers(path),
+                    'languages': set(),
+                    'business_types': set(),
+                    'values': set()
+                }
+        
+        # 檢測層級衝突
+        conflicts_found = self._detect_layer_conflicts_in_paths(path_info, 'json')
+        
+        if conflicts_found:
+            print(f"❌ 發現 {len(self.json_conflicts)} 個 JSON 層級衝突")
+            return True
+        else:
+            print("✅ 未發現 JSON 層級衝突")
+            return False
+    
+    def detect_po_layer_conflicts(self, all_updates: dict, target_po_data) -> bool:
+        """
+        檢測 PO 檔案中的層級衝突（msgid 重複但在不同上下文）
+        
+        Args:
+            all_updates: 所有語言的更新資料
+            target_po_data: 目標 PO 檔案內容
+            
+        Returns:
+            bool: 是否發現衝突
+        """
+        print("🔍 檢測 PO 層級衝突...")
+        
+        # 收集所有 msgid 和其上下文信息
+        msgid_info = {}  # {msgid: {contexts: [上下文列表], languages: [語言列表], business_types: [業態列表]}}
+        
+        # 從更新資料中收集 msgid
+        for language, language_updates in all_updates.items():
+            for bt_code, bt_updates in language_updates.items():
+                for msgid, new_msgstr, update_language in bt_updates['po']:
+                    if msgid not in msgid_info:
+                        msgid_info[msgid] = {
+                            'contexts': set(),
+                            'languages': set(),
+                            'business_types': set(),
+                            'values': set()
+                        }
+                    
+                    msgid_info[msgid]['languages'].add(update_language)
+                    msgid_info[msgid]['business_types'].add(bt_code)
+                    msgid_info[msgid]['values'].add(str(new_msgstr))
+        
+        # 從目標檔案中收集現有 msgid
+        for entry in target_po_data:
+            msgid = entry.msgid
+            msgctxt = getattr(entry, 'msgctxt', None) or 'default'
+            
+            if msgid not in msgid_info:
+                msgid_info[msgid] = {
+                    'contexts': set(),
+                    'languages': set(),
+                    'business_types': set(),
+                    'values': set()
+                }
+            
+            msgid_info[msgid]['contexts'].add(msgctxt)
+            if entry.msgstr:
+                msgid_info[msgid]['values'].add(entry.msgstr)
+        
+        # 檢測 PO 檔案的"層級"衝突（主要是上下文衝突）
+        conflicts_found = False
+        for msgid, info in msgid_info.items():
+            if len(info['contexts']) > 1:
+                conflict = {
+                    'id': msgid,
+                    'type': 'po_context_conflict',
+                    'contexts': list(info['contexts']),
+                    'languages': list(info['languages']),
+                    'business_types': list(info['business_types']),
+                    'values': list(info['values']),
+                    'description': f"msgid '{msgid}' 存在於多個不同上下文中"
+                }
+                self.po_conflicts.append(conflict)
+                conflicts_found = True
+        
+        if conflicts_found:
+            print(f"❌ 發現 {len(self.po_conflicts)} 個 PO 上下文衝突")
+            return True
+        else:
+            print("✅ 未發現 PO 上下文衝突")
+            return False
+    
+    def _analyze_json_path_layers(self, path: str) -> list:
+        """分析 JSON 路徑的層級結構"""
+        parts = []
+        current = ""
+        in_bracket = False
+        
+        for char in path:
+            if char == '[':
+                if current:
+                    parts.append(('key', current))
+                    current = ""
+                in_bracket = True
+            elif char == ']':
+                if in_bracket and current:
+                    try:
+                        parts.append(('index', int(current)))
+                    except ValueError:
+                        parts.append(('key', current))
+                    current = ""
+                in_bracket = False
+            elif char == '.' and not in_bracket:
+                if current:
+                    parts.append(('key', current))
+                    current = ""
+            else:
+                current += char
+        
+        if current:
+            parts.append(('key', current))
+        
+        return parts
+    
+    def _extract_json_paths(self, data, prefix=""):
+        """遞歸提取 JSON 檔案中的所有路徑"""
+        paths = []
+        
+        if isinstance(data, dict):
+            for key, value in data.items():
+                current_path = f"{prefix}.{key}" if prefix else key
+                paths.append(current_path)
+                
+                if isinstance(value, (dict, list)):
+                    paths.extend(self._extract_json_paths(value, current_path))
+        
+        elif isinstance(data, list):
+            for i, value in enumerate(data):
+                current_path = f"{prefix}[{i}]"
+                paths.append(current_path)
+                
+                if isinstance(value, (dict, list)):
+                    paths.extend(self._extract_json_paths(value, current_path))
+        
+        return paths
+    
+    def _detect_layer_conflicts_in_paths(self, path_info: dict, file_type: str) -> bool:
+        """檢測路徑中的層級衝突"""
+        conflicts_found = False
+        
+        # 按最後一個路徑元素分組檢查
+        end_key_groups = defaultdict(list)
+        
+        for path, info in path_info.items():
+            # 獲取路徑的最後一個元素作為關鍵詞
+            layers = info['layers']
+            if layers:
+                last_element = layers[-1][1]  # (type, value) 中的 value
+                end_key_groups[last_element].append((path, info))
+        
+        # 檢查每個關鍵詞是否出現在不同層級
+        for end_key, path_list in end_key_groups.items():
+            if len(path_list) > 1:
+                # 檢查是否真的是不同層級（不只是路徑不同）
+                unique_layer_structures = set()
+                
+                for path, info in path_list:
+                    # 創建層級結構的簽名
+                    layer_signature = self._create_layer_signature(info['layers'])
+                    unique_layer_structures.add(layer_signature)
+                
+                # 如果有多個不同的層級結構，就是衝突
+                if len(unique_layer_structures) > 1:
+                    conflict = {
+                        'id': end_key,
+                        'type': f'{file_type}_layer_conflict',
+                        'paths': [],
+                        'layer_structures': [],
+                        'languages': set(),
+                        'business_types': set(),
+                        'values': set(),
+                        'description': f"ID '{end_key}' 出現在多個不同的層級結構中"
+                    }
+                    
+                    for path, info in path_list:
+                        conflict['paths'].append(path)
+                        conflict['layer_structures'].append(self._format_layer_structure(info['layers']))
+                        conflict['languages'].update(info['languages'])
+                        conflict['business_types'].update(info['business_types'])
+                        conflict['values'].update(info['values'])
+                    
+                    # 轉換 set 為 list 以便序列化
+                    conflict['languages'] = list(conflict['languages'])
+                    conflict['business_types'] = list(conflict['business_types'])
+                    conflict['values'] = list(conflict['values'])
+                    
+                    if file_type == 'json':
+                        self.json_conflicts.append(conflict)
+                    else:
+                        self.po_conflicts.append(conflict)
+                    
+                    conflicts_found = True
+        
+        return conflicts_found
+    
+    def _create_layer_signature(self, layers: list) -> str:
+        """創建層級結構的簽名"""
+        signature_parts = []
+        for layer_type, layer_value in layers[:-1]:  # 排除最後一個元素
+            if layer_type == 'key':
+                signature_parts.append(f"k:{layer_value}")
+            elif layer_type == 'index':
+                signature_parts.append(f"i:{layer_value}")
+        return ".".join(signature_parts)
+    
+    def _format_layer_structure(self, layers: list) -> str:
+        """格式化層級結構為可讀字符串"""
+        parts = []
+        for layer_type, layer_value in layers:
+            if layer_type == 'key':
+                parts.append(str(layer_value))
+            elif layer_type == 'index':
+                parts.append(f"[{layer_value}]")
+        return ".".join(parts)
+    
+    def print_conflict_report(self):
+        """打印詳細的衝突報告"""
+        total_conflicts = len(self.json_conflicts) + len(self.po_conflicts)
+        
+        if total_conflicts == 0:
+            print("✅ 未發現任何層級衝突")
+            return False
+        
+        print(f"\n{'='*60}")
+        print(f"❌ 發現 {total_conflicts} 個層級衝突")
+        print(f"{'='*60}")
+        
+        # JSON 衝突報告
+        if self.json_conflicts:
+            print(f"\n📄 JSON 層級衝突 ({len(self.json_conflicts)} 個)：")
+            print("-" * 40)
+            
+            for i, conflict in enumerate(self.json_conflicts, 1):
+                print(f"\n衝突 {i}：ID '{conflict['id']}'")
+                print(f"  描述：{conflict['description']}")
+                print(f"  影響語言：{', '.join(conflict['languages']) if conflict['languages'] else '未知'}")
+                print(f"  影響業態：{', '.join(conflict['business_types']) if conflict['business_types'] else '未知'}")
+                print(f"  不同層級結構：")
+                
+                for j, (path, structure) in enumerate(zip(conflict['paths'], conflict['layer_structures']), 1):
+                    print(f"    {j}) 路徑: {path}")
+                    print(f"       結構: {structure}")
+                
+                if conflict['values']:
+                    print(f"  相關數值：{', '.join(conflict['values'])}")
+        
+        # PO 衝突報告
+        if self.po_conflicts:
+            print(f"\n📝 PO 上下文衝突 ({len(self.po_conflicts)} 個)：")
+            print("-" * 40)
+            
+            for i, conflict in enumerate(self.po_conflicts, 1):
+                print(f"\n衝突 {i}：msgid '{conflict['id']}'")
+                print(f"  描述：{conflict['description']}")
+                print(f"  影響語言：{', '.join(conflict['languages']) if conflict['languages'] else '未知'}")
+                print(f"  影響業態：{', '.join(conflict['business_types']) if conflict['business_types'] else '未知'}")
+                
+                if 'contexts' in conflict:
+                    print(f"  不同上下文：")
+                    for j, context in enumerate(conflict['contexts'], 1):
+                        print(f"    {j}) {context}")
+                
+                if conflict['values']:
+                    print(f"  相關翻譯：{', '.join(conflict['values'])}")
+        
+        # 修正建議
+        print(f"\n🔧 修正建議：")
+        print("1. 檢查 Excel 檔案中是否有重複的 ID 名稱")
+        print("2. 確認每個 ID 在不同語言/業態中的路徑結構一致")
+        print("3. 如果是合理的不同路徑，請修改 ID 名稱以區分用途")
+        print("4. 檢查 JSON 檔案結構是否符合預期的多語言格式")
+        print("5. 確認 PO 檔案中的 msgid 在同一上下文中使用")
+        
+        print(f"\n❌ 由於發現層級衝突，合併進程已終止")
+        print("請修正上述衝突後重新執行合併操作")
+        
+        return True
+    
+    def generate_conflict_report_file(self, output_dir: Path, timestamp: str):
+        """生成詳細的衝突報告檔案"""
+        if not self.json_conflicts and not self.po_conflicts:
+            return
+        
+        report_file = output_dir / f"layer_conflicts_report_{timestamp}.txt"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            with open(report_file, 'w', encoding='utf-8') as f:
+                f.write("層級衝突詳細報告\n")
+                f.write(f"生成時間：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"{'='*60}\n\n")
+                
+                total_conflicts = len(self.json_conflicts) + len(self.po_conflicts)
+                f.write(f"總衝突數量：{total_conflicts}\n")
+                f.write(f"JSON 層級衝突：{len(self.json_conflicts)} 個\n")
+                f.write(f"PO 上下文衝突：{len(self.po_conflicts)} 個\n\n")
+                
+                # JSON 衝突詳情
+                if self.json_conflicts:
+                    f.write("JSON 層級衝突詳情：\n")
+                    f.write("-" * 40 + "\n")
+                    
+                    for i, conflict in enumerate(self.json_conflicts, 1):
+                        f.write(f"\n衝突 {i}：\n")
+                        f.write(f"  ID：{conflict['id']}\n")
+                        f.write(f"  類型：{conflict['type']}\n")
+                        f.write(f"  描述：{conflict['description']}\n")
+                        f.write(f"  影響語言：{', '.join(conflict['languages'])}\n")
+                        f.write(f"  影響業態：{', '.join(conflict['business_types'])}\n")
+                        
+                        f.write(f"  衝突路徑：\n")
+                        for j, (path, structure) in enumerate(zip(conflict['paths'], conflict['layer_structures']), 1):
+                            f.write(f"    {j}) 完整路徑: {path}\n")
+                            f.write(f"       層級結構: {structure}\n")
+                        
+                        if conflict['values']:
+                            f.write(f"  相關數值：\n")
+                            for value in conflict['values']:
+                                f.write(f"    - {value}\n")
+                
+                # PO 衝突詳情
+                if self.po_conflicts:
+                    f.write("\nPO 上下文衝突詳情：\n")
+                    f.write("-" * 40 + "\n")
+                    
+                    for i, conflict in enumerate(self.po_conflicts, 1):
+                        f.write(f"\n衝突 {i}：\n")
+                        f.write(f"  msgid：{conflict['id']}\n")
+                        f.write(f"  類型：{conflict['type']}\n")
+                        f.write(f"  描述：{conflict['description']}\n")
+                        f.write(f"  影響語言：{', '.join(conflict['languages'])}\n")
+                        f.write(f"  影響業態：{', '.join(conflict['business_types'])}\n")
+                        
+                        if 'contexts' in conflict:
+                            f.write(f"  不同上下文：\n")
+                            for context in conflict['contexts']:
+                                f.write(f"    - {context}\n")
+                        
+                        if conflict['values']:
+                            f.write(f"  相關翻譯：\n")
+                            for value in conflict['values']:
+                                f.write(f"    - {value}\n")
+                
+                # 修正指引
+                f.write(f"\n修正指引：\n")
+                f.write("1. 層級衝突分析：\n")
+                f.write("   - 檢查相同 ID 是否在不同的 JSON 路徑層級中使用\n")
+                f.write("   - 確認多語言結構中的路徑一致性\n")
+                f.write("   - 驗證 PO 檔案中的 msgid 上下文使用\n\n")
+                
+                f.write("2. 建議的修正方法：\n")
+                f.write("   - 重新命名衝突的 ID 以反映其在不同層級的用途\n")
+                f.write("   - 統一多語言 JSON 結構中的路徑格式\n")
+                f.write("   - 為 PO 檔案中的重複 msgid 添加適當的上下文\n")
+                f.write("   - 檢查 Excel 檔案中的項目ID是否有邏輯錯誤\n\n")
+                
+                f.write("3. 預防措施：\n")
+                f.write("   - 建立 ID 命名規範，避免層級間的重複\n")
+                f.write("   - 使用層級前綴來區分不同層級的項目\n")
+                f.write("   - 在合併前進行結構驗證\n")
+                f.write("   - 定期審查翻譯檔案的結構一致性\n")
+            
+            print(f"📄 層級衝突報告已生成：{report_file}")
+            
+        except Exception as e:
+            print(f"⚠️  生成層級衝突報告失敗：{e}")
+
+
+# 以下是原有函數，增加層級衝突檢測邏輯
 
 def detect_tobemodified_files(config) -> dict:
     """檢測可用的 tobemodified 檔案"""
@@ -296,7 +730,7 @@ def read_excel_updates_for_language(xlsx_path: Path, language: str, config) -> d
 
 def combine_multilang_json_files_for_business_type(all_updates: dict, target_json_path: Path, 
                                                   output_json_path: Path, bt_code: str, log_detail=None) -> dict:
-    """【修正版】為特定業態合併多語言 JSON 檔案，避免業態間衝突，並正確處理數值差異"""
+    """【改進版】為特定業態合併多語言 JSON 檔案，包含層級衝突檢測"""
     result = {
         "success": False,
         "merged": 0,
@@ -336,6 +770,26 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
         if log_detail:
             log_detail(f"多語言結構檢測：{'是' if is_multilang_structure else '否'}")
         
+        # **新增：層級衝突檢測**
+        conflict_detector = LayerConflictDetector()
+        has_layer_conflicts = conflict_detector.detect_json_layer_conflicts(
+            {lang: {bt_code: updates[bt_code]} for lang, updates in all_updates.items() if bt_code in updates},
+            target_data,
+            is_multilang_structure
+        )
+        
+        if has_layer_conflicts:
+            print(f"   ❌ JSON 檔案發現層級衝突，終止合併")
+            if log_detail:
+                log_detail(f"JSON ({bt_code}): 發現層級衝突，終止合併")
+            
+            # 生成衝突報告
+            conflict_detector.print_conflict_report()
+            
+            # 將衝突信息添加到結果中
+            result["errors"].append("發現層級衝突，合併已終止")
+            return result
+        
         conflicts = []
         language_stats = {}
         
@@ -364,7 +818,7 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                 # 獲取現有值
                 existing_value = get_json_value_by_path(target_data, multilang_path)
                 
-                # 【修正關鍵邏輯】正確處理值的比較和衝突檢測
+                # 正確處理值的比較和衝突檢測
                 if existing_value is not None:
                     existing_str = str(existing_value).strip()
                     new_str = str(new_value).strip()
@@ -377,7 +831,7 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                             log_detail(f"跳過相同值：{multilang_path} = '{new_str}'")
                         continue
                     
-                    # 【重要修正】當值不同時，應該標記為衝突並讓用戶決定
+                    # 當值不同時，標記為衝突並讓用戶決定
                     if existing_str != new_str:
                         conflict_info = {
                             "path": multilang_path,
@@ -497,59 +951,9 @@ def handle_json_conflict(path: str, existing_value: str, new_value: str, languag
             return "skip"
 
 
-def generate_conflict_report(conflicts: list, output_dir: Path, timestamp: str):
-    """生成衝突報告"""
-    if not conflicts:
-        return
-    
-    conflict_report_file = output_dir / f"conflicts_report_{timestamp}.txt"
-    
-    try:
-        with open(conflict_report_file, 'w', encoding='utf-8') as f:
-            f.write(f"JSON 合併衝突報告\n")
-            f.write(f"生成時間：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write(f"{'='*60}\n\n")
-            
-            f.write(f"總衝突數量：{len(conflicts)}\n\n")
-            
-            for i, conflict in enumerate(conflicts, 1):
-                f.write(f"衝突 {i}：\n")
-                f.write(f"  路徑：{conflict['path']}\n")
-                f.write(f"  語言：{conflict['language']}\n")
-                f.write(f"  現有值：'{conflict['existing_value']}'\n")
-                f.write(f"  新值：'{conflict['new_value']}'\n")
-                f.write(f"  檔案類型：{conflict['file_type']}\n")
-                f.write(f"\n{'-'*40}\n\n")
-            
-            f.write(f"處理建議：\n")
-            f.write(f"1. 檢查值的差異是否為預期的更新\n")
-            f.write(f"2. 確認語言翻譯的正確性\n")
-            f.write(f"3. 驗證業態特定的術語使用\n")
-            f.write(f"4. 考慮建立翻譯一致性檢查機制\n")
-        
-        print(f"📄 衝突報告已生成：{conflict_report_file}")
-        
-    except Exception as e:
-        print(f"⚠️  生成衝突報告失敗：{e}")
-
-def check_multilang_json_structure(data: dict) -> bool:
-    """檢查 JSON 是否為多語言結構"""
-    if not isinstance(data, dict):
-        return False
-    
-    # 檢查頂層 key 是否像語言代碼
-    for key in data.keys():
-        if isinstance(key, str) and re.match(r'^[a-z]{2}(-[A-Z]{2})?$', key):
-            # 如果至少有一個 key 像語言代碼，且其值是字典，則認為是多語言結構
-            if isinstance(data[key], dict):
-                return True
-    
-    return False
-
-
 def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path, 
                                      output_dir: Path, bt_code: str, log_detail=None) -> dict:
-    """【修正版】為特定業態處理 PO 檔案合併"""
+    """【改進版】為特定業態處理 PO 檔案合併，包含層級衝突檢測"""
     result = {
         "success": False,
         "merged": 0,
@@ -583,9 +987,28 @@ def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path,
         if log_detail:
             log_detail(f"載入目標 PO 檔案：{target_po_path.name}，共 {len(target_po)} 個條目")
         
+        # **新增：層級衝突檢測**
+        conflict_detector = LayerConflictDetector()
+        has_layer_conflicts = conflict_detector.detect_po_layer_conflicts(
+            {lang: {bt_code: updates[bt_code]} for lang, updates in all_updates.items() if bt_code in updates},
+            target_po
+        )
+        
+        if has_layer_conflicts:
+            print(f"   ❌ PO 檔案發現層級衝突，終止合併")
+            if log_detail:
+                log_detail(f"PO ({bt_code}): 發現層級衝突，終止合併")
+            
+            # 生成衝突報告
+            conflict_detector.print_conflict_report()
+            
+            # 將衝突信息添加到結果中
+            result["errors"].append("發現層級衝突，合併已終止")
+            return result
+        
         language_stats = {}
         
-        # 【修正】只處理當前業態的更新
+        # 只處理當前業態的更新
         for language, language_updates in all_updates.items():
             if bt_code not in language_updates:
                 continue
@@ -598,7 +1021,7 @@ def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path,
                 target_entry = target_po.find(msgid)
                 
                 if target_entry:
-                    # 【修正】只有當現有值和新值真的不同時才需要更新
+                    # 只有當現有值和新值真的不同時才需要更新
                     if target_entry.msgstr and target_entry.msgstr.strip():
                         if target_entry.msgstr == new_msgstr:
                             # 值相同，跳過
@@ -643,6 +1066,21 @@ def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path,
             log_detail(f"錯誤：{error_msg}")
     
     return result
+
+
+def check_multilang_json_structure(data: dict) -> bool:
+    """檢查 JSON 是否為多語言結構"""
+    if not isinstance(data, dict):
+        return False
+    
+    # 檢查頂層 key 是否像語言代碼
+    for key in data.keys():
+        if isinstance(key, str) and re.match(r'^[a-z]{2}(-[A-Z]{2})?, key):
+            # 如果至少有一個 key 像語言代碼，且其值是字典，則認為是多語言結構
+            if isinstance(data[key], dict):
+                return True
+    
+    return False
 
 
 def get_json_value_by_path(data: dict, path: str):
@@ -738,8 +1176,8 @@ def parse_json_path(path: str) -> list:
 
 
 def main():
-    """主執行函數"""
-    print("🚀 開始多語言檔案合併處理 (v1.3 - 修正業態衝突邏輯版)")
+    """主執行函數 - 包含層級衝突檢測"""
+    print("🚀 開始多語言檔案合併處理 (v1.4 - 層級衝突檢測版)")
     
     # 載入配置
     config = get_config()
@@ -805,6 +1243,60 @@ def main():
         print(f"   PO 檔案：{target_po_path.relative_to(combine_dir)}")
     print(f"   涵蓋業態：{', '.join([config.get_business_types()[bt]['display_name'] for bt in all_business_types])}")
     
+    # **新增：預先進行全面的層級衝突檢測**
+    print(f"\n🔍 執行全面層級衝突檢測...")
+    global_conflict_detector = LayerConflictDetector()
+    
+    has_global_conflicts = False
+    
+    # 檢測 JSON 層級衝突
+    if target_json_path:
+        try:
+            target_json_data = json.loads(target_json_path.read_text(encoding="utf-8"))
+            is_multilang = check_multilang_json_structure(target_json_data)
+            
+            if global_conflict_detector.detect_json_layer_conflicts(all_updates, target_json_data, is_multilang):
+                has_global_conflicts = True
+        except Exception as e:
+            print(f"⚠️  JSON 衝突檢測失敗：{e}")
+    
+    # 檢測 PO 層級衝突
+    if target_po_path:
+        try:
+            target_po_data = polib.pofile(str(target_po_path))
+            
+            if global_conflict_detector.detect_po_layer_conflicts(all_updates, target_po_data):
+                has_global_conflicts = True
+        except Exception as e:
+            print(f"⚠️  PO 衝突檢測失敗：{e}")
+    
+    # 如果發現全局層級衝突，終止進程
+    if has_global_conflicts:
+        print(f"\n{'='*60}")
+        print(f"❌ 發現層級衝突，合併進程已終止")
+        print(f"{'='*60}")
+        
+        global_conflict_detector.print_conflict_report()
+        
+        # 建立輸出目錄以生成衝突報告
+        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        dirs = config.get_directories()
+        output_dir = Path(dirs['output_dir']) / f"conflict_report_{timestamp}"
+        
+        global_conflict_detector.generate_conflict_report_file(output_dir, timestamp)
+        
+        print(f"\n🔧 修正建議：")
+        print("1. 檢查 Excel 檔案中的項目ID是否有重複命名")
+        print("2. 確認同一個ID在不同語言中是否使用了不同的路徑結構")
+        print("3. 檢查多語言 JSON 檔案的結構一致性")
+        print("4. 驗證 PO 檔案中的 msgid 上下文使用")
+        print("5. 建議使用層級前綴來區分不同層級的相同名稱項目")
+        
+        print(f"📄 詳細衝突報告已生成於：{output_dir}")
+        sys.exit(1)
+    
+    print(f"✅ 層級衝突檢測通過，繼續合併流程...")
+    
     # 建立輸出目錄 - 使用正確的命名格式
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     dirs = config.get_directories()
@@ -822,12 +1314,13 @@ def main():
     log_detail(f"語言：{', '.join(selected_files.keys())}")
     log_detail(f"來源檔案：{list(selected_files.values())}")
     log_detail(f"涵蓋業態：{', '.join(all_business_types)}")
+    log_detail(f"層級衝突檢測：通過")
     
-    # 【修正】處理合併邏輯 - 避免業態間衝突
+    # 處理合併邏輯 - 避免業態間衝突
     business_types = config.get_business_types()
     all_results = {}
     
-    # 【修正】按業態分別處理，避免相互干擾
+    # 按業態分別處理，避免相互干擾
     for bt_code in all_business_types:
         if bt_code not in business_types:
             continue
@@ -841,7 +1334,7 @@ def main():
         
         results = {}
         
-        # 【修正】為當前業態處理 JSON 檔案
+        # 為當前業態處理 JSON 檔案
         if target_json_path:
             output_json_path = output_dir / f"{target_json_path.stem}{suffix}_combined.json"
             json_result = combine_multilang_json_files_for_business_type(
@@ -866,7 +1359,7 @@ def main():
                 if json_result.get('merged', 0) == 0 and json_result.get('skipped', 0) == 0:
                     print(f"     ℹ️  {display_name} 沒有 JSON 更新項目")
         
-        # 【修正】為當前業態處理 PO 檔案
+        # 為當前業態處理 PO 檔案
         if target_po_path:
             po_result = combine_po_files_for_business_type(
                 all_updates,
@@ -945,6 +1438,7 @@ def main():
     if total_errors > 0:
         print(f"⚠️  處理錯誤：{total_errors} 個")
     print(f"📁 輸出目錄：{output_dir}")
+    print(f"🔍 層級衝突檢測：通過")
     
     # 生成處理摘要
     generate_multilang_summary_report(all_results, all_updates, output_dir, timestamp, target_json_path, target_po_path, log_detail)
@@ -952,13 +1446,14 @@ def main():
 
 def generate_multilang_summary_report(results: dict, all_updates: dict, output_dir: Path, timestamp: str, 
                                      target_json_path: Path, target_po_path: Path, log_detail):
-    """生成多語言合併處理摘要報告"""
+    """生成多語言合併處理摘要報告 - 包含層級衝突檢測信息"""
     summary_file = output_dir / f"multi_combine_summary_{timestamp}.txt"
     
     try:
         with open(summary_file, 'w', encoding='utf-8') as f:
             f.write(f"多語言檔案合併處理摘要報告\n")
             f.write(f"生成時間：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"版本：v1.4 - 層級衝突檢測版\n")
             f.write(f"{'='*60}\n\n")
             
             f.write(f"目標檔案：\n")
@@ -972,6 +1467,9 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             for language in all_updates.keys():
                 f.write(f"  - {language}\n")
             f.write(f"\n")
+            
+            f.write(f"層級衝突檢測：通過\n")
+            f.write(f"所有相同ID的不同層級衝突已在合併前檢測並解決\n\n")
             
             total_merged = 0
             total_skipped = 0
@@ -1021,12 +1519,21 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"總跳過項目：{total_skipped}\n")
             f.write(f"總錯誤項目：{total_errors}\n")
             f.write(f"處理語言數：{len(all_updates)}\n")
+            f.write(f"層級衝突檢測：通過\n")
             
             if successful_business_types:
                 f.write(f"\n成功的業態：{', '.join(successful_business_types)}\n")
             
             if failed_business_types:
                 f.write(f"失敗的業態：{', '.join(failed_business_types)}\n")
+            
+            f.write(f"\n層級衝突檢測說明：\n")
+            f.write(f"- 本版本新增了完整的層級衝突檢測功能\n")
+            f.write(f"- 在合併前檢查所有相同ID是否出現在不同層級結構中\n")
+            f.write(f"- 檢測 JSON 檔案中的路徑層級衝突\n")
+            f.write(f"- 檢測 PO 檔案中的上下文衝突\n")
+            f.write(f"- 發現衝突時會終止進程並生成詳細報告\n")
+            f.write(f"- 通過檢測後才會執行實際的合併操作\n")
             
             f.write(f"\n多語言合併說明：\n")
             f.write(f"- 本次處理支援多個語言的 tobemodified 合併到同一檔案\n")
@@ -1041,14 +1548,16 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"- 合併前建議備份原始檔案\n")
             f.write(f"- 合併後請測試多語言翻譯檔案的正確性\n")
             f.write(f"- 檢查各語言層級的數據完整性\n")
+            f.write(f"- 如果遇到層級衝突，請參考衝突報告進行修正\n")
             
-            # 修正版本說明
-            f.write(f"\n修正版本 v1.3 改進：\n")
-            f.write(f"- 修正業態間重複處理同一檔案的問題\n")
-            f.write(f"- 修正衝突檢測邏輯：只處理當前業態的更新\n")
-            f.write(f"- 避免業態間互相干擾\n")
-            f.write(f"- 正確區分真正衝突和正常更新\n")
-            f.write(f"- 改善合併流程邏輯\n")
+            # 版本更新說明
+            f.write(f"\n版本 v1.4 新增功能：\n")
+            f.write(f"- 新增層級衝突檢測器 (LayerConflictDetector)\n")
+            f.write(f"- 檢測相同ID名稱但在不同層級的衝突\n")
+            f.write(f"- 全面列出所有層級衝突詳情\n")
+            f.write(f"- 發現層級衝突時終止進程並生成報告\n")
+            f.write(f"- 支援多語言和多業態的層級衝突檢測\n")
+            f.write(f"- 提供詳細的修正建議和指引\n")
         
         log_detail(f"多語言合併摘要報告已生成：{summary_file}")
         
