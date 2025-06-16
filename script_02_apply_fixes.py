@@ -578,7 +578,7 @@ def detect_tobemodified_files(config) -> dict:
         return False
     
     # 在當前目錄和輸出目錄中查找額外的 tobemodified 檔案
-    for search_dir in [Path('.'), output_dir]:
+    for search_dir in [output_dir]:
         if search_dir.exists():
             for file_path in search_dir.glob("*_tobemodified.xlsx"):
                 # 提取語言代碼

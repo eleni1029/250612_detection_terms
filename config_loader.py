@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-config_loader.py (v2.4 - 部分檔案支持版本 + 合併功能修正版)
+config_loader.py (v2.4.1 - 修正語言代碼檢測版本)
 
-基於現有邏輯進行最小化調整，主要修正：
-1. 路徑結構從 i18n_input/{language}/ 改為 i18n_input/{language}/LC_MESSAGES/
-2. 檔案讀取邏輯：優先讀取 messages.po 和 {language}.json，忽略其他檔案
-3. 如果兩個檔案都不存在才報錯，有其中一個就可以處理
-4. 新增部分檔案支持功能
-5. 新增合併功能支援（單語言和多語言）
+修正內容：
+1. ✅ 修正語言代碼驗證邏輯，排除日期前綴目錄
+2. ✅ 增強目錄名稱過濾，避免掃描到系統檔案和日期前綴目錄
+3. ✅ 更嚴格的語言代碼格式驗證
+4. ✅ 改善錯誤處理和日誌輸出
+5. ✅ 修正所有語法錯誤
 """
 
 import yaml
@@ -102,7 +102,7 @@ class ConfigLoader:
     
     def detect_available_languages(self) -> List[str]:
         """
-        檢測 i18n_input 目錄中可用的語言 - 使用新的路徑結構，過濾臨時檔案
+        檢測 i18n_input 目錄中可用的語言 - 修正版，嚴格過濾無效目錄
         
         Returns:
             可用語言列表
@@ -126,27 +126,6 @@ class ConfigLoader:
         # 檔案處理規則
         file_handling = self.config.get('file_handling', {})
         require_at_least_one = file_handling.get('require_at_least_one', True)
-        ignore_patterns = file_handling.get('ignore_patterns', ['*.tmp', '*.bak', '*.log', '*~'])
-        
-        # 定義需要過濾的目錄名稱模式
-        ignore_dir_patterns = [
-            '~$*',           # Excel/Word 臨時檔案前綴
-            '.*',            # 隱藏目錄（以點開頭）
-            '__pycache__',   # Python 快取目錄
-            '.DS_Store',     # macOS 系統檔案
-            'Thumbs.db',     # Windows 縮圖快取
-            '*.tmp',         # 臨時目錄
-            '*.temp'         # 臨時目錄
-        ]
-        
-        def should_ignore_directory(dir_name: str) -> bool:
-            """檢查目錄是否應該被忽略"""
-            import fnmatch
-            
-            for pattern in ignore_dir_patterns:
-                if fnmatch.fnmatch(dir_name, pattern):
-                    return True
-            return False
         
         # 掃描所有語言目錄 - 新的路徑結構：JSON 在根目錄，PO 在 LC_MESSAGES 子目錄
         for lang_dir in input_dir.iterdir():
@@ -155,13 +134,13 @@ class ConfigLoader:
             
             language = lang_dir.name
             
-            # 過濾不符合語言代碼格式的目錄
-            if should_ignore_directory(language):
-                print(f"⚠️  跳過系統目錄：{language}")
+            # 【修正】更嚴格的目錄過濾
+            if self._should_ignore_directory(language):
+                print(f"⚠️  跳過無效目錄：{language}")
                 continue
             
-            # 基本語言代碼格式驗證（可選）
-            if not self._is_valid_language_code(language):
+            # 【修正】嚴格的語言代碼格式驗證
+            if not self._is_valid_language_code_strict(language):
                 print(f"⚠️  跳過無效語言代碼：{language}")
                 continue
             
@@ -219,9 +198,98 @@ class ConfigLoader:
         self._detected_languages = available_languages
         return available_languages
 
-    def _is_valid_language_code(self, language: str) -> bool:
+    def _should_ignore_directory(self, dir_name: str) -> bool:
         """
-        驗證語言代碼格式是否有效
+        【新增】檢查目錄是否應該被忽略 - 更嚴格的過濾規則
+        
+        Args:
+            dir_name: 目錄名稱
+            
+        Returns:
+            bool: 是否應該忽略此目錄
+        """
+        import fnmatch
+        
+        # 定義需要過濾的目錄名稱模式
+        ignore_patterns = [
+            '~$*',           # Excel/Word 臨時檔案前綴
+            '.*',            # 隱藏目錄（以點開頭）
+            '__*',           # Python 特殊目錄
+            '__pycache__',   # Python 快取目錄
+            '.DS_Store',     # macOS 系統檔案
+            'Thumbs.db',     # Windows 縮圖快取
+            '*.tmp',         # 臨時目錄
+            '*.temp',        # 臨時目錄
+            '*.bak',         # 備份目錄
+            '*~',            # 臨時檔案
+        ]
+        
+        # 檢查常見的忽略模式
+        for pattern in ignore_patterns:
+            if fnmatch.fnmatch(dir_name, pattern):
+                return True
+        
+        # 【新增】檢查日期前綴模式（如 "250616 zh-TW"）
+        if self._has_date_prefix(dir_name):
+            return True
+        
+        # 【新增】檢查是否包含不適當的字符
+        if self._contains_invalid_chars(dir_name):
+            return True
+        
+        return False
+    
+    def _has_date_prefix(self, dir_name: str) -> bool:
+        """
+        【新增】檢查目錄名是否包含日期前綴
+        
+        Args:
+            dir_name: 目錄名稱
+            
+        Returns:
+            bool: 是否包含日期前綴
+        """
+        # 檢查常見的日期前綴模式
+        date_patterns = [
+            r'^\d{6}\s',      # 6位數字開頭 + 空格 (如 "250616 zh-TW")
+            r'^\d{8}\s',      # 8位數字開頭 + 空格 (如 "20250616 zh-TW")
+            r'^\d{4}-\d{2}-\d{2}\s',  # YYYY-MM-DD 格式 + 空格
+            r'^\d{2}-\d{2}-\d{4}\s',  # DD-MM-YYYY 格式 + 空格
+            r'^\d{4}_\d{2}_\d{2}_',   # 時間戳格式
+        ]
+        
+        for pattern in date_patterns:
+            if re.match(pattern, dir_name):
+                return True
+        
+        return False
+    
+    def _contains_invalid_chars(self, dir_name: str) -> bool:
+        """
+        【新增】檢查目錄名是否包含不適當的字符
+        
+        Args:
+            dir_name: 目錄名稱
+            
+        Returns:
+            bool: 是否包含無效字符
+        """
+        # 語言代碼中不應該包含的字符
+        invalid_chars = [' ', '\t', '\n', '\r']  # 空格和空白字符
+        
+        for char in invalid_chars:
+            if char in dir_name:
+                return True
+        
+        # 檢查是否包含多個連續的特殊字符
+        if re.search(r'[_-]{3,}', dir_name):  # 3個或更多連續的下劃線或破折號
+            return True
+        
+        return False
+
+    def _is_valid_language_code_strict(self, language: str) -> bool:
+        """
+        【修正】嚴格驗證語言代碼格式是否有效
         
         Args:
             language: 語言代碼字符串
@@ -229,26 +297,30 @@ class ConfigLoader:
         Returns:
             bool: 是否為有效的語言代碼
         """
-        # 常見的語言代碼格式：
-        # - ISO 639-1: en, zh, fr (2字母)
-        # - ISO 639-1 with region: en-US, zh-TW, zh-CN (2字母-2字母)
-        # - 其他格式: zh_TW, en_US (下劃線分隔)
-        valid_patterns = [
-            r'^[a-zA-Z]{2}$',                    # en, zh
-            r'^[a-zA-Z]{2}[-_][a-zA-Z]{2}$',    # en-US, zh-TW, zh_CN
-            r'^[a-zA-Z]{2}[-_][a-zA-Z]{2,4}$',  # en-US, zh-Hans
-            r'^[a-zA-Z]{3}$',                    # 3字母語言代碼
+        # 【修正】更嚴格的語言代碼格式驗證
+        strict_patterns = [
+            r'^[a-z]{2}$',                      # en, zh (小寫2字母)
+            r'^[a-z]{2}-[A-Z]{2}$',            # en-US, zh-TW (標準格式)
+            r'^[a-z]{2}_[A-Z]{2}$',            # en_US, zh_TW (下劃線格式)
+            r'^[a-z]{2}-[a-z]{2,4}$',          # en-us, zh-hans (小寫區域)
+            r'^[a-z]{2}_[a-z]{2,4}$',          # en_us, zh_hans (下劃線小寫區域)
+            r'^[a-z]{3}$',                      # eng, zho (3字母語言代碼)
+            r'^[a-z]{2}-[A-Z]{2}-[a-z]+$',     # en-US-variant (帶變體)
         ]
         
-        for pattern in valid_patterns:
-            if re.match(pattern, language, re.IGNORECASE):
+        # 檢查是否符合任何一個嚴格模式
+        for pattern in strict_patterns:
+            if re.match(pattern, language):
                 return True
         
-        # 如果不符合標準格式，但不是系統檔案，也允許（向後相容）
-        if not language.startswith(('~$', '.', '__')):
-            return True
-        
         return False
+    
+    def _is_valid_language_code(self, language: str) -> bool:
+        """
+        【保留】原有的語言代碼驗證（向後相容）
+        現在使用 _is_valid_language_code_strict 替代
+        """
+        return self._is_valid_language_code_strict(language)
         
     def get_language_files(self, language: str) -> Dict[str, Path]:
         """
@@ -702,7 +774,6 @@ class ConfigLoader:
                 if json_structure.get('top_level_languages', True):
                     pattern = json_structure.get('language_code_pattern', r'^[a-z]{2}(-[A-Z]{2})?$')
                     try:
-                        import re
                         re.compile(pattern)
                     except re.error:
                         print(f"⚠️  多語言配置中的語言代碼模式無效：{pattern}")
@@ -793,11 +864,15 @@ class ConfigLoader:
         pattern = json_structure.get('language_code_pattern', r'^[a-z]{2}(-[A-Z]{2})?$')
         
         # 檢查頂層 key 是否像語言代碼
-        for key in data.keys():
-            if isinstance(key, str) and re.match(pattern, key):
-                # 如果至少有一個 key 像語言代碼，且其值是字典，則認為是多語言結構
-                if isinstance(data[key], dict):
-                    return True
+        try:
+            for key in data.keys():
+                if isinstance(key, str) and re.match(pattern, key):
+                    # 如果至少有一個 key 像語言代碼，且其值是字典，則認為是多語言結構
+                    if isinstance(data[key], dict):
+                        return True
+        except re.error:
+            # 如果正則表達式模式無效，回退到簡單檢查
+            pass
         
         return False
     

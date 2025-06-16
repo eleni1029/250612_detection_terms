@@ -62,19 +62,6 @@ def detect_tobemodified_files(config) -> dict:
         if tobemodified_path.exists():
             available_files[language] = tobemodified_path
     
-    # 在當前目錄中查找額外的檔案
-    for file_path in Path('.').glob("*_tobemodified.xlsx"):
-        filename = file_path.stem
-        if filename.endswith('_tobemodified'):
-            language = filename[:-len('_tobemodified')]
-            
-            # 過濾系統臨時檔案
-            if language.startswith(('~$', '.', '__')):
-                continue
-            
-            if language not in available_files:
-                available_files[language] = file_path
-
     return available_files
 
 

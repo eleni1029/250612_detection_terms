@@ -14,7 +14,7 @@ file_patterns:
   
   # 統一的對照表和待修正檔案
   phrase_comparison: "phrase_comparison.xlsx"     # 統一對照表
-  tobemodified: "tobemodified_{language}.xlsx"   # 各語言的待修正清單
+  tobemodified: "{language}_tobemodified.xlsx"   # 各語言的待修正清單（修正：移除 tobemodified_ 前綴）
   
   # 新增：部分檔案命名模板
   partial_po: "messages{suffix}_partial.po"       # 部分 PO 檔案命名
@@ -41,19 +41,60 @@ business_types:
     display_name: "培訓機構"
     description: "教育訓練機構適用的敏感詞解決方案"
 
-# 檔案處理規則
+# 檔案處理規則 - 修正版本
 file_handling:
-  # 檔案路徑配置：JSON 在語言根目錄，PO 在 LC_MESSAGES 子目錄
+  # 檔案路徑配置：支援彈性路徑結構
   json_in_root: true               # JSON 檔案在語言根目錄
-  po_in_lc_messages: true          # PO 檔案在 LC_MESSAGES 子目錄
-  lc_messages_subdir: "LC_MESSAGES"  # LC_MESSAGES 子目錄名稱
+  po_in_lc_messages: false         # 修正：改為 false，支援 PO 檔案在根目錄或子目錄
+  lc_messages_subdir: "LC_MESSAGES"  # LC_MESSAGES 子目錄名稱（可選）
+  
+  # 檔案搜尋模式 - 新增彈性搜尋
+  search_mode: "flexible"          # flexible: 彈性搜尋, strict: 嚴格路徑
+  search_patterns:
+    po_patterns:                   # PO 檔案可能的路徑模式
+      - "messages.po"              # 根目錄
+      - "LC_MESSAGES/messages.po"  # LC_MESSAGES 子目錄
+      - "*/messages.po"            # 任意子目錄
+    json_patterns:                 # JSON 檔案可能的路徑模式
+      - "{language}.json"          # 根目錄
+      - "*/{language}.json"        # 任意子目錄
   
   # 檔案優先順序和處理規則
   priority_files: ["messages.po", "{language}.json"]
-  ignore_patterns: ["*.tmp", "*.bak", "*.log", "*~"]
+  ignore_patterns: ["*.tmp", "*.bak", "*.log", "*~", "~$*"]  # 新增 Excel 臨時檔案模式
   require_at_least_one: true  # 至少需要一個優先檔案存在
-  # 新增：如果兩個檔案都存在，優先處理哪個（如果有衝突的話）
   file_priority: "both"  # both: 都處理, po: 優先PO, json: 優先JSON
+
+# 語言檢測配置 - 增強版本
+language_detection:
+  # 檔案檢測優先順序
+  file_priority:
+    - "messages.po"
+    - "{language}.json"
+  
+  # 大小寫處理
+  case_handling:
+    ignore_case: true              # 忽略檔案名大小寫
+    
+  # 檔案驗證
+  validation:
+    require_at_least_one: true     # 至少需要一個檔案
+    warn_missing_files: true      # 警告缺失的檔案
+    
+  # 新增：語言代碼驗證規則
+  language_code_validation:
+    enabled: true                  # 啟用語言代碼驗證
+    patterns:                      # 有效的語言代碼模式
+      - "^[a-zA-Z]{2}$"           # en, zh
+      - "^[a-zA-Z]{2}[-_][a-zA-Z]{2}$"  # en-US, zh-TW
+      - "^[a-zA-Z]{2}[-_][a-zA-Z]{2,4}$"  # en-US, zh-Hans
+      - "^[a-zA-Z]{3}$"           # 3字母語言代碼
+    ignore_system_patterns:        # 要忽略的系統檔案模式
+      - "^~\\$.*"                 # Excel 臨時檔案
+      - "^\\..*"                  # 隱藏檔案
+      - "^__.*"                   # Python 特殊檔案
+      - "Thumbs"                  # Windows 縮圖
+      - "\\.DS_Store"             # macOS 系統檔案
 
 # 統一 Excel 配置
 excel_config:
@@ -99,22 +140,6 @@ excel_config:
     data_row_color: "F2F2F2"        # 奇數行背景色
     business_header_color: "FFC000"  # 業態標題背景色
     language_block_border: "thick"   # 語言區塊邊框樣式
-
-# 語言檢測配置
-language_detection:
-  # 檔案檢測優先順序
-  file_priority:
-    - "messages.po"
-    - "{language}.json"
-  
-  # 大小寫處理
-  case_handling:
-    ignore_case: true              # 忽略檔案名大小寫
-    
-  # 檔案驗證
-  validation:
-    require_at_least_one: true     # 至少需要一個檔案
-    warn_missing_files: true      # 警告缺失的檔案
 
 # 敏感詞檢測設定
 keyword_detection:
@@ -188,6 +213,29 @@ partial_file_handling:
     add_timestamp: true           # 在目錄名中添加時間戳
     include_summary: true         # 生成處理摘要
 
+# 新增：檔案路徑解析配置
+path_resolution:
+  # tobemodified 檔案搜尋配置
+  tobemodified_search:
+    # 搜尋目錄（按優先順序）
+    search_directories:
+      - "."                       # 當前目錄
+      - "i18n_output"            # 輸出目錄
+    
+    # 檔案名模式（按優先順序嘗試）
+    filename_patterns:
+      - "{language}_tobemodified.xlsx"     # 標準格式
+      - "tobemodified_{language}.xlsx"     # 舊格式（向後相容）
+    
+    # 檔案過濾規則
+    file_filters:
+      exclude_patterns:
+        - "~$*"                   # Excel 臨時檔案
+        - ".*"                    # 隱藏檔案
+        - "__*"                   # Python 特殊檔案
+      
+      validate_excel: true        # 驗證是否為有效的 Excel 檔案
+
 # 系統設定
 system:
   # 日誌設定
@@ -203,9 +251,9 @@ system:
     show_progress: true
 
 # 版本資訊
-version: "2.6.0"
-last_updated: "2024-12-10"
-system_type: "unified_multi_language_excel_with_partial_files"
+version: "2.6.1"
+last_updated: "2024-12-20"
+system_type: "unified_multi_language_excel_with_partial_files_fixed"
 
 # 預設值
 defaults:
@@ -213,9 +261,7 @@ defaults:
   business_type: "enterprises"    # 預設業態
   backup_before_overwrite: true
 
-# 在現有 config.yaml 中添加以下配置段落
-
-# 新增：檔案合併配置
+# 檔案合併配置
 combine:
   # 合併來源目錄 - 固定為 i18n_combine
   combine_dir: "i18n_combine"
@@ -289,9 +335,9 @@ combine:
     log_file_pattern: "combine_{timestamp}.log"
     multi_log_file_pattern: "multi_combine_{timestamp}.log"
 
-# 在現有的檔案命名配置中添加
+# 合併相關檔案命名
 file_patterns:
-  # ... 現有配置 ...
+  # 原有配置保持不變...
   
   # 新增：合併相關檔案命名
   combine_output: "{language}_{timestamp}_combined"      # 單語言合併輸出目錄命名
