@@ -256,13 +256,13 @@ def create_partial_po_file(original_po_path: Path, updates_list: list, output_pa
                     flags=original_entry.flags
                 )
                 
-                # 添加處理信息到註解
-                if debug_info.get('multiple_sensitive_words'):
-                    sensitive_words = ', '.join(debug_info['multiple_sensitive_words'])
-                    new_entry.tcomment += f"\n# 敏感詞: {sensitive_words}"
+                # # 添加處理信息到註解
+                # if debug_info.get('multiple_sensitive_words'):
+                #     sensitive_words = ', '.join(debug_info['multiple_sensitive_words'])
+                #     new_entry.tcomment += f"\n# 敏感詞: {sensitive_words}"
                 
-                if debug_info.get('category'):
-                    new_entry.tcomment += f"\n# 分類: {debug_info['category']}"
+                # if debug_info.get('category'):
+                #     new_entry.tcomment += f"\n# 分類: {debug_info['category']}"
                 
                 partial_po.append(new_entry)
                 result["updated"] += 1
