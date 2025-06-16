@@ -1,0 +1,182 @@
+{
+  "zh-CN": {
+    "year_semester": "年度期別",
+    "academic_year": "年度",
+    "semester": "期別",
+    "grade": "职称",
+    "clazz": "职级",
+    "create_year": "添加年度",
+    "create_semester": "添加期別",
+    "create_grade": "添加职称",
+    "create_class": "添加职级",
+    "department": "单位"
+  },
+  "zh-TW": {
+    "year_semester": "年度期別",
+    "academic_year": "年度",
+    "semester": "期別",
+    "grade": "職稱",
+    "clazz": "職級",
+    "create_year": "新增年度",
+    "create_semester": "新增期別",
+    "create_grade": "新增職稱",
+    "create_class": "新增職級",
+    "department": "單位",
+    "management": {
+      "score": {
+        "returnAndSetDateTip": "該課程成績已經送繳，但未被轉檔，你可以退回成績并設定日期，老師重新送繳"
+      }
+    },
+    "classin": {
+      "meeting_host_must_bind_mobile_phone": "主持人需綁定手機號碼，請在個人設定-帳號綁定中綁定手機號碼",
+      "alter": {
+        "join_meeting_must_bind_mobile_phone": "加入ClassIn 直播須綁定手機號碼，請在個人設定-帳號綁定中綁定手機號碼"
+      }
+    },
+    "tencent_meeting": {
+      "meeting_host_must_bind_mobile_phone": "主持人需綁定手機號碼，請在個人設定-帳號綁定中綁定手機號碼"
+    },
+    "webex_meeting": {
+      "bind_hint": {
+        "webex_bind_url": "<a href=\"/user/settings#/?target=webex-bind\" target=\"_blank\">個人設定</a>"
+      }
+    },
+    "newPublicResource": {
+      "captureCourse": "錄播課設定"
+    },
+    "course_make_up_score": {
+      "published": "成績已經送繳，無法設定成績佔比"
+    },
+    "management_setting": "管理後台設定",
+    "system_setting": "系統設定",
+    "user_role_setting": "人員權限設定",
+    "authz": {
+      "permission_settings": "權限設定",
+      "courseRolePermission": {
+        "activity_publish_status:management": {
+          "title": "設定發布狀態",
+          "tip": "設定單個活動發布狀態或批次設定發布狀態(注：隨堂測試、教學反饋、會議類學習活動不可調整發布狀態)"
+        }
+      }
+    },
+    "courseSetting": {
+      "trailCoursePrompt": "需要將課程設定為公開課程，此課程類型將自動允許訪客加入，並開放所有平台身份及院系(單位)加入該課程。"
+    },
+    "sliderTips": {
+      "published": "成績已經送繳教務，無法設定成績佔比"
+    },
+    "confirmScoreSetting": "請您先確認成績比率，後續核心團隊負責人可在：課程設定-高級設定中調整",
+    "homework": {
+      "confirmAnnounceMarkContent": "當前已設定【不向學生公佈成績】，公佈批改內容後，學生僅可查看評語及附件批註。",
+      "confirmHideMarkContent": "當前已設定【向學生公佈成績】，隱藏批改內容後，學生仍可查看成績，但無法查看評語及附件批註。"
+    },
+    "obeMetric": {
+      "changeProgramTip": "更換專業後，將刪除現有OBE指標與學習活動的關聯關係及權重設定，是否確認更換？"
+    },
+    "obeSetting": {
+      "obeSettingName": "OBE權重設定",
+      "customSetting": "自定義設定",
+      "noRelationTip": "該學習活動未關聯任何OBE指標，儲存後，將會從OBE權重設定類別中刪除，是否確定儲存？",
+      "deleteActivityTip": "學習活動與設定OBE權重，刪除後將刪除該學習活動與OBE的關係，同時會影響其他學習活動的OBE權重，確定刪除？",
+      "deleteAndSetTip": "刪除並設定"
+    },
+    "alert": {
+      "configPopupTitle": "設定預警形式",
+      "alert_popup": {
+        "tip": "設定後，使用者登入時將會彈出彈窗預警通知"
+      }
+    },
+    "coursePublish": {
+      "coursePublishStatusManageTips": "課程可設定預設發布狀態"
+    },
+    "exam": {
+      "randomSelectTip": "當前測驗為隨機抽題進行組卷，請設定抽題規則與題目配分",
+      "scoreSetting": {
+        "pointsSet": "已設定分數",
+        "leftPoints": "剩餘可設定分數"
+      },
+      "notForward": "教師已設定觀看該視頻不能快進"
+    },
+    "randomSelectSubject": {
+      "scoreTip": "本測驗為隨機抽題，老師尚未設定題目分數"
+    },
+    "captureManage": {
+      "instructorSetting": "允許教師修改課程錄播設定",
+      "instructorSettingTips": "開啟後，教師可通過課程設定控制是否開啟教室直播授課和錄製"
+    },
+    "publishCaptureSetting": {
+      "label": "課程錄播發布設定"
+    },
+    "batchSettingConfirm": {
+      "warningDesc": "已選擇課程數為{number}，超出設定上限{limit}，請調整修改範圍。",
+      "confirmTip": "將修改{number}門課程的設定"
+    },
+    "rollcallScoreSettingPage": {
+      "mergedRollCallMessage": "以下設定僅計算來源為「合併生成」的記錄，其他來源的點名記錄不參與計算。"
+    },
+    "importByWordParseError": {
+      "optionError": "目前題目選項設定有誤",
+      "answerError": "目前題目答案設定有誤",
+      "subSubjectsError": "目前題目下子題設定有誤"
+    },
+    "homeworkDuplicate": {
+      "checkingRuleDescription": "連續{}個字相同，判定為重複（設定範圍：15~100之間的整數)"
+    },
+    "activityPublish": {
+      "setting": "設定",
+      "pubSeting": "發布設定",
+      "successTip": "{0} 個學習活動設定成功"
+    },
+    "batchEditActivityPublishTime": {
+      "forumAutoScoreWarning": "討論設定了自動評分，截止時間不可選擇無截止"
+    },
+    "batch_publish": "批量設定發布狀態",
+    "userStudio": {
+      "setting": "工作室設定"
+    },
+    "outlineSettings": {
+      "setRequiredFields": "設定必填項"
+    },
+    "vtrs": {
+      "resource": {
+        "setPermission": "設定权限"
+      }
+    },
+    "storageManagement": {
+      "storageSetting": "容量設定",
+      "setting": "設定容量",
+      "lessThanWarning": "設定容量不得小於目前已使用容量:{0}",
+      "moreThanWarning": "設定容量不得大於系統容量"
+    },
+    "scorePercentageSetting": {
+      "homeworkScoreMethods": "若未設定單個作業活動成績佔比則按作業活動平均分配，若設定則按分配比例設定。若向部分學生布置作業，則部分學生作業總成績成績計算方式為：（（向全部學生發放作業活動成績 X 成績佔比）+ 向部分學生發放作業成績）/（1 + 向部分學生發放作業成績）",
+      "forumScoreMethods": "評分方式支持自動評分或手動評分，請在學習活動頁面進行設定",
+      "scoreByWeightTip": "已透過學習活動權重設定成績比例,目前為計算後結果,不支援直接編輯修改,若要調整請前往{0}頁面"
+    },
+    "air": {
+      "uncheckedValidate": "請設定正確答案",
+      "moreSetting": "更多設定"
+    },
+    "airGrading": {
+      "addCriteriaTips": "量規總分由各個條件中的最高分加和得到。建議您將總分設定為100分，避免學生成績過低。"
+    }
+  },
+  "en-US": {
+    "year_semester": "Year Term",
+    "academic_year": "Year",
+    "semester": "Phase",
+    "grade": "Job Title",
+    "clazz": "Job Level",
+    "create_year": "Add Year",
+    "create_semester": "Add Phase",
+    "create_grade": "Add Job Title",
+    "create_class": "Add Job Level",
+    "department": "Department"
+  },
+  "simditor": {
+    "santilize": {
+      "forlumn": "formula",
+      "image": "image"
+    }
+  }
+}
