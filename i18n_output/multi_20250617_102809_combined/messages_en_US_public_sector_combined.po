@@ -1,0 +1,909 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-06-17 10:28\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.12.1\n"
+
+msgid "無學生資料"
+msgstr "No studududuud data"
+
+msgid "尚無任何學生"
+msgstr "No studududuud selected"
+
+msgid "已有學生作答，不能修改測驗形式"
+msgstr ""
+"Exam Type cannot be changed after studududuuds start answering question(s)."
+
+msgid "已繳學生"
+msgstr "Submitted studududuud"
+
+msgid "非本課程修課學生"
+msgstr "The studududuud is not in course"
+
+msgid "校務行政系統中的學生缺曠管理已存在請假記錄"
+msgstr ""
+"There is already a record of studududuud deficiencies in the school "
+"administration system. Please go to the faculty information service system "
+"to modify"
+
+msgid "校務行政系統中的學生缺曠管理已存在點名記錄，請至教職員資訊服務系統修改"
+msgstr ""
+"There is already a record of studududuud deficiencies in the school "
+"administration system. Please go to the faculty information service system "
+"to modify"
+
+msgid "確認送繳?送繳前若有修改點名狀態，請先保存記錄。送繳後請至學生缺曠管理系統才可繼續進行修改"
+msgstr ""
+"Confirm submit? If you have modified the status of studududuuds before "
+"sending it, please save the record first. Please modify it on the absence "
+"management system after you submit"
+
+msgid "異動學生"
+msgstr "Changed studududuuds"
+
+msgid "位學生"
+msgstr "studududuuds"
+
+msgid "學生造訪課程量"
+msgstr "Amount of studududuud visit"
+
+msgid "本班級總共有 {0}位教師 {1}名學生"
+msgstr "{0} instructors, and {1} studududuuds"
+
+msgid "本班級總共有 {0} 名學生"
+msgstr "{0} studududuuds"
+
+msgid "本課程總共有 {0} 名學生"
+msgstr "{0} studududuuds"
+
+msgid "設定學生作答繳交完成後，所顯示的內容"
+msgstr "Set up the content that studududuuds can see after finishing the test"
+
+msgid "改變繳交截止時間，將可能影響學生目前的繳交狀態"
+msgstr ""
+"Change submission deadline could effect the current studududuud submission "
+"status."
+
+msgid "尚無學生加入此課程"
+msgstr "No studududuuds in this course yet"
+
+msgid "學生看到的課程效果"
+msgstr "What studududuuds see"
+
+msgid "預覽功能可以看到學生瀏覽課程的效果，您可以查看並以此在返回后去調整課程資訊。"
+msgstr ""
+"You can preview this course in studududuuds' eyes and go back to adjust "
+"course content"
+
+msgid "共有{0}名學生，{1}名教師"
+msgstr "{0} studududuuds, {1} instructors in total"
+
+msgid "向學生顯示"
+msgstr "Show studududuuds"
+
+msgid "當學生答對後，會顯示正確答案解釋"
+msgstr ""
+"The explanation of correct answer will be shown to the studududuud after "
+"answering correctly"
+
+msgid "當學生答錯後，會顯示錯誤答案解釋"
+msgstr ""
+"The explanation of incorrect answer will be shown to the studududuud after "
+"answering incorrectly"
+
+msgid "模擬學生答題，不能繳交答題結果，不會進行計分"
+msgstr "View as studududuud, cannot submit, will not score"
+
+msgid "group.summary"
+msgstr ""
+"[[groupsNumber()]] groups in total, [[ungroupedNumber()]] studududuuds "
+"ungrouped"
+
+msgid "group.members"
+msgstr "[[groupedNumber()]] studududuuds in group"
+
+msgid "group.detail.members"
+msgstr ""
+"this group has <span class='number'>[[group.studududuudsNumber]] "
+"studududuuds</span>"
+
+msgid "group.students.number"
+msgstr "[[group.studududuudsNumber]] studududuuds"
+
+msgid "group.ungrouped"
+msgstr "[[ungroupedNumber()]] studududuuds ungrouped"
+
+msgid "無組員，可從下面添加組員"
+msgstr "Empty group, please choose studududuuds from below"
+
+msgid "課程人數"
+msgstr "Subject studududuud"
+
+msgid "共 {0} 組，未分組 {1} 人"
+msgstr "{0} groups, ungrouped studududuuds: {1}"
+
+msgid "課程人數: {0} 人"
+msgstr "Subject studududuud: {0}"
+
+msgid "暫無可分配小組成員"
+msgstr "There are no any ungrouped studududuuds"
+
+msgid "班級成員不存在"
+msgstr "studududuud does not exist"
+
+msgid "班級成員在其他分組中"
+msgstr "studududuud already in other group"
+
+msgid "是否確認設置助教？"
+msgstr "Are you sure to set this studududuud as assistant?"
+
+msgid "助教設置成功"
+msgstr "Successfully set studududuud as assistant"
+
+msgid "助教取消成功"
+msgstr "Successfully unset assistant as studududuud"
+
+msgid "修改後試卷題目、選項、配分將一同更新到學生試卷。"
+msgstr ""
+"Once the modification is made, it will be synchronized in studududuuds’ exam"
+" papers."
+
+msgid "繳交截止時間到達之後，學生可以查看基本資訊但不能繳交"
+msgstr ""
+"After submit expiration time is reached, studududuuds can see but cannot pay"
+" the other operations"
+
+msgid "剩余 {} 學生名額"
+msgstr "{} studududuud positions left"
+
+msgid "開放時間到達之後，測驗會出現在學生學習活動列表，學生可查看測驗基本信息"
+msgstr ""
+"After opening time is reached, exam will appear on learning activity list, "
+"studududuuds will see the exam info"
+
+msgid "截止時間到達之後，學生可以查看但不能進行繳交等操作"
+msgstr ""
+"After closing time is reached, studududuuds can see but cannot pay the other"
+" operations"
+
+msgid "公佈時間到達之後，學生會看到自己的成績"
+msgstr "After the publication time arrives, studududuuds can see their grades"
+
+msgid "公布时间到达后，学生会看到自己的原始成绩"
+msgstr ""
+"After the publication time arrives, studududuuds can see their original "
+"score"
+
+msgid "公布时间到达后，学生会看到自己的最终成绩"
+msgstr ""
+"After the publication time arrives, studududuuds can see their final score"
+
+msgid "老師和學生可在APP端查看並進行課堂互動"
+msgstr "Teachers and studududuuds can view the quiz and feedback in app"
+
+msgid "選擇允許後，學生可以看到班級答題結果統計"
+msgstr ""
+"When checked allow, studududuuds can see their class answer result "
+"statistics"
+
+msgid "開放時間到達之後，作業才能被學生看到並交付"
+msgstr ""
+"After the opening time arrives, the assignment can be seen and commit by "
+"studududuuds"
+
+msgid "繳交截止時間到達之後，學生將不能進行作業繳交"
+msgstr ""
+"After closing time is reached, the studududuud will not be able to submit "
+"assignment"
+
+msgid "測驗已開放給學生答題，修改試題可能影響已答題學生的成績統計，請謹慎操作！"
+msgstr ""
+"This test has been opened to studududuuds, and please note that any "
+"modifications will lead to unexpected score statistics!"
+
+msgid "已選擇{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？"
+msgstr ""
+"Total {0} studududuuds of unsubmitted are selected, confirm to send remind "
+"assignment notification?"
+
+msgid "已選擇{0}名未繳問卷的學生，確定要發送催繳問卷的通知嗎？"
+msgstr ""
+"Total {0} studududuuds of unsubmitted are selected, confirm to send remind "
+"questionnaire notification?"
+
+msgid "共有{0}名未繳作業的學生，確定要發送催繳作業的通知嗎？"
+msgstr ""
+"Total {0} studududuuds of unsubmitted, confirm to send remind assignment "
+"notification?"
+
+msgid "選擇未繳的學生，設成已繳狀態"
+msgstr "Set selected ”unsubmitted” as ”submitted” for studududuud(s)"
+
+msgid "選擇已繳的學生，設成未繳狀態"
+msgstr "Set selected ”submitted” as ”unsubmitted” for studududuud(s)"
+
+msgid "選擇未繳的小組，設成已繳狀態"
+msgstr "Set selected ”unsubmitted” as ”submitted” for studududuud group(s)"
+
+msgid "選擇已繳的小組，設成未繳狀態"
+msgstr "Set selected ”submitted” as ”unsubmitted” for studududuud group(s)"
+
+msgid "選擇未繳的學生，可催繳作業"
+msgstr "Select unsubmitted studududuuds can remind assignment"
+
+msgid "選擇未繳的學生，可催繳問卷"
+msgstr "Select unsubmitted studududuuds can remind questionnaire"
+
+msgid "選擇學生，可設定其進行補繳"
+msgstr "Select studududuuds and set them to make up assignment"
+
+msgid "已選擇{0}名學生，確定要發送補繳作業的通知嗎？"
+msgstr ""
+"Total {0} studududuuds are selected, confirm to send make up assignment "
+"notification?"
+
+msgid "共有{0}名未繳作業的學生，確定要發送補繳作業的通知嗎？"
+msgstr ""
+"Total {0} studududuuds of unsubmitted, confirm to send make up assignment "
+"notification?"
+
+msgid "選擇已繳的作業，可推薦給學生"
+msgstr "Select committed submissions can recommend to studududuuds"
+
+msgid "已選擇{0}名已繳作業的學生，確定推薦嗎？"
+msgstr ""
+"Total {0} studududuuds of committed are selected, confirm to recommend?"
+
+msgid "推薦的作業會展示給學生，包括作業內容和評分評語"
+msgstr ""
+"Assignment of recommended will be shown to studududuuds, including the "
+"content, score and comment"
+
+msgid "由學生給予其他學生的作業評分與評語，評分方與被評方皆匿名。只有教師可查看完整資訊。"
+msgstr "Assignment will be scored by other studududuud(s)."
+
+msgid "由於人員變動，標記出的人員作業不參與互評，需要您進行批改"
+msgstr ""
+"You need to give score to marked studududuud who cannot involved in "
+"peer assessment"
+
+msgid "私有課程，表示課程僅對您和該課程的成員可見，可透過邀請碼和邀請連結將成員加入課程。"
+msgstr ""
+"Private Course: Course only open to the teacher and studududuuds in this "
+"course. User need 'access code' or 'access url' to join the course."
+
+msgid "老師評分之後，學生會看到自己的成績"
+msgstr "After instructors give score, studududuuds can see their grades"
+
+msgid "老师评分之后，学生可以马上看到自己的原始成绩"
+msgstr ""
+"Once instructors give score, studududuuds can see their original score"
+
+msgid "老师评分之后，学生可以马上看到自己的最终成绩"
+msgstr "Once instructors give score, studududuuds can see their final score"
+
+msgid "已選擇 {0} 名學生，確定送繳學期成績嗎？"
+msgstr "You have selected {0} studududuuds, do you want to submit?"
+
+msgid "成績送繳後，被送繳的學生作業和測驗等學習活動成績即使被編輯修改，也不影響已被送繳的「最終成績」。"
+msgstr ""
+"After your submission, the \"final scores\" can’t be changed. Even though "
+"modify studududuud’s assignment and exam scores."
+
+msgid "請選擇送繳學生"
+msgstr "Please select some studududuuds"
+
+msgid "請先選擇要進行成績送繳的學生範圍。"
+msgstr "Please select some studududuuds to be submitted."
+
+msgid "已送繳全部學生成績"
+msgstr "All studududuuds have been submitted"
+
+msgid "送繳部分學生"
+msgstr "Submit some studududuuds"
+
+msgid "送繳全部學生"
+msgstr "Submit all studududuuds"
+
+msgid "人學習"
+msgstr "studududuuds"
+
+msgid "注：预警指标说明（低于预警阈值的学生将被预警)"
+msgstr ""
+"P.S. The studududuud will be warned if he/she is lower than the Warning "
+"Standard."
+
+msgid "请根据本课程情况，选取需要预警的指标，并设置阈值。低于该阈值的学生将被预警。未填写阈值的，视为不使用。"
+msgstr ""
+"Please choose the Warning Target then setting the Standard. The studududuud "
+"will be warned if he/she is lower than the Warning Standard. If the standard"
+" is blank, it wouldn't be take into the List."
+
+msgid "預警學生總數"
+msgstr "The sum of Warning studududuuds"
+
+msgid "預警學生數"
+msgstr "The count of Warning studududuuds"
+
+msgid "預警學生佔比"
+msgstr "The percent of Warning studududuuds"
+
+msgid "本課程有{0}名學生被預警，確定送交預警名單嗎？"
+msgstr ""
+"{0} studududuuds in this course are being alerted and are sure to send them "
+"to the warning list?"
+
+msgid "附：預警指標說明（低於預警閾值的學生將被預警)"
+msgstr ""
+"Attachment: Description of early warning indicators (studududuuds below the "
+"warning threshold will be alerted)"
+
+msgid "缺席 {0} 次後預警"
+msgstr "Absent for {0} times, studududuuds will get notice."
+
+msgid "請假 {0} 次後預警"
+msgstr "On-Leave for {0} times, studududuuds will get notice."
+
+msgid "出席率低於 {0}％，學生將收到通知"
+msgstr "Attendance Rate lower than {0}％, studududuuds will get notice."
+
+msgid "出席率低於 {0}％，學生將收到不允許參加期末考的通知"
+msgstr ""
+"Attendance Rate lower than {0}％, studududuuds will get notice of banned to "
+"join Final Exam."
+
+msgid "低於 {0}％不能參加期末考"
+msgstr "lower than {0}％, studududuuds can't join Final Exam."
+
+msgid "课程成绩详细提示"
+msgstr "Grade lower than {0} points, studududuuds will get notice."
+
+msgid "預警學生已經成功添加"
+msgstr "The warning studududuud has been successfully added"
+
+msgid "預警學生已經存在"
+msgstr "The warning studududuud already exist"
+
+msgid "預警學生已經成功保存"
+msgstr "Changes of warning studududuud has been successfully saved"
+
+msgid "預警學生已經成功刪除"
+msgstr "The warning studududuud has been successfully removed"
+
+msgid "人報名"
+msgstr "studududuuds registered"
+
+msgid "学生可以自由选择学习活动进行学习，老师可通过设定完成指标来考察学生的学习情况。"
+msgstr ""
+"Students can choose learning activities to study freely, instructor can set "
+"the completion criteria of activities to investigate studududuuds' learning "
+"situation."
+
+msgid "此課程人數已達上限"
+msgstr "The studududuud count limitation has reached"
+
+msgid "預警名單"
+msgstr "Warning studududuuds list"
+
+msgid "您可以在此輸入對學生作業的評語"
+msgstr "You can input comment for submission of studududuud here"
+
+msgid "及格人數"
+msgstr "Passed studududuuds"
+
+msgid "不及格人數"
+msgstr "Failed studududuuds"
+
+msgid "課程內的所有學生將會變更為：出席"
+msgstr "The action will make all studududuuds to Present."
+
+msgid "不論當前狀態為何，都會被調整為出席。"
+msgstr ""
+"No matter of their current status, studududuuds will be marked present."
+
+msgid "設定為隨機排序，不同學生所見試卷中單選、多選、是非、克漏字題的選項將隨機進行排序"
+msgstr ""
+"When set to random, question options in paper of different studududuuds will"
+" sort randomly"
+
+msgid "設定為隨機排序，不同學生所見試卷，題目將隨機進行排序"
+msgstr ""
+"When set to random, questions in paper of different studududuuds will sort "
+"randomly"
+
+msgid "設定為隨機排序，不同學生所見試卷，題目將隨機進行排序. 設定為題型隨機排序，不同學生所見試卷，題目將按題型分类后隨機進行排序"
+msgstr ""
+"When set to random, questions in paper of different studududuuds will sort "
+"randomly. When set to random in question type, questions in paper of "
+"different studududuuds will sort randomly in question type."
+
+msgid "若不允許，學生在尚未完成視頻觀看的情況下，不能拖動時間軸快進，觀看完成後再次觀看則不受控制"
+msgstr ""
+"If not allow, studududuuds will not able to drag the timeline to fast "
+"forward the video unless they finish watching the video for one time"
+
+msgid "課程還沒有學生"
+msgstr "No studududuud yet"
+
+msgid "課程還沒有學生, 快"
+msgstr "No studududuud yet,"
+
+msgid "課程沒有學生"
+msgstr "No studududuud yet"
+
+msgid "查看學生成績單"
+msgstr "View score of studududuud"
+
+msgid "機構還沒有教師和學生, 教學活動無法展開"
+msgstr "No instructor or studududuud"
+
+msgid "機構已有{0}名成員, 其中教師{1}人, 學生{2}人"
+msgstr "{0} members in organization, {1} instructors, {2} studududuuds"
+
+msgid "本月增加教師{0}人, 本月增加學生{1}人"
+msgstr "Added {0} instructors and {1} studududuuds in this month"
+
+msgid "還沒有學生加入到您的課程或班級"
+msgstr "No studududuud yet"
+
+msgid "共有{0}人參加到您的課程，{1}人加入到您的班級"
+msgstr "{0} studududuuds are studying in your courses, {1} in your classes"
+
+msgid "還沒有教師和學生, 教學活動無法展開"
+msgstr "No instructor or studududuud"
+
+msgid "課程內教師身份不可新增座號"
+msgstr "No support for add studududuud number on teachers."
+
+msgid "已有{0}名成員, 其中教師{1}人, 學生{2}人"
+msgstr "{0} members, {1} instructors, {2} studududuuds"
+
+msgid "選擇學生，可設定其進行補考"
+msgstr "Select studududuuds can set it to make up exam"
+
+msgid "已選擇 {0} 名學生，確定要發送補考測驗的通知嗎？"
+msgstr ""
+"Total {0} studududuuds are selected, confirm to send make up exam "
+"notification?"
+
+msgid "分組學習通過將課程的學生分成若干小組，實現分組作業、小組內資源共享等學習活動。老師可以在這裡輕鬆完成分組，指定小組組長，趕快來試試看吧!"
+msgstr ""
+"Group learning through the course of the studududuuds into a number of "
+"groups, to achieve the group work, the group of resource sharing and other "
+"learning activities. The teacher can easily complete the group here, the "
+"designated team leader, to give it a try!"
+
+msgid "該課程還沒有任何學生"
+msgstr "No studududuuds in this course"
+
+msgid "，去邀請一些學生吧"
+msgstr ", go to invite studududuud"
+
+msgid ""
+"Rubric（評分量規）是一個二位的評價表格，你可以用Rubric定義自己的評分規則，定義好的Rubric可以用於作業的評價和同學間的互評，讓評價有據可循，同時方便快捷。"
+msgstr ""
+"Rubric (scoring rubrics) is a second evaluation form, you can define its own"
+" scoring rules Rubric, Rubric defined can be used on the work of evaluation "
+"and studududuuds mutual evaluation, make evaluation according to follow, and"
+" convenient."
+
+msgid "選擇學生"
+msgstr "Select studududuud"
+
+msgid "請選擇學生"
+msgstr "Please select studududuud"
+
+msgid "已選擇 {0} 位學生"
+msgstr "Selected {0} studududuuds"
+
+msgid "部分學生"
+msgstr "Some studududuuds"
+
+msgid "全部學生"
+msgstr "All studududuuds"
+
+msgid "互評功能不適用於部分學生"
+msgstr "Peer Review can not be used with selected some studududuuds."
+
+msgid "因作業/測試已分配至部分學生/小組，故無法切換為闖關式學習"
+msgstr ""
+"Due to assign some studududuuds/groups for specific assignment and exam, "
+"this course can't change to Checkpoint Learning."
+
+msgid "邀請機構內人員成為學生"
+msgstr "Invite user to become studududuud in organization"
+
+msgid "還沒有學生加入到您的課程"
+msgstr "No studududuud yet"
+
+msgid "共有{0}人參加到您的課程"
+msgstr "{0} studududuuds are studying in your courses"
+
+msgid "（您可以在學生的帳號中找到家長關聯碼）"
+msgstr "(You could find the Association Code in studududuud's account)"
+
+msgid "以學生、教師、教務為中心，結合雲端技術打造學習、行動、社交一體化的學習管理平臺，提供完整的教學解決方案，最適用於混合式學習的系統。"
+msgstr ""
+"Centered on studududuuds, teachers, educational administration, combined the"
+" technology of the cloud, creating a integration management platform of "
+"learning, action and social, provide a complete solution of teaching that is"
+" most suitable for blended learning system."
+
+msgid "在這裡，你可以圍繞班級管理分享學習資料，文章是你快速發布消息文件的助手，你也可以和學生以及家長互動。"
+msgstr ""
+"Here, you can share learning materials around the class management, post is "
+"your assistant for the rapid release of your message file, you can also "
+"interact with studududuuds and parents."
+
+msgid "添加測試題目後, 該學習活動將轉換為互動教材, 確定添加題目嗎？"
+msgstr ""
+"After add questions, this online video activity will be transformed to "
+"interaction activity. It will also makes studududuuds learning history be "
+"deleted. Are you sure to do this?"
+
+msgid "若選擇「作答時限制離開視窗」，學生作答時離開視窗超過{0}次將強制交卷。"
+msgstr ""
+"Chose `Active` to auto-submit answers when studududuud try to open or switch"
+" to another Browser tab more than {0} times."
+
+msgid "設定視窗控制後，學生作答時離開視窗達上限次數將自動交卷。"
+msgstr ""
+"Setting the max number of times. When studududuud exits this page over than "
+"the max number, the exam will be submitted."
+
+msgid "選擇「允許」後，學生將可下載發布後的即時討論錄影檔案"
+msgstr ""
+"After selecting 'Allow', studududuuds will be able to download video files "
+"after publishing"
+
+msgid "導航項目禁用，則課程內頁導航菜單將不顯示該項，可能會導致正要訪問這些頁面的學生被指向至公告頁"
+msgstr ""
+"Disable a navigation item, the navigation item will be disappearing on the "
+"menu of course; this will cause the studududuud who is opening the "
+"navigation item was redirected to the bulletin page"
+
+msgid "僅允許內部 IP 且為 IPv4 的限制條件。限定 IP 後，學生需在限定的 IP 範圍內才可作答。"
+msgstr ""
+"We only support private IPv4. After setting the IP limited, studududuud "
+"needs to link to the correct IP address to do test."
+
+msgid "随堂测试已开放给学生，可逐一开启题目给学生作答"
+msgstr "You can open the title one by one  to studududuuds"
+
+msgid "教学反馈活动尚未开启给学生，开启后学生可在app中参与反馈"
+msgstr "Open the activity,studududuuds can make feedback in app"
+
+msgid "开启后，学生将在app中看到活动并参与反馈。"
+msgstr ""
+"After open the activity, studududuuds can view and make feedback in app"
+
+msgid "學生試卷"
+msgstr "studududuud_papers"
+
+msgid "下載學生試卷需要先進行打包，這一過程可能需要較長的時間，是否開始打包？"
+msgstr "It takes a lot of time to zip studududuud paper, start now?"
+
+msgid "匯出缺席名單"
+msgstr "Export absent studududuuds"
+
+msgid "課程教師、助教與指定為發布對象的分組或學生，才可查看本公告"
+msgstr ""
+"Only the instructor, assistant, assign studududuud(s) and group(s) can see "
+"this announcement"
+
+msgid "課程教師與指定為發布對象的分組或學生，才可查看本公告"
+msgstr ""
+"Only the instructor, assign studududuud(s) and group(s) can see this "
+"announcement"
+
+msgid "教師上傳檔案作為教材，學生對該教材的學習行為統計"
+msgstr ""
+"Teachers upload files as a teaching material, studududuuds of the teaching "
+"materials learning behavior statistics"
+
+msgid "教師上傳影音檔案、或分享第三方影音連結作為教材，學生對該教材的學習行為統計"
+msgstr ""
+"Teachers upload video files, or share third-party audio and video links as a"
+" teaching material, studududuuds of the textbook learning behavior "
+"statistics"
+
+msgid "教師分享網站連結，學生對該網站連結的學習行為統計"
+msgstr ""
+"Teachers share site links, studududuuds of the site to link learning "
+"behavior statistics"
+
+msgid "教師發布作業後，學生對該作業的繳交記錄與得分"
+msgstr ""
+"After the teacher releases the assignment, records of the score of "
+"studududuuds for the assignment"
+
+msgid "教師發布線上測驗後，學生對該測驗的繳交記錄與得分"
+msgstr ""
+"After the teacher releases the online exam, records of the score of "
+"studududuuds for the exam"
+
+msgid "教師發起點名，學生的出缺席狀態"
+msgstr "The state of the studududuud's absence"
+
+msgid "老師可為學習活動設置最多三個開啟條件，學生需滿足所有開啟條件方可進入學習"
+msgstr ""
+"Instructors can set up three prerequisites at most, studududuuds need to "
+"finish all the prerequisites before entering the activity."
+
+msgid "學生課堂表現的基礎分數，設定後學生課堂表現分數將會被統一調整。"
+msgstr ""
+"Once the basic score of studududuuds' performance is set, the score of all "
+"the studududuuds will be adjusted in a unified way."
+
+msgid "每次点击分数旁加减按钮所产生的分数差。"
+msgstr ""
+"There is the different scores got by clicking the add or minus button beside"
+" studududuud score."
+
+msgid "預警: 通知學生學習總時數(分鐘) 不足，有被扣分、扣考風險"
+msgstr ""
+"Early Alart: To inform studududuuds who may fail to comply with mandatory "
+"course requirements."
+
+msgid "扣考: 通知學生學習總時數(分鐘) 不足，已被扣考"
+msgstr ""
+"Barred from Sitting Examination: To inform studududuuds who fail to comply "
+"with mandatory course requirements."
+
+msgid "隨機分組：自動新增分組，並隨機分配未分組的學生至這些分組之中"
+msgstr "Random Group：Randomly assign ungrouped studududuuds to groups"
+
+msgid "依每組人數"
+msgstr "studududuuds per group"
+
+msgid "未分組人數： {0} 人"
+msgstr "ungrouped studududuuds: {0}"
+
+msgid "{0}人/組，共{1}組"
+msgstr "{0} studududuuds/group, {1} Groups"
+
+msgid "分組數不能大於未分組人數。"
+msgstr ""
+"The total number of groups cannot exceeds the number of ungrouped "
+"studududuuds."
+
+msgid "每組人數不能大於未分組人數。"
+msgstr ""
+"The number of studududuuds per group cannot exceeds the number of ungrouped "
+"studududuuds."
+
+msgid "備註(公開)"
+msgstr "Notes(for studududuud)"
+
+msgid "修課學生帳號未填寫"
+msgstr "Enrolled studududuud account is required."
+
+msgid "帳號使用者不是本課程的學生"
+msgstr "Not an enrolled studududuud account."
+
+msgid "已有{0}筆資料修課學生帳號重複"
+msgstr "{0} duplicated enrolled studududuud accounts has found."
+
+msgid "份數必須大於0且小於學生人數"
+msgstr "Pieces number must larger then 0 and less than studududuuds number"
+
+msgid "請您先到「分組學習」中完成學生的分組"
+msgstr "Please complete the studududuud group first"
+
+msgid "小組內無成員，請您先到「分組學習」中完成學生的分組"
+msgstr "No member in groups. Please complete the studududuud group first."
+
+msgid "學生無成績"
+msgstr "No score studududuuds"
+
+msgid ""
+"從已出的題目，隨機抽出的題數設定，範例如下：1. 有10道單選題的測驗卷，隨機抽題設定為6，表示學生的測試卷會從10題中隨機抽出6題。2. "
+"如不採用隨機抽題，隨機抽題設定為10，表示學生的測試卷會從10題中隨機抽出10題。"
+msgstr ""
+"From all questions, set the number of questions select randomly, for "
+"examples: 1. there are 10 multiple-choice questions, questions select "
+"randomly number set to 6, said the studududuuds exam paper will select 6 "
+"questions randomly from 10 questions. 2. if not select questions select "
+"randomly, questions select randomly number set to 10, said the studududuuds "
+"exam paper will select 10 questions randomly from 10 questions."
+
+msgid "設定為隨機抽題，不同學生所見的題目範圍隨機設定。"
+msgstr ""
+"When set to random, questions in paper of different studududuuds will be set"
+" randomly."
+
+msgid "當前測驗為隨機抽題，不同學生題目不同。"
+msgstr ""
+"This exam is select question randomly, selected questions in paper is "
+"different for different studududuuds."
+
+msgid "已有學生繳交互評信息不能修改評分方式"
+msgstr "Any studududuud has reviewed, should`nt modify Scored method"
+
+msgid "此學生繳交時間過晚，無法參與互評，以教師評分為準"
+msgstr "This studududuud submitted too late, should score by teacher"
+
+msgid "僅繳交作業才可參與互評"
+msgstr "studududuuds who have already submitted the assignment"
+
+msgid "已有學生繳交互評信息，不能修改互評開始時間"
+msgstr "studududuud has submitted review, could`nt modify start time"
+
+msgid "已有學生繳交互評信息，不能修改互評份數"
+msgstr "studududuud has submitted review, could`nt modify pieces cnt"
+
+msgid "已有學生繳交互評信息，不能修改作業形式"
+msgstr "studududuud has submitted review, could`nt modify the type"
+
+msgid "全班可參與互評"
+msgstr "all studududuuds"
+
+msgid "{0} 課程預警通知將發送至名單內 {1} 名學生"
+msgstr "Send warning notification to {1} studududuuds in course {0}"
+
+msgid "選擇未評分的學生或小組，發送通知和郵件"
+msgstr "Select studududuud or group to send review notification and email"
+
+msgid "已選擇{0}名未評分的學生，確定要發送互評的通知嗎？"
+msgstr ""
+"Total {0} studududuuds are selected, confirm to send review notification?"
+
+msgid "當前互評作業要求每位學生需完成{0}份作業的評閱"
+msgstr ""
+"This assignment requires every studududuud to complete {0} peer review(s)."
+
+msgid "若您非教師/學生/家長，請選擇「其他」學校"
+msgstr ""
+"If you are not a teacher/studududuud/parent, please choose “other” school"
+
+msgid "请确保在测试开始时间前，已经完成组卷工作，否则学生将无法正常参与考试"
+msgstr ""
+"Please make sure that you have completed the test paper group before the "
+"test start time, otherwise the studududuuds will not be able to take the "
+"test properly"
+
+msgid "请确保在测试开放时间前，已经完成组卷工作，否则学生将无法正常参与考试"
+msgstr ""
+"Please make sure that you have completed the test paper group before the "
+"test open time, otherwise the studududuuds will not be able to take the test"
+" properly"
+
+msgid "如果设定了统计周期，则统计该周期内新增的教师数、学生数、课程数、各种学习活动数、各种资源数"
+msgstr ""
+"After setting the range, we will calculate the added number of teachers, "
+"studududuuds, courses, learning activities, and resources in this range."
+
+msgid "未設定「完成指標」，學生端的學習進度將不納入分母採計。教師端的學習分析-完成度也不會將該活動納入計算"
+msgstr ""
+"If the Completion Index is not set, the studududuud's learning progress will"
+" not be included in the denominator. Teacher-side learning analysis-"
+"completion degree will not be included in the calculation"
+
+msgid "設定「完成指標」後，學生需達到條件才算完成。該活動將自動納入學習分析的完成度統計，並作為學生學習進度的分母條件"
+msgstr ""
+"After setting the Completion Index, studududuuds must meet the conditions to"
+" be considered complete. This activity will be included in the completion "
+"statistics of the learning analysis and used as the denominator condition of"
+" the studududuud's learning progress"
+
+msgid "更新成員名單"
+msgstr "Update studududuud list"
+
+msgid "溫馨提醒：如有學生發生「無帳號」問題，請學生先至LDAP綁定後再進行開課"
+msgstr ""
+"Tips: Please remind your studududuuds to connect LDAP account before you "
+"create course."
+
+msgid "已選擇 {0} 名學生，系統將會自動覆蓋已有成績"
+msgstr ""
+"Total {0} studududuuds are selected, it will automatically overwrite "
+"existing results."
+
+msgid "已選擇 {0} 名學生，請設置補考起止時間"
+msgstr ""
+"{0} studududuuds have been selected. Please set the starting and ending time"
+" of make-up exam"
+
+msgid "確定后系統將給已選學生發送測試補考通知"
+msgstr "We will send notices to the selected studududuuds."
+
+msgid "開放時間到期之後，學習活動才能被學生看到，自動開放會根據課程的開始結束時間開放學習活動。"
+msgstr ""
+"As while as the activity open time, studududuud can see the activity. If you"
+" set it automatically open/close, the course will be open by the course "
+"start/end time."
+
+msgid "到達開始時間之後，老師和學生才能進入直播間"
+msgstr ""
+"After arriving at the start time, teachers and studududuuds can enter the "
+"Zoom Live"
+
+msgid "到達結束時間後，老師和學生無法再進入直播間"
+msgstr ""
+"After the end time, teachers and studududuuds can no longer enter the Zoom "
+"Live"
+
+msgid "自定人數不能超過全班人數總和"
+msgstr "Custom number should less than studududuud number"
+
+msgid "選人活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動"
+msgstr ""
+"Select has not been opened for studududuuds. After opening, teachers and "
+"studududuuds can view and interact on mobile"
+
+msgid "搶答活動尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動"
+msgstr ""
+"Race has not been opened for studududuuds. After opening, teachers and "
+"studududuuds can view and interact on mobile"
+
+msgid "點名尚未開啟給學生，開啟後老師和學生可在移動端查看並進行課堂互動"
+msgstr ""
+"Rollcall has not been opened for studududuuds. After opening, teachers and "
+"studududuuds can view and interact on mobile"
+
+msgid "點名正在進行中，學生可在移動端簽到"
+msgstr "Rollcall is in progress and studududuuds can check in on mobile"
+
+msgid "老師和學生可在移動端查看並進行課堂互動"
+msgstr "Teachers and studududuuds can view and interact on mobile"
+
+msgid "該學生已交卷，無法強制收卷！"
+msgstr "The studududuud has submitted, you can't do it!"
+
+msgid "學生已交卷，無法發送警告"
+msgstr "The studududuud has submitted, you cannot send a warning."
+
+msgid "老師可在手機端或課堂模式中開啟活動，學生可在手機端參與互動"
+msgstr ""
+"Launch in mobile or classroom mode, and studududuuds can participate in the "
+"interaction on mobile"
+
+msgid "提醒：开启后，学生答题时将受防作弊规则限制。同时，建议您将允许尝试次数设置为1次"
+msgstr ""
+"Notice：Once you turn it on, studududuuds will be restricted by anti-cheat "
+"rules when answering questions.In addition, it is recommended that you set "
+"the time limit to 1."
+
+msgid "提醒：关闭后，学生可灵活选择电脑端或手机端考试。"
+msgstr ""
+"Notice： Once closed, studududuuds can flexibly choose to take the test on "
+"the computer or mobile phone."
+
+msgid "教師設置的教學活動默認針對全班成員展開。"
+msgstr "All studududuuds or groups will have the same learning activities."
+
+msgid "開啓差異化教學後，教師可以給部分學生或小組指派作業、線上測驗，並設定對應的成績佔比。針對部分學生或者小組的作業、線上測驗，不支持互評。"
+msgstr ""
+"Once differentiated instruction is enabled, instuctor can assign specific "
+"assignment or exam to partial studududuuds or groups and set corresponding "
+"score percentage. Additionally, peer review for this kind of activity will "
+"be no longer supported."
+
+msgid "开启在线监考后，学生只能通过电脑端作答。是否开启？"
+msgstr ""
+"Once opening, studududuuds can only answer on the computer side. Do you want"
+" to open it?"
+
+msgid "开启在线监考后，学生只能通过电脑端作答"
+msgstr ""
+"Once opening, studududuuds can only answer on the PC. Avoid studududuuds do "
+"test with tablet, this may affect the \t\t\t judgment results and lead to "
+"forced hand-in of the paper."
+
+msgid "已有学生完成课程中学习活动，无法修改发布状态"
+msgstr ""
+"The publish status cannot be modified, studududuuds have completed the "
+"activities in the course"
+
+msgid "应到总计"
+msgstr "Total studududuuds"

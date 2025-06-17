@@ -3,30 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-06-16 15:28\n"
-"PO-Revision-Date: 2014-03-24 11:26+0800\n"
+"POT-Creation-Date: 2025-06-17 10:28\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: zh_Hant_TW <LL@li.org>\n"
-"Language: zh_Hant_TW\n"
+"Language-Team: zh-TW <LL@li.org>\n"
+"Language: zh-TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.12.1\n"
 
-# #############################################################################
-# #
-# # 為了方便管理 i18n，故將 msgid 分門別類，以避免重複使用相近詞語，增強整體一致性。
-# # 目錄
-# # - 名詞 Noun
-# #    - 人物 Character
-# #    - 時間 Time
-# #    - 語言 Language
-# # - 動作 Action
-# # - 暫時未分類 Temp
-# #  Note: The Great Wall 下方的尚未分類
-# # 名詞 Noun
-# ### 人物 Character
 msgid "Student"
 msgstr "學員"
 
@@ -89,7 +76,6 @@ msgstr "第三期別"
 msgid "教師所屬系所"
 msgstr "講師所屬單位"
 
-# ### 種類名 Catogories
 msgid "院系代碼 / 院系名稱 / 院系簡稱"
 msgstr "單位代碼 / 單位名稱 / 單位簡稱"
 

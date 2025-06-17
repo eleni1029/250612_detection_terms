@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_02_apply_combine.py (v1.3 - 修正業態衝突邏輯版)
-
-修正內容：
-1. ✅ 修正業態間重複處理同一檔案的問題
-2. ✅ 修正衝突檢測邏輯：只處理當前業態的更新
-3. ✅ 避免業態間互相干擾
-4. ✅ 正確區分真正衝突和正常更新
-5. ✅ 改善合併流程邏輯
+script_02_apply_combine.py (v1.5 - 支援自動創建JSON和PO檔案版)
 
 功能：
 1. 選擇要合併的 tobemodified Excel 檔案（支援多選）
 2. 選擇 i18n_combine 目錄下的 JSON/PO 檔案作為合併目標
 3. 按業態分別處理，避免相互衝突
-4. 生成合併後的檔案到 i18n_output/multi_{timestamp}_combined/
-5. 提供詳細的合併報告和日誌
+4. 沒有目標檔案時自動創建標準檔案（JSON/PO）
+5. 生成合併後的檔案到 i18n_output/multi_{timestamp}_combined/
+6. 提供詳細的合併報告和日誌
 """
 
 import json
@@ -24,7 +18,6 @@ import shutil
 import datetime
 import argparse
 import glob
-import re
 from pathlib import Path
 from collections import defaultdict
 from config_loader import get_config
@@ -36,6 +29,125 @@ except ImportError as e:
     print(f"❌ 缺少必要套件：{e}")
     print("請執行：pip install openpyxl polib")
     sys.exit(1)
+
+
+def check_multilang_json_structure(data: dict) -> bool:
+    """檢查 JSON 是否為多語言結構（簡化版）"""
+    if not isinstance(data, dict):
+        return False
+    
+    # 簡化的檢查：如果頂層 key 看起來像語言代碼（2-5個字符），則認為是多語言結構
+    for key in data.keys():
+        if isinstance(key, str) and 2 <= len(key) <= 10 and isinstance(data[key], dict):
+            return True
+    
+    return False
+
+
+def create_default_json_file(output_path: Path, all_updates: dict, detected_languages: list) -> bool:
+    """創建預設的多語言 JSON 檔案（僅包含檢測到的語言區塊）"""
+    try:
+        # 根據檢測到的語言建立空結構
+        json_data = {}
+        
+        # 只添加檢測到的語言，創建空結構
+        for language in detected_languages:
+            json_data[language] = {}
+        
+        # 根據 Excel 更新資料動態添加路徑結構（但不設置值）
+        for language, language_updates in all_updates.items():
+            if language not in json_data:
+                json_data[language] = {}
+                
+            for bt_code, bt_updates in language_updates.items():
+                for json_path_str, new_value, update_language in bt_updates['json']:
+                    # 確保路徑存在於對應語言中
+                    if update_language in json_data:
+                        # 預先創建路徑結構，但不設置值（將由後續合併處理）
+                        create_json_path_structure(json_data[update_language], json_path_str)
+        
+        # 確保輸出目錄存在
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 保存檔案
+        json_content = json.dumps(json_data, ensure_ascii=False, indent=2)
+        output_path.write_text(json_content, encoding="utf-8")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ 創建預設 JSON 檔案失敗：{e}")
+        return False
+
+
+def create_json_path_structure(data: dict, path: str):
+    """在 JSON 中預先創建路徑結構"""
+    try:
+        path_parts = parse_json_path(path)
+        current = data
+        
+        for i, (part_type, part_value) in enumerate(path_parts):
+            is_last = (i == len(path_parts) - 1)
+            
+            if part_type == 'key':
+                if not is_last:
+                    if part_value not in current:
+                        # 檢查下一部分是否為索引
+                        next_part_type = path_parts[i + 1][0] if i + 1 < len(path_parts) else 'key'
+                        current[part_value] = [] if next_part_type == 'index' else {}
+                    current = current[part_value]
+                else:
+                    # 最後一個部分，如果不存在則設為空字串
+                    if part_value not in current:
+                        current[part_value] = ""
+            
+            elif part_type == 'index':
+                if not is_last:
+                    while len(current) <= part_value:
+                        current.append({})
+                    current = current[part_value]
+                else:
+                    while len(current) <= part_value:
+                        current.append("")
+        
+    except Exception as e:
+        print(f"⚠️  創建JSON路徑結構失敗：{path} - {e}")
+
+
+def create_default_po_file(output_path: Path, language: str = "zh_Hant_TW") -> bool:
+    """創建預設的 messages.po 檔案（僅包含標頭，無範例條目）"""
+    try:
+        # 創建新的 PO 檔案
+        po = polib.POFile()
+        
+        # 設置標頭資訊
+        current_time = datetime.datetime.now()
+        po.metadata = {
+            'Project-Id-Version': 'PROJECT VERSION',
+            'Report-Msgid-Bugs-To': 'EMAIL@ADDRESS',
+            'POT-Creation-Date': current_time.strftime('%Y-%m-%d %H:%M%z'),
+            'PO-Revision-Date': 'YEAR-MO-DA HO:MI+ZONE',
+            'Last-Translator': 'FULL NAME <EMAIL@ADDRESS>',
+            'Language': language,
+            'Language-Team': f'{language} <LL@li.org>',
+            'Plural-Forms': 'nplurals=1; plural=0;',
+            'MIME-Version': '1.0',
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Content-Transfer-Encoding': '8bit',
+            'Generated-By': 'Babel 2.12.1'
+        }
+        
+        # 確保輸出目錄存在
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 保存檔案
+        po.save(str(output_path))
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ 創建預設 PO 檔案失敗：{e}")
+        return False
 
 
 def detect_tobemodified_files(config) -> dict:
@@ -155,6 +267,10 @@ def choose_combine_file(files: list, file_type: str) -> Path:
     """選擇要合併的檔案"""
     if not files:
         print(f"⚠️  /i18n_combine/ 中沒有找到 {file_type.upper()} 檔案")
+        if file_type.lower() == 'po':
+            print(f"💡 將自動創建預設的 messages.po 檔案")
+        elif file_type.lower() == 'json':
+            print(f"💡 將自動創建預設的多語言 JSON 檔案")
         return None
     
     print(f"\n📁 可用的 {file_type.upper()} 檔案：")
@@ -162,21 +278,30 @@ def choose_combine_file(files: list, file_type: str) -> Path:
         print(f"  {i}) {file_info['relative_path']}")
     
     print(f"  0) 跳過 {file_type.upper()} 檔案")
+    if file_type.lower() in ['po', 'json']:
+        create_option = "messages.po" if file_type.lower() == 'po' else "多語言 JSON"
+        print(f"  C) 創建新的 {create_option} 檔案")
     
     while True:
         try:
-            choice = input(f"\n請選擇要合併的 {file_type.upper()} 檔案 (0-{len(files)})：").strip()
-            choice_idx = int(choice)
+            choice = input(f"\n請選擇要合併的 {file_type.upper()} 檔案 (0-{len(files)}{'/C' if file_type.lower() in ['po', 'json'] else ''})：").strip()
             
-            if choice_idx == 0:
+            if choice == '0':
                 print(f"⏭️  跳過 {file_type.upper()} 檔案")
                 return None
-            elif 1 <= choice_idx <= len(files):
-                selected_file = files[choice_idx - 1]
-                print(f"✅ 選擇了：{selected_file['relative_path']}")
-                return selected_file['path']
+            elif choice.upper() == 'C' and file_type.lower() in ['po', 'json']:
+                create_option = "messages.po" if file_type.lower() == 'po' else "多語言 JSON"
+                print(f"🆕 將創建新的 {create_option} 檔案")
+                return "CREATE_NEW"
             else:
-                print(f"⚠️  請輸入 0-{len(files)} 之間的數字")
+                choice_idx = int(choice)
+                if 1 <= choice_idx <= len(files):
+                    selected_file = files[choice_idx - 1]
+                    print(f"✅ 選擇了：{selected_file['relative_path']}")
+                    return selected_file['path']
+                else:
+                    suffix = ' 或 C' if file_type.lower() in ['po', 'json'] else ''
+                    print(f"⚠️  請輸入 0-{len(files)} 之間的數字{suffix}")
         except (ValueError, KeyboardInterrupt):
             print("\n❌ 操作取消")
             return None
@@ -282,40 +407,56 @@ def read_excel_updates_for_language(xlsx_path: Path, language: str, config) -> d
 
 
 def combine_multilang_json_files_for_business_type(all_updates: dict, target_json_path: Path, 
-                                                  output_json_path: Path, bt_code: str, log_detail=None) -> dict:
-    """【修正版】為特定業態合併多語言 JSON 檔案，避免業態間衝突，並正確處理數值差異"""
+                                                  output_json_path: Path, bt_code: str, log_detail=None,
+                                                  create_new: bool = False, detected_languages: list = None) -> dict:
+    """【增強版】為特定業態合併多語言 JSON 檔案，支援創建新檔案"""
     result = {
         "success": False,
         "merged": 0,
         "skipped": 0,
         "conflicts": [],
         "errors": [],
-        "language_stats": {}
+        "language_stats": {},
+        "created_new": False
     }
     
     # 檢查是否有當前業態的更新
-    has_updates = False
+    json_updates_for_bt = []
     for language_updates in all_updates.values():
         if bt_code in language_updates and language_updates[bt_code]['json']:
-            has_updates = True
-            break
+            json_updates_for_bt.extend(language_updates[bt_code]['json'])
     
-    if not has_updates:
+    if not json_updates_for_bt and not create_new:
         result["success"] = True
         if log_detail:
             log_detail(f"JSON ({bt_code}): 沒有任何更新項目")
         return result
     
     try:
-        # 載入目標 JSON 檔案
-        if not target_json_path.exists():
-            result["errors"].append(f"目標 JSON 檔案不存在：{target_json_path}")
-            return result
-        
-        target_data = json.loads(target_json_path.read_text(encoding="utf-8"))
-        print(f"   📄 載入目標多語言 JSON 檔案：{target_json_path.name}")
-        if log_detail:
-            log_detail(f"載入目標 JSON 檔案：{target_json_path.name}")
+        # 處理目標 JSON 檔案
+        if create_new or target_json_path == "CREATE_NEW" or not target_json_path or not target_json_path.exists():
+            # 創建新的 JSON 檔案
+            print(f"   🆕 創建新的多語言 JSON 檔案：{output_json_path.name}")
+            if log_detail:
+                log_detail(f"創建新的多語言 JSON 檔案：{output_json_path.name}")
+            
+            # 創建預設檔案到臨時位置
+            temp_json_path = output_json_path.parent / f"temp_multilang.json"
+            temp_json_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            if not create_default_json_file(temp_json_path, all_updates, detected_languages or []):
+                result["errors"].append(f"無法創建預設 JSON 檔案")
+                return result
+            
+            target_data = json.loads(temp_json_path.read_text(encoding="utf-8"))
+            result["created_new"] = True
+            
+        else:
+            # 載入現有的 JSON 檔案
+            target_data = json.loads(target_json_path.read_text(encoding="utf-8"))
+            print(f"   📄 載入目標多語言 JSON 檔案：{target_json_path.name}")
+            if log_detail:
+                log_detail(f"載入目標 JSON 檔案：{target_json_path.name}")
         
         # 檢查是否為多語言結構
         is_multilang_structure = check_multilang_json_structure(target_data)
@@ -351,7 +492,7 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                 # 獲取現有值
                 existing_value = get_json_value_by_path(target_data, multilang_path)
                 
-                # 【修正關鍵邏輯】正確處理值的比較和衝突檢測
+                # 處理值的比較和衝突檢測
                 if existing_value is not None:
                     existing_str = str(existing_value).strip()
                     new_str = str(new_value).strip()
@@ -364,7 +505,7 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                             log_detail(f"跳過相同值：{multilang_path} = '{new_str}'")
                         continue
                     
-                    # 【重要修正】當值不同時，應該標記為衝突並讓用戶決定
+                    # 當值不同時，標記為衝突並讓用戶決定
                     if existing_str != new_str:
                         conflict_info = {
                             "path": multilang_path,
@@ -421,13 +562,19 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
         json_content = json.dumps(target_data, ensure_ascii=False, indent=2)
         output_json_path.write_text(json_content, encoding="utf-8")
         
+        # 清理臨時檔案
+        temp_json_path = output_json_path.parent / f"temp_multilang.json"
+        if temp_json_path.exists():
+            temp_json_path.unlink()
+        
         result["success"] = True
         result["language_stats"] = language_stats
         
         # 修正日誌訊息，包含衝突數量
         total_conflicts = len(conflicts)
         if log_detail:
-            log_detail(f"JSON ({bt_code}) 合併完成：合併 {result['merged']} 個，跳過 {result['skipped']} 個，衝突 {total_conflicts} 個")
+            status = "創建並" if result["created_new"] else ""
+            log_detail(f"JSON ({bt_code}) {status}合併完成：合併 {result['merged']} 個，跳過 {result['skipped']} 個，衝突 {total_conflicts} 個")
         
     except json.JSONDecodeError as e:
         error_msg = f"JSON 格式錯誤：{e}"
@@ -469,11 +616,9 @@ def handle_json_conflict(path: str, existing_value: str, new_value: str, languag
             elif choice == "3":
                 return "skip"
             elif choice == "A":
-                # 可以擴展為全局策略
                 print(f"✅ 將使用新值")
                 return "use_new"
             elif choice == "K":
-                # 可以擴展為全局策略
                 print(f"✅ 將保留現有值")
                 return "keep_existing"
             else:
@@ -519,84 +664,119 @@ def generate_conflict_report(conflicts: list, output_dir: Path, timestamp: str):
     except Exception as e:
         print(f"⚠️  生成衝突報告失敗：{e}")
 
-def check_multilang_json_structure(data: dict) -> bool:
-    """檢查 JSON 是否為多語言結構"""
-    if not isinstance(data, dict):
-        return False
-    
-    # 檢查頂層 key 是否像語言代碼
-    for key in data.keys():
-        if isinstance(key, str) and re.match(r'^[a-z]{2}(-[A-Z]{2})?$', key):
-            # 如果至少有一個 key 像語言代碼，且其值是字典，則認為是多語言結構
-            if isinstance(data[key], dict):
-                return True
-    
-    return False
-
 
 def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path, 
-                                     output_dir: Path, bt_code: str, log_detail=None) -> dict:
-    """【修正版】為特定業態處理 PO 檔案合併"""
+                                     output_dir: Path, bt_code: str, log_detail=None, 
+                                     create_new: bool = False) -> dict:
+    """【增強版】為特定業態處理 PO 檔案合併，每個語言生成獨立的 PO 檔案"""
     result = {
         "success": False,
         "merged": 0,
         "skipped": 0,
         "conflicts": [],
         "errors": [],
-        "language_stats": {}
+        "language_stats": {},
+        "created_new": False,
+        "created_files": []  # 新增：記錄創建的檔案
     }
     
     # 檢查是否有當前業態的 PO 更新
-    has_updates = False
-    for language_updates in all_updates.values():
+    languages_with_po_updates = {}
+    for language, language_updates in all_updates.items():
         if bt_code in language_updates and language_updates[bt_code]['po']:
-            has_updates = True
-            break
+            languages_with_po_updates[language] = language_updates[bt_code]['po']
     
-    if not has_updates:
+    if not languages_with_po_updates:
         result["success"] = True
         if log_detail:
             log_detail(f"PO ({bt_code}): 沒有任何更新項目")
         return result
     
     try:
-        # 載入目標 PO 檔案
-        if not target_po_path.exists():
-            result["errors"].append(f"目標 PO 檔案不存在：{target_po_path}")
-            return result
+        config = get_config()
+        business_types = config.get_business_types()
+        suffix = business_types[bt_code]['suffix'] if bt_code in business_types else ""
         
-        target_po = polib.pofile(str(target_po_path))
-        print(f"   📄 載入目標 PO 檔案：{target_po_path.name}，共 {len(target_po)} 個條目")
-        if log_detail:
-            log_detail(f"載入目標 PO 檔案：{target_po_path.name}，共 {len(target_po)} 個條目")
-        
-        language_stats = {}
-        
-        # 【修正】只處理當前業態的更新
-        for language, language_updates in all_updates.items():
-            if bt_code not in language_updates:
-                continue
-                
-            language_stats[language] = {"merged": 0, "skipped": 0, "conflicts": 0}
+        # 為每個語言分別處理 PO 檔案
+        for language, po_updates in languages_with_po_updates.items():
+            print(f"   🌐 處理 {language} 的 PO 檔案...")
+            if log_detail:
+                log_detail(f"開始處理 {language} 的 PO 檔案 (業態: {bt_code})")
             
-            # 處理當前業態的 PO 更新
-            bt_updates = language_updates[bt_code]
-            for msgid, new_msgstr, update_language in bt_updates['po']:
+            # 確定當前語言的輸出檔案路徑
+            if target_po_path and target_po_path != "CREATE_NEW":
+                # 基於原始檔案名稱，添加語言和業態後綴
+                base_name = target_po_path.stem
+                # 移除可能已存在的語言後綴，避免重複
+                if base_name.endswith(f"_{language}"):
+                    base_name = base_name[:-len(f"_{language}")]
+                output_po_path = output_dir / f"{base_name}_{language}{suffix}_combined.po"
+            else:
+                output_po_path = output_dir / f"messages_{language}{suffix}_combined.po"
+            
+            # 記錄創建的檔案
+            result["created_files"].append(str(output_po_path))
+            
+            # 為當前語言創建或載入 PO 檔案
+            if create_new or target_po_path == "CREATE_NEW" or not target_po_path or not target_po_path.exists():
+                # 創建新的 PO 檔案
+                print(f"     🆕 創建新的 PO 檔案：{output_po_path.name}")
+                if log_detail:
+                    log_detail(f"創建新的 PO 檔案：{output_po_path.name}")
+                
+                # 創建預設檔案
+                if not create_default_po_file(output_po_path, language):
+                    result["errors"].append(f"無法為 {language} 創建預設 PO 檔案")
+                    continue
+                
+                target_po = polib.pofile(str(output_po_path))
+                result["created_new"] = True
+                
+                # 清空預設條目，將由更新資料填充
+                target_po.clear()
+                
+            else:
+                # 嘗試載入對應語言的現有 PO 檔案
+                language_specific_path = target_po_path.parent / f"{target_po_path.stem}_{language}.po"
+                if language_specific_path.exists():
+                    target_po = polib.pofile(str(language_specific_path))
+                    print(f"     📄 載入 {language} 專用 PO 檔案：{language_specific_path.name}")
+                    if log_detail:
+                        log_detail(f"載入 {language} 專用 PO 檔案：{language_specific_path.name}")
+                else:
+                    # 使用通用 PO 檔案作為基礎
+                    target_po = polib.pofile(str(target_po_path))
+                    print(f"     📄 基於通用 PO 檔案創建 {language} 版本")
+                    if log_detail:
+                        log_detail(f"基於通用 PO 檔案創建 {language} 版本")
+            
+            # 初始化當前語言的統計
+            language_stats = {"merged": 0, "skipped": 0, "conflicts": 0}
+            
+            # 處理當前語言的 PO 更新
+            for msgid, new_msgstr, update_language in po_updates:
                 target_entry = target_po.find(msgid)
                 
                 if target_entry:
-                    # 【修正】只有當現有值和新值真的不同時才需要更新
+                    # 只有當現有值和新值真的不同時才需要更新
                     if target_entry.msgstr and target_entry.msgstr.strip():
                         if target_entry.msgstr == new_msgstr:
                             # 值相同，跳過
+                            language_stats["skipped"] += 1
                             result["skipped"] += 1
-                            language_stats[update_language]["skipped"] += 1
+                            if log_detail:
+                                log_detail(f"[{language}] 跳過相同值：{msgid} = '{new_msgstr}'")
                             continue
+                        else:
+                            # 值不同，記錄但仍然更新
+                            if log_detail:
+                                log_detail(f"[{language}] 更新現有條目：{msgid} = '{new_msgstr}' (原值: '{target_entry.msgstr}')")
                     
                     # 應用更新
                     target_entry.msgstr = new_msgstr
+                    language_stats["merged"] += 1
                     result["merged"] += 1
-                    language_stats[update_language]["merged"] += 1
+                    
                 else:
                     # 目標檔案中沒有此條目，添加新條目
                     new_entry = polib.POEntry(
@@ -604,24 +784,34 @@ def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path,
                         msgstr=new_msgstr
                     )
                     target_po.append(new_entry)
+                    language_stats["merged"] += 1
                     result["merged"] += 1
-                    language_stats[update_language]["merged"] += 1
-        
-        # 保存合併後的檔案
-        config = get_config()
-        business_types = config.get_business_types()
-        
-        if bt_code in business_types:
-            suffix = business_types[bt_code]['suffix']
-            output_po_path = output_dir / f"{target_po_path.stem}{suffix}_combined.po"
+                    if log_detail:
+                        log_detail(f"[{language}] 新增條目：{msgid} = '{new_msgstr}'")
+            
+            # 更新 PO 檔案的語言元數據
+            if 'Language' in target_po.metadata:
+                target_po.metadata['Language'] = language
+            if 'Language-Team' in target_po.metadata:
+                target_po.metadata['Language-Team'] = f'{language} <LL@li.org>'
+            
+            # 保存當前語言的 PO 檔案
             output_po_path.parent.mkdir(parents=True, exist_ok=True)
             target_po.save(str(output_po_path))
+            
+            # 記錄語言統計
+            result["language_stats"][language] = language_stats
+            
+            print(f"     ✅ {language}: 合併 {language_stats['merged']} 個，跳過 {language_stats['skipped']} 個")
+            if log_detail:
+                log_detail(f"[{language}] PO 檔案處理完成：合併 {language_stats['merged']} 個，跳過 {language_stats['skipped']} 個")
         
         result["success"] = True
-        result["language_stats"] = language_stats
         
         if log_detail:
-            log_detail(f"PO ({bt_code}) 合併完成：合併 {result['merged']} 個，跳過 {result['skipped']} 個")
+            log_detail(f"PO ({bt_code}) 處理完成：共處理 {len(languages_with_po_updates)} 個語言")
+            log_detail(f"總計：合併 {result['merged']} 個，跳過 {result['skipped']} 個")
+            log_detail(f"生成檔案：{', '.join(result['created_files'])}")
         
     except Exception as e:
         error_msg = f"PO 檔案合併失敗：{e}"
@@ -687,7 +877,7 @@ def set_json_value_by_path(data: dict, path: str, new_value: str) -> bool:
         
         return True
         
-    except Exception as e:
+    except Exception:
         return False
 
 
@@ -724,9 +914,160 @@ def parse_json_path(path: str) -> list:
     return parts
 
 
+def check_po_updates_exist(all_updates: dict) -> bool:
+    """檢查是否存在任何 PO 更新"""
+    for language_updates in all_updates.values():
+        for bt_code, bt_updates in language_updates.items():
+            if bt_updates['po']:
+                return True
+    return False
+
+
+def check_json_updates_exist(all_updates: dict) -> bool:
+    """檢查是否存在任何 JSON 更新"""
+    for language_updates in all_updates.values():
+        for bt_code, bt_updates in language_updates.items():
+            if bt_updates['json']:
+                return True
+    return False
+
+
+def generate_multilang_summary_report(results: dict, all_updates: dict, output_dir: Path, timestamp: str, 
+                                     target_json_path: Path, target_po_path: Path, log_detail):
+    """生成多語言合併處理摘要報告"""
+    summary_file = output_dir / f"multi_combine_summary_{timestamp}.txt"
+    
+    try:
+        with open(summary_file, 'w', encoding='utf-8') as f:
+            f.write(f"多語言檔案合併處理摘要報告\n")
+            f.write(f"生成時間：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"{'='*60}\n\n")
+            
+            f.write(f"目標檔案：\n")
+            if target_json_path:
+                if target_json_path == "CREATE_NEW":
+                    f.write(f"  JSON: 創建新的多語言 JSON\n")
+                else:
+                    f.write(f"  JSON: {target_json_path}\n")
+            if target_po_path:
+                if target_po_path == "CREATE_NEW":
+                    f.write(f"  PO: 創建新的 messages.po\n")
+                else:
+                    f.write(f"  PO: {target_po_path}\n")
+            f.write(f"\n")
+            
+            f.write(f"處理的語言：\n")
+            for language in all_updates.keys():
+                f.write(f"  - {language}\n")
+            f.write(f"\n")
+            
+            total_merged = 0
+            total_skipped = 0
+            total_errors = 0
+            successful_business_types = []
+            failed_business_types = []
+            created_new_files = []
+            
+            # 按業態統計
+            for bt_code, bt_results in results.items():
+                f.write(f"業態：{bt_code}\n")
+                
+                bt_merged = sum(result.get('merged', 0) for result in bt_results.values())
+                bt_skipped = sum(result.get('skipped', 0) for result in bt_results.values())
+                bt_errors = []
+                bt_new_files = []
+                
+                for result_key, result in bt_results.items():
+                    bt_errors.extend(result.get('errors', []))
+                    if result.get('created_new'):
+                        file_type = "JSON檔案" if "json" in result_key else "PO檔案"
+                        bt_new_files.append(file_type)
+                
+                f.write(f"合併數量：{bt_merged}\n")
+                f.write(f"跳過數量：{bt_skipped}\n")
+                
+                if bt_new_files:
+                    f.write(f"新建檔案：{', '.join(bt_new_files)}\n")
+                    created_new_files.extend(bt_new_files)
+                
+                # 語言級別統計
+                f.write(f"語言統計：\n")
+                for result in bt_results.values():
+                    if 'language_stats' in result:
+                        for lang, stats in result['language_stats'].items():
+                            f.write(f"  {lang}: 合併 {stats['merged']}, 跳過 {stats['skipped']}, 衝突 {stats.get('conflicts', 0)}\n")
+                
+                if bt_errors:
+                    f.write(f"錯誤：\n")
+                    for error in bt_errors:
+                        f.write(f"  - {error}\n")
+                    failed_business_types.append(bt_code)
+                else:
+                    successful_business_types.append(bt_code)
+                
+                total_merged += bt_merged
+                total_skipped += bt_skipped
+                total_errors += len(bt_errors)
+                
+                f.write(f"\n{'-'*40}\n\n")
+            
+            # 總計統計
+            f.write(f"處理總結：\n")
+            f.write(f"成功業態：{len(successful_business_types)}\n")
+            f.write(f"失敗業態：{len(failed_business_types)}\n")
+            f.write(f"總合併項目：{total_merged}\n")
+            f.write(f"總跳過項目：{total_skipped}\n")
+            f.write(f"總錯誤項目：{total_errors}\n")
+            f.write(f"處理語言數：{len(all_updates)}\n")
+            
+            if created_new_files:
+                f.write(f"新建檔案數：{len(set(created_new_files))}\n")
+            
+            if successful_business_types:
+                f.write(f"\n成功的業態：{', '.join(successful_business_types)}\n")
+            
+            if failed_business_types:
+                f.write(f"失敗的業態：{', '.join(failed_business_types)}\n")
+            
+            f.write(f"\n多語言合併說明：\n")
+            f.write(f"- 本次處理支援多個語言的 tobemodified 合併\n")
+            f.write(f"- JSON 檔案：採用多語言結構，所有語言合併到同一檔案\n")
+            f.write(f"- PO 檔案：每個語言生成獨立的 PO 檔案（如 messages_zh_TW_rt.po）\n")
+            f.write(f"- 自動檢測並處理語言層級的路徑映射\n")
+            f.write(f"- 按業態分別處理，避免業態間相互干擾\n")
+            f.write(f"- 相同 key 且相同 value 的項目會自動跳過\n")
+            f.write(f"- 不同 value 的項目會正常更新\n")
+            f.write(f"- 沒有目標檔案時會自動創建標準檔案（JSON/PO）\n")
+            
+            f.write(f"\n使用建議：\n")
+            f.write(f"- 確認目標 JSON 檔案採用多語言結構（頂層為語言代碼）\n")
+            f.write(f"- PO 檔案會按語言分別生成，便於獨立管理各語言翻譯\n")
+            f.write(f"- 合併前建議備份原始檔案\n")
+            f.write(f"- 合併後請測試翻譯檔案的正確性\n")
+            f.write(f"- 檢查各語言檔案的數據完整性\n")
+            f.write(f"- 新建的檔案包含標準結構，無預設範例\n")
+            
+            # 修正版本說明
+            f.write(f"\n修正版本 v1.5 新增功能：\n")
+            f.write(f"- 當沒有找到 JSON 檔案時，自動創建多語言 JSON 檔案\n")
+            f.write(f"- 根據 tobemodified 內容智能生成 JSON 結構\n")
+            f.write(f"- 支援基於檢測到的語言創建對應的語言區塊\n")
+            f.write(f"- 新建 JSON 檔案不包含預設範例，只根據實際語言創建空結構\n")
+            f.write(f"- PO 檔案按語言分別生成（如 messages_zh_TW.po, messages_en.po）\n")
+            f.write(f"- 每個語言的 PO 檔案獨立管理，便於團隊協作\n")
+            f.write(f"- 改善用戶體驗，JSON 和 PO 檔案都支援自動創建\n")
+            f.write(f"- 動態路徑結構創建，確保更新項目能正確寫入\n")
+            f.write(f"- 完整的多語言檔案處理工作流程\n")
+        
+        log_detail(f"多語言合併摘要報告已生成：{summary_file}")
+        
+    except Exception as e:
+        log_detail(f"生成多語言合併摘要報告失敗：{e}")
+
+
 def main():
     """主執行函數"""
-    print("🚀 開始多語言檔案合併處理 (v1.3 - 修正業態衝突邏輯版)")
+    print("🚀 開始多語言檔案合併處理 (v1.5 - 支援自動創建JSON和PO檔案版)")
     
     # 載入配置
     config = get_config()
@@ -763,20 +1104,67 @@ def main():
     # 步驟3：選擇要合併的 PO 檔案
     target_po_path = choose_combine_file(combine_files['po'], 'po')
     
-    # 檢查是否至少選擇了一個檔案
-    if not target_json_path and not target_po_path:
-        print("❌ 必須至少選擇一個檔案進行合併")
-        sys.exit(1)
-    
     # 讀取所有選中語言的 Excel 更新資料
     all_updates = {}
+    detected_languages = []
+    
     for language, xlsx_path in selected_files.items():
         updates = read_excel_updates_for_language(xlsx_path, language, config)
         if updates:
             all_updates[language] = updates
+            detected_languages.append(language)
     
     if not all_updates:
         print("❌ 沒有讀取到任何有效的更新資料")
+        sys.exit(1)
+    
+    # 檢查是否有更新
+    has_json_updates = check_json_updates_exist(all_updates)
+    has_po_updates = check_po_updates_exist(all_updates)
+    
+    # 如果沒有選擇 JSON 檔案但有 JSON 更新，詢問是否創建新檔案
+    if not target_json_path and has_json_updates:
+        print(f"\n💡 檢測到 JSON 更新但未選擇目標檔案")
+        while True:
+            try:
+                choice = input(f"是否創建新的多語言 JSON 檔案？(Y/n)：").strip().lower()
+                if choice in ['', 'y', 'yes']:
+                    target_json_path = "CREATE_NEW"
+                    print(f"✅ 將創建新的多語言 JSON 檔案")
+                    break
+                elif choice in ['n', 'no']:
+                    print(f"⏭️  跳過 JSON 檔案處理")
+                    break
+                else:
+                    print(f"⚠️  請輸入 Y 或 N")
+            except KeyboardInterrupt:
+                print(f"\n❌ 操作取消")
+                target_json_path = None
+                break
+    
+    # 如果沒有選擇 PO 檔案但有 PO 更新，詢問是否創建新檔案
+    if not target_po_path and has_po_updates:
+        print(f"\n💡 檢測到 PO 更新但未選擇目標檔案")
+        while True:
+            try:
+                choice = input(f"是否創建新的 messages.po 檔案？(Y/n)：").strip().lower()
+                if choice in ['', 'y', 'yes']:
+                    target_po_path = "CREATE_NEW"
+                    print(f"✅ 將創建新的 messages.po 檔案")
+                    break
+                elif choice in ['n', 'no']:
+                    print(f"⏭️  跳過 PO 檔案處理")
+                    break
+                else:
+                    print(f"⚠️  請輸入 Y 或 N")
+            except KeyboardInterrupt:
+                print(f"\n❌ 操作取消")
+                target_po_path = None
+                break
+    
+    # 檢查是否至少選擇了一個檔案或有更新需要處理
+    if not target_json_path and not target_po_path:
+        print("❌ 必須至少選擇一個檔案進行合併")
         sys.exit(1)
     
     # 統計所有業態
@@ -787,12 +1175,18 @@ def main():
     print(f"\n📋 合併設定：")
     print(f"   來源語言：{', '.join(selected_files.keys())}")
     if target_json_path:
-        print(f"   JSON 檔案：{target_json_path.relative_to(combine_dir)}")
+        if target_json_path == "CREATE_NEW":
+            print(f"   JSON 檔案：將創建新的多語言 JSON")
+        else:
+            print(f"   JSON 檔案：{target_json_path.relative_to(combine_dir)}")
     if target_po_path:
-        print(f"   PO 檔案：{target_po_path.relative_to(combine_dir)}")
+        if target_po_path == "CREATE_NEW":
+            print(f"   PO 檔案：將創建新的 messages.po")
+        else:
+            print(f"   PO 檔案：{target_po_path.relative_to(combine_dir)}")
     print(f"   涵蓋業態：{', '.join([config.get_business_types()[bt]['display_name'] for bt in all_business_types])}")
     
-    # 建立輸出目錄 - 使用正確的命名格式
+    # 建立輸出目錄
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     dirs = config.get_directories()
     output_dir = Path(dirs['output_dir']) / f"multi_{timestamp}_combined"
@@ -810,11 +1204,11 @@ def main():
     log_detail(f"來源檔案：{list(selected_files.values())}")
     log_detail(f"涵蓋業態：{', '.join(all_business_types)}")
     
-    # 【修正】處理合併邏輯 - 避免業態間衝突
+    # 處理合併邏輯 - 避免業態間衝突
     business_types = config.get_business_types()
     all_results = {}
     
-    # 【修正】按業態分別處理，避免相互干擾
+    # 按業態分別處理，避免相互干擾
     for bt_code in all_business_types:
         if bt_code not in business_types:
             continue
@@ -828,15 +1222,22 @@ def main():
         
         results = {}
         
-        # 【修正】為當前業態處理 JSON 檔案
+        # 為當前業態處理 JSON 檔案
         if target_json_path:
-            output_json_path = output_dir / f"{target_json_path.stem}{suffix}_combined.json"
+            if target_json_path == "CREATE_NEW":
+                output_json_path = output_dir / f"multilang{suffix}_combined.json"
+            else:
+                output_json_path = output_dir / f"{target_json_path.stem}{suffix}_combined.json"
+            
+            create_new = (target_json_path == "CREATE_NEW")
             json_result = combine_multilang_json_files_for_business_type(
                 all_updates,
-                target_json_path,
+                target_json_path if not create_new else None,
                 output_json_path,
                 bt_code,
-                log_detail
+                log_detail,
+                create_new,
+                detected_languages
             )
             results['json_result'] = json_result
             
@@ -850,17 +1251,23 @@ def main():
                         if stats['merged'] > 0 or stats['skipped'] > 0:
                             print(f"     📊 {lang}: 合併 {stats['merged']} 個, 跳過 {stats['skipped']} 個")
                 
+                if json_result.get('created_new'):
+                    print(f"     🆕 創建了新的 JSON 檔案")
+                
                 if json_result.get('merged', 0) == 0 and json_result.get('skipped', 0) == 0:
-                    print(f"     ℹ️  {display_name} 沒有 JSON 更新項目")
+                    if not json_result.get('created_new'):
+                        print(f"     ℹ️  {display_name} 沒有 JSON 更新項目")
         
-        # 【修正】為當前業態處理 PO 檔案
+        # 為當前業態處理 PO 檔案
         if target_po_path:
+            create_new = (target_po_path == "CREATE_NEW")
             po_result = combine_po_files_for_business_type(
                 all_updates,
-                target_po_path,
+                target_po_path if not create_new else None,
                 output_dir,
                 bt_code,
-                log_detail
+                log_detail,
+                create_new
             )
             results['po_result'] = po_result
             
@@ -874,25 +1281,24 @@ def main():
                         if stats['merged'] > 0 or stats['skipped'] > 0:
                             print(f"     📊 {lang}: 合併 {stats['merged']} 個, 跳過 {stats['skipped']} 個")
                 
+                if po_result.get('created_new'):
+                    print(f"     🆕 創建了新的 PO 檔案")
+                
                 if po_result.get('merged', 0) == 0 and po_result.get('skipped', 0) == 0:
-                    print(f"     ℹ️  {display_name} 沒有 PO 更新項目")
+                    if not po_result.get('created_new'):
+                        print(f"     ℹ️  {display_name} 沒有 PO 更新項目")
         
-        # 如果沒有更新，複製原檔案
-        if target_json_path and results.get('json_result', {}).get('merged', 0) == 0:
-            output_json_path = output_dir / f"{target_json_path.stem}{suffix}_combined.json"
-            if not output_json_path.exists():
-                output_json_path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(target_json_path, output_json_path)
-                print(f"     📄 複製 JSON 檔案（無更新）")
-                log_detail(f"複製原始 JSON 檔案：{target_json_path.name}")
+        # 如果沒有更新，複製原檔案（僅限非創建新檔案的情況）
+        if target_json_path and target_json_path != "CREATE_NEW" and results.get('json_result', {}).get('merged', 0) == 0:
+            if not results.get('json_result', {}).get('created_new', False):
+                output_json_path = output_dir / f"{target_json_path.stem}{suffix}_combined.json"
+                if not output_json_path.exists():
+                    output_json_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(target_json_path, output_json_path)
+                    print(f"     📄 複製 JSON 檔案（無更新）")
+                    log_detail(f"複製原始 JSON 檔案：{target_json_path.name}")
         
-        if target_po_path and results.get('po_result', {}).get('merged', 0) == 0:
-            output_po_path = output_dir / f"{target_po_path.stem}{suffix}_combined.po"
-            if not output_po_path.exists():
-                output_po_path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(target_po_path, output_po_path)
-                print(f"     📄 複製 PO 檔案（無更新）")
-                log_detail(f"複製原始 PO 檔案：{target_po_path.name}")
+        # PO 檔案現在是按語言分別生成，所以不需要複製邏輯
         
         all_results[bt_code] = results
         
@@ -900,16 +1306,22 @@ def main():
         total_merged = 0
         total_skipped = 0
         total_errors = 0
+        has_new_files = False
         
         for result in results.values():
             total_merged += result.get('merged', 0)
             total_skipped += result.get('skipped', 0)
             total_errors += len(result.get('errors', []))
+            if result.get('created_new'):
+                has_new_files = True
         
         if total_errors > 0:
             print(f"     ❌ 處理失敗 - 錯誤: {total_errors} 個")
         else:
-            print(f"     ✅ 完成 - 合併: {total_merged} 個, 跳過: {total_skipped} 個")
+            status_msg = f"完成 - 合併: {total_merged} 個, 跳過: {total_skipped} 個"
+            if has_new_files:
+                status_msg += " (包含新檔案)"
+            print(f"     ✅ {status_msg}")
         
         log_detail(f"{display_name} 處理完成：合併 {total_merged} 個，跳過 {total_skipped} 個，錯誤 {total_errors} 個")
     
@@ -935,112 +1347,6 @@ def main():
     
     # 生成處理摘要
     generate_multilang_summary_report(all_results, all_updates, output_dir, timestamp, target_json_path, target_po_path, log_detail)
-
-
-def generate_multilang_summary_report(results: dict, all_updates: dict, output_dir: Path, timestamp: str, 
-                                     target_json_path: Path, target_po_path: Path, log_detail):
-    """生成多語言合併處理摘要報告"""
-    summary_file = output_dir / f"multi_combine_summary_{timestamp}.txt"
-    
-    try:
-        with open(summary_file, 'w', encoding='utf-8') as f:
-            f.write(f"多語言檔案合併處理摘要報告\n")
-            f.write(f"生成時間：{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write(f"{'='*60}\n\n")
-            
-            f.write(f"目標檔案：\n")
-            if target_json_path:
-                f.write(f"  JSON: {target_json_path}\n")
-            if target_po_path:
-                f.write(f"  PO: {target_po_path}\n")
-            f.write(f"\n")
-            
-            f.write(f"處理的語言：\n")
-            for language in all_updates.keys():
-                f.write(f"  - {language}\n")
-            f.write(f"\n")
-            
-            total_merged = 0
-            total_skipped = 0
-            total_errors = 0
-            successful_business_types = []
-            failed_business_types = []
-            
-            # 按業態統計
-            for bt_code, bt_results in results.items():
-                f.write(f"業態：{bt_code}\n")
-                
-                bt_merged = sum(result.get('merged', 0) for result in bt_results.values())
-                bt_skipped = sum(result.get('skipped', 0) for result in bt_results.values())
-                bt_errors = []
-                for result in bt_results.values():
-                    bt_errors.extend(result.get('errors', []))
-                
-                f.write(f"合併數量：{bt_merged}\n")
-                f.write(f"跳過數量：{bt_skipped}\n")
-                
-                # 語言級別統計
-                f.write(f"語言統計：\n")
-                for result in bt_results.values():
-                    if 'language_stats' in result:
-                        for lang, stats in result['language_stats'].items():
-                            f.write(f"  {lang}: 合併 {stats['merged']}, 跳過 {stats['skipped']}, 衝突 {stats.get('conflicts', 0)}\n")
-                
-                if bt_errors:
-                    f.write(f"錯誤：\n")
-                    for error in bt_errors:
-                        f.write(f"  - {error}\n")
-                    failed_business_types.append(bt_code)
-                else:
-                    successful_business_types.append(bt_code)
-                
-                total_merged += bt_merged
-                total_skipped += bt_skipped
-                total_errors += len(bt_errors)
-                
-                f.write(f"\n{'-'*40}\n\n")
-            
-            # 總計統計
-            f.write(f"處理總結：\n")
-            f.write(f"成功業態：{len(successful_business_types)}\n")
-            f.write(f"失敗業態：{len(failed_business_types)}\n")
-            f.write(f"總合併項目：{total_merged}\n")
-            f.write(f"總跳過項目：{total_skipped}\n")
-            f.write(f"總錯誤項目：{total_errors}\n")
-            f.write(f"處理語言數：{len(all_updates)}\n")
-            
-            if successful_business_types:
-                f.write(f"\n成功的業態：{', '.join(successful_business_types)}\n")
-            
-            if failed_business_types:
-                f.write(f"失敗的業態：{', '.join(failed_business_types)}\n")
-            
-            f.write(f"\n多語言合併說明：\n")
-            f.write(f"- 本次處理支援多個語言的 tobemodified 合併到同一檔案\n")
-            f.write(f"- JSON 檔案支援多語言結構（如 enterprise.json）\n")
-            f.write(f"- 自動檢測並處理語言層級的路徑映射\n")
-            f.write(f"- 按業態分別處理，避免業態間相互干擾\n")
-            f.write(f"- 相同 key 且相同 value 的項目會自動跳過\n")
-            f.write(f"- 不同 value 的項目會正常更新（不再視為衝突）\n")
-            
-            f.write(f"\n使用建議：\n")
-            f.write(f"- 確認目標 JSON 檔案採用多語言結構（頂層為語言代碼）\n")
-            f.write(f"- 合併前建議備份原始檔案\n")
-            f.write(f"- 合併後請測試多語言翻譯檔案的正確性\n")
-            f.write(f"- 檢查各語言層級的數據完整性\n")
-            
-            # 修正版本說明
-            f.write(f"\n修正版本 v1.3 改進：\n")
-            f.write(f"- 修正業態間重複處理同一檔案的問題\n")
-            f.write(f"- 修正衝突檢測邏輯：只處理當前業態的更新\n")
-            f.write(f"- 避免業態間互相干擾\n")
-            f.write(f"- 正確區分真正衝突和正常更新\n")
-            f.write(f"- 改善合併流程邏輯\n")
-        
-        log_detail(f"多語言合併摘要報告已生成：{summary_file}")
-        
-    except Exception as e:
-        log_detail(f"生成多語言合併摘要報告失敗：{e}")
 
 
 if __name__ == "__main__":
