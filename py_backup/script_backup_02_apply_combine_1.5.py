@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_02_apply_combine.py (v1.6 - 支援陣列完整更新版)
+script_02_apply_combine.py (v1.5 - 支援自動創建JSON和PO檔案版)
 
 功能：
 1. 選擇要合併的 tobemodified Excel 檔案（支援多選）
@@ -10,7 +10,6 @@ script_02_apply_combine.py (v1.6 - 支援陣列完整更新版)
 4. 沒有目標檔案時自動創建標準檔案（JSON/PO）
 5. 生成合併後的檔案到 i18n_output/multi_{timestamp}_combined/
 6. 提供詳細的合併報告和日誌
-7. **新增：完整陣列更新邏輯 - 從 i18n_input 讀取原始陣列進行智能合併**
 """
 
 import json
@@ -43,82 +42,6 @@ def check_multilang_json_structure(data: dict) -> bool:
             return True
     
     return False
-
-
-def load_original_language_json(language: str) -> dict:
-    """載入指定語言的原始 JSON 檔案 (i18n_input/{language}/{language}.json)"""
-    try:
-        input_dir = Path("i18n_input")
-        language_file = input_dir / language / f"{language}.json"
-        
-        if not language_file.exists():
-            print(f"⚠️  原始語言檔案不存在：{language_file}")
-            return {}
-        
-        with open(language_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            print(f"✅ 載入原始語言檔案：{language_file}")
-            return data
-    
-    except Exception as e:
-        print(f"❌ 載入原始語言檔案失敗 ({language})：{e}")
-        return {}
-
-
-def detect_array_path_and_index(path: str) -> tuple:
-    """
-    檢測路徑是否包含陣列索引，並返回陣列路徑和索引
-    
-    Returns:
-        (array_path, index) 如果是陣列索引路徑
-        (None, None) 如果不是陣列索引路徑
-    
-    例如：
-        "slogan[1]" -> ("slogan", 1)
-        "data.items[0].tags[2]" -> ("data.items[0].tags", 2)
-        "simple.key" -> (None, None)
-    """
-    import re
-    
-    # 使用正規表達式找到最後一個陣列索引
-    pattern = r'^(.+)\[(\d+)\]$'
-    match = re.match(pattern, path)
-    
-    if match:
-        array_path = match.group(1)
-        index = int(match.group(2))
-        return (array_path, index)
-    
-    return (None, None)
-
-
-def get_array_from_original_json(original_data: dict, array_path: str) -> list:
-    """從原始 JSON 資料中獲取指定路徑的陣列"""
-    try:
-        path_parts = parse_json_path(array_path)
-        current = original_data
-        
-        for part_type, part_value in path_parts:
-            if part_type == 'key':
-                if part_value not in current:
-                    print(f"⚠️  原始資料中找不到路徑：{array_path}")
-                    return []
-                current = current[part_value]
-            elif part_type == 'index':
-                if not isinstance(current, list) or len(current) <= part_value:
-                    print(f"⚠️  原始資料中陣列索引超出範圍：{array_path}")
-                    return []
-                current = current[part_value]
-        
-        if isinstance(current, list):
-            return current.copy()  # 返回副本避免修改原始資料
-        else:
-            print(f"⚠️  指定路徑不是陣列：{array_path} (類型: {type(current)})")
-            return []
-            
-    except Exception as e:
-        print(f"❌ 從原始資料獲取陣列失敗：{array_path} - {e}")
-        return []
 
 
 def create_default_json_file(output_path: Path, all_updates: dict, detected_languages: list) -> bool:
@@ -486,7 +409,7 @@ def read_excel_updates_for_language(xlsx_path: Path, language: str, config) -> d
 def combine_multilang_json_files_for_business_type(all_updates: dict, target_json_path: Path, 
                                                   output_json_path: Path, bt_code: str, log_detail=None,
                                                   create_new: bool = False, detected_languages: list = None) -> dict:
-    """【v1.6 增強版】為特定業態合併多語言 JSON 檔案，支援完整陣列更新"""
+    """【增強版】為特定業態合併多語言 JSON 檔案，支援創建新檔案"""
     result = {
         "success": False,
         "merged": 0,
@@ -541,15 +464,6 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
         if log_detail:
             log_detail(f"多語言結構檢測：{'是' if is_multilang_structure else '否'}")
         
-        # 載入所有語言的原始資料用於陣列更新
-        original_language_data = {}
-        for language in all_updates.keys():
-            original_data = load_original_language_json(language)
-            if original_data:
-                original_language_data[language] = original_data
-                if log_detail:
-                    log_detail(f"載入 {language} 原始資料用於陣列更新")
-        
         conflicts = []
         language_stats = {}
         
@@ -569,161 +483,78 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                 if log_detail:
                     log_detail(f"處理更新：{update_language}.{json_path_str} = {new_value}")
                 
-                # 檢測是否為陣列索引路徑
-                array_path, array_index = detect_array_path_and_index(json_path_str)
-                
-                if array_path is not None and array_index is not None:
-                    # 這是陣列索引更新，需要進行完整陣列更新
-                    if log_detail:
-                        log_detail(f"檢測到陣列索引更新：{array_path}[{array_index}] = {new_value}")
-                    
-                    # 從原始語言資料中獲取完整陣列
-                    if update_language in original_language_data:
-                        original_array = get_array_from_original_json(original_language_data[update_language], array_path)
-                        
-                        if original_array:
-                            # 確保陣列足夠長
-                            while len(original_array) <= array_index:
-                                original_array.append("")
-                            
-                            # 更新指定索引的值
-                            original_array[array_index] = new_value
-                            
-                            # 多語言結構的路徑映射
-                            if is_multilang_structure:
-                                final_path = f"{update_language}.{array_path}"
-                            else:
-                                final_path = array_path
-                            
-                            # 設置完整陣列到目標路徑
-                            if set_json_value_by_path(target_data, final_path, original_array):
-                                result["merged"] += 1
-                                language_stats[update_language]["merged"] += 1
-                                if log_detail:
-                                    log_detail(f"完整陣列更新成功：{final_path} = {original_array}")
-                            else:
-                                error_msg = f"無法設置完整陣列：{final_path}"
-                                result["errors"].append(error_msg)
-                                if log_detail:
-                                    log_detail(f"錯誤：{error_msg}")
-                        else:
-                            # 無法獲取原始陣列，使用傳統方式
-                            if log_detail:
-                                log_detail(f"無法獲取原始陣列，使用傳統索引更新：{json_path_str}")
-                            
-                            # 多語言結構的路徑映射
-                            if is_multilang_structure:
-                                multilang_path = f"{update_language}.{json_path_str}"
-                            else:
-                                multilang_path = json_path_str
-                            
-                            # 傳統的索引更新方式
-                            if set_json_value_by_path(target_data, multilang_path, new_value):
-                                result["merged"] += 1
-                                language_stats[update_language]["merged"] += 1
-                                if log_detail:
-                                    log_detail(f"傳統索引更新成功：{multilang_path} = {new_value}")
-                            else:
-                                error_msg = f"無法設置傳統索引路徑：{multilang_path}"
-                                result["errors"].append(error_msg)
-                                if log_detail:
-                                    log_detail(f"錯誤：{error_msg}")
-                    else:
-                        if log_detail:
-                            log_detail(f"未找到 {update_language} 的原始資料，使用傳統更新方式")
-                        
-                        # 多語言結構的路徑映射
-                        if is_multilang_structure:
-                            multilang_path = f"{update_language}.{json_path_str}"
-                        else:
-                            multilang_path = json_path_str
-                        
-                        # 傳統的索引更新方式
-                        if set_json_value_by_path(target_data, multilang_path, new_value):
-                            result["merged"] += 1
-                            language_stats[update_language]["merged"] += 1
-                            if log_detail:
-                                log_detail(f"傳統索引更新成功：{multilang_path} = {new_value}")
-                        else:
-                            error_msg = f"無法設置傳統索引路徑：{multilang_path}"
-                            result["errors"].append(error_msg)
-                            if log_detail:
-                                log_detail(f"錯誤：{error_msg}")
-                
+                # 多語言結構的路徑映射
+                if is_multilang_structure:
+                    multilang_path = f"{update_language}.{json_path_str}"
                 else:
-                    # 這是普通路徑更新（非陣列索引）
-                    # 多語言結構的路徑映射
-                    if is_multilang_structure:
-                        multilang_path = f"{update_language}.{json_path_str}"
-                    else:
-                        multilang_path = json_path_str
+                    multilang_path = json_path_str
+                
+                # 獲取現有值
+                existing_value = get_json_value_by_path(target_data, multilang_path)
+                
+                # 處理值的比較和衝突檢測
+                if existing_value is not None:
+                    existing_str = str(existing_value).strip()
+                    new_str = str(new_value).strip()
                     
-                    # 獲取現有值
-                    existing_value = get_json_value_by_path(target_data, multilang_path)
+                    # 如果值完全相同，跳過
+                    if existing_str == new_str:
+                        result["skipped"] += 1
+                        language_stats[update_language]["skipped"] += 1
+                        if log_detail:
+                            log_detail(f"跳過相同值：{multilang_path} = '{new_str}'")
+                        continue
                     
-                    # 處理值的比較和衝突檢測
-                    if existing_value is not None:
-                        existing_str = str(existing_value).strip()
-                        new_str = str(new_value).strip()
+                    # 當值不同時，標記為衝突並讓用戶決定
+                    if existing_str != new_str:
+                        conflict_info = {
+                            "path": multilang_path,
+                            "language": update_language,
+                            "existing_value": existing_str,
+                            "new_value": new_str,
+                            "file_type": "json"
+                        }
+                        conflicts.append(conflict_info)
+                        result["conflicts"].append(conflict_info)
+                        language_stats[update_language]["conflicts"] += 1
                         
-                        # 如果值完全相同，跳過
-                        if existing_str == new_str:
+                        if log_detail:
+                            log_detail(f"發現衝突：{multilang_path}")
+                            log_detail(f"  現有值: '{existing_str}'")
+                            log_detail(f"  新值: '{new_str}'")
+                        
+                        # 詢問用戶如何處理衝突
+                        choice = handle_json_conflict(multilang_path, existing_str, new_str, update_language)
+                        
+                        if choice == "keep_existing":
                             result["skipped"] += 1
                             language_stats[update_language]["skipped"] += 1
                             if log_detail:
-                                log_detail(f"跳過相同值：{multilang_path} = '{new_str}'")
+                                log_detail(f"保留現有值：{multilang_path} = '{existing_str}'")
                             continue
-                        
-                        # 當值不同時，標記為衝突並讓用戶決定
-                        if existing_str != new_str:
-                            conflict_info = {
-                                "path": multilang_path,
-                                "language": update_language,
-                                "existing_value": existing_str,
-                                "new_value": new_str,
-                                "file_type": "json"
-                            }
-                            conflicts.append(conflict_info)
-                            result["conflicts"].append(conflict_info)
-                            language_stats[update_language]["conflicts"] += 1
-                            
+                        elif choice == "use_new":
+                            # 繼續執行更新邏輯
                             if log_detail:
-                                log_detail(f"發現衝突：{multilang_path}")
-                                log_detail(f"  現有值: '{existing_str}'")
-                                log_detail(f"  新值: '{new_str}'")
-                            
-                            # 詢問用戶如何處理衝突
-                            choice = handle_json_conflict(multilang_path, existing_str, new_str, update_language)
-                            
-                            if choice == "keep_existing":
-                                result["skipped"] += 1
-                                language_stats[update_language]["skipped"] += 1
-                                if log_detail:
-                                    log_detail(f"保留現有值：{multilang_path} = '{existing_str}'")
-                                continue
-                            elif choice == "use_new":
-                                # 繼續執行更新邏輯
-                                if log_detail:
-                                    log_detail(f"採用新值：{multilang_path} = '{new_str}'")
-                            elif choice == "skip":
-                                result["skipped"] += 1
-                                language_stats[update_language]["skipped"] += 1
-                                if log_detail:
-                                    log_detail(f"跳過處理：{multilang_path}")
-                                continue
-                    
-                    # 應用普通更新
-                    if set_json_value_by_path(target_data, multilang_path, new_value):
-                        result["merged"] += 1
-                        language_stats[update_language]["merged"] += 1
-                        if log_detail:
-                            original_display = f"'{existing_value}'" if existing_value is not None else "無"
-                            log_detail(f"成功更新：{multilang_path} = '{new_value}' (原值: {original_display})")
-                    else:
-                        error_msg = f"無法設置 JSON 路徑：{multilang_path} (語言: {update_language})"
-                        result["errors"].append(error_msg)
-                        if log_detail:
-                            log_detail(f"錯誤：{error_msg}")
+                                log_detail(f"採用新值：{multilang_path} = '{new_str}'")
+                        elif choice == "skip":
+                            result["skipped"] += 1
+                            language_stats[update_language]["skipped"] += 1
+                            if log_detail:
+                                log_detail(f"跳過處理：{multilang_path}")
+                            continue
+                
+                # 應用更新
+                if set_json_value_by_path(target_data, multilang_path, new_value):
+                    result["merged"] += 1
+                    language_stats[update_language]["merged"] += 1
+                    if log_detail:
+                        original_display = f"'{existing_value}'" if existing_value is not None else "無"
+                        log_detail(f"成功更新：{multilang_path} = '{new_value}' (原值: {original_display})")
+                else:
+                    error_msg = f"無法設置 JSON 路徑：{multilang_path} (語言: {update_language})"
+                    result["errors"].append(error_msg)
+                    if log_detail:
+                        log_detail(f"錯誤：{error_msg}")
         
         # 保存合併後的檔案
         output_json_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1013,8 +844,8 @@ def get_json_value_by_path(data: dict, path: str):
         return None
 
 
-def set_json_value_by_path(data: dict, path: str, new_value) -> bool:
-    """【v1.6 增強版】按路徑設置 JSON 值，支援陣列和普通值"""
+def set_json_value_by_path(data: dict, path: str, new_value: str) -> bool:
+    """按路徑設置 JSON 值"""
     try:
         path_parts = parse_json_path(path)
         current = data
@@ -1046,8 +877,7 @@ def set_json_value_by_path(data: dict, path: str, new_value) -> bool:
         
         return True
         
-    except Exception as e:
-        print(f"⚠️  設置JSON路徑失敗：{path} = {new_value}, 錯誤：{e}")
+    except Exception:
         return False
 
 
@@ -1199,7 +1029,6 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             if failed_business_types:
                 f.write(f"失敗的業態：{', '.join(failed_business_types)}\n")
             
-            # v1.6 版本新增說明
             f.write(f"\n多語言合併說明：\n")
             f.write(f"- 本次處理支援多個語言的 tobemodified 合併\n")
             f.write(f"- JSON 檔案：採用多語言結構，所有語言合併到同一檔案\n")
@@ -1210,15 +1039,6 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"- 不同 value 的項目會正常更新\n")
             f.write(f"- 沒有目標檔案時會自動創建標準檔案（JSON/PO）\n")
             
-            f.write(f"\nv1.6 版本新增功能 - 智能陣列處理：\n")
-            f.write(f"- 檢測陣列索引路徑（如 slogan[1]）並自動進行完整陣列更新\n")
-            f.write(f"- 從 i18n_input/{{language}}/{{language}}.json 讀取原始完整陣列\n")
-            f.write(f"- 只替換指定索引的元素，保持其他元素不變\n")
-            f.write(f"- 避免陣列部分更新導致其他位置變成 null 的問題\n")
-            f.write(f"- 支援嵌套陣列路徑（如 data.items[0].tags[2]）\n")
-            f.write(f"- 當無法獲取原始陣列時，自動降級為傳統索引更新\n")
-            f.write(f"- 非陣列索引路徑仍使用原有的更新邏輯\n")
-            
             f.write(f"\n使用建議：\n")
             f.write(f"- 確認目標 JSON 檔案採用多語言結構（頂層為語言代碼）\n")
             f.write(f"- PO 檔案會按語言分別生成，便於獨立管理各語言翻譯\n")
@@ -1226,9 +1046,19 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"- 合併後請測試翻譯檔案的正確性\n")
             f.write(f"- 檢查各語言檔案的數據完整性\n")
             f.write(f"- 新建的檔案包含標準結構，無預設範例\n")
-            f.write(f"- 確保 i18n_input 目錄包含各語言的原始 JSON 檔案以支援陣列更新\n")
-            f.write(f"- 陣列索引更新會自動從原始檔案讀取完整陣列進行智能合併\n")
             
+            # 修正版本說明
+            f.write(f"\n修正版本 v1.5 新增功能：\n")
+            f.write(f"- 當沒有找到 JSON 檔案時，自動創建多語言 JSON 檔案\n")
+            f.write(f"- 根據 tobemodified 內容智能生成 JSON 結構\n")
+            f.write(f"- 支援基於檢測到的語言創建對應的語言區塊\n")
+            f.write(f"- 新建 JSON 檔案不包含預設範例，只根據實際語言創建空結構\n")
+            f.write(f"- PO 檔案按語言分別生成（如 messages_zh_TW.po, messages_en.po）\n")
+            f.write(f"- 每個語言的 PO 檔案獨立管理，便於團隊協作\n")
+            f.write(f"- 改善用戶體驗，JSON 和 PO 檔案都支援自動創建\n")
+            f.write(f"- 動態路徑結構創建，確保更新項目能正確寫入\n")
+            f.write(f"- 完整的多語言檔案處理工作流程\n")
+        
         log_detail(f"多語言合併摘要報告已生成：{summary_file}")
         
     except Exception as e:
@@ -1237,7 +1067,7 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
 
 def main():
     """主執行函數"""
-    print("🚀 開始多語言檔案合併處理 (v1.6 - 支援陣列完整更新版)")
+    print("🚀 開始多語言檔案合併處理 (v1.5 - 支援自動創建JSON和PO檔案版)")
     
     # 載入配置
     config = get_config()
@@ -1356,29 +1186,6 @@ def main():
             print(f"   PO 檔案：{target_po_path.relative_to(combine_dir)}")
     print(f"   涵蓋業態：{', '.join([config.get_business_types()[bt]['display_name'] for bt in all_business_types])}")
     
-    # 顯示陣列更新功能提示
-    print(f"\n🔧 v1.6 新功能：智能陣列處理")
-    print(f"   - 自動檢測陣列索引路徑（如 slogan[1]）")
-    print(f"   - 從 i18n_input/{{language}}/{{language}}.json 讀取原始陣列")
-    print(f"   - 進行完整陣列更新，避免其他位置變成 null")
-    
-    # 檢查 i18n_input 目錄
-    input_dir = Path("i18n_input")
-    if not input_dir.exists():
-        print(f"⚠️  未找到 i18n_input 目錄，陣列更新功能可能受限")
-    else:
-        missing_languages = []
-        for language in detected_languages:
-            language_file = input_dir / language / f"{language}.json"
-            if not language_file.exists():
-                missing_languages.append(language)
-        
-        if missing_languages:
-            print(f"⚠️  缺少原始語言檔案：{', '.join(missing_languages)}")
-            print(f"   陣列更新將降級為傳統索引更新")
-        else:
-            print(f"✅ 所有語言的原始檔案都已找到，支援完整陣列更新")
-    
     # 建立輸出目錄
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     dirs = config.get_directories()
@@ -1392,11 +1199,10 @@ def main():
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M:%S')} - {message}\n")
     
-    log_detail(f"開始多語言合併處理 (v1.6)")
+    log_detail(f"開始多語言合併處理")
     log_detail(f"語言：{', '.join(selected_files.keys())}")
     log_detail(f"來源檔案：{list(selected_files.values())}")
     log_detail(f"涵蓋業態：{', '.join(all_business_types)}")
-    log_detail(f"陣列更新功能：啟用")
     
     # 處理合併邏輯 - 避免業態間衝突
     business_types = config.get_business_types()
@@ -1533,12 +1339,11 @@ def main():
         for results in all_results.values()
     )
     
-    print(f"\n🎉 多語言合併處理完成！(v1.6)")
+    print(f"\n🎉 多語言合併處理完成！")
     print(f"📊 處理結果：合併 {total_merged} 個項目，跳過 {total_skipped} 個項目")
     if total_errors > 0:
         print(f"⚠️  處理錯誤：{total_errors} 個")
     print(f"📁 輸出目錄：{output_dir}")
-    print(f"🔧 陣列更新功能：已啟用，自動處理陣列索引路徑")
     
     # 生成處理摘要
     generate_multilang_summary_report(all_results, all_updates, output_dir, timestamp, target_json_path, target_po_path, log_detail)
