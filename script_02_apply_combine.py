@@ -511,6 +511,8 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
     
     try:
         # 處理目標 JSON 檔案
+        is_creating_new_file = False  # 新增標記變數
+        
         if create_new or target_json_path == "CREATE_NEW" or not target_json_path or not target_json_path.exists():
             # 創建新的 JSON 檔案
             print(f"   🆕 創建新的多語言 JSON 檔案：{output_json_path.name}")
@@ -527,6 +529,7 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
             
             target_data = json.loads(temp_json_path.read_text(encoding="utf-8"))
             result["created_new"] = True
+            is_creating_new_file = True  # 設置為新建檔案標記
             
         else:
             # 載入現有的 JSON 檔案
@@ -534,6 +537,7 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
             print(f"   📄 載入目標多語言 JSON 檔案：{target_json_path.name}")
             if log_detail:
                 log_detail(f"載入目標 JSON 檔案：{target_json_path.name}")
+            is_creating_new_file = False  # 明確設置為非新建檔案
         
         # 檢查是否為多語言結構
         is_multilang_structure = check_multilang_json_structure(target_data)
@@ -661,8 +665,8 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                     # 獲取現有值
                     existing_value = get_json_value_by_path(target_data, multilang_path)
                     
-                    # 處理值的比較和衝突檢測
-                    if existing_value is not None:
+                    # 修正的衝突檢測邏輯：新建檔案時跳過衝突檢測
+                    if not is_creating_new_file and existing_value is not None:
                         existing_str = str(existing_value).strip()
                         new_str = str(new_value).strip()
                         
@@ -674,8 +678,8 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                                 log_detail(f"跳過相同值：{multilang_path} = '{new_str}'")
                             continue
                         
-                        # 當值不同時，標記為衝突並讓用戶決定
-                        if existing_str != new_str:
+                        # 當值不同且不是空字串時，標記為衝突並讓用戶決定
+                        if existing_str != new_str and existing_str != "":
                             conflict_info = {
                                 "path": multilang_path,
                                 "language": update_language,
@@ -717,8 +721,11 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                         result["merged"] += 1
                         language_stats[update_language]["merged"] += 1
                         if log_detail:
-                            original_display = f"'{existing_value}'" if existing_value is not None else "無"
-                            log_detail(f"成功更新：{multilang_path} = '{new_value}' (原值: {original_display})")
+                            if is_creating_new_file:
+                                log_detail(f"新建檔案寫入：{multilang_path} = '{new_value}'")
+                            else:
+                                original_display = f"'{existing_value}'" if existing_value is not None else "無"
+                                log_detail(f"成功更新：{multilang_path} = '{new_value}' (原值: {original_display})")
                     else:
                         error_msg = f"無法設置 JSON 路徑：{multilang_path} (語言: {update_language})"
                         result["errors"].append(error_msg)
