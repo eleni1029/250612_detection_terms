@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_02_apply_combine.py (v1.6 - 支援陣列完整更新版)
+script_02_apply_combine.py (v1.7 - 修復空檔案生成版)
 
 功能：
 1. 選擇要合併的 tobemodified Excel 檔案（支援多選）
@@ -10,7 +10,8 @@ script_02_apply_combine.py (v1.6 - 支援陣列完整更新版)
 4. 沒有目標檔案時自動創建標準檔案（JSON/PO）
 5. 生成合併後的檔案到 i18n_output/multi_{timestamp}_combined/
 6. 提供詳細的合併報告和日誌
-7. **新增：完整陣列更新邏輯 - 從 i18n_input 讀取原始陣列進行智能合併**
+7. **完整陣列更新邏輯 - 從 i18n_input 讀取原始陣列進行智能合併**
+8. **v1.7 新增：智能檔案生成 - 只在有實際內容時才生成 JSON 檔案，避免空檔案**
 """
 
 import json
@@ -483,10 +484,22 @@ def read_excel_updates_for_language(xlsx_path: Path, language: str, config) -> d
         return {}
 
 
+def has_non_empty_content(obj) -> bool:
+    """【v1.7 新增】檢查物件是否包含非空內容"""
+    if isinstance(obj, dict):
+        return any(has_non_empty_content(v) for v in obj.values())
+    elif isinstance(obj, list):
+        return any(has_non_empty_content(item) for item in obj)
+    elif isinstance(obj, str):
+        return bool(obj.strip())
+    else:
+        return obj is not None and obj != ""
+
+
 def combine_multilang_json_files_for_business_type(all_updates: dict, target_json_path: Path, 
                                                   output_json_path: Path, bt_code: str, log_detail=None,
                                                   create_new: bool = False, detected_languages: list = None) -> dict:
-    """【v1.6 增強版】為特定業態合併多語言 JSON 檔案，支援完整陣列更新"""
+    """【v1.7 增強版】為特定業態合併多語言 JSON 檔案，支援完整陣列更新，只在有實際內容時才生成檔案"""
     result = {
         "success": False,
         "merged": 0,
@@ -494,7 +507,8 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
         "conflicts": [],
         "errors": [],
         "language_stats": {},
-        "created_new": False
+        "created_new": False,
+        "file_skipped": False  # 【v1.7 新增】檔案是否被跳過
     }
     
     # 檢查是否有當前業態的更新
@@ -732,11 +746,43 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
                         if log_detail:
                             log_detail(f"錯誤：{error_msg}")
         
-        # 保存合併後的檔案
-        output_json_path.parent.mkdir(parents=True, exist_ok=True)
+        # 【v1.7 修改】智能檔案保存邏輯 - 只在有實際內容時才保存檔案
+        should_save_file = False
         
-        json_content = json.dumps(target_data, ensure_ascii=False, indent=2)
-        output_json_path.write_text(json_content, encoding="utf-8")
+        # 檢查是否有實際更新內容
+        if result["merged"] > 0:
+            should_save_file = True
+            if log_detail:
+                log_detail(f"檢測到 {result['merged']} 個實際更新，將保存檔案")
+        
+        # 如果是創建新檔案，檢查是否有非空內容
+        elif result["created_new"]:
+            # 檢查 target_data 是否包含非空內容
+            has_content = has_non_empty_content(target_data)
+            
+            if has_content:
+                should_save_file = True
+                if log_detail:
+                    log_detail("新檔案包含實際內容，將保存檔案")
+            else:
+                if log_detail:
+                    log_detail("新檔案無實際內容，跳過保存")
+        
+        if should_save_file:
+            # 保存合併後的檔案
+            output_json_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            json_content = json.dumps(target_data, ensure_ascii=False, indent=2)
+            output_json_path.write_text(json_content, encoding="utf-8")
+            
+            if log_detail:
+                log_detail(f"JSON 檔案已保存：{output_json_path}")
+        else:
+            if log_detail:
+                log_detail(f"跳過保存空的 JSON 檔案：{output_json_path}")
+            
+            # 設置特殊標記表示檔案未保存
+            result["file_skipped"] = True
         
         # 清理臨時檔案
         temp_json_path = output_json_path.parent / f"temp_multilang.json"
@@ -750,7 +796,10 @@ def combine_multilang_json_files_for_business_type(all_updates: dict, target_jso
         total_conflicts = len(conflicts)
         if log_detail:
             status = "創建並" if result["created_new"] else ""
-            log_detail(f"JSON ({bt_code}) {status}合併完成：合併 {result['merged']} 個，跳過 {result['skipped']} 個，衝突 {total_conflicts} 個")
+            if result["file_skipped"]:
+                log_detail(f"JSON ({bt_code}) {status}處理完成但跳過保存：合併 {result['merged']} 個，跳過 {result['skipped']} 個，衝突 {total_conflicts} 個")
+            else:
+                log_detail(f"JSON ({bt_code}) {status}合併完成：合併 {result['merged']} 個，跳過 {result['skipped']} 個，衝突 {total_conflicts} 個")
         
     except json.JSONDecodeError as e:
         error_msg = f"JSON 格式錯誤：{e}"
@@ -1144,6 +1193,7 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             successful_business_types = []
             failed_business_types = []
             created_new_files = []
+            skipped_files = []  # 【v1.7 新增】跳過的檔案
             
             # 按業態統計
             for bt_code, bt_results in results.items():
@@ -1153,12 +1203,16 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
                 bt_skipped = sum(result.get('skipped', 0) for result in bt_results.values())
                 bt_errors = []
                 bt_new_files = []
+                bt_skipped_files = []  # 【v1.7 新增】
                 
                 for result_key, result in bt_results.items():
                     bt_errors.extend(result.get('errors', []))
                     if result.get('created_new'):
                         file_type = "JSON檔案" if "json" in result_key else "PO檔案"
                         bt_new_files.append(file_type)
+                    if result.get('file_skipped'):  # 【v1.7 新增】
+                        file_type = "JSON檔案" if "json" in result_key else "PO檔案"
+                        bt_skipped_files.append(file_type)
                 
                 f.write(f"合併數量：{bt_merged}\n")
                 f.write(f"跳過數量：{bt_skipped}\n")
@@ -1166,6 +1220,11 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
                 if bt_new_files:
                     f.write(f"新建檔案：{', '.join(bt_new_files)}\n")
                     created_new_files.extend(bt_new_files)
+                
+                # 【v1.7 新增】跳過檔案統計
+                if bt_skipped_files:
+                    f.write(f"跳過檔案：{', '.join(bt_skipped_files)} (無實際內容)\n")
+                    skipped_files.extend(bt_skipped_files)
                 
                 # 語言級別統計
                 f.write(f"語言統計：\n")
@@ -1200,13 +1259,17 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             if created_new_files:
                 f.write(f"新建檔案數：{len(set(created_new_files))}\n")
             
+            # 【v1.7 新增】跳過檔案統計
+            if skipped_files:
+                f.write(f"跳過檔案數：{len(set(skipped_files))} (因無實際內容)\n")
+            
             if successful_business_types:
                 f.write(f"\n成功的業態：{', '.join(successful_business_types)}\n")
             
             if failed_business_types:
                 f.write(f"失敗的業態：{', '.join(failed_business_types)}\n")
             
-            # v1.6 版本新增說明
+            # v1.7 版本新增說明
             f.write(f"\n多語言合併說明：\n")
             f.write(f"- 本次處理支援多個語言的 tobemodified 合併\n")
             f.write(f"- JSON 檔案：採用多語言結構，所有語言合併到同一檔案\n")
@@ -1217,7 +1280,7 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"- 不同 value 的項目會正常更新\n")
             f.write(f"- 沒有目標檔案時會自動創建標準檔案（JSON/PO）\n")
             
-            f.write(f"\nv1.6 版本新增功能 - 智能陣列處理：\n")
+            f.write(f"\nv1.6 版本功能 - 智能陣列處理：\n")
             f.write(f"- 檢測陣列索引路徑（如 slogan[1]）並自動進行完整陣列更新\n")
             f.write(f"- 從 i18n_input/{{language}}/{{language}}.json 讀取原始完整陣列\n")
             f.write(f"- 只替換指定索引的元素，保持其他元素不變\n")
@@ -1225,6 +1288,14 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"- 支援嵌套陣列路徑（如 data.items[0].tags[2]）\n")
             f.write(f"- 當無法獲取原始陣列時，自動降級為傳統索引更新\n")
             f.write(f"- 非陣列索引路徑仍使用原有的更新邏輯\n")
+            
+            # 【v1.7 新增】智能檔案生成說明
+            f.write(f"\nv1.7 版本新增功能 - 智能檔案生成：\n")
+            f.write(f"- 自動檢測 JSON 檔案是否包含實際內容\n")
+            f.write(f"- 只有在有實際更新或有意義的新內容時才生成 JSON 檔案\n")
+            f.write(f"- 避免生成空的或僅包含空結構的 JSON 檔案\n")
+            f.write(f"- PO 檔案仍按原有邏輯處理，不受此功能影響\n")
+            f.write(f"- 提供清晰的跳過檔案統計和日誌記錄\n")
             
             f.write(f"\n使用建議：\n")
             f.write(f"- 確認目標 JSON 檔案採用多語言結構（頂層為語言代碼）\n")
@@ -1235,6 +1306,7 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
             f.write(f"- 新建的檔案包含標準結構，無預設範例\n")
             f.write(f"- 確保 i18n_input 目錄包含各語言的原始 JSON 檔案以支援陣列更新\n")
             f.write(f"- 陣列索引更新會自動從原始檔案讀取完整陣列進行智能合併\n")
+            f.write(f"- 如果 JSON 檔案被跳過，表示該業態沒有實際的更新內容\n")
             
         log_detail(f"多語言合併摘要報告已生成：{summary_file}")
         
@@ -1244,7 +1316,7 @@ def generate_multilang_summary_report(results: dict, all_updates: dict, output_d
 
 def main():
     """主執行函數"""
-    print("🚀 開始多語言檔案合併處理 (v1.6 - 支援陣列完整更新版)")
+    print("🚀 開始多語言檔案合併處理 (v1.7 - 修復空檔案生成版)")
     
     # 載入配置
     config = get_config()
@@ -1364,10 +1436,11 @@ def main():
     print(f"   涵蓋業態：{', '.join([config.get_business_types()[bt]['display_name'] for bt in all_business_types])}")
     
     # 顯示陣列更新功能提示
-    print(f"\n🔧 v1.6 新功能：智能陣列處理")
+    print(f"\n🔧 v1.7 新功能：智能檔案生成 + 陣列處理")
     print(f"   - 自動檢測陣列索引路徑（如 slogan[1]）")
     print(f"   - 從 i18n_input/{{language}}/{{language}}.json 讀取原始陣列")
     print(f"   - 進行完整陣列更新，避免其他位置變成 null")
+    print(f"   - 只在有實際內容時才生成 JSON 檔案，避免空檔案")
     
     # 檢查 i18n_input 目錄
     input_dir = Path("i18n_input")
@@ -1399,11 +1472,12 @@ def main():
         with open(log_file, "a", encoding="utf-8") as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M:%S')} - {message}\n")
     
-    log_detail(f"開始多語言合併處理 (v1.6)")
+    log_detail(f"開始多語言合併處理 (v1.7)")
     log_detail(f"語言：{', '.join(selected_files.keys())}")
     log_detail(f"來源檔案：{list(selected_files.values())}")
     log_detail(f"涵蓋業態：{', '.join(all_business_types)}")
     log_detail(f"陣列更新功能：啟用")
+    log_detail(f"智能檔案生成：啟用")
     
     # 處理合併邏輯 - 避免業態間衝突
     business_types = config.get_business_types()
@@ -1442,9 +1516,11 @@ def main():
             )
             results['json_result'] = json_result
             
-            # 顯示結果
+            # 【v1.7 修改】顯示結果，包含檔案跳過情況
             if json_result.get('errors'):
                 print(f"     ❌ JSON 檔案處理錯誤：{json_result['errors']}")
+            elif json_result.get('file_skipped'):
+                print(f"     ⚠️  {display_name}: 無實際內容，跳過生成 JSON 檔案")
             else:
                 # 顯示語言統計
                 if json_result.get('language_stats'):
@@ -1489,9 +1565,10 @@ def main():
                     if not po_result.get('created_new'):
                         print(f"     ℹ️  {display_name} 沒有 PO 更新項目")
         
-        # 如果沒有更新，複製原檔案（僅限非創建新檔案的情況）
+        # 【v1.7 修改】如果沒有更新，複製原檔案（僅限非創建新檔案且未跳過的情況）
         if target_json_path and target_json_path != "CREATE_NEW" and results.get('json_result', {}).get('merged', 0) == 0:
-            if not results.get('json_result', {}).get('created_new', False):
+            if (not results.get('json_result', {}).get('created_new', False) and 
+                not results.get('json_result', {}).get('file_skipped', False)):
                 output_json_path = output_dir / f"{target_json_path.stem}{suffix}_combined.json"
                 if not output_json_path.exists():
                     output_json_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1508,6 +1585,7 @@ def main():
         total_skipped = 0
         total_errors = 0
         has_new_files = False
+        has_skipped_files = False  # 【v1.7 新增】
         
         for result in results.values():
             total_merged += result.get('merged', 0)
@@ -1515,6 +1593,8 @@ def main():
             total_errors += len(result.get('errors', []))
             if result.get('created_new'):
                 has_new_files = True
+            if result.get('file_skipped'):  # 【v1.7 新增】
+                has_skipped_files = True
         
         if total_errors > 0:
             print(f"     ❌ 處理失敗 - 錯誤: {total_errors} 個")
@@ -1522,6 +1602,8 @@ def main():
             status_msg = f"完成 - 合併: {total_merged} 個, 跳過: {total_skipped} 個"
             if has_new_files:
                 status_msg += " (包含新檔案)"
+            if has_skipped_files:  # 【v1.7 新增】
+                status_msg += " (部分檔案因無內容被跳過)"
             print(f"     ✅ {status_msg}")
         
         log_detail(f"{display_name} 處理完成：合併 {total_merged} 個，跳過 {total_skipped} 個，錯誤 {total_errors} 個")
@@ -1540,11 +1622,12 @@ def main():
         for results in all_results.values()
     )
     
-    print(f"\n🎉 多語言合併處理完成！(v1.6)")
+    print(f"\n🎉 多語言合併處理完成！(v1.7)")
     print(f"📊 處理結果：合併 {total_merged} 個項目，跳過 {total_skipped} 個項目")
     if total_errors > 0:
         print(f"⚠️  處理錯誤：{total_errors} 個")
     print(f"📁 輸出目錄：{output_dir}")
+    print(f"🔧 新功能：智能檔案生成已啟用，自動跳過無內容的 JSON 檔案")
     print(f"🔧 陣列更新功能：已啟用，自動處理陣列索引路徑")
     
     # 生成處理摘要
