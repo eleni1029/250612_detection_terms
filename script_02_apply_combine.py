@@ -246,11 +246,17 @@ def detect_tobemodified_files(config) -> dict:
         print(f"⚠️  語言檢測失敗：{e}")
         available_languages = []
     
-    # 檢測標準命名的檔案
+    # 檢測所有帶時間戳的 tobemodified 檔案
+    import re
     for language in available_languages:
-        tobemodified_path = output_dir / f"{language}_tobemodified.xlsx"
-        if tobemodified_path.exists():
-            available_files[language] = tobemodified_path
+        # 尋找該語言的所有 tobemodified 檔案（包括帶時間戳的）
+        pattern = f"{language}_tobemodified*.xlsx"
+        language_files = list(output_dir.glob(pattern))
+        
+        if language_files:
+            # 按檔案修改時間排序（從新到舊）
+            language_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
+            available_files[language] = language_files
     
     return available_files
 
@@ -286,17 +292,53 @@ def scan_combine_directory(combine_dir: Path) -> dict:
 
 
 def choose_tobemodified_files(available_files: dict) -> dict:
-    """選擇要使用的 tobemodified 檔案（支援多選）"""
+    """選擇要使用的 tobemodified 檔案（支援多選和多版本選擇）"""
     if not available_files:
         print("❌ 未找到任何 tobemodified 檔案")
         return {}
     
-    print("\n📄 可用的 tobemodified 檔案：")
-    choices = list(available_files.items())
+    # 展開所有語言的檔案選項
+    all_choices = []
+    for language, file_list in available_files.items():
+        if isinstance(file_list, list):
+            for i, file_path in enumerate(file_list):
+                # 顯示時間戳和檔案大小等資訊
+                import datetime
+                mtime = datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
+                time_str = mtime.strftime('%Y-%m-%d %H:%M:%S')
+                all_choices.append((language, file_path, time_str, i == 0))  # 第一個是最新的
+        else:
+            # 兼容舊格式
+            file_path = file_list
+            mtime = datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
+            time_str = mtime.strftime('%Y-%m-%d %H:%M:%S')
+            all_choices.append((language, file_path, time_str, True))
     
-    for i, (language, file_path) in enumerate(choices, 1):
-        print(f"  {i}) {language} ({file_path.name})")
+    if not all_choices:
+        print("❌ 沒有找到有效的 tobemodified 檔案")
+        return {}
     
+    print("\n📄 可用的 tobemodified 檔案（按時間排序，從新到舊）：")
+    
+    # 按語言分組顯示
+    language_groups = {}
+    for language, file_path, time_str, is_latest in all_choices:
+        if language not in language_groups:
+            language_groups[language] = []
+        language_groups[language].append((file_path, time_str, is_latest))
+    
+    choice_index = 1
+    indexed_choices = []
+    
+    for language in sorted(language_groups.keys()):
+        print(f"\n  🌐 {language}:")
+        for file_path, time_str, is_latest in language_groups[language]:
+            latest_mark = " [最新]" if is_latest else ""
+            print(f"    {choice_index}) {file_path.name} ({time_str}){latest_mark}")
+            indexed_choices.append((language, file_path))
+            choice_index += 1
+    
+    print(f"\n  L) 每個語言自動選擇最新版本")
     print(f"  A) 全部選擇")
     print(f"  0) 取消操作")
     
@@ -304,13 +346,26 @@ def choose_tobemodified_files(available_files: dict) -> dict:
     
     while True:
         try:
-            choice = input(f"\n請選擇要使用的檔案 (可多選，用逗號分隔，如 1,2,3 或 A)：").strip()
+            choice = input(f"\n請選擇要使用的檔案 (可多選，用逗號分隔，如 1,2,3 或 L/A)：").strip()
             
             if choice == '0':
                 print("❌ 操作取消")
                 return {}
+            elif choice.upper() == 'L':
+                # 每個語言選擇最新版本
+                for language, file_list in available_files.items():
+                    if isinstance(file_list, list):
+                        selected_files[language] = file_list[0]  # 第一個是最新的
+                    else:
+                        selected_files[language] = file_list
+                break
             elif choice.upper() == 'A':
-                selected_files = available_files.copy()
+                # 選擇所有檔案（每個語言的所有版本中選最新的）
+                for language, file_list in available_files.items():
+                    if isinstance(file_list, list):
+                        selected_files[language] = file_list[0]
+                    else:
+                        selected_files[language] = file_list
                 break
             else:
                 # 解析多選
@@ -318,8 +373,8 @@ def choose_tobemodified_files(available_files: dict) -> dict:
                 selected_files = {}
                 
                 for choice_idx in choice_indices:
-                    if 0 <= choice_idx < len(choices):
-                        language, file_path = choices[choice_idx]
+                    if 0 <= choice_idx < len(indexed_choices):
+                        language, file_path = indexed_choices[choice_idx]
                         selected_files[language] = file_path
                     else:
                         print(f"⚠️  無效選項：{choice_idx + 1}")
@@ -336,7 +391,9 @@ def choose_tobemodified_files(available_files: dict) -> dict:
     
     print(f"✅ 選擇了 {len(selected_files)} 個檔案：")
     for language, file_path in selected_files.items():
-        print(f"   {language}: {file_path.name}")
+        mtime = datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
+        time_str = mtime.strftime('%Y-%m-%d %H:%M:%S')
+        print(f"   {language}: {file_path.name} ({time_str})")
     
     return selected_files
 
@@ -459,9 +516,9 @@ def read_excel_updates_for_language(xlsx_path: Path, language: str, config) -> d
                     # 創建更新記錄，包含語言信息
                     update_record = (str(entry_id), new_value, language)
                     
-                    if file_type == "po":
+                    if file_type == "po" or file_type == "combine_po":
                         updates[bt_code]["po"].append(update_record)
-                    elif file_type == "json":
+                    elif file_type == "json" or file_type == "combine_json":
                         updates[bt_code]["json"].append(update_record)
             
             except Exception as e:
@@ -979,7 +1036,7 @@ def combine_po_files_for_business_type(all_updates: dict, target_po_path: Path,
             language_stats = {"merged": 0, "skipped": 0, "conflicts": 0}
             
             # 處理當前語言的 PO 更新
-            for msgid, new_msgstr, update_language in po_updates:
+            for msgid, new_msgstr, _ in po_updates:
                 target_entry = target_po.find(msgid)
                 
                 if target_entry:

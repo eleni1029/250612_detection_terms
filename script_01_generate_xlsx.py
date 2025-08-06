@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-script_01_generate_xlsx.py (v2.7 - 基於現有版本的修復版)
+script_01_generate_xlsx.py (v2.8 - 新增 combine 檔案比對功能)
 
 修復內容：
 1. ✅ 只處理有有效替換方案的語言（跳過CN、MO等沒有替換方案的語言）
 2. ✅ 替換結果欄位只在有有效替換時才顯示內容，否則顯示空值
 3. ✅ 黃色底色只標示真正有有效替換的項目
 4. ✅ 保持現有的多重敏感詞檢測功能
+5. 🆕 新增 i18n_combine 目錄檔案掃描與比對功能
+6. 🆕 支援用戶選擇要包含的 combine 檔案（全部/單選）
+7. 🆕 combine 檔案在結果中標示為 COMBINE_PO 或 COMBINE_JSON
 """
 
 import json
@@ -450,7 +453,7 @@ def has_valid_replacements(sensitive_words: dict, business_types: dict) -> bool:
     return False
 
 
-def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensitive_words: dict):
+def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensitive_words: dict, combine_files=None):
     """
     【修復版】使用優先順序邏輯檢測敏感詞，只返回有有效替換的項目
     
@@ -458,6 +461,7 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
         config: 配置物件
         language: 語言代碼
         sensitive_words: 敏感詞字典
+        combine_files: 可選的 combine 檔案字典 {'json': [], 'po': []}
         
     Returns:
         list: 檢測到的敏感詞項目列表（只包含有有效替換方案的項目）
@@ -641,6 +645,118 @@ def detect_sensitive_phrases_in_files_with_priority(config, language: str, sensi
         print(f"   ❌ 檢測過程發生錯誤：{e}")
         return []
     
+    # 處理 combine 檔案
+    if combine_files:
+        print(f"   🔍 檢測 combine 檔案...")
+        
+        # 檢測 combine 中的 PO 檔案
+        for po_file in combine_files.get('po', []):
+            print(f"     📄 檢測 {po_file.name}...")
+            try:
+                po_data = polib.pofile(str(po_file))
+                
+                for entry in po_data:
+                    if not entry.msgstr:
+                        continue
+                    
+                    detected = detector.detect_with_priority_multiple(entry.msgstr, log_detail)
+                    
+                    if detected:
+                        has_any_valid_replacement = False
+                        combined_replacements = {}
+                        
+                        for bt_code in business_types.keys():
+                            replaced_text, used_keywords = detector.generate_multiple_replacements(
+                                entry.msgstr, detected, bt_code
+                            )
+                            
+                            if replaced_text and replaced_text.strip() and replaced_text != entry.msgstr:
+                                combined_replacements[bt_code] = replaced_text
+                                has_any_valid_replacement = True
+                            else:
+                                combined_replacements[bt_code] = ""
+                        
+                        if has_any_valid_replacement:
+                            all_keywords = [item['keyword'] for item in detected]
+                            all_categories = list(set(item['category'] for item in detected))
+                            
+                            detected_items.append({
+                                'file_type': 'combine_po',
+                                'file_path': po_file,
+                                'entry_id': entry.msgid,
+                                'entry_context': entry.msgctxt or "",
+                                'original_text': entry.msgstr,
+                                'sensitive_word': ', '.join(all_keywords),
+                                'category': ', '.join(all_categories),
+                                'replacements': {},
+                                'multiple_replacements': combined_replacements,
+                                'detected_details': detected,
+                                'line_number': entry.linenum if hasattr(entry, 'linenum') else 0,
+                                'match_positions': [(item['start_pos'], item['end_pos']) for item in detected]
+                            })
+            
+            except Exception as e:
+                print(f"     ⚠️  讀取 combine PO 檔案失敗：{e}")
+        
+        # 檢測 combine 中的 JSON 檔案
+        for json_file in combine_files.get('json', []):
+            print(f"     📄 檢測 {json_file.name}...")
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    json_data = json.load(f)
+                
+                def check_combine_json_recursive(obj, path=""):
+                    """遞歸檢查 combine JSON 檔案中的敏感詞"""
+                    if isinstance(obj, dict):
+                        for key, value in obj.items():
+                            new_path = f"{path}.{key}" if path else key
+                            check_combine_json_recursive(value, new_path)
+                    elif isinstance(obj, list):
+                        for i, item in enumerate(obj):
+                            new_path = f"{path}[{i}]"
+                            check_combine_json_recursive(item, new_path)
+                    elif isinstance(obj, str):
+                        detected = detector.detect_with_priority_multiple(obj, log_detail)
+                        
+                        if detected:
+                            has_any_valid_replacement = False
+                            combined_replacements = {}
+                            
+                            for bt_code in business_types.keys():
+                                replaced_text, used_keywords = detector.generate_multiple_replacements(
+                                    obj, detected, bt_code
+                                )
+                                
+                                if replaced_text and replaced_text.strip() and replaced_text != obj:
+                                    combined_replacements[bt_code] = replaced_text
+                                    has_any_valid_replacement = True
+                                else:
+                                    combined_replacements[bt_code] = ""
+                            
+                            if has_any_valid_replacement:
+                                all_keywords = [item['keyword'] for item in detected]
+                                all_categories = list(set(item['category'] for item in detected))
+                                
+                                detected_items.append({
+                                    'file_type': 'combine_json',
+                                    'file_path': json_file,
+                                    'entry_id': path,
+                                    'entry_context': "",
+                                    'original_text': obj,
+                                    'sensitive_word': ', '.join(all_keywords),
+                                    'category': ', '.join(all_categories),
+                                    'replacements': {},
+                                    'multiple_replacements': combined_replacements,
+                                    'detected_details': detected,
+                                    'line_number': 0,
+                                    'match_positions': [(item['start_pos'], item['end_pos']) for item in detected]
+                                })
+                
+                check_combine_json_recursive(json_data)
+            
+            except Exception as e:
+                print(f"     ⚠️  讀取 combine JSON 檔案失敗：{e}")
+    
     print(f"   ✅ 檢測完成：{len(detected_items)} 個項目有有效替換")
     
     return detected_items
@@ -666,8 +782,9 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
         print(f"   ⚠️ {language} 沒有任何項目有有效替換方案，跳過生成檔案")
         return
     
-    # 建立輸出檔案路徑
-    output_file = output_dir / f"{language}_tobemodified.xlsx"
+    # 建立輸出檔案路徑，加上時間戳
+    timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+    output_file = output_dir / f"{language}_tobemodified_{timestamp}.xlsx"
     
     # 創建工作簿
     wb = Workbook()
@@ -723,8 +840,12 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
         col_num = 1
         
         # 基本資訊
+        file_type_display = item['file_type'].upper()
+        if file_type_display.startswith('COMBINE_'):
+            file_type_display = f"COMBINE_{file_type_display[8:]}"
+        
         basic_data = [
-            item['file_type'].upper(),
+            file_type_display,
             str(item['file_path'].name),
             item['entry_id'],
             item['original_text'][:100] + "..." if len(item['original_text']) > 100 else item['original_text'],
@@ -823,12 +944,95 @@ def generate_tobemodified_excel(config, language: str, detected_items: list, out
     print(f"   📄 已生成：{output_file.name} ({len(detected_items)} 個項目)")
 
 
+def scan_combine_files():
+    """掃描 i18n_combine 目錄中的 JSON 和 PO 檔案"""
+    combine_dir = Path('i18n_combine')
+    combine_files = {'json': [], 'po': []}
+    
+    if not combine_dir.exists():
+        print(f"⚠️  combine 目錄不存在：{combine_dir}")
+        return combine_files
+    
+    # 掃描 JSON 檔案
+    for json_file in combine_dir.glob('*.json'):
+        combine_files['json'].append(json_file)
+    
+    # 掃描 PO 檔案
+    for po_file in combine_dir.glob('*.po'):
+        combine_files['po'].append(po_file)
+    
+    return combine_files
+
+def choose_combine_files(combine_files):
+    """讓用戶選擇要包含的 combine 檔案"""
+    selected_files = {'json': [], 'po': []}
+    
+    for file_type in ['json', 'po']:
+        files = combine_files[file_type]
+        if not files:
+            print(f"⚠️  沒有找到 {file_type.upper()} 檔案")
+            continue
+        
+        print(f"\n📁 可用的 {file_type.upper()} 檔案：")
+        for i, file_path in enumerate(files, 1):
+            print(f"  {i}) {file_path.name}")
+        print(f"  A) 全部選擇")
+        print(f"  0) 跳過 {file_type.upper()} 檔案")
+        
+        while True:
+            try:
+                choice = input(f"請選擇要包含的 {file_type.upper()} 檔案 (可多選，用逗號分隔，如 1,2 或 A)：").strip()
+                
+                if choice == '0':
+                    print(f"⏭️  跳過 {file_type.upper()} 檔案")
+                    break
+                elif choice.upper() == 'A':
+                    selected_files[file_type] = files[:]
+                    print(f"✅ 選擇了所有 {len(files)} 個 {file_type.upper()} 檔案")
+                    break
+                else:
+                    # 處理多選
+                    indices = [int(x.strip()) for x in choice.split(',')]
+                    selected = []
+                    for idx in indices:
+                        if 1 <= idx <= len(files):
+                            selected.append(files[idx - 1])
+                        else:
+                            print(f"❌ 無效選擇：{idx}")
+                            break
+                    else:
+                        selected_files[file_type] = selected
+                        print(f"✅ 選擇了 {len(selected)} 個 {file_type.upper()} 檔案：{', '.join(f.name for f in selected)}")
+                        break
+            except (ValueError, IndexError):
+                print("❌ 請輸入有效的數字選擇")
+    
+    return selected_files
+
 def main():
     """主執行函數 - 【修復版】只處理有有效替換方案的語言"""
-    print("🚀 開始生成各語言 tobemodified 檔案 (v2.7 - 修復版)")
+    print("🚀 開始生成各語言 tobemodified 檔案 (v2.8 - 新增 combine 檔案比對)")
     
     # 載入配置
     config = get_config()
+    
+    # 掃描並選擇 combine 檔案
+    print("\n🔍 掃描 combine 目錄...")
+    combine_files = scan_combine_files()
+    
+    selected_combine_files = {'json': [], 'po': []}
+    if combine_files['json'] or combine_files['po']:
+        print(f"📁 在 i18n_combine 目錄找到：")
+        if combine_files['json']:
+            print(f"   JSON 檔案：{len(combine_files['json'])} 個")
+        if combine_files['po']:
+            print(f"   PO 檔案：{len(combine_files['po'])} 個")
+        
+        choice = input("\n是否要加入 combine 檔案進行比對？(Y/n)：").strip().lower()
+        if choice != 'n':
+            selected_combine_files = choose_combine_files(combine_files)
+    else:
+        print("📁 combine 目錄為空或不存在")
     
     # 檢測可用語言
     available_languages = config.detect_available_languages()
@@ -926,7 +1130,7 @@ def main():
         sensitive_words = valid_languages[language]
         
         # 使用修復版的檢測邏輯（只檢測有替換方案的項目）
-        detected_items = detect_sensitive_phrases_in_files_with_priority(config, language, sensitive_words)
+        detected_items = detect_sensitive_phrases_in_files_with_priority(config, language, sensitive_words, selected_combine_files)
         total_detected += len(detected_items)
         
         # 生成待修正檔案（只包含有有效替換的項目）
